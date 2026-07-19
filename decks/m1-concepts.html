@@ -134,290 +134,616 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 1 &nbsp;·&nbsp; HOW LLMS WORK</p>
-  <h2 class="t" style="font-size:2.3em">Read the Bill, the Latency, the Capacity</h2>
-  <p class="s" style="font-size:1.2em">One assistant, three ops questions in one week — and all three have the same root: what the model does at runtime, and what that work costs</p>
-  <svg viewBox="0 0 1100 320" role="img" aria-label="One LLM assistant box fans out with three gray arrows to three ops questions: the bill jumped, why is it slow, and how many users fit one box.">
+  <h2 class="t" style="font-size:2.3em">From your key press to the streamed reply</h2>
+  <p class="s" style="font-size:1.2em">What actually happens between typing into ChatGPT and the first word appearing — that whole trip is this module</p>
+  <svg viewBox="0 0 1100 330" role="img" aria-label="A hand types a question at a keyboard, a prompt bubble flows to a reply panel where answer word-chips appear one at a time; underneath, a gray line fans to three ops questions: the bill jumped, why is it slow, and how many users fit.">
+    <!-- keyboard + typing hand -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <rect x="70" y="90" width="180" height="66" rx="8"/>
+      <line x1="100" y1="112" x2="220" y2="112"/>
+      <line x1="100" y1="134" x2="220" y2="134"/>
+    </g>
+    <text x="160" y="182" text-anchor="middle" class="lbl-g">you type</text>
+    <!-- prompt bubble -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="300" y="86" width="230" height="74" rx="14"/>
+    </g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round">
-      <rect x="430" y="60" width="240" height="100" rx="12"/>
+      <path d="M340,160 L326,186 L360,162"/>
     </g>
-    <text x="550" y="102" text-anchor="middle" class="lbl-b">LLM assistant</text>
-    <text x="550" y="134" text-anchor="middle" class="lbl-g">shipped, nobody changed the code</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M470,162 C360,200 260,210 210,232" marker-end="url(#ahg)"/>
-      <path d="M550,164 L550,232" marker-end="url(#ahg)"/>
-      <path d="M630,162 C740,200 840,210 890,232" marker-end="url(#ahg)"/>
+    <text x="415" y="132" text-anchor="middle" class="lbl-b">"why is it slow?"</text>
+    <!-- arrow to reply -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M532,122 L600,122" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="70"  y="238" width="280" height="64" rx="10"/>
-      <rect x="410" y="238" width="280" height="64" rx="10"/>
-      <rect x="750" y="238" width="280" height="64" rx="10"/>
+    <!-- reply panel: chips streaming in -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="610" y="70" width="420" height="108" rx="12"/>
     </g>
-    <text x="210" y="278" text-anchor="middle" class="lbl">the bill jumped</text>
-    <text x="550" y="278" text-anchor="middle" class="lbl">slow for long questions</text>
-    <text x="890" y="278" text-anchor="middle" class="lbl">how many users fit?</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="636" y="98" width="70" height="34" rx="6"/>
+      <rect x="716" y="98" width="70" height="34" rx="6"/>
+      <rect x="796" y="98" width="70" height="34" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 6">
+      <rect x="876" y="98" width="70" height="34" rx="6"/>
+    </g>
+    <text x="820" y="160" text-anchor="middle" class="lbl-g">reply, streaming one piece at a time…</text>
+    <!-- fan to three ops questions -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M300,232 L1000,232"/>
+      <path d="M230,232 C260,232 280,210 300,206" marker-end="url(#ahg)"/>
+      <path d="M230,266 L230,232"/>
+      <path d="M550,266 L550,232"/>
+      <path d="M870,266 L870,232"/>
+    </g>
+    <text x="150" y="238" text-anchor="middle" class="lbl-g">and on your desk:</text>
+    <g class="lbl-g" text-anchor="middle">
+      <text x="230" y="288">the bill jumped</text>
+      <text x="550" y="288">slow for long questions</text>
+      <text x="870" y="288">how many users fit?</text>
+    </g>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M1·01</div>
 </section>
 
-<!-- ============ SLIDE 2 — TOKENS ARE THE UNIT ============ -->
+<!-- ============ SLIDE 2 — THE JOURNEY STRIP (anchor introduced) ============ -->
+<section>
+  <h2 class="t">The whole trip, on one strip</h2>
+  <p class="s">You type → it is tokenized → the model reads → the model writes → it streams back. This strip is our map — we zoom into each stop next.</p>
+  <svg viewBox="0 0 1100 300" role="img" aria-label="The journey strip laid out whole: five linked stages reading you type, tokenize, model reads, model writes, streams back, each an equal inked box joined by arrows.">
+    <!-- five equal inked stages -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="40"  y="90" width="180" height="90" rx="12"/>
+      <rect x="250" y="90" width="180" height="90" rx="12"/>
+      <rect x="460" y="90" width="180" height="90" rx="12"/>
+      <rect x="670" y="90" width="180" height="90" rx="12"/>
+      <rect x="880" y="90" width="180" height="90" rx="12"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M222,135 L248,135" marker-end="url(#ah)"/>
+      <path d="M432,135 L458,135" marker-end="url(#ah)"/>
+      <path d="M642,135 L668,135" marker-end="url(#ah)"/>
+      <path d="M852,135 L878,135" marker-end="url(#ah)"/>
+    </g>
+    <g class="lbl-b" text-anchor="middle">
+      <text x="130" y="130">you type</text>
+      <text x="340" y="130">tokenize</text>
+      <text x="550" y="130">model reads</text>
+      <text x="760" y="130">model writes</text>
+      <text x="970" y="130">streams back</text>
+    </g>
+    <g class="lbl-g" text-anchor="middle">
+      <text x="130" y="160">a question</text>
+      <text x="340" y="160">into pieces</text>
+      <text x="550" y="160">all at once</text>
+      <text x="760" y="160">one at a time</text>
+      <text x="970" y="160">to your screen</text>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="9 7">
+      <rect x="200" y="228" width="700" height="52" rx="10"/>
+    </g>
+    <text x="550" y="260" text-anchor="middle" class="lbl-g">every later slide lights up one stop of this strip — so you always know where you are</text>
+  </svg>
+  <p class="takeaway">One request is a five-stop trip — the rest of the deck zooms into each stop in turn.</p>
+  <div class="pageno">M1·02</div>
+</section>
+
+<!-- ============ SLIDE 3 — TOKENIZE: word-pieces ============ -->
 <section>
   <h2 class="t">You pay per word-piece, not per idea</h2>
-  <p class="s">Text is chopped into dictionary pieces before the model sees anything — and the piece-count is the meter.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="The phrase restart the payments pod goes into a BPE tokenizer and comes out as four token pieces, giving a token count of four which is what you are billed for.">
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="50" y="60" width="300" height="90" rx="12"/>
+  <p class="s">Stop one: your text is chopped into dictionary pieces before the model sees anything — and <em>disconnecting</em> is two of them.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the tokenize stage lit. The question why is my internet disconnecting repeatedly goes into a BPE tokenizer and comes out as eight token chips, with disconnect and ing boxed together to show one word split into two pieces, giving a token count of eight.">
+    <!-- journey strip: tokenize lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="20" width="150" height="52" rx="9"/>
+      <rect x="360" y="20" width="150" height="52" rx="9"/>
+      <rect x="525" y="20" width="150" height="52" rx="9"/>
+      <rect x="690" y="20" width="150" height="52" rx="9"/>
+      <path d="M182,46 L193,46" marker-end="url(#ahg)"/>
+      <path d="M347,46 L358,46" marker-end="url(#ahg)"/>
+      <path d="M512,46 L523,46" marker-end="url(#ahg)"/>
+      <path d="M677,46 L688,46" marker-end="url(#ahg)"/>
     </g>
-    <text x="200" y="100" text-anchor="middle" class="lbl">"restart the</text>
-    <text x="200" y="130" text-anchor="middle" class="lbl">payments pod"</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="195" y="16" width="150" height="60" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="51">you type</text>
+      <text x="435" y="51">model reads</text>
+      <text x="600" y="51">writes</text>
+      <text x="765" y="51">streams back</text>
+    </g>
+    <text x="270" y="51" text-anchor="middle" class="lbl-b" style="font-size:19px">tokenize</text>
+
+    <!-- prompt -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="40" y="120" width="330" height="90" rx="12"/>
+    </g>
+    <text x="205" y="160" text-anchor="middle" class="lbl-sm">"Why is my internet</text>
+    <text x="205" y="188" text-anchor="middle" class="lbl-sm">disconnecting repeatedly?"</text>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M355,105 L440,105" marker-end="url(#ah)"/>
+        <path d="M375,165 L455,165" marker-end="url(#ah)"/>
       </g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-        <rect x="450" y="60" width="260" height="90" rx="12"/>
+        <rect x="465" y="120" width="230" height="90" rx="12"/>
       </g>
-      <text x="580" y="100" text-anchor="middle" class="lbl-b">tokenizer</text>
-      <text x="580" y="132" text-anchor="middle" class="lbl-g">BPE dictionary</text>
+      <text x="580" y="160" text-anchor="middle" class="lbl-b">tokenizer</text>
+      <text x="580" y="192" text-anchor="middle" class="lbl-g">BPE dictionary</text>
     </g>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M715,105 L800,105" marker-end="url(#ah)"/>
+        <path d="M700,165 L760,165" marker-end="url(#ah)"/>
       </g>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-        <rect x="810" y="66" width="230" height="40" rx="8"/>
-        <rect x="810" y="116" width="230" height="40" rx="8"/>
-        <rect x="810" y="166" width="230" height="40" rx="8"/>
-        <rect x="810" y="216" width="230" height="40" rx="8"/>
+      <!-- eight chips over two rows -->
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="770" y="120" width="70" height="40" rx="8"/>
+        <rect x="850" y="120" width="52" height="40" rx="8"/>
+        <rect x="912" y="120" width="60" height="40" rx="8"/>
+        <rect x="982" y="120" width="86" height="40" rx="8"/>
+        <rect x="912" y="230" width="120" height="40" rx="8"/>
+        <rect x="1042" y="230" width="30" height="40" rx="8"/>
       </g>
-      <g class="lbl" text-anchor="middle">
-        <text x="925" y="93">restart</text>
-        <text x="925" y="143">·the</text>
-        <text x="925" y="193">·payments</text>
-        <text x="925" y="243">·pod</text>
+      <!-- the disconnect + ing pair, boxed together -->
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="770" y="180" width="98" height="40" rx="8"/>
+        <rect x="874" y="180" width="46" height="40" rx="8"/>
       </g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
+        <rect x="762" y="172" width="166" height="56" rx="11"/>
+      </g>
+      <g class="lbl-sm" text-anchor="middle">
+        <text x="805" y="146">Why</text>
+        <text x="876" y="146">·is</text>
+        <text x="942" y="146">·my</text>
+        <text x="1025" y="146">·internet</text>
+        <text x="819" y="206">·disconnect</text>
+        <text x="897" y="206">ing</text>
+        <text x="972" y="256">·repeatedly</text>
+        <text x="1057" y="256">?</text>
+      </g>
+      <text x="845" y="252" text-anchor="middle" class="lbl-g" style="font-size:15px">one word → two pieces</text>
     </g>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-        <rect x="120" y="250" width="600" height="80" rx="10"/>
+        <rect x="120" y="300" width="640" height="80" rx="10"/>
       </g>
-      <text x="420" y="285" text-anchor="middle" class="lbl-b">token count = 4</text>
-      <text x="420" y="315" text-anchor="middle" class="lbl-g">this — not the words — is what you pay for and what fills the window</text>
+      <text x="440" y="335" text-anchor="middle" class="lbl-b">token count = 8</text>
+      <text x="440" y="365" text-anchor="middle" class="lbl-g">this — not the words — is what you pay for and what fills the window</text>
     </g>
   </svg>
-  <p class="takeaway">Count in tokens, never words — the same idea written two ways can cost twice as much and fill the window twice as fast.</p>
-  <div class="pageno">M1·02</div>
-</section>
-
-<!-- ============ SLIDE 3 — TELEGRAM COUNTER (scene) ============ -->
-<section>
-  <h2 class="t">A telegram counter bills pieces, not meaning</h2>
-  <p class="s">Pay per word, so people wrote tight — same idea, very different cost, because the office counts pieces.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="At a telegram counter a long wordy message slip costs a tall stack of coins, while a terse message slip reading arriving Monday send car costs a short stack — same idea, less money.">
-    <!-- counter -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
-      <rect x="60" y="70" width="980" height="54" rx="8"/>
-      <line x1="60" y1="124" x2="1040" y2="124"/>
-    </g>
-    <text x="550" y="104" text-anchor="middle" class="lbl-b">TELEGRAM OFFICE — priced per word</text>
-    <!-- LEFT: long wordy slip -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <rect x="120" y="160" width="340" height="120" rx="6"/>
-    </g>
-    <g class="lbl-sm" text-anchor="middle">
-      <text x="290" y="192">"I will be arriving on Monday,</text>
-      <text x="290" y="218">please could you send a car</text>
-      <text x="290" y="244">to pick me up at the station"</text>
-    </g>
-    <text x="290" y="272" text-anchor="middle" class="lbl-g">many words</text>
-    <!-- left coin stack (tall) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <ellipse cx="290" cy="360" rx="46" ry="12"/>
-      <ellipse cx="290" cy="342" rx="46" ry="12"/>
-      <ellipse cx="290" cy="324" rx="46" ry="12"/>
-      <ellipse cx="290" cy="306" rx="46" ry="12"/>
-    </g>
-    <text x="380" y="336" text-anchor="start" class="lbl-b">$$$$</text>
-    <!-- divider -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
-      <line x1="550" y1="150" x2="550" y2="372"/>
-    </g>
-    <!-- RIGHT: terse slip -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="640" y="160" width="340" height="120" rx="6"/>
-    </g>
-    <text x="810" y="228" text-anchor="middle" class="lbl-b">"ARRIVING MON SEND CAR"</text>
-    <text x="810" y="272" text-anchor="middle" class="lbl-g">same idea, tight</text>
-    <!-- right coin stack (short) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <ellipse cx="810" cy="360" rx="46" ry="12"/>
-      <ellipse cx="810" cy="342" rx="46" ry="12"/>
-    </g>
-    <text x="900" y="356" text-anchor="start" class="lbl-b">$</text>
-  </svg>
-  <p class="takeaway">The meter counts pieces, not meaning — tighten the prompt and the bill drops with no change to what you asked.</p>
+  <p class="takeaway">The model reads word-pieces, not words — <em>disconnecting</em> is two tokens, so a single word can cost more than one.</p>
   <div class="pageno">M1·03</div>
 </section>
 
-<!-- ============ SLIDE 4 — AUTOREGRESSIVE LOOP ============ -->
+<!-- ============ SLIDE 4 — TELEGRAM COUNTER (scene) ============ -->
+<section>
+  <h2 class="t">A telegram counter bills pieces, not meaning</h2>
+  <p class="s">Still at the tokenize stop: pay per word, so people wrote tight — same idea, very different cost, because the office counts pieces.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the tokenize stage lit. At a telegram counter a long wordy message slip costs a tall stack of coins, while a terse message slip reading arriving Monday send car costs a short stack — same idea, less money.">
+    <!-- journey strip: tokenize lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="360" y="16" width="150" height="48" rx="9"/>
+      <rect x="525" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="195" y="12" width="150" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="435" y="45">model reads</text>
+      <text x="600" y="45">writes</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="270" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">tokenize</text>
+    <!-- counter -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+      <rect x="60" y="90" width="980" height="50" rx="8"/>
+      <line x1="60" y1="140" x2="1040" y2="140"/>
+    </g>
+    <text x="550" y="122" text-anchor="middle" class="lbl-b">TELEGRAM OFFICE — priced per word</text>
+    <!-- LEFT: long wordy slip -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+      <rect x="120" y="176" width="340" height="120" rx="6"/>
+    </g>
+    <g class="lbl-sm" text-anchor="middle">
+      <text x="290" y="208">"I will be arriving on Monday,</text>
+      <text x="290" y="234">please could you send a car</text>
+      <text x="290" y="260">to pick me up at the station"</text>
+    </g>
+    <text x="290" y="288" text-anchor="middle" class="lbl-g">many words</text>
+    <!-- left coin stack (tall) -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+      <ellipse cx="290" cy="376" rx="46" ry="12"/>
+      <ellipse cx="290" cy="358" rx="46" ry="12"/>
+      <ellipse cx="290" cy="340" rx="46" ry="12"/>
+      <ellipse cx="290" cy="322" rx="46" ry="12"/>
+    </g>
+    <text x="380" y="352" text-anchor="start" class="lbl-b">$$$$</text>
+    <!-- divider -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
+      <line x1="550" y1="166" x2="550" y2="388"/>
+    </g>
+    <!-- RIGHT: terse slip -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="640" y="176" width="340" height="120" rx="6"/>
+    </g>
+    <text x="810" y="244" text-anchor="middle" class="lbl-b">"ARRIVING MON SEND CAR"</text>
+    <text x="810" y="288" text-anchor="middle" class="lbl-g">same idea, tight</text>
+    <!-- right coin stack (short) -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+      <ellipse cx="810" cy="376" rx="46" ry="12"/>
+      <ellipse cx="810" cy="358" rx="46" ry="12"/>
+    </g>
+    <text x="900" y="372" text-anchor="start" class="lbl-b">$</text>
+  </svg>
+  <p class="takeaway">The meter counts pieces, not meaning — tighten the prompt and the bill drops with no change to what you asked.</p>
+  <div class="pageno">M1·04</div>
+</section>
+
+<!-- ============ SLIDE 5 — THREE MODEL SHAPES ============ -->
+<section>
+  <h2 class="t">Three shapes of model — you use the writer</h2>
+  <p class="s">Stop two, the model. "Decoder-only" is a choice, not jargon — here is what else exists, and why chat uses this one.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. Three stacked rows compare model shapes: encoder-only turns text into numbers for search, encoder-decoder transforms text into other text for translation, and decoder-only generates the next piece over and over for chat, boxed as you are here.">
+    <!-- journey strip: model lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="315" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
+
+    <!-- three rows -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+      <rect x="70" y="96" width="960" height="86" rx="10"/>
+      <rect x="70" y="196" width="960" height="86" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="70" y="296" width="960" height="90" rx="10"/>
+    </g>
+    <!-- row 1: encoder-only -->
+    <text x="100" y="132" text-anchor="start" class="lbl-b">encoder-only</text>
+    <text x="100" y="164" text-anchor="start" class="lbl-g">reads text → numbers you can search &amp; compare · embeddings (BERT) · you meet these in M4</text>
+    <!-- row 2: encoder-decoder -->
+    <text x="100" y="232" text-anchor="start" class="lbl-b">encoder-decoder</text>
+    <text x="100" y="264" text-anchor="start" class="lbl-g">text in → other text out · translation is the textbook case (T5)</text>
+    <!-- row 3: decoder-only (you are here) -->
+    <text x="100" y="332" text-anchor="start" class="lbl-b">decoder-only</text>
+    <text x="100" y="364" text-anchor="start" class="lbl-g">just generates the next piece, over and over · every chat model, ChatGPT included</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
+      <rect x="840" y="308" width="170" height="66" rx="10"/>
+    </g>
+    <text x="925" y="348" text-anchor="middle" class="lbl-b">you are here</text>
+  </svg>
+  <p class="takeaway">ChatGPT is decoder-only — built to <em>generate</em>: given all the tokens so far, predict the single next one.</p>
+  <div class="pageno">M1·05</div>
+</section>
+
+<!-- ============ SLIDE 6 — AUTOREGRESSIVE LOOP ============ -->
 <section>
   <h2 class="t">One token, then look back and write the next</h2>
-  <p class="s">A decoder-only model predicts one next token, appends it, and re-reads everything so far to get the next.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="All tokens so far become embeddings, attention looks back across them, the model predicts the next token and appends it, then a dashed arrow loops back to the start to do it all again.">
+  <p class="s">Inside the model stop: it predicts one next token, appends it, and re-reads everything so far to get the next.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. All tokens so far become embeddings, attention looks back across them, the model predicts the next token and appends it, then a dashed arrow loops back to the start to do it all again.">
+    <!-- journey strip: model lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="40" y="120" width="220" height="100" rx="12"/>
+      <rect x="360" y="12" width="315" height="56" rx="9"/>
     </g>
-    <text x="150" y="162" text-anchor="middle" class="lbl-b">all tokens</text>
-    <text x="150" y="194" text-anchor="middle" class="lbl-g">so far</text>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="40" y="140" width="220" height="100" rx="12"/>
+    </g>
+    <text x="150" y="182" text-anchor="middle" class="lbl-b">all tokens</text>
+    <text x="150" y="214" text-anchor="middle" class="lbl-g">so far</text>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M262,170 L320,170" marker-end="url(#ah)"/>
+        <path d="M262,190 L320,190" marker-end="url(#ah)"/>
       </g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="330" y="120" width="200" height="100" rx="12"/>
+        <rect x="330" y="140" width="200" height="100" rx="12"/>
       </g>
-      <text x="430" y="162" text-anchor="middle" class="lbl">embeddings</text>
-      <text x="430" y="194" text-anchor="middle" class="lbl-g">tokens → vectors</text>
+      <text x="430" y="182" text-anchor="middle" class="lbl">embeddings</text>
+      <text x="430" y="214" text-anchor="middle" class="lbl-g">tokens → vectors</text>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M532,170 L590,170" marker-end="url(#ah)"/>
+        <path d="M532,190 L590,190" marker-end="url(#ah)"/>
       </g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="600" y="120" width="200" height="100" rx="12"/>
+        <rect x="600" y="140" width="200" height="100" rx="12"/>
       </g>
-      <text x="700" y="162" text-anchor="middle" class="lbl">attention</text>
-      <text x="700" y="194" text-anchor="middle" class="lbl-g">looks back</text>
+      <text x="700" y="182" text-anchor="middle" class="lbl">attention</text>
+      <text x="700" y="214" text-anchor="middle" class="lbl-g">looks back</text>
     </g>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M802,170 L860,170" marker-end="url(#ah)"/>
+        <path d="M802,190 L860,190" marker-end="url(#ah)"/>
       </g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-        <rect x="870" y="120" width="190" height="100" rx="12"/>
+        <rect x="870" y="140" width="190" height="100" rx="12"/>
       </g>
-      <text x="965" y="162" text-anchor="middle" class="lbl-b">next token</text>
-      <text x="965" y="194" text-anchor="middle" class="lbl-g">append it</text>
+      <text x="965" y="182" text-anchor="middle" class="lbl-b">next token</text>
+      <text x="965" y="214" text-anchor="middle" class="lbl-g">append it</text>
     </g>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7" stroke-linecap="round">
-        <path d="M965,222 C965,320 150,320 150,224" marker-end="url(#ahg)"/>
+        <path d="M965,242 C965,340 150,340 150,244" marker-end="url(#ahg)"/>
       </g>
-      <text x="560" y="312" text-anchor="middle" class="lbl-g">append, then loop again — autoregressive, always looking back</text>
+      <text x="560" y="332" text-anchor="middle" class="lbl-g">append, then loop again — autoregressive, always looking back</text>
     </g>
   </svg>
   <p class="takeaway">A 200-token answer is 200 trips round this loop, each one re-reading everything before it — that is where the time goes.</p>
-  <div class="pageno">M1·04</div>
-</section>
-
-<!-- ============ SLIDE 5 — WORD-AT-A-TIME PLAYER (scene) ============ -->
-<section>
-  <h2 class="t">Read the whole line, say one word, read it again</h2>
-  <p class="s">A well-read player never skips ahead — every new word is a fresh read of everything up to that point.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="A person sits reading a strip of word cards left to right, speaks the next word in a speech bubble, then a curved arrow loops back to the start of the strip to re-read it all including the word just added.">
-    <!-- the reader -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <circle cx="130" cy="150" r="34"/>
-      <path d="M130,184 L130,262"/>
-      <path d="M130,206 L92,244"/>
-      <path d="M130,206 L176,238"/>
-      <path d="M130,262 L104,320"/>
-      <path d="M130,262 L158,320"/>
-    </g>
-    <!-- speech bubble: next word -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="176" y="86" width="150" height="56" rx="12"/>
-      <path d="M196,142 L182,168 L214,144"/>
-    </g>
-    <text x="251" y="122" text-anchor="middle" class="lbl-b">…pod</text>
-    <!-- word strip -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="300" y="150" width="150" height="66" rx="8"/>
-      <rect x="470" y="150" width="150" height="66" rx="8"/>
-      <rect x="640" y="150" width="150" height="66" rx="8"/>
-      <rect x="810" y="150" width="150" height="66" rx="8"/>
-    </g>
-    <g class="lbl" text-anchor="middle">
-      <text x="375" y="191">restart</text>
-      <text x="545" y="191">the</text>
-      <text x="715" y="191">payments</text>
-      <text x="885" y="191">pod</text>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M450,183 L466,183" marker-end="url(#ahg)"/>
-      <path d="M620,183 L636,183" marker-end="url(#ahg)"/>
-      <path d="M790,183 L806,183" marker-end="url(#ahg)"/>
-    </g>
-    <!-- re-read loop back to start of strip -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7" stroke-linecap="round">
-      <path d="M885,218 C885,300 375,300 375,220" marker-end="url(#ah)"/>
-    </g>
-    <text x="600" y="292" text-anchor="middle" class="lbl-g">re-read the whole line — now including the word just said</text>
-  </svg>
-  <p class="takeaway">The model never skips ahead — every new word is a fresh read of everything up to that point.</p>
-  <div class="pageno">M1·05</div>
-</section>
-
-<!-- ============ SLIDE 6 — EXAM: READ vs WRITE (scene) ============ -->
-<section>
-  <h2 class="t">Reading the paper is one job; writing is another</h2>
-  <p class="s">In an exam you read the whole question paper in one quick pass — then write the answer slowly, line by line.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Left: a student reads a whole question paper in one glance, eyes sweeping across all of it at once. Right: the same student writes an answer line by line, the pen partway down the page.">
-    <!-- LEFT: read the whole paper -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="90" y="70" width="330" height="220" rx="8"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <line x1="120" y1="110" x2="390" y2="110"/>
-      <line x1="120" y1="140" x2="390" y2="140"/>
-      <line x1="120" y1="170" x2="390" y2="170"/>
-      <line x1="120" y1="200" x2="390" y2="200"/>
-      <line x1="120" y1="230" x2="390" y2="230"/>
-      <line x1="120" y1="260" x2="330" y2="260"/>
-    </g>
-    <!-- eyes sweeping across all at once -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
-      <path d="M130,90 L380,90" marker-end="url(#ah)"/>
-    </g>
-    <text x="255" y="330" text-anchor="middle" class="lbl-b">READ the paper — one quick pass</text>
-    <!-- divider -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
-      <line x1="550" y1="60" x2="550" y2="300"/>
-    </g>
-    <!-- RIGHT: write the answer line by line -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="680" y="70" width="330" height="220" rx="8"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
-      <line x1="710" y1="110" x2="980" y2="110"/>
-      <line x1="710" y1="140" x2="980" y2="140"/>
-      <line x1="710" y1="170" x2="900" y2="170"/>
-    </g>
-    <!-- fainter unwritten lines below -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.8" stroke-dasharray="4 6" stroke-linecap="round">
-      <line x1="710" y1="200" x2="980" y2="200"/>
-      <line x1="710" y1="230" x2="980" y2="230"/>
-      <line x1="710" y1="260" x2="980" y2="260"/>
-    </g>
-    <!-- pen partway down -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M905,168 L945,150"/>
-      <path d="M900,176 L905,168"/>
-    </g>
-    <text x="845" y="330" text-anchor="middle" class="lbl-b">WRITE the answer — line by line</text>
-  </svg>
-  <p class="takeaway">One request is two kinds of work — a fast whole-prompt read, then a slow word-at-a-time write.</p>
   <div class="pageno">M1·06</div>
 </section>
 
-<!-- ============ SLIDE 7 — PREFILL vs DECODE (mechanism) ============ -->
+<!-- ============ SLIDE 7 — WORD-AT-A-TIME PLAYER (scene) ============ -->
+<section>
+  <h2 class="t">Read the whole line, say one word, read it again</h2>
+  <p class="s">A well-read player never skips ahead — every new word is a fresh read of everything up to that point.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. A person sits reading a strip of word cards left to right, speaks the next word in a speech bubble, then a curved arrow loops back to the start of the strip to re-read it all including the word just added.">
+    <!-- journey strip: model lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="315" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
+
+    <!-- the reader -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <circle cx="130" cy="180" r="34"/>
+      <path d="M130,214 L130,292"/>
+      <path d="M130,236 L92,274"/>
+      <path d="M130,236 L176,268"/>
+      <path d="M130,292 L104,350"/>
+      <path d="M130,292 L158,350"/>
+    </g>
+    <!-- speech bubble: next word -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="176" y="116" width="150" height="56" rx="12"/>
+      <path d="M196,172 L182,198 L214,174"/>
+    </g>
+    <text x="251" y="152" text-anchor="middle" class="lbl-b">…pod</text>
+    <!-- word strip -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="300" y="180" width="150" height="66" rx="8"/>
+      <rect x="470" y="180" width="150" height="66" rx="8"/>
+      <rect x="640" y="180" width="150" height="66" rx="8"/>
+      <rect x="810" y="180" width="150" height="66" rx="8"/>
+    </g>
+    <g class="lbl" text-anchor="middle">
+      <text x="375" y="221">restart</text>
+      <text x="545" y="221">the</text>
+      <text x="715" y="221">payments</text>
+      <text x="885" y="221">pod</text>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M450,213 L466,213" marker-end="url(#ahg)"/>
+      <path d="M620,213 L636,213" marker-end="url(#ahg)"/>
+      <path d="M790,213 L806,213" marker-end="url(#ahg)"/>
+    </g>
+    <!-- re-read loop back to start of strip -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7" stroke-linecap="round">
+      <path d="M885,248 C885,330 375,330 375,250" marker-end="url(#ah)"/>
+    </g>
+    <text x="600" y="322" text-anchor="middle" class="lbl-g">re-read the whole line — now including the word just said</text>
+  </svg>
+  <p class="takeaway">The model never skips ahead — every new word is a fresh read of everything up to that point.</p>
+  <div class="pageno">M1·07</div>
+</section>
+
+<!-- ============ SLIDE 8 — ONE BREATH: TWO PHASES ============ -->
+<section>
+  <h2 class="t">Read everything at once, then write one piece at a time</h2>
+  <p class="s">The whole journey in one breath: the model reads all the prompt pieces in one go, then generates the answer one piece at a time, streaming as it goes.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with model-reads and model-writes both lit. Two linked panels: phase one reads the prompt, all pieces in one go; phase two writes the answer, one piece at a time, streamed.">
+    <!-- journey strip: reads + writes lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="855" y="16" width="215" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M842,40 L853,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="235" height="56" rx="9"/>
+      <rect x="610" y="12" width="235" height="56" rx="9"/>
+      <path d="M597,40 L608,40" marker-end="url(#ah)"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="962" y="45">streams back</text>
+    </g>
+    <g class="lbl-b" text-anchor="middle" style="font-size:18px">
+      <text x="477" y="45">model reads</text>
+      <text x="727" y="45">model writes</text>
+    </g>
+
+    <!-- PHASE 1 -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="70" y="110" width="420" height="220" rx="12"/>
+    </g>
+    <text x="280" y="152" text-anchor="middle" class="lbl-b">PHASE 1 · read the prompt</text>
+    <text x="280" y="182" text-anchor="middle" class="lbl-g">all the pieces, in one go</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="110" y="210" width="60" height="46" rx="6"/>
+      <rect x="182" y="210" width="60" height="46" rx="6"/>
+      <rect x="254" y="210" width="60" height="46" rx="6"/>
+      <rect x="326" y="210" width="60" height="46" rx="6"/>
+      <rect x="398" y="210" width="60" height="46" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M110,278 L448,278"/>
+      <path d="M110,278 L110,266"/>
+      <path d="M448,278 L448,266"/>
+      <path d="M279,278 L279,298" marker-end="url(#ah)"/>
+    </g>
+    <text x="280" y="320" text-anchor="middle" class="lbl-g">read together</text>
+    <!-- arrow between phases -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+      <path d="M492,220 L608,220" marker-end="url(#ah)"/>
+    </g>
+    <!-- PHASE 2 -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="610" y="110" width="420" height="220" rx="12"/>
+    </g>
+    <text x="820" y="152" text-anchor="middle" class="lbl-b">PHASE 2 · write the answer</text>
+    <text x="820" y="182" text-anchor="middle" class="lbl-g">one piece at a time, streamed</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="648" y="210" width="76" height="46" rx="6"/>
+      <rect x="792" y="210" width="76" height="46" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 6">
+      <rect x="936" y="210" width="76" height="46" rx="6"/>
+    </g>
+    <g class="lbl-sm" text-anchor="middle">
+      <text x="686" y="240">tok</text>
+      <text x="830" y="240">tok</text>
+      <text x="974" y="240">…</text>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M724,233 L788,233" marker-end="url(#ah)"/>
+      <path d="M868,233 L932,233" marker-end="url(#ah)"/>
+    </g>
+    <text x="820" y="320" text-anchor="middle" class="lbl-g">one, then the next, then the next</text>
+  </svg>
+  <p class="takeaway">One request is two kinds of work: a fast whole-prompt read, then a slow word-at-a-time write.</p>
+  <div class="pageno">M1·08</div>
+</section>
+
+<!-- ============ SLIDE 9 — EXAM: READ vs WRITE (scene) ============ -->
+<section>
+  <h2 class="t">Reading the paper is one job; writing is another</h2>
+  <p class="s">The two phases as an exam: you read the whole question paper in one quick pass — then write the answer slowly, line by line.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with model-reads and model-writes lit. Left: a student reads a whole question paper in one glance, eyes sweeping across all of it at once. Right: the same student writes an answer line by line, the pen partway down the page.">
+    <!-- journey strip: reads + writes lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="855" y="16" width="215" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M842,40 L853,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="235" height="56" rx="9"/>
+      <rect x="610" y="12" width="235" height="56" rx="9"/>
+      <path d="M597,40 L608,40" marker-end="url(#ah)"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="962" y="45">streams back</text>
+    </g>
+    <g class="lbl-b" text-anchor="middle" style="font-size:18px">
+      <text x="477" y="45">model reads</text>
+      <text x="727" y="45">model writes</text>
+    </g>
+
+    <!-- LEFT: read the whole paper -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="90" y="110" width="330" height="210" rx="8"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <line x1="120" y1="150" x2="390" y2="150"/>
+      <line x1="120" y1="180" x2="390" y2="180"/>
+      <line x1="120" y1="210" x2="390" y2="210"/>
+      <line x1="120" y1="240" x2="390" y2="240"/>
+      <line x1="120" y1="270" x2="390" y2="270"/>
+      <line x1="120" y1="300" x2="330" y2="300"/>
+    </g>
+    <!-- eyes sweeping across all at once -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M130,130 L380,130" marker-end="url(#ah)"/>
+    </g>
+    <text x="255" y="358" text-anchor="middle" class="lbl-b">READ the paper — one quick pass</text>
+    <!-- divider -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
+      <line x1="550" y1="100" x2="550" y2="330"/>
+    </g>
+    <!-- RIGHT: write the answer line by line -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="680" y="110" width="330" height="210" rx="8"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
+      <line x1="710" y1="150" x2="980" y2="150"/>
+      <line x1="710" y1="180" x2="980" y2="180"/>
+      <line x1="710" y1="210" x2="900" y2="210"/>
+    </g>
+    <!-- fainter unwritten lines below -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.8" stroke-dasharray="4 6" stroke-linecap="round">
+      <line x1="710" y1="240" x2="980" y2="240"/>
+      <line x1="710" y1="270" x2="980" y2="270"/>
+      <line x1="710" y1="300" x2="980" y2="300"/>
+    </g>
+    <!-- pen partway down -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M905,208 L945,190"/>
+      <path d="M900,216 L905,208"/>
+    </g>
+    <text x="845" y="358" text-anchor="middle" class="lbl-b">WRITE the answer — line by line</text>
+  </svg>
+  <p class="takeaway">Reading the paper is one kind of work; writing the answer, line by line, is a completely different kind.</p>
+  <div class="pageno">M1·09</div>
+</section>
+
+<!-- ============ SLIDE 10 — PREFILL vs DECODE (mechanism) ============ -->
 <section>
   <h2 class="t">Prefill reads together; decode writes one at a time</h2>
-  <p class="s">Same two phases, named — one processes the whole prompt in parallel, the other is the serial loop.</p>
+  <p class="s">Now the two phases get their names — one processes the whole prompt in parallel, the other is the serial loop.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="Left panel: prefill processes all prompt tokens together in one parallel block, compute-bound. Right panel: decode emits token after token in a serial chain, memory-bandwidth-bound.">
     <!-- LEFT: prefill -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -468,101 +794,13 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="830" y="258" text-anchor="middle" class="lbl-g">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
   </svg>
   <p class="takeaway">Prefill is parallel and compute-bound; decode is serial and bandwidth-bound — two phases, sized and billed apart.</p>
-  <div class="pageno">M1·07</div>
+  <div class="pageno">M1·10</div>
 </section>
 
-<!-- ============ SLIDE 8 — TTFT vs TPOT ============ -->
-<section>
-  <h2 class="t">TTFT is your prompt; TPOT is your answer</h2>
-  <p class="s">Two phases set two clocks — the wait to the first token, then the rhythm of every token after it.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="Prefill flows into decode which flows into the finished answer; the prefill-to-decode seam is labelled TTFT and the decode rhythm is labelled TPOT, with a split bar underneath showing how much of a request is each phase.">
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="60" y="90" width="260" height="110" rx="12"/>
-      <rect x="470" y="90" width="260" height="110" rx="12"/>
-      <rect x="880" y="90" width="180" height="110" rx="12"/>
-    </g>
-    <text x="190" y="135" text-anchor="middle" class="lbl-b">prefill</text>
-    <text x="190" y="167" text-anchor="middle" class="lbl-g">read the prompt</text>
-    <text x="600" y="135" text-anchor="middle" class="lbl-b">decode</text>
-    <text x="600" y="167" text-anchor="middle" class="lbl-g">write the answer</text>
-    <text x="970" y="135" text-anchor="middle" class="lbl">answer</text>
-    <text x="970" y="167" text-anchor="middle" class="lbl-g">done</text>
-
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
-        <path d="M322,145 L465,145" marker-end="url(#ah)"/>
-      </g>
-      <text x="393" y="80" text-anchor="middle" class="lbl-b">TTFT</text>
-      <text x="393" y="230" text-anchor="middle" class="lbl-g">first token appears</text>
-    </g>
-
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
-        <path d="M732,145 L875,145" marker-end="url(#ah)"/>
-      </g>
-      <text x="800" y="80" text-anchor="middle" class="lbl-b">TPOT</text>
-      <text x="800" y="230" text-anchor="middle" class="lbl-g">steady rhythm after</text>
-      <!-- split bar -->
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-        <rect x="190" y="268" width="200" height="46" rx="6"/>
-      </g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
-        <rect x="390" y="268" width="480" height="46" rx="6"/>
-      </g>
-      <text x="290" y="298" text-anchor="middle" class="lbl-sm" style="font-weight:700">prefill</text>
-      <text x="630" y="298" text-anchor="middle" class="lbl-sm" style="font-weight:700">decode</text>
-      <text x="530" y="352" text-anchor="middle" class="lbl-g">how much of one request is which phase — it shifts with the request</text>
-    </g>
-  </svg>
-  <p class="takeaway">When someone says "it's slow", ask: slow to <em>start</em> (TTFT, the prompt) or slow to <em>finish</em> (TPOT, the answer)?</p>
-  <div class="pageno">M1·08</div>
-</section>
-
-<!-- ============ SLIDE 9 — THE SPLIT FLIPS (measured) ============ -->
-<section>
-  <h2 class="t">94/6 or 3/97 — the split flips with the request</h2>
-  <p class="s">Same box, opposite shape — measured live on the course model, <code>qwen3:0.6b</code>.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="Left: a big prompt with a one-word answer is about ninety-four percent prefill and six percent decode. Right: a short prompt with a long answer is about three percent prefill and ninety-seven percent decode.">
-    <!-- LEFT: prefill-heavy -->
-    <text x="290" y="90" text-anchor="middle" class="lbl-b">big prompt · one-word answer</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="80" y="120" width="395" height="56" rx="6"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <rect x="475" y="120" width="45" height="56" rx="6"/>
-    </g>
-    <text x="277" y="156" text-anchor="middle" class="lbl-sm" style="font-weight:700">prefill 94%</text>
-    <text x="498" y="205" text-anchor="middle" class="lbl-g">6%</text>
-    <text x="300" y="234" text-anchor="middle" class="lbl-g">almost all the work is reading</text>
-    <!-- divider -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
-      <line x1="550" y1="70" x2="550" y2="300"/>
-    </g>
-    <!-- RIGHT: decode-heavy -->
-    <text x="810" y="90" text-anchor="middle" class="lbl-b">short prompt · long answer</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <rect x="620" y="120" width="20" height="56" rx="6"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="640" y="120" width="380" height="56" rx="6"/>
-    </g>
-    <text x="630" y="205" text-anchor="middle" class="lbl-g">3%</text>
-    <text x="830" y="156" text-anchor="middle" class="lbl-sm" style="font-weight:700">decode 97%</text>
-    <text x="820" y="234" text-anchor="middle" class="lbl-g">almost all the work is writing</text>
-    <!-- caption -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
-      <rect x="230" y="280" width="640" height="60" rx="10"/>
-    </g>
-    <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the request shape — not by "the model"</text>
-  </svg>
-  <p class="takeaway">Measure the split before you blame the model — the request shape, not the model, decides which phase dominates.</p>
-  <div class="pageno">M1·09</div>
-</section>
-
-<!-- ============ SLIDE 10 — KV CACHE = ROUGH WORK (scene) ============ -->
+<!-- ============ SLIDE 11 — KV CACHE = ROUGH WORK (scene) ============ -->
 <section>
   <h2 class="t">The KV cache is rough work — computed once, kept</h2>
-  <p class="s">Each token's key and value are worked out once and stored; every later token reads them instead of redoing them.</p>
+  <p class="s">Why decode stays fast: each token's key and value are worked out once and stored; every later token reads them instead of redoing them.</p>
   <svg viewBox="0 0 1100 370" role="img" aria-label="An exam margin holds a hard sum worked out once as rough work; a later question glances back at it instead of re-deriving. Beside it, a row of token cells each writes its key and value once into a KV cache store.">
     <!-- exam sheet with margin rough work -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -611,10 +849,127 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="765" y="284" text-anchor="middle" class="lbl-g">the model's rough work — read, don't redo</text>
   </svg>
   <p class="takeaway">Compute each token's key and value once, keep them — the cache is what holds decode at a steady rhythm.</p>
-  <div class="pageno">M1·10</div>
+  <div class="pageno">M1·11</div>
 </section>
 
-<!-- ============ SLIDE 11 — CAPACITY MATH ============ -->
+<!-- ============ SLIDE 12 — WHAT YOU FEEL: TTFT + STREAMING ============ -->
+<section>
+  <h2 class="t">What you feel: the wait, then the drip</h2>
+  <p class="s">Back at your screen — the streams-back stop. The wait before the first word is TTFT; the steady drip of words after it is decode = TPOT.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the streams-back stage lit. A stopwatch marks the wait to the first reply chip, labelled TTFT and driven by prefill; then chips appear at a steady beat, labelled TPOT and driven by decode.">
+    <!-- journey strip: streams back lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="360" y="16" width="150" height="48" rx="9"/>
+      <rect x="525" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="690" y="12" width="215" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="435" y="45">reads</text>
+      <text x="600" y="45">writes</text>
+    </g>
+    <text x="797" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">streams back</text>
+
+    <!-- stopwatch = the wait to first token -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <circle cx="140" cy="210" r="52"/>
+      <path d="M140,210 L140,176"/>
+      <path d="M140,210 L166,224"/>
+      <path d="M140,148 L140,158"/>
+    </g>
+    <text x="140" y="300" text-anchor="middle" class="lbl-g">you wait…</text>
+    <!-- TTFT arrow to first chip -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+      <path d="M196,210 L300,210" marker-end="url(#ah)"/>
+    </g>
+    <text x="250" y="176" text-anchor="middle" class="lbl-b">TTFT</text>
+    <text x="250" y="300" text-anchor="middle" class="lbl-g">= prefill · your prompt</text>
+    <!-- reply chips at a steady beat -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="310" y="184" width="120" height="52" rx="8"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="470" y="184" width="120" height="52" rx="8"/>
+      <rect x="630" y="184" width="120" height="52" rx="8"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 6">
+      <rect x="790" y="184" width="120" height="52" rx="8"/>
+    </g>
+    <g class="lbl-sm" text-anchor="middle">
+      <text x="370" y="216">first word</text>
+      <text x="530" y="216">next</text>
+      <text x="690" y="216">next</text>
+      <text x="850" y="216">…</text>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M432,210 L466,210" marker-end="url(#ahg)"/>
+      <path d="M592,210 L626,210" marker-end="url(#ahg)"/>
+      <path d="M752,210 L786,210" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M470,270 L910,270"/>
+      <path d="M470,270 L470,258"/>
+      <path d="M910,270 L910,258"/>
+      <path d="M690,270 L690,286" marker-end="url(#ah)"/>
+    </g>
+    <text x="690" y="310" text-anchor="middle" class="lbl-b">TPOT</text>
+    <text x="690" y="340" text-anchor="middle" class="lbl-g">= decode · the drip you watch · driven by answer length</text>
+  </svg>
+  <p class="takeaway">That drip of words on screen <em>is</em> decode — the wait to the first word is TTFT, the rhythm after it is TPOT.</p>
+  <div class="pageno">M1·12</div>
+</section>
+
+<!-- ============ SLIDE 13 — THE SPLIT FLIPS (measured) ============ -->
+<section>
+  <h2 class="t">94/6 or 3/97 — the split flips with the request</h2>
+  <p class="s">Same box, opposite shape — measured live on the course model, <code>qwen3:0.6b</code>.</p>
+  <svg viewBox="0 0 1100 380" role="img" aria-label="Left: a big prompt with a one-word answer is about ninety-four percent prefill and six percent decode. Right: a short prompt with a long answer is about three percent prefill and ninety-seven percent decode.">
+    <!-- LEFT: prefill-heavy -->
+    <text x="290" y="90" text-anchor="middle" class="lbl-b">big prompt · one-word answer</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="80" y="120" width="395" height="56" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+      <rect x="475" y="120" width="45" height="56" rx="6"/>
+    </g>
+    <text x="277" y="156" text-anchor="middle" class="lbl-sm" style="font-weight:700">prefill 94%</text>
+    <text x="498" y="205" text-anchor="middle" class="lbl-g">6%</text>
+    <text x="300" y="234" text-anchor="middle" class="lbl-g">almost all the work is reading</text>
+    <!-- divider -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
+      <line x1="550" y1="70" x2="550" y2="300"/>
+    </g>
+    <!-- RIGHT: decode-heavy -->
+    <text x="810" y="90" text-anchor="middle" class="lbl-b">short prompt · long answer</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+      <rect x="620" y="120" width="20" height="56" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="640" y="120" width="380" height="56" rx="6"/>
+    </g>
+    <text x="630" y="205" text-anchor="middle" class="lbl-g">3%</text>
+    <text x="830" y="156" text-anchor="middle" class="lbl-sm" style="font-weight:700">decode 97%</text>
+    <text x="820" y="234" text-anchor="middle" class="lbl-g">almost all the work is writing</text>
+    <!-- caption -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
+      <rect x="230" y="280" width="640" height="60" rx="10"/>
+    </g>
+    <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the request shape — not by "the model"</text>
+  </svg>
+  <p class="takeaway">Measure the split before you blame the model — the request shape, not the model, decides which phase dominates.</p>
+  <div class="pageno">M1·13</div>
+</section>
+
+<!-- ============ SLIDE 14 — CAPACITY MATH ============ -->
 <section>
   <h2 class="t">The rough work takes space — that space is capacity</h2>
   <p class="s">Weights take a fixed chunk; whatever is left is your KV budget, and one request's cache eats into it.</p>
@@ -653,10 +1008,68 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="296" text-anchor="middle" class="lbl">= users that fit at once</text>
   </svg>
   <p class="takeaway">How many users fit one box is a back-of-envelope sum: the KV budget divided by the KV cost of one request.</p>
-  <div class="pageno">M1·11</div>
+  <div class="pageno">M1·14</div>
 </section>
 
-<!-- ============ SLIDE 12 — CLOSING: THREE NUMBERS ============ -->
+<!-- ============ SLIDE 15 — READ THE OPS QUESTIONS OFF THE TRIP ============ -->
+<section>
+  <h2 class="t">Read the bill, the latency, the capacity off the trip</h2>
+  <p class="s">The three questions from the opening are three stops on the same journey — that is why the runtime stops being a mystery.</p>
+  <svg viewBox="0 0 1100 380" role="img" aria-label="The journey strip once more, with three gray callouts hanging off it: tokenize answers the bill, read-versus-write answers the latency as TTFT and TPOT, and the KV cache answers the capacity.">
+    <!-- the strip, whole, all inked -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="40"  y="70" width="180" height="86" rx="12"/>
+      <rect x="250" y="70" width="180" height="86" rx="12"/>
+      <rect x="460" y="70" width="180" height="86" rx="12"/>
+      <rect x="670" y="70" width="180" height="86" rx="12"/>
+      <rect x="880" y="70" width="180" height="86" rx="12"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M222,113 L248,113" marker-end="url(#ah)"/>
+      <path d="M432,113 L458,113" marker-end="url(#ah)"/>
+      <path d="M642,113 L668,113" marker-end="url(#ah)"/>
+      <path d="M852,113 L878,113" marker-end="url(#ah)"/>
+    </g>
+    <g class="lbl-b" text-anchor="middle">
+      <text x="130" y="108">you type</text>
+      <text x="340" y="108">tokenize</text>
+      <text x="550" y="108">reads</text>
+      <text x="760" y="108">writes</text>
+      <text x="970" y="108">streams back</text>
+    </g>
+    <!-- callout: tokenize -> the bill -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M340,158 L340,208" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="180" y="212" width="320" height="66" rx="10"/>
+    </g>
+    <text x="340" y="242" text-anchor="middle" class="lbl-b">the bill</text>
+    <text x="340" y="268" text-anchor="middle" class="lbl-g">count the tokens</text>
+    <!-- callout: reads/writes -> the latency -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M655,158 L655,300" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="470" y="304" width="370" height="66" rx="10"/>
+    </g>
+    <text x="655" y="334" text-anchor="middle" class="lbl-b">the latency</text>
+    <text x="655" y="360" text-anchor="middle" class="lbl-g">TTFT to start · TPOT to finish</text>
+    <!-- callout: streams back / cache -> the capacity -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M970,158 L970,208" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="800" y="212" width="270" height="66" rx="10"/>
+    </g>
+    <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
+    <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
+  </svg>
+  <p class="takeaway">Every ops question about this system is read off one trip — bill at tokenize, latency at read-vs-write, capacity at the cache.</p>
+  <div class="pageno">M1·15</div>
+</section>
+
+<!-- ============ SLIDE 16 — CLOSING: THREE NUMBERS ============ -->
 <section>
   <p class="kicker">MODULE 1 &nbsp;·&nbsp; TAKEAWAYS</p>
   <h2 class="t" style="font-size:2.0em">Three numbers you carry into the lab</h2>
@@ -683,7 +1096,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 1 · Lab</b> — you'll measure the split and print the KV table on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M1·12</div>
+  <div class="pageno">M1·16</div>
 </section>
 
 </div></div>

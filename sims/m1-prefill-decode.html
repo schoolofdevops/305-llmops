@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prefill / Decode Visualizer — where an LLM request spends its time</title>
+<style>
+  :root{
+    --bg:#0d1220; --panel:#151c2e; --panel2:#111827; --line:#26324e; --line2:#1c2740;
+    --txt:#dbe4f5; --dim:#8494b3; --faint:#5a6a8c;
+    --accent:#4cc9f0; --accent2:#7b6cf6;
+    --ok:#3ddc97; --warn:#f5b942; --bad:#ff6b6b;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:clamp(10.5px,0.4vw + 9.1px,16px)}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:1rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  #app{display:flex;flex-direction:column;height:100%;padding:8px 10px;gap:6px}
+
+  /* ---------- header ---------- */
+  header{display:flex;align-items:center;gap:12px;flex:0 0 auto;flex-wrap:wrap}
+  header h1{font-size:1.05rem;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+  header h1 .llm{color:var(--accent)}
+  #hsub{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--faint);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #reset{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;
+    padding:3px 9px;font-size:.88rem;cursor:pointer;min-height:24px;flex:0 0 auto}
+  #reset:hover{color:var(--txt);border-color:var(--faint)}
+
+  /* ---------- challenge banner ---------- */
+  #challenge{flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    background:linear-gradient(90deg,rgba(123,108,246,.14),rgba(76,201,240,.07));
+    border:1px solid #3a3f6e;border-radius:8px;padding:4px 11px;min-height:30px}
+  #challenge .tag{font-size:.8rem;font-weight:700;letter-spacing:.8px;color:var(--accent2);
+    text-transform:uppercase;white-space:nowrap}
+  #challenge .steps{display:flex;gap:5px}
+  #challenge .dot{width:1.3rem;height:1.3rem;border-radius:50%;border:1.5px solid var(--faint);
+    font-size:.76rem;display:flex;align-items:center;justify-content:center;color:var(--faint);font-weight:700}
+  #challenge .dot.cur{border-color:var(--accent);color:var(--accent)}
+  #challenge .dot.done{border-color:var(--ok);background:rgba(61,220,151,.15);color:var(--ok)}
+  #challenge .txt{flex:1;color:var(--txt);font-size:.94rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  #challenge .txt code{font-family:var(--mono);font-size:.86rem;color:var(--accent);background:rgba(76,201,240,.08);
+    padding:0 4px;border-radius:4px}
+  #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
+  #challenge.success .tag{color:var(--ok)}
+  #challenge.success .txt{white-space:normal;line-height:1.3}
+
+  /* ---------- main grid ---------- */
+  #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(232px,20rem,330px) 1fr;gap:6px;min-height:0}
+  #main>.panel{min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;min-height:0}
+  .panel h2{font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .panel h2 span{text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- controls (left) ---------- */
+  #controls{display:flex;flex-direction:column;gap:9px;overflow-y:auto;scrollbar-width:thin}
+  .ctl .cl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .ctl .cl b{color:var(--txt);font-weight:700}
+  .ctl .cl .hint{color:var(--faint);font-size:.68rem;font-weight:400}
+  .ctl input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:1.2rem}
+  #runBtn{width:100%;min-height:2.1rem;border-radius:8px;border:1px solid var(--accent);
+    background:color-mix(in srgb,var(--accent) 12%,var(--panel2));
+    color:var(--accent);font-weight:700;font-size:.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+    transition:background .15s;margin-top:2px}
+  #runBtn:hover:not(:disabled){background:color-mix(in srgb,var(--accent) 22%,var(--panel2))}
+  #runBtn:disabled{opacity:.5;cursor:default}
+
+  .readout{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line2);border-radius:8px;
+    background:var(--panel2);padding:6px 9px}
+  .readout,.readout *{cursor:default}
+  .rrow{display:flex;justify-content:space-between;align-items:baseline;padding:1px 0}
+  .rrow .rl{font-family:var(--mono);font-size:.76rem;color:var(--dim)}
+  .rrow .rl small{color:var(--faint);font-size:.66rem}
+  .rrow .rv{font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--txt)}
+  .rrow .rv.ttft{color:var(--accent2)}
+  .rrow .rv.total{color:var(--accent)}
+  .rrow .rv.warnv{color:var(--warn)}
+
+  /* ---------- stage (right) ---------- */
+  #stage{display:flex;flex-direction:column;min-height:0;gap:8px}
+
+  .phase{display:flex;flex-direction:column;gap:3px}
+  .phase .ph-head{display:flex;align-items:baseline;gap:8px;font-family:var(--mono)}
+  .phase .ph-name{font-size:.82rem;font-weight:700;letter-spacing:.4px}
+  .phase.prefill .ph-name{color:var(--accent2)}
+  .phase.decode .ph-name{color:var(--accent)}
+  .phase .ph-tag{font-size:.68rem;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .phase .ph-ms{margin-left:auto;font-size:.78rem;font-weight:700;color:var(--dim)}
+
+  /* prefill: one bar that fills in a single sweep */
+  #prefillBar{height:1.5rem;border-radius:7px;background:#0a0f1c;border:1px solid var(--line2);overflow:hidden;position:relative}
+  #prefillFill{position:absolute;left:0;top:0;bottom:0;width:0%;
+    background:repeating-linear-gradient(90deg,var(--accent2) 0 6px,#6a5cd8 6px 12px);
+    transition:width .12s linear}
+  #prefillBar .plabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:.72rem;color:var(--txt);text-shadow:0 1px 3px #000;pointer-events:none;z-index:2}
+
+  /* decode: tokens tick out one at a time */
+  #decodeStrip{min-height:2.4rem;border:1px solid var(--line2);border-radius:7px;background:#0a0f1c;
+    padding:4px 6px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;overflow-y:auto;max-height:6.5rem;scrollbar-width:thin}
+  #decodeStrip .tok{width:.85rem;height:.85rem;border-radius:3px;background:var(--accent);opacity:0;
+    flex:0 0 auto;transition:opacity .12s}
+  #decodeStrip .tok.on{opacity:.9}
+  #decodeStrip .tok.cursor{background:none;border:1px solid var(--accent);opacity:1;animation:blink .7s infinite}
+  #decodeEmpty{font-family:var(--mono);font-size:.74rem;color:var(--faint)}
+  @keyframes blink{50%{opacity:.25}}
+
+  /* KV cache bar vs context window */
+  #kvWrap{display:flex;flex-direction:column;gap:3px}
+  #kvBar{height:1.3rem;border-radius:7px;background:#0a0f1c;border:1px solid var(--line);overflow:hidden;position:relative}
+  #kvPrompt{position:absolute;left:0;top:0;bottom:0;width:0%;background:linear-gradient(90deg,#5a4fd0,#7b6cf6);transition:width .12s linear}
+  #kvDecode{position:absolute;top:0;bottom:0;width:0%;background:linear-gradient(90deg,#2e9ec4,#4cc9f0);transition:width .12s linear,left .12s linear}
+  #kvLimit{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--warn);z-index:3;transition:left .2s}
+  #kvOver{position:absolute;top:0;bottom:0;width:0%;background:repeating-linear-gradient(45deg,rgba(255,107,107,.6) 0 5px,rgba(255,107,107,.22) 5px 10px);z-index:2;transition:width .12s linear,left .12s linear}
+  #kvLegend{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--faint)}
+  #kvLegend .kp{color:var(--accent2)} #kvLegend .kd{color:var(--accent)} #kvLegend .kl{color:var(--warn)}
+
+  #overflow{display:none;border:1px dashed var(--bad);border-radius:8px;background:rgba(255,107,107,.07);
+    padding:5px 9px;font-family:var(--mono);font-size:.78rem;color:var(--bad);line-height:1.35}
+  #overflow.on{display:block}
+  #overflow b{color:var(--bad)}
+
+  /* ---------- event log ---------- */
+  #events{flex:0 0 clamp(84px,7.5rem,132px);display:flex;flex-direction:column;min-height:0}
+  #events,#events *{cursor:default}
+  #evList{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6;scrollbar-width:thin}
+  .ev{display:flex;gap:8px;white-space:nowrap;overflow:hidden}
+  .ev .et{color:var(--faint);flex:0 0 4.2rem}
+  .ev .er{flex:0 0 5.4rem;color:var(--accent2);font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .ev.decode .er{color:var(--accent)}
+  .ev.over .er{color:var(--bad)}
+  .ev .em{flex:1;color:var(--txt);opacity:.9;overflow:hidden;text-overflow:ellipsis}
+  .ev.new{animation:evin .4s ease-out}
+  @keyframes evin{0%{background:rgba(76,201,240,.12)}100%{background:transparent}}
+  #note{margin-left:auto;font-size:1rem;color:var(--faint);cursor:help;position:relative;padding:0 4px}
+  #note:hover{color:var(--dim)}
+  #note:hover::after,#note:active::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 7px);
+    z-index:40;width:42ch;max-width:80vw;background:#0a0f1c;border:1px solid var(--line);border-radius:7px;padding:7px 10px;
+    color:var(--txt);text-align:left;white-space:normal;pointer-events:none;
+    font:.82rem/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    box-shadow:0 4px 16px rgba(0,0,0,.55)}
+
+  /* narrow fallback */
+  @media (max-width:620px){
+    body{overflow:auto}
+    #main{grid-template-columns:1fr}
+    #app{height:auto;min-height:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <h1><span class="llm">◇</span> Prefill / Decode Visualizer</h1>
+    <span id="hsub">prompt read in one parallel pass · answer written one token at a time</span>
+    <button id="reset" title="Reset the simulator to its starting state">↺ Reset</button>
+  </header>
+
+  <div id="challenge">
+    <span class="tag">Try this</span>
+    <span class="steps">
+      <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
+    </span>
+    <span class="txt" id="chTxt"></span>
+  </div>
+
+  <div id="main">
+    <!-- LEFT: controls + readouts -->
+    <div class="panel" id="controls">
+      <h2>Request <span>· drag, then Run</span></h2>
+
+      <div class="ctl" title="How many tokens are in your prompt. Prefill processes them ALL in one parallel pass, so this sets TTFT.">
+        <div class="cl">prompt length <span><b><span id="promptVal">64</span></b> tok</span></div>
+        <input type="range" id="promptRange" min="8" max="1024" step="8" value="64">
+        <div class="cl"><span class="hint">↑ longer prompt = longer prefill = higher TTFT</span></div>
+      </div>
+
+      <div class="ctl" title="How many tokens the model will emit. Decode runs one token at a time, so this sets total time.">
+        <div class="cl">output length <span><b><span id="outVal">96</span></b> tok</span></div>
+        <input type="range" id="outRange" min="1" max="512" step="1" value="96">
+        <div class="cl"><span class="hint">↑ longer answer = more decode steps = higher total</span></div>
+      </div>
+
+      <div class="ctl" title="The model's context window — a hard cap on prompt + output tokens held at once. The KV cache must fit under it.">
+        <div class="cl">context limit <span><b><span id="ctxVal">512</span></b> tok</span></div>
+        <input type="range" id="ctxRange" min="128" max="2048" step="64" value="512">
+        <div class="cl"><span class="hint">prompt + output must fit under this</span></div>
+      </div>
+
+      <button id="runBtn" title="Run one request: prefill the prompt, then decode the answer token by token.">▶ Run request</button>
+
+      <div class="readout" id="readout">
+        <div class="rrow"><span class="rl">TTFT <small>time to first token</small></span><span class="rv ttft" id="ttftV">—</span></div>
+        <div class="rrow"><span class="rl">TPOT <small>time per output token</small></span><span class="rv" id="tpotV">—</span></div>
+        <div class="rrow"><span class="rl">total time</span><span class="rv total" id="totalV">—</span></div>
+        <div class="rrow"><span class="rl">decode share <small>of total</small></span><span class="rv" id="decShareV">—</span></div>
+        <div class="rrow"><span class="rl">KV cache <small>prompt+output</small></span><span class="rv" id="kvV">—</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: the two phases -->
+    <div class="panel" id="stage">
+      <div class="phase prefill">
+        <div class="ph-head">
+          <span class="ph-name">1 · PREFILL</span>
+          <span class="ph-tag">read whole prompt · compute-bound · one parallel pass</span>
+          <span class="ph-ms" id="prefillMsLbl">—</span>
+        </div>
+        <div id="prefillBar"><div id="prefillFill"></div><span class="plabel" id="prefillLabel">prompt not read yet</span></div>
+      </div>
+
+      <div class="phase decode">
+        <div class="ph-head">
+          <span class="ph-name">2 · DECODE</span>
+          <span class="ph-tag">write answer · memory-bandwidth-bound · one token at a time</span>
+          <span class="ph-ms" id="decodeMsLbl">—</span>
+        </div>
+        <div id="decodeStrip"><span id="decodeEmpty">tokens tick out here, one at a time, after the first token appears</span></div>
+      </div>
+
+      <div id="kvWrap">
+        <div class="phase">
+          <div class="ph-head">
+            <span class="ph-name" style="color:var(--ok)">KV CACHE</span>
+            <span class="ph-tag">grows one slot per token · pinned in memory while the request lives</span>
+            <span class="ph-ms" id="kvMsLbl">—</span>
+          </div>
+        </div>
+        <div id="kvBar">
+          <div id="kvPrompt"></div><div id="kvDecode"></div><div id="kvOver"></div><div id="kvLimit"></div>
+        </div>
+        <div id="kvLegend">
+          <span class="kp">■ prompt</span><span class="kd">■ output</span><span class="kl">▏context limit</span>
+        </div>
+        <div id="overflow"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="events">
+    <h2>Request trace <span>— what the serving engine would log</span>
+      <span id="note" data-tip="Teaching model, not the real system. Timings here are illustrative — prefill is drawn as one pass and decode at a steady per-token rhythm to make the two phases visible. Real numbers come from the M1 lab (Ollama's own prompt_eval / eval timings) and the LLM Stack X-Ray on your endpoint; on the course host decode runs roughly 3–5 ms per token. This sim omits batching, scheduling, and hardware detail.">ⓘ</span></h2>
+    <div id="evList"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ------------------------------------------------------------------ model
+     A request = prefill (one pass over the prompt) + decode (one token at a time).
+     Illustrative timing model, calibrated to the course host's shape:
+       prefill_ms  = PREFILL_PER_TOK * promptLen   (processed together, but the
+                     wall-clock still grows with prompt length — compute-bound)
+       ttft        = prefill_ms  (first token appears when prefill finishes)
+       decode_ms   = TPOT * outLen
+       total       = prefill_ms + decode_ms
+     KV cache holds one slot per token, prompt + output, capped by ctxLimit. */
+  var PREFILL_PER_TOK=0.42;   /* ms per prompt token (illustrative) */
+  var TPOT=4.0;               /* ms per output token (illustrative; host is ~3-5) */
+
+  var DEFAULTS={promptLen:64, outLen:96, ctxLimit:512};
+  var S={
+    promptLen:DEFAULTS.promptLen, outLen:DEFAULTS.outLen, ctxLimit:DEFAULTS.ctxLimit,
+    ran:false,          /* has a run completed? */
+    result:null,        /* last completed run's numbers */
+    t0:Date.now()
+  };
+  var CH={step:1, done:[false,false,false], baseTtft:null};
+
+  /* pure math the harness can call without animation */
+  function compute(p,o){
+    p=(p==null?S.promptLen:p); o=(o==null?S.outLen:o);
+    var prefillMs=PREFILL_PER_TOK*p;
+    var decodeMs=TPOT*o;
+    var total=prefillMs+decodeMs;
+    var kv=p+o;
+    return {
+      promptLen:p, outLen:o,
+      prefillMs:prefillMs, decodeMs:decodeMs, total:total,
+      ttft:prefillMs, tpot:o>0?TPOT:0,
+      decodeShare: total>0?decodeMs/total:0,
+      kv:kv, overflow: kv>S.ctxLimit,
+      allowedOut: Math.max(0, S.ctxLimit-p)
+    };
+  }
+
+  /* ------------------------------------------------------------------ events log */
+  var evList=$('evList');
+  function clock(){var s=Math.floor((Date.now()-S.t0)/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  function logEv(kind,reason,msg){
+    var d=document.createElement('div');
+    d.className='ev new '+(kind||'');
+    d.innerHTML='<span class="et"></span><span class="er"></span><span class="em"></span>';
+    d.children[0].textContent=clock();
+    d.children[1].textContent=reason; d.children[2].textContent=msg;
+    d.title=reason+'  —  '+msg;
+    evList.appendChild(d);
+    while(evList.children.length>90)evList.removeChild(evList.firstChild);
+    evList.scrollTop=evList.scrollHeight;
+  }
+
+  /* ------------------------------------------------------------------ animation */
+  var running=false, timers=[];
+  function clearTimers(){timers.forEach(clearTimeout);timers=[]}
+  function later(fn,ms){var t=setTimeout(fn,ms);timers.push(t);return t}
+  function REDUCED(){return window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches}
+
+  function fmtMs(v){return v>=1000?(v/1000).toFixed(2)+' s':Math.round(v)+' ms'}
+
+  function resetStage(){
+    $('prefillFill').style.width='0%';
+    $('prefillLabel').textContent='prompt not read yet';
+    $('prefillMsLbl').textContent='—';
+    $('decodeStrip').innerHTML='<span id="decodeEmpty">tokens tick out here, one at a time, after the first token appears</span>';
+    $('decodeMsLbl').textContent='—'; $('kvMsLbl').textContent='—';
+    $('kvPrompt').style.width='0%'; $('kvDecode').style.width='0%'; $('kvDecode').style.left='0%';
+    $('kvOver').style.width='0%'; $('overflow').classList.remove('on');
+    ['ttftV','tpotV','totalV','decShareV','kvV'].forEach(function(id){$(id).textContent='—';$(id).classList.remove('warnv')});
+  }
+
+  /* place the context-limit marker (always reflects current slider) */
+  function renderCtxMarker(){
+    /* bar is scaled so ctxLimit sits at 85% when the request fits, giving headroom to
+       show overflow spilling past. Scale = whichever is larger: ctxLimit or kv total. */
+    var r=S.result||compute();
+    var scaleMax=Math.max(S.ctxLimit, r.kv, 1)*1.06;
+    $('kvLimit').style.left=(S.ctxLimit/scaleMax*100)+'%';
+    return scaleMax;
+  }
+
+  function run(fast){
+    if(running)return;
+    running=true; clearTimers(); resetStage();
+    var r=compute();
+    S.result=r;
+    var scaleMax=renderCtxMarker();
+    $('runBtn').disabled=true; $('runBtn').textContent='⏳ running…';
+
+    logEv('','request','prompt='+r.promptLen+' tok · asking for '+r.outLen+' output tok (num_ctx '+S.ctxLimit+')');
+
+    var instant=fast||REDUCED();
+    var kvPromptPct=r.promptLen/scaleMax*100;
+
+    /* ---- PREFILL: one sweeping fill ---- */
+    var pfDur=instant?0:520;
+    $('prefillFill').style.transition=instant?'none':'width '+(pfDur/1000)+'s linear';
+    /* force reflow so the transition takes */
+    void $('prefillFill').offsetWidth;
+    $('prefillFill').style.width='100%';
+    $('prefillLabel').textContent=r.promptLen+' prompt tokens processed together (one pass)';
+    $('kvPrompt').style.width=kvPromptPct+'%';
+
+    later(function(){
+      $('prefillMsLbl').textContent=fmtMs(r.prefillMs)+' → TTFT';
+      logEv('','prefill',r.promptLen+' tokens in one parallel pass · first token at '+fmtMs(r.ttft));
+      $('ttftV').textContent=fmtMs(r.ttft);
+      $('kvMsLbl').textContent=r.kv+' / '+S.ctxLimit+' tok';
+
+      /* ---- DECODE: tick tokens ---- */
+      $('decodeStrip').innerHTML='';
+      var cursor=document.createElement('span'); cursor.className='tok cursor'; $('decodeStrip').appendChild(cursor);
+      var emitted=0;
+      var allowed=r.allowedOut;               /* how many output tokens fit under ctx */
+      var willOverflow=r.overflow;
+      var stopAt=willOverflow?allowed:r.outLen;
+
+      function emitBatch(){
+        /* emit a chunk of tokens per frame so long outputs stay fast */
+        var per=instant?r.outLen:Math.max(1,Math.ceil(r.outLen/48));
+        for(var k=0;k<per && emitted<stopAt;k++){
+          var t=document.createElement('span'); t.className='tok on';
+          $('decodeStrip').insertBefore(t,cursor);
+          emitted++;
+        }
+        /* grow KV output slice */
+        var kvOutPct=emitted/scaleMax*100;
+        $('kvDecode').style.left=kvPromptPct+'%';
+        $('kvDecode').style.width=kvOutPct+'%';
+        $('kvV').textContent=(r.promptLen+emitted)+' / '+S.ctxLimit;
+
+        if(emitted<stopAt){ later(emitBatch, instant?0:26); return; }
+
+        /* decode finished (or hit the wall) */
+        cursor.remove();
+        if(willOverflow){
+          /* overflow: the request can't hold prompt+output under the window */
+          var overCount=r.kv-S.ctxLimit;
+          var overStartPct=S.ctxLimit/scaleMax*100;
+          var overWidthPct=(r.kv-S.ctxLimit)/scaleMax*100;
+          $('kvOver').style.left=overStartPct+'%';
+          $('kvOver').style.width=overWidthPct+'%';
+          $('overflow').classList.add('on');
+          $('overflow').innerHTML='<b>context overflow</b> — prompt+output = '+r.kv+' tok exceeds num_ctx '+S.ctxLimit+
+            ' by '+overCount+'. Only ~'+allowed+' output tokens fit; the rest is truncated (or the request errors).';
+          logEv('over','context','KV '+r.kv+' tok > num_ctx '+S.ctxLimit+' — overflow by '+overCount+' tokens');
+          $('kvV').textContent=r.kv+' / '+S.ctxLimit;
+          $('kvV').classList.add('warnv');
+        }
+        finishRun(r,instant);
+      }
+      later(emitBatch, instant?0:26);
+    }, pfDur);
+  }
+
+  function finishRun(r,instant){
+    $('decodeMsLbl').textContent=fmtMs(r.decodeMs)+' ('+r.outLen+'×TPOT)';
+    logEv('decode','decode',r.outLen+' tokens one at a time · '+r.tpot.toFixed(1)+' ms/token · '+fmtMs(r.decodeMs));
+    $('tpotV').textContent=r.tpot.toFixed(1)+' ms';
+    $('totalV').textContent=fmtMs(r.total);
+    var pct=Math.round(r.decodeShare*100);
+    $('decShareV').textContent=pct+'%';
+    $('decShareV').classList.toggle('warnv',pct>=80);
+    if(!$('kvV').classList.contains('warnv')) $('kvV').textContent=r.kv+' / '+S.ctxLimit;
+    logEv('','done','TTFT '+fmtMs(r.ttft)+' · total '+fmtMs(r.total)+' · decode '+pct+'% of total');
+    S.ran=true;
+    running=false;
+    $('runBtn').disabled=false; $('runBtn').textContent='▶ Run request';
+    evalChallenge();
+  }
+
+  /* ------------------------------------------------------------------ challenge */
+  var CH_TEXT=[
+    'Step 1 — Grow <code>prompt length</code> until <b>TTFT is at least 3×</b> its starting value, then Run. Long prompt → long prefill → high time-to-first-token.',
+    'Step 2 — Without touching the prompt, make the run <b>decode-dominated</b> (<code>decode share ≥ 80%</code>): raise <code>output length</code> so the answer, not the prompt, owns the time.',
+    'Step 3 — Push <code>prompt</code> + <code>output</code> past the <code>context limit</code> and Run → hit the <b>context window wall</b> (<code>context overflow</code>).'
+  ];
+  var SUCCESS='Challenge complete! You just felt the two phases and the wall. <b>TTFT</b> tracks <b>prompt length</b> (prefill, one parallel pass, compute-bound). <b>Total time</b> tracks <b>output length</b> (decode, one token at a time, memory-bandwidth-bound). And the <b>KV cache</b> grows one slot per token until <code>prompt+output</code> hits <code>num_ctx</code> — that same number sizes a pod\'s memory later in the course. "Slow" is always one phase or the other, never just "slow".';
+
+  function evalChallenge(){
+    if(!S.result)return;
+    var r=S.result;
+    if(CH.step===1){
+      if(CH.baseTtft==null) CH.baseTtft=r.ttft;
+      /* baseTtft is captured at the FIRST run; success when a later run is >=3x it.
+         Anchor to the default-prompt TTFT so it can't be spoofed by shrinking first. */
+      var base=PREFILL_PER_TOK*DEFAULTS.promptLen;
+      if(r.ttft>=base*3){CH.done[0]=true;CH.step=2;
+        logEv('','try-this','Step 1 done — TTFT is '+ (r.ttft/base).toFixed(1) +'× the starting value. That is prefill growing with the prompt.');}
+    }else if(CH.step===2){
+      if(r.decodeShare>=0.80){CH.done[1]=true;CH.step=3;
+        logEv('decode','try-this','Step 2 done — '+Math.round(r.decodeShare*100)+'% of the time is decode now. The answer owns the clock.');}
+    }else if(CH.step===3){
+      if(r.overflow){CH.done[2]=true;CH.step=4;
+        logEv('over','try-this','Step 3 done — prompt+output overran num_ctx. That is the context window wall.');}
+    }
+    updateChallenge();
+  }
+  function updateChallenge(){
+    for(var i=1;i<=3;i++){
+      var d=$('d'+i);d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
+      d.textContent=CH.done[i-1]?'✓':i;
+    }
+    var box=$('challenge'),txt=$('chTxt');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;}
+    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[CH.step-1];}
+  }
+
+  /* ------------------------------------------------------------------ controls */
+  function syncLabels(){
+    $('promptVal').textContent=S.promptLen;
+    $('outVal').textContent=S.outLen;
+    $('ctxVal').textContent=S.ctxLimit;
+    $('promptRange').value=S.promptLen;
+    $('outRange').value=S.outLen;
+    $('ctxRange').value=S.ctxLimit;
+  }
+  function onChange(){ renderCtxMarker(); updateChallenge(); }
+
+  $('promptRange').addEventListener('input',function(){if(running)return;S.promptLen=+this.value;$('promptVal').textContent=S.promptLen;onChange()});
+  $('outRange').addEventListener('input',function(){if(running)return;S.outLen=+this.value;$('outVal').textContent=S.outLen;onChange()});
+  $('ctxRange').addEventListener('input',function(){if(running)return;S.ctxLimit=+this.value;$('ctxVal').textContent=S.ctxLimit;onChange()});
+  $('runBtn').addEventListener('click',function(){run(false)});
+  $('reset').addEventListener('click',function(){location.reload()});
+
+  /* ------------------------------------------------------------------ boot */
+  syncLabels();
+  renderCtxMarker();
+  updateChallenge();
+  logEv('','ready','engine up · set prompt / output / context and press Run');
+
+  /* test hook (harmless in production) */
+  window.__sim={S:S,CH:CH,
+    setPrompt:function(v){S.promptLen=v;syncLabels();onChange()},
+    setOut:function(v){S.outLen=v;syncLabels();onChange()},
+    setCtx:function(v){S.ctxLimit=v;syncLabels();onChange()},
+    run:function(){run(true)},              /* instant path for tests */
+    compute:compute,
+    isRunning:function(){return running},
+    consts:{PREFILL_PER_TOK:PREFILL_PER_TOK,TPOT:TPOT,DEFAULTS:DEFAULTS}
+  };
+})();
+</script>
+</body>
+</html>

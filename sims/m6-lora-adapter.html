@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoRA Adapter — how a few megabytes tune a frozen model</title>
+<style>
+  :root{
+    --bg:#0d1220; --panel:#151c2e; --panel2:#111827; --line:#26324e; --line2:#1c2740;
+    --txt:#dbe4f5; --dim:#8494b3; --faint:#5a6a8c;
+    --accent:#4cc9f0; --accent2:#7b6cf6;
+    --ok:#3ddc97; --warn:#f5b942; --bad:#ff6b6b;
+    --frozen:#2b3450; --frozenFaint:#222a42;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:clamp(10.5px,0.4vw + 9.1px,16px)}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:1rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  #app{display:flex;flex-direction:column;height:100%;padding:8px 10px;gap:6px}
+
+  /* ---------- header ---------- */
+  header{display:flex;align-items:center;gap:12px;flex:0 0 auto;flex-wrap:wrap}
+  header h1{font-size:1.05rem;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+  header h1 .llm{color:var(--accent2)}
+  #hsub{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--faint);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #modeWrap{display:flex;gap:0;border:1px solid var(--line);border-radius:7px;overflow:hidden;flex:0 0 auto}
+  #modeWrap button{background:var(--panel2);border:none;color:var(--dim);font-size:.82rem;
+    padding:3px 11px;cursor:pointer;min-height:24px;font-family:inherit;
+    transition:background .12s,color .12s}
+  #modeWrap button:hover{color:var(--txt)}
+  #modeWrap button.on{background:color-mix(in srgb,var(--accent2) 22%,var(--panel2));color:var(--txt)}
+  #modeWrap button.on[data-mode="serve"]{background:color-mix(in srgb,var(--ok) 20%,var(--panel2))}
+  #modeWrap button+button{border-left:1px solid var(--line)}
+  #reset{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;
+    padding:3px 9px;font-size:.88rem;cursor:pointer;min-height:24px;flex:0 0 auto}
+  #reset:hover{color:var(--txt);border-color:var(--faint)}
+
+  /* ---------- challenge banner ---------- */
+  #challenge{flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    background:linear-gradient(90deg,rgba(123,108,246,.14),rgba(76,201,240,.07));
+    border:1px solid #3a3f6e;border-radius:8px;padding:4px 11px;min-height:30px}
+  #challenge .tag{font-size:.8rem;font-weight:700;letter-spacing:.8px;color:var(--accent2);
+    text-transform:uppercase;white-space:nowrap}
+  #challenge .steps{display:flex;gap:5px}
+  #challenge .dot{width:1.3rem;height:1.3rem;border-radius:50%;border:1.5px solid var(--faint);
+    font-size:.76rem;display:flex;align-items:center;justify-content:center;color:var(--faint);font-weight:700}
+  #challenge .dot.cur{border-color:var(--accent);color:var(--accent)}
+  #challenge .dot.done{border-color:var(--ok);background:rgba(61,220,151,.15);color:var(--ok)}
+  #challenge .txt{flex:1;color:var(--txt);font-size:.94rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  #challenge .txt code{font-family:var(--mono);font-size:.86rem;color:var(--accent);background:rgba(76,201,240,.08);
+    padding:0 4px;border-radius:4px}
+  #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
+  #challenge.success .tag{color:var(--ok)}
+  #challenge.success .txt{white-space:normal;line-height:1.3}
+
+  /* ---------- main grid ---------- */
+  #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(238px,20.5rem,340px) 1fr;gap:6px;min-height:0}
+  #main>.panel{min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;min-height:0}
+  .panel h2{font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .panel h2 span{text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- controls (left) ---------- */
+  #controls{display:flex;flex-direction:column;gap:9px;overflow-y:auto;scrollbar-width:thin}
+
+  .ctl .cl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .ctl .cl b{color:var(--txt);font-weight:700}
+  .ctl .cl .hint{color:var(--faint);font-size:.68rem;font-weight:400}
+  .ctl input[type=range]{width:100%;accent-color:var(--accent2);cursor:pointer;height:1.2rem}
+
+  /* module-targeting checkboxes */
+  .modhead{font-family:var(--mono);font-size:.76rem;color:var(--dim);margin-bottom:1px}
+  #modules{display:flex;flex-wrap:wrap;gap:4px}
+  .modchk{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.78rem;
+    line-height:1.2;border:1px solid var(--line);border-radius:999px;background:var(--panel2);
+    color:var(--dim);padding:3px 10px 3px 8px;cursor:pointer;
+    transition:border-color .12s,color .12s,background .12s;user-select:none}
+  .modchk:hover{border-color:var(--accent2);color:var(--txt)}
+  .modchk.on{border-color:var(--accent2);color:var(--accent);
+    background:color-mix(in srgb,var(--accent2) 14%,var(--panel2))}
+  .modchk .box{width:.85rem;height:.85rem;border-radius:3px;border:1.5px solid var(--faint);
+    display:inline-flex;align-items:center;justify-content:center;font-size:.6rem;flex:0 0 auto}
+  .modchk.on .box{border-color:var(--accent);background:rgba(76,201,240,.18);color:var(--accent)}
+
+  /* readouts */
+  .readout{display:flex;flex-direction:column;gap:3px;border:1px solid var(--line2);border-radius:8px;
+    background:var(--panel2);padding:7px 10px}
+  .readout,.readout *{cursor:default}
+  .rrow{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:1px 0}
+  .rrow .rl{font-family:var(--mono);font-size:.78rem;color:var(--dim)}
+  .rrow .rv{font-family:var(--mono);font-size:.86rem;font-weight:700;color:var(--txt)}
+  .rrow .rv.big{font-size:1rem}
+  .rrow .rv.good{color:var(--ok)} .rrow .rv.warn{color:var(--warn)} .rrow .rv.bad{color:var(--bad)}
+  .rsep{height:1px;background:var(--line2);margin:3px 0}
+
+  /* the capacity / "what the update can express" meter */
+  .meterWrap{border:1px solid var(--line2);border-radius:8px;background:var(--panel2);padding:7px 10px}
+  .meterWrap,.meterWrap *{cursor:default}
+  .meterWrap .ml{font-family:var(--mono);font-size:.74rem;color:var(--dim);display:flex;justify-content:space-between;margin-bottom:4px}
+  .meterWrap .ml b{color:var(--txt)}
+  #meterBar{height:.7rem;border-radius:5px;background:#0a0f1c;border:1px solid var(--line2);overflow:hidden;position:relative}
+  #meterFill{position:absolute;inset:0 auto 0 0;width:0%;border-radius:5px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s ease}
+  .meterWrap .mnote{font-family:var(--mono);font-size:.68rem;color:var(--faint);margin-top:4px;line-height:1.35}
+
+  /* ---------- weight view (right) ---------- */
+  #view{display:flex;flex-direction:column;min-height:0;gap:6px}
+  #stage{flex:1 1 auto;position:relative;min-height:0;border:1px solid var(--line2);border-radius:8px;
+    background:radial-gradient(circle at 50% 42%,#0f1626 0%,#0a0f1c 100%);overflow:hidden;
+    display:flex;align-items:center;justify-content:center;padding:2%}
+  #stageInner{display:flex;align-items:center;gap:clamp(10px,3vw,42px);width:100%;height:100%;
+    justify-content:center;position:relative}
+
+  /* the frozen base matrix (large dimmed grid) */
+  .matWrap{display:flex;flex-direction:column;align-items:center;gap:5px;position:relative}
+  .matLbl{font-family:var(--mono);font-size:.72rem;color:var(--dim);text-align:center;line-height:1.3}
+  .matLbl .dim{color:var(--faint);font-size:.66rem}
+  #baseGrid{display:grid;gap:1.5px;border:1px solid var(--line);border-radius:5px;padding:4px;
+    background:rgba(0,0,0,.25)}
+  #baseGrid .cell{background:var(--frozen);border-radius:1px;transition:background .3s}
+  #baseGrid.merged .cell.hot{background:color-mix(in srgb,var(--accent2) 55%,var(--frozen))}
+  #baseFreeze{position:absolute;top:-0.55rem;right:-0.55rem;font-size:.95rem;
+    filter:drop-shadow(0 1px 2px #000);z-index:3}
+  #baseFreeze.hidden{display:none}
+
+  /* the flow: input dot -> base + side-path -> sum -> output */
+  .flowCol{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto}
+  .node{font-family:var(--mono);font-size:.7rem;color:var(--dim);text-align:center}
+  .ioDot{width:.85rem;height:.85rem;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 8px 1px rgba(76,201,240,.5)}
+
+  /* low-rank side-path: A (d x r) and B (r x d) */
+  #sidePath{display:flex;flex-direction:column;align-items:center;gap:5px;position:relative}
+  #sidePath .spLbl{font-family:var(--mono);font-size:.7rem;color:var(--accent);text-align:center;line-height:1.3}
+  #sidePath .spLbl .rk{color:var(--accent2);font-weight:700}
+  .lowrank{display:flex;align-items:center;gap:6px}
+  .lrmat{display:grid;gap:1.5px;border:1px solid var(--accent2);border-radius:4px;padding:3px;
+    background:rgba(123,108,246,.08)}
+  .lrmat .cell{background:color-mix(in srgb,var(--accent2) 60%,transparent);border-radius:1px}
+  .lrmat .lbl{grid-column:1/-1;font-family:var(--mono);font-size:.6rem;color:var(--accent2);text-align:center;padding-top:1px}
+  #sidePath.training{animation:sideglow 1.6s ease-in-out infinite}
+  #sidePath.training .lrmat{border-color:var(--warn);box-shadow:0 0 14px 2px rgba(245,185,66,.35)}
+  #sidePath.training .lrmat .cell{background:color-mix(in srgb,var(--warn) 65%,transparent)}
+  @keyframes sideglow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.55)}}
+  #sidePath.merged{opacity:0;transform:scale(.6) translateX(-30%);transition:opacity .5s,transform .5s}
+  #sidePath.hiddenPath{display:none}
+
+  /* connectors */
+  svg#wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+  svg#wires path{fill:none;stroke:var(--line);stroke-width:1.4}
+  svg#wires path.base{stroke:var(--dim);stroke-dasharray:0}
+  svg#wires path.side{stroke:var(--accent2);stroke-width:1.6}
+  svg#wires path.side.training{stroke:var(--warn);stroke-width:2}
+  .flowPulse{fill:var(--accent)}
+  .flowPulse.side{fill:var(--accent2)}
+  .flowPulse.side.training{fill:var(--warn)}
+
+  #plus{font-family:var(--mono);font-size:1.4rem;color:var(--faint);font-weight:700}
+  #modeBadge{position:absolute;top:6px;left:8px;font-family:var(--mono);font-size:.72rem;
+    padding:2px 9px;border-radius:999px;border:1px solid var(--line);z-index:4;letter-spacing:.4px}
+  #modeBadge.train{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 50%,var(--line));background:rgba(245,185,66,.08)}
+  #modeBadge.serve{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 50%,var(--line));background:rgba(61,220,151,.08)}
+  #stageCaption{position:absolute;bottom:6px;left:0;right:0;text-align:center;
+    font-family:var(--mono);font-size:.72rem;color:var(--faint);padding:0 10px;line-height:1.35}
+
+  /* ---------- event log ---------- */
+  #events{flex:0 0 clamp(84px,7.5rem,132px);display:flex;flex-direction:column;min-height:0}
+  #events,#events *{cursor:default}
+  #evList{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6;scrollbar-width:thin}
+  .ev{display:flex;gap:8px;white-space:nowrap;overflow:hidden}
+  .ev .et{color:var(--faint);flex:0 0 4.2rem}
+  .ev .er{flex:0 0 6.2rem;color:var(--accent2);font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .ev.warn .er{color:var(--warn)} .ev.try .er{color:var(--accent)} .ev.ok .er{color:var(--ok)}
+  .ev .em{flex:1;color:var(--txt);opacity:.9;overflow:hidden;text-overflow:ellipsis}
+  .ev.new{animation:evin .4s ease-out}
+  @keyframes evin{0%{background:rgba(123,108,246,.12)}100%{background:transparent}}
+  #note{margin-left:auto;font-size:1rem;color:var(--faint);cursor:help;position:relative;padding:0 4px}
+  #note:hover{color:var(--dim)}
+  #note:hover::after,#note:active::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 7px);
+    z-index:40;width:48ch;max-width:80vw;background:#0a0f1c;border:1px solid var(--line);border-radius:7px;padding:7px 10px;
+    color:var(--txt);text-align:left;white-space:normal;pointer-events:none;
+    font:.82rem/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    box-shadow:0 4px 16px rgba(0,0,0,.55)}
+
+  /* narrow fallback */
+  @media (max-width:620px){
+    body{overflow:auto}
+    #main{grid-template-columns:1fr}
+    #app{height:auto;min-height:100%}
+    #stage{min-height:56vw}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <h1><span class="llm">◆</span> LoRA Adapter</h1>
+    <span id="hsub">tune 0.19% of a frozen model · watch the removable fittings</span>
+    <div id="modeWrap" role="group" aria-label="mode">
+      <button data-mode="train" class="on" title="Training mode: the frozen base stays put, only the low-rank side-path learns (it glows).">train</button>
+      <button data-mode="serve" title="Serve mode: the trained side-path is MERGED into the base — one model, zero extra serving cost.">serve · merged</button>
+    </div>
+    <button id="reset" title="Reset the simulator to its starting state (r=8, q_proj+v_proj, train mode)">↺ Reset</button>
+  </header>
+
+  <div id="challenge">
+    <span class="tag">Try this</span>
+    <span class="steps">
+      <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
+    </span>
+    <span class="txt" id="chTxt"></span>
+  </div>
+
+  <div id="main">
+    <!-- LEFT: controls + readouts -->
+    <div class="panel" id="controls">
+
+      <div class="ctl" title="LoRA rank r — the shared inner dimension of the two thin adapter matrices A (d×r) and B (r×d). Trainable params grow LINEARLY with r.">
+        <div class="cl">rank <code style="color:var(--accent2)">r</code> <span><b><span id="rVal">8</span></b></span></div>
+        <input type="range" id="rRange" min="0" max="7" step="1" value="3">
+        <div class="cl"><span class="hint">1 = tiniest adapter · 64 = 8× the params of r=8</span></div>
+      </div>
+
+      <div class="ctl" title="LoRA alpha — the scaling applied to the adapter's contribution (effective scale = alpha / r). It changes how STRONGLY the side-path speaks, NOT how many params it has.">
+        <div class="cl">alpha <span><b><span id="aVal">16</span></b> <span class="hint">scale α/r = <span id="scaleVal">2.0</span>×</span></span></div>
+        <input type="range" id="aRange" min="1" max="64" step="1" value="16">
+        <div class="cl"><span class="hint">strength of the side-path — not its size</span></div>
+      </div>
+
+      <div>
+        <div class="modhead">target modules <span style="color:var(--faint)">· where adapters attach</span></div>
+        <div id="modules"></div>
+      </div>
+
+      <div class="readout" id="readout">
+        <div class="rrow"><span class="rl">trainable params</span><span class="rv big" id="ovTrainable">—</span></div>
+        <div class="rrow"><span class="rl">trainable %</span><span class="rv big" id="ovPct">—</span></div>
+        <div class="rsep"></div>
+        <div class="rrow"><span class="rl">adapter size (fp16)</span><span class="rv" id="ovSize">—</span></div>
+        <div class="rrow"><span class="rl">frozen base</span><span class="rv" id="ovFrozen">597.2M</span></div>
+      </div>
+
+      <div class="meterWrap" title="A stylized 'expressiveness' meter: rank is a bottleneck on what the update can represent. Low rank climbs fast then flattens — the diminishing-returns curve.">
+        <div class="ml">what the update can express <b><span id="capPct">—</span></b></div>
+        <div id="meterBar"><div id="meterFill"></div></div>
+        <div class="mnote" id="capNote"></div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: the weight-matrix + side-path view -->
+    <div class="panel" id="view">
+      <div id="stage">
+        <div id="modeBadge" class="train">TRAIN — base frozen, adapter learning</div>
+        <svg id="wires"></svg>
+        <div id="stageInner">
+
+          <div class="flowCol">
+            <div class="ioDot"></div>
+            <div class="node">input<br>x</div>
+          </div>
+
+          <div class="matWrap">
+            <div id="baseFreeze">🧊</div>
+            <div id="baseGrid"></div>
+            <div class="matLbl">frozen base weights <b style="color:var(--dim)">W</b><br>
+              <span class="dim">1024 × 2048 · never updated</span></div>
+          </div>
+
+          <div id="plus">+</div>
+
+          <div id="sidePath">
+            <div class="lowrank">
+              <div class="lrmat" id="matA"><span class="lbl">A · d×r</span></div>
+              <div class="lrmat" id="matB"><span class="lbl">B · r×d</span></div>
+            </div>
+            <div class="spLbl">low-rank side-path <span class="rk">ΔW = B·A</span><br>
+              <span style="color:var(--faint);font-size:.64rem">the only thing that trains</span></div>
+          </div>
+
+          <div class="flowCol">
+            <div class="ioDot" style="background:var(--ok);box-shadow:0 0 8px 1px rgba(61,220,151,.5)"></div>
+            <div class="node">output<br>h = Wx + ΔWx</div>
+          </div>
+
+        </div>
+        <div id="stageCaption"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="events">
+    <h2>Adapter trace <span>— what peft &amp; the trainer would tell you</span>
+      <span id="note" data-tip="Teaching model, not the real system. The grids are stylized — the real base is 597M weights across 28 layers, not the few cells drawn here, and the geometry is schematic. But the numbers are the real formulae: trainable = layers × r × Σ(in+out) over the targeted modules for Qwen3-0.6B (hidden 1024, 28 layers, GQA 8 kv-heads), and adapter size = trainable × 2 bytes (fp16). The r=8 q+v figure (1,146,880 = 0.192%) matches the course's actual training run.">ⓘ</span></h2>
+    <div id="evList"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ============================================================= REAL MODEL
+     Qwen3-0.6B architecture (from the base config.json used in the M6 lab):
+       hidden_size (d)        = 1024
+       num_attention_heads    = 16   -> q out = 16*128 = 2048
+       num_key_value_heads    = 8    -> k/v out = 8*128 = 1024   (GQA)
+       head_dim               = 128
+       num_hidden_layers      = 28
+       intermediate_size      = 3072 (mlp)
+       total params           = 597,196,800  (the lesson's "597.2M")
+
+     LoRA trainable params for a targeted linear (in x out), rank r:
+         A is (in x r), B is (r x out)  ->  r*(in + out) trainable params.
+     Summed over the targeted modules, times the number of layers.
+
+     Spot-check the load-bearing number: q_proj+v_proj at r=8
+       per layer = 8*( (1024+2048) + (1024+1024) ) = 8*(3072+2048)=8*5120=40,960
+       x 28 layers = 1,146,880 trainable  ->  0.1920% of 597,196,800.
+     This is EXACTLY peft's print_trainable_parameters() line in the lesson. */
+
+  var HIDDEN=1024, LAYERS=28, TOTAL=597196800;
+  /* per-module (in_features + out_features) — the sum that r multiplies. */
+  var MODULES=[
+    {id:'q_proj', label:'q_proj', io:1024+2048, on:true,  desc:'attention query (out 2048)'},
+    {id:'v_proj', label:'v_proj', io:1024+1024, on:true,  desc:'attention value (GQA, out 1024)'},
+    {id:'k_proj', label:'k_proj', io:1024+1024, on:false, desc:'attention key (GQA, out 1024)'},
+    {id:'o_proj', label:'o_proj', io:2048+1024, on:false, desc:'attention output (in 2048)'},
+    {id:'mlp',    label:'mlp',    io:(1024+3072)+(1024+3072)+(3072+1024), on:false,
+                  desc:'gate+up+down (biggest by far)'}
+  ];
+  var MMAP={}; MODULES.forEach(function(m){MMAP[m.id]=m;});
+
+  /* rank slider is log-ish: discrete steps 1..64 */
+  var R_STEPS=[1,2,4,8,16,32,48,64];
+  var DEFAULTS={rIdx:3, alpha:16, mode:'train', on:{q_proj:true,v_proj:true,k_proj:false,o_proj:false,mlp:false}};
+
+  var S={
+    rIdx:DEFAULTS.rIdx,
+    alpha:DEFAULTS.alpha,
+    mode:DEFAULTS.mode,               /* 'train' | 'serve' */
+    on:Object.assign({},DEFAULTS.on),
+    t0:Date.now()
+  };
+
+  var CH={step:1, done:[false,false,false]};
+  /* remember the r=8 q+v baseline params so step 2 can compare an 8x jump. */
+  var sawUnder05=false, sawR8QV=null, sawR64=false, sawMerged=false;
+
+  /* ------------------------------------------------------------ pure model */
+  function rankVal(){return R_STEPS[S.rIdx];}
+  function activeModules(){return MODULES.filter(function(m){return S.on[m.id];});}
+  /* trainable params = r * Σ(in+out over active modules) * LAYERS */
+  function trainableParams(){
+    var r=rankVal();
+    var sumIO=0; MODULES.forEach(function(m){ if(S.on[m.id]) sumIO+=m.io; });
+    return r*sumIO*LAYERS;
+  }
+  function trainablePct(){return 100*trainableParams()/TOTAL;}
+  /* fp16 adapter = 2 bytes per trainable param, in MB (MiB). */
+  function adapterMB(){return trainableParams()*2/1048576;}
+
+  /* Stylized "expressiveness" of the update: rank is a bottleneck. Model it as a
+     saturating curve of rank (sqrt gives the fast-rise-then-flatten shape), normalized
+     so full-rank (=hidden, the max a d×d update could express) reads 100%. This is the
+     diminishing-returns intuition — NOT a measured quantity (see honest-model note). */
+  function capacityPct(){
+    var r=rankVal();
+    // saturating: sqrt(r/hidden). r=8 -> ~8.8%, r=16 -> ~12.5%, r=64 -> ~25%.
+    var v=Math.sqrt(r/HIDDEN)*100;
+    return Math.min(100, v);
+  }
+
+  /* ------------------------------------------------------------ events log */
+  var evList=$('evList');
+  function clock(){var s=Math.floor((Date.now()-S.t0)/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2);}
+  function logEv(kind,reason,msg){
+    var d=document.createElement('div');
+    d.className='ev new '+(kind||'');
+    d.innerHTML='<span class="et"></span><span class="er"></span><span class="em"></span>';
+    d.children[0].textContent=clock();
+    d.children[1].textContent=reason; d.children[2].textContent=msg;
+    d.title=reason+'  —  '+msg;
+    evList.appendChild(d);
+    while(evList.children.length>90)evList.removeChild(evList.firstChild);
+    evList.scrollTop=evList.scrollHeight;
+  }
+
+  /* ------------------------------------------------------------ number fmt */
+  function fmtInt(n){return n.toLocaleString('en-US');}
+  function fmtM(n){ // 1146880 -> "1.15M"
+    if(n>=1e6) return (n/1e6).toFixed(2)+'M';
+    if(n>=1e3) return (n/1e3).toFixed(1)+'K';
+    return String(n);
+  }
+  function fmtMB(mb){
+    if(mb<1) return (mb*1024).toFixed(0)+' KB';
+    return mb.toFixed(1)+' MB';
+  }
+
+  /* ------------------------------------------------------------ render: modules */
+  function renderModules(){
+    var wrap=$('modules'); wrap.innerHTML='';
+    MODULES.forEach(function(m){
+      var el=document.createElement('button');
+      el.className='modchk'+(S.on[m.id]?' on':'');
+      el.setAttribute('data-mod',m.id);
+      el.setAttribute('role','checkbox');
+      el.setAttribute('aria-checked',S.on[m.id]?'true':'false');
+      el.title='Attach a LoRA adapter to '+m.label+' — '+m.desc+'. Toggling changes the trainable-param count.';
+      el.innerHTML='<span class="box">'+(S.on[m.id]?'✓':'')+'</span>'+m.label;
+      el.addEventListener('click',function(){toggleModule(m.id);});
+      wrap.appendChild(el);
+    });
+  }
+
+  /* ------------------------------------------------------------ render: base grid + side-path */
+  var GRID_R=8, GRID_C=14;  /* stylized frozen base cells */
+  function buildBaseGrid(){
+    var g=$('baseGrid');
+    g.style.gridTemplateColumns='repeat('+GRID_C+',clamp(6px,1.3vw,13px))';
+    g.style.gridAutoRows='clamp(6px,1.3vw,13px)';
+    g.innerHTML='';
+    for(var i=0;i<GRID_R*GRID_C;i++){
+      var c=document.createElement('div'); c.className='cell'; g.appendChild(c);
+    }
+  }
+  function buildLowRankMats(){
+    var r=rankVal();
+    // A: d rows x r cols (draw a capped number of rows for legibility), B: r rows x d cols
+    var rCols=Math.max(1,Math.min(6,Math.round(Math.log2(r)+1))); // 1..6 visual cols scaling with r
+    var mA=$('matA'), mB=$('matB');
+    var cell='clamp(4px,0.9vw,9px)';
+    mA.style.gridTemplateColumns='repeat('+rCols+','+cell+')';
+    mA.style.gridAutoRows=cell;
+    mB.style.gridTemplateColumns='repeat(6,'+cell+')';
+    mB.style.gridAutoRows=cell;
+    // rebuild cells (keep the label span)
+    [ [mA, 6*rCols, 'A · d×r'], [mB, rCols*6, 'B · r×d'] ].forEach(function(spec){
+      var el=spec[0], n=spec[1], lbl=spec[2];
+      el.innerHTML='';
+      for(var i=0;i<n;i++){var c=document.createElement('div');c.className='cell';el.appendChild(c);}
+      var l=document.createElement('span'); l.className='lbl'; l.textContent=lbl; el.appendChild(l);
+    });
+  }
+
+  /* ------------------------------------------------------------ render: wires */
+  function renderWires(){
+    var svg=$('wires'); svg.innerHTML='';
+    var stage=$('stage').getBoundingClientRect();
+    var inDot=document.querySelector('.flowCol .ioDot');
+    var base=$('baseGrid'), side=$('sidePath'), out=document.querySelectorAll('.flowCol .ioDot')[1];
+    if(!inDot||!base||!out) return;
+    function ctr(el){var r=el.getBoundingClientRect();return {x:r.left+r.width/2-stage.left,y:r.top+r.height/2-stage.top};}
+    var i=ctr(inDot), b=ctr(base), o=ctr(out);
+    function path(cls, from, to, bend){
+      var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      var mx=(from.x+to.x)/2;
+      var d='M '+from.x+' '+from.y+' C '+mx+' '+from.y+' '+mx+' '+(to.y+bend)+' '+to.x+' '+to.y;
+      p.setAttribute('d',d); p.setAttribute('class',cls); svg.appendChild(p); return p;
+    }
+    // input -> base (top route), base -> output
+    path('base', i, b, 0);
+    path('base', b, o, 0);
+    // input -> side-path -> output (only if a side-path is shown)
+    var showSide=(S.mode==='train') && activeModules().length>0;
+    if(showSide){
+      var s=ctr(side);
+      var trn=(S.mode==='train');
+      path('side'+(trn?' training':''), i, s, 0);
+      path('side'+(trn?' training':''), s, o, 0);
+    }
+  }
+
+  /* ------------------------------------------------------------ render: everything */
+  function render(){
+    var r=rankVal();
+    var tp=trainableParams(), pct=trainablePct(), mb=adapterMB(), cap=capacityPct();
+    var nMods=activeModules().length;
+
+    // control readouts
+    $('rVal').textContent=r;
+    $('aVal').textContent=S.alpha;
+    $('scaleVal').textContent=(S.alpha/r).toFixed(r>=1?1:2);
+    $('rRange').value=S.rIdx;
+    $('aRange').value=S.alpha;
+
+    // param readouts
+    $('ovTrainable').textContent = nMods? (fmtInt(tp)+' ('+fmtM(tp)+')') : 'none';
+    var pctEl=$('ovPct');
+    pctEl.textContent = nMods? pct.toFixed(pct<1?4:3)+'%' : '0%';
+    pctEl.className='rv big '+(pct<0.5?'good':pct<2?'warn':'bad');
+    $('ovSize').textContent = nMods? fmtMB(mb) : '0 MB';
+
+    // capacity meter
+    $('capPct').textContent = cap.toFixed(1)+'%';
+    $('meterFill').style.width = cap.toFixed(1)+'%';
+    $('capNote').textContent = nMods===0 ? 'no modules targeted — nothing trains'
+      : (r<=4 ? 'low rank: a tight bottleneck — cheap, may underfit'
+      : r<=16 ? 'the practical band — most of the gain for a fraction of the params'
+      : 'high rank: params keep climbing but the meter barely moves — diminishing returns');
+
+    // module chips reflect state
+    Array.prototype.forEach.call(document.querySelectorAll('.modchk'),function(el){
+      var id=el.getAttribute('data-mod');
+      el.classList.toggle('on',!!S.on[id]);
+      el.setAttribute('aria-checked',S.on[id]?'true':'false');
+      el.querySelector('.box').textContent=S.on[id]?'✓':'';
+    });
+
+    // mode: badge, side-path visibility/animation, merged state
+    var badge=$('modeBadge'), side=$('sidePath'), grid=$('baseGrid'), freeze=$('baseFreeze');
+    var cap2=$('stageCaption');
+    var trn=(S.mode==='train');
+    badge.className=trn?'train':'serve';
+    badge.textContent=trn?'TRAIN — base frozen, adapter learning':'SERVE · MERGED — one model, adapter folded in';
+    // frozen snowflake always present (base never trains); in serve/merged the base
+    // absorbs the side-path so the snowflake stays (it's still just weights) but the
+    // side-path visually folds INTO the grid.
+    if(trn){
+      side.classList.remove('merged','hiddenPath');
+      side.classList.toggle('training', nMods>0);
+      grid.classList.remove('merged');
+      freeze.classList.remove('hidden');
+      $('plus').style.opacity = nMods>0 ? '1' : '.25';
+      cap2.textContent = nMods>0
+        ? 'Forward pass flows through BOTH paths; only the glowing side-path updates. Base weights: frozen.'
+        : 'No modules targeted — the side-path is empty and nothing would train.';
+    }else{
+      // serve-merged: fold the side-path into the base, zero extra serving cost
+      side.classList.remove('training');
+      side.classList.add('merged');
+      grid.classList.add('merged');
+      // light up some base cells to show ΔW absorbed into W
+      markMergedCells(nMods>0);
+      freeze.classList.remove('hidden');
+      $('plus').style.opacity='.2';
+      cap2.textContent = nMods>0
+        ? 'ΔW = B·A folded into W → one standalone model. Serving cost is identical to the base — no adapter to load.'
+        : 'Nothing was trained, so nothing merges — this is just the base model.';
+    }
+
+    buildLowRankMats();
+    renderWires();
+    evalChallenge();
+  }
+
+  function markMergedCells(any){
+    var cells=$('baseGrid').querySelectorAll('.cell');
+    cells.forEach(function(c){c.classList.remove('hot');});
+    if(!any) return;
+    // deterministically light a scatter of cells (the absorbed low-rank update)
+    var r=rankVal(), frac=Math.min(0.5, 0.12+Math.log2(r)/16);
+    var n=Math.round(cells.length*frac);
+    for(var i=0;i<cells.length && i<n;i++){
+      var idx=(i*7+3)%cells.length; cells[idx].classList.add('hot');
+    }
+  }
+
+  /* ------------------------------------------------------------ challenge */
+  /* Step 1: get trainable % below 0.5 WHILE covering q_proj+v_proj (the course config).
+     Step 2: observe r=64 costs ~8x r=8 trainable params with the meter barely moving.
+     Step 3: switch to serve-merged and see the side-path fold in (zero extra serving cost). */
+  function paramsForR(rIdx){
+    var r=R_STEPS[rIdx], sumIO=0; MODULES.forEach(function(m){if(S.on[m.id])sumIO+=m.io;});
+    return r*sumIO*LAYERS;
+  }
+  function evalChallenge(){
+    var pct=trainablePct(), r=rankVal();
+    var covQV = S.on.q_proj && S.on.v_proj;
+
+    if(CH.step===1){
+      if(pct<0.5 && pct>0 && covQV){
+        sawUnder05=true;
+        CH.done[0]=true; CH.step=2;
+        logEv('try','try-this','Step 1 done — '+pct.toFixed(3)+'% trainable, covering q_proj+v_proj. That is exactly OpsMate’s config: real tuning, 0.19% of the model.');
+      }
+    } else if(CH.step===2){
+      // detect an r=64 view whose params are ~8x an r=8 view (same modules), meter barely up.
+      // We compare against the r=8 params for the CURRENT module set.
+      var idx8=R_STEPS.indexOf(8), p8=paramsForR(idx8), p64=paramsForR(R_STEPS.indexOf(64));
+      if(r===64 && p8>0){
+        var ratio=p64/p8;                     // exactly 8 (linear in r)
+        var capR=capacityPct();
+        // meter at r=8:
+        var cap8=Math.min(100,Math.sqrt(8/HIDDEN)*100);
+        CH.done[1]=true; CH.step=3;
+        logEv('try','try-this','Step 2 done — r=64 costs '+ratio.toFixed(0)+'× the params of r=8 ('+fmtM(p64)+' vs '+fmtM(p8)+') but the meter moved only '+(capR-cap8).toFixed(1)+' points. Diminishing returns.');
+      }
+    } else if(CH.step===3){
+      if(S.mode==='serve'){
+        sawMerged=true;
+        CH.done[2]=true; CH.step=4;
+        logEv('ok','try-this','Step 3 done — merged. ΔW folded into W: one standalone model, serving cost identical to the base. The fittings are now built in.');
+      }
+    }
+    paintChallenge();
+  }
+
+  var CH_TEXT=[
+    'Step 1 — With <code>q_proj</code> and <code>v_proj</code> on, set <code>r</code> so <b>trainable % &lt; 0.5</b>. That is OpsMate’s real config: 0.19% of the model.',
+    'Step 2 — Drag <code>r</code> to <b>64</b> and watch: params jump <b>8×</b> vs r=8, but the expressiveness meter barely moves. Diminishing returns.',
+    'Step 3 — Switch to <code>serve · merged</code> and watch the side-path <b>fold into the base</b> — one model, zero extra serving cost.'
+  ];
+  var SUCCESS='Challenge complete! You drove the whole LoRA economics. Tuning only a low-rank <b>side-path</b> (here q_proj+v_proj at r=8) trains <b>0.19%</b> of the model — that is why a real fine-tune fits on a CPU laptop and the adapter is a few megabytes. Rank buys capacity with <b>sharply diminishing returns</b>: r=64 costs 8× the params of r=8 for a sliver more expressiveness. And at serve time you <b>merge</b> the side-path back into the base, so the tuned model serves at <b>zero extra cost</b> — one GGUF, one filename change. Small, swappable, cheap to ship: that is the whole reason LoRA changed the economics of tuning.';
+
+  function paintChallenge(){
+    for(var i=1;i<=3;i++){
+      var d=$('d'+i);d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
+      d.textContent=CH.done[i-1]?'✓':i;
+    }
+    var box=$('challenge'),txt=$('chTxt');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;}
+    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[CH.step-1];}
+  }
+
+  /* ------------------------------------------------------------ actions */
+  function setR(idx){
+    S.rIdx=idx; var r=R_STEPS[idx];
+    render();
+    logEv('','rank r='+r,'adapter rank '+r+' · '+fmtM(trainableParams())+' trainable ('+trainablePct().toFixed(trainablePct()<1?4:3)+'%) · '+fmtMB(adapterMB()));
+  }
+  function setAlpha(v){
+    S.alpha=v; render();
+    logEv('','alpha='+v,'scale α/r = '+(v/rankVal()).toFixed(2)+'× — strength of the side-path, params unchanged');
+  }
+  function toggleModule(id){
+    S.on[id]=!S.on[id];
+    render();
+    var mods=activeModules().map(function(m){return m.id;});
+    logEv(S.on[id]?'':'warn', S.on[id]?'target +'+id:'target -'+id,
+      'adapting ['+ (mods.length?mods.join(', '):'nothing') +'] · '+fmtM(trainableParams())+' trainable ('+trainablePct().toFixed(trainablePct()<1?4:3)+'%)');
+  }
+  function setMode(m){
+    if(S.mode===m) return;
+    S.mode=m;
+    Array.prototype.forEach.call(document.querySelectorAll('#modeWrap button'),function(b){
+      b.classList.toggle('on',b.getAttribute('data-mode')===m);
+    });
+    render();
+    if(m==='serve'){
+      logEv('ok','serve · merge','peft merge_and_unload() — ΔW folded into W. One standalone model, no adapter at serve time.');
+    }else{
+      logEv('','train','base frozen, side-path trainable. Forward pass runs through both; only the adapter updates.');
+    }
+  }
+
+  /* ------------------------------------------------------------ wiring */
+  $('rRange').addEventListener('input',function(){setR(+this.value);});
+  $('aRange').addEventListener('input',function(){setAlpha(+this.value);});
+  Array.prototype.forEach.call(document.querySelectorAll('#modeWrap button'),function(b){
+    b.addEventListener('click',function(){setMode(b.getAttribute('data-mode'));});
+  });
+  $('reset').addEventListener('click',function(){location.reload();});
+  window.addEventListener('resize',function(){renderWires();});
+
+  /* ------------------------------------------------------------ boot */
+  buildBaseGrid();
+  renderModules();
+  render();
+  paintChallenge();
+  logEv('','ready','base Qwen3-0.6B loaded (597.2M, frozen) · attach a low-rank adapter and watch the numbers');
+  // wires need a layout pass
+  setTimeout(renderWires,0);
+
+  /* ------------------------------------------------------------ test hook */
+  window.__sim={
+    S:S, CH:CH,
+    R_STEPS:R_STEPS, MODULES:MODULES, TOTAL:TOTAL, LAYERS:LAYERS, HIDDEN:HIDDEN,
+    consts:{DEFAULTS:DEFAULTS, R_STEPS:R_STEPS},
+    setR:function(idx){setR(idx);},
+    setRankValue:function(r){var i=R_STEPS.indexOf(r); if(i>=0) setR(i);},
+    setAlpha:function(v){setAlpha(v);},
+    toggleModule:function(id){toggleModule(id);},
+    setModule:function(id,on){ if(!!S.on[id]!==!!on) toggleModule(id); },
+    setMode:function(m){setMode(m);},
+    rankVal:rankVal,
+    trainableParams:trainableParams,
+    trainablePct:trainablePct,
+    adapterMB:adapterMB,
+    capacityPct:capacityPct,
+    activeModules:function(){return activeModules().map(function(m){return m.id;});}
+  };
+})();
+</script>
+</body>
+</html>

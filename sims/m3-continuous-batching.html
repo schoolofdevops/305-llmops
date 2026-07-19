@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Continuous Batching Visualizer — why the engine never waits for a full batch</title>
+<style>
+  :root{
+    --bg:#0d1220; --panel:#151c2e; --panel2:#111827; --line:#26324e; --line2:#1c2740;
+    --txt:#dbe4f5; --dim:#8494b3; --faint:#5a6a8c;
+    --accent:#4cc9f0; --accent2:#7b6cf6;
+    --ok:#3ddc97; --warn:#f5b942; --bad:#ff6b6b;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:clamp(10.5px,0.4vw + 9.1px,16px)}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:1rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  #app{display:flex;flex-direction:column;height:100%;padding:8px 10px;gap:6px}
+
+  /* ---------- header ---------- */
+  header{display:flex;align-items:center;gap:12px;flex:0 0 auto;flex-wrap:wrap}
+  header h1{font-size:1.05rem;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+  header h1 .llm{color:var(--accent)}
+  #hsub{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--faint);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #reset{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;
+    padding:3px 9px;font-size:.88rem;cursor:pointer;min-height:24px;flex:0 0 auto}
+  #reset:hover{color:var(--txt);border-color:var(--faint)}
+
+  /* ---------- challenge banner ---------- */
+  #challenge{flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    background:linear-gradient(90deg,rgba(123,108,246,.14),rgba(76,201,240,.07));
+    border:1px solid #3a3f6e;border-radius:8px;padding:4px 11px;min-height:30px}
+  #challenge .tag{font-size:.8rem;font-weight:700;letter-spacing:.8px;color:var(--accent2);
+    text-transform:uppercase;white-space:nowrap}
+  #challenge .steps{display:flex;gap:5px}
+  #challenge .dot{width:1.3rem;height:1.3rem;border-radius:50%;border:1.5px solid var(--faint);
+    font-size:.76rem;display:flex;align-items:center;justify-content:center;color:var(--faint);font-weight:700}
+  #challenge .dot.cur{border-color:var(--accent);color:var(--accent)}
+  #challenge .dot.done{border-color:var(--ok);background:rgba(61,220,151,.15);color:var(--ok)}
+  #challenge .txt{flex:1;color:var(--txt);font-size:.94rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  #challenge .txt code{font-family:var(--mono);font-size:.86rem;color:var(--accent);background:rgba(76,201,240,.08);
+    padding:0 4px;border-radius:4px}
+  #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
+  #challenge.success .tag{color:var(--ok)}
+  #challenge.success .txt{white-space:normal;line-height:1.3}
+
+  /* ---------- main grid ---------- */
+  #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(232px,20rem,330px) 1fr;gap:6px;min-height:0}
+  #main>.panel{min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;min-height:0}
+  .panel h2{font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .panel h2 span{text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- controls (left) ---------- */
+  #controls{display:flex;flex-direction:column;gap:9px;overflow-y:auto;scrollbar-width:thin}
+
+  /* mode toggle */
+  #modeWrap{display:flex;flex-direction:column;gap:4px}
+  #modeToggle{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel2)}
+  #modeToggle button{flex:1;background:none;border:none;color:var(--dim);font-size:.82rem;font-weight:700;
+    padding:6px 4px;cursor:pointer;min-height:2rem;font-family:inherit;transition:background .15s,color .15s}
+  #modeToggle button:hover:not(.on){color:var(--txt);background:rgba(123,108,246,.08)}
+  #modeToggle button.on{color:var(--bg);background:var(--accent2)}
+  #modeToggle button.on.cont{background:var(--accent);color:#04121a}
+  #modeHint{font-family:var(--mono);font-size:.7rem;color:var(--faint);line-height:1.4}
+
+  .ctl .cl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .ctl .cl b{color:var(--txt);font-weight:700}
+  .ctl .cl .hint{color:var(--faint);font-size:.68rem;font-weight:400}
+  .ctl input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:1.2rem}
+
+  #runBtn{width:100%;min-height:2.1rem;border-radius:8px;border:1px solid var(--accent);
+    background:color-mix(in srgb,var(--accent) 12%,var(--panel2));
+    color:var(--accent);font-weight:700;font-size:.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+    transition:background .15s;margin-top:2px}
+  #runBtn:hover{background:color-mix(in srgb,var(--accent) 22%,var(--panel2))}
+  #runBtn.paused{border-color:var(--warn);color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,var(--panel2))}
+
+  .readout{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line2);border-radius:8px;
+    background:var(--panel2);padding:6px 9px}
+  .readout,.readout *{cursor:default}
+  .rrow{display:flex;justify-content:space-between;align-items:baseline;padding:1px 0}
+  .rrow .rl{font-family:var(--mono);font-size:.76rem;color:var(--dim)}
+  .rrow .rl small{color:var(--faint);font-size:.66rem}
+  .rrow .rv{font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--txt)}
+  .rrow .rv.thru{color:var(--ok)}
+  .rrow .rv.wait{color:var(--accent2)}
+  .rrow .rv.util{color:var(--accent)}
+  .rrow .rv.warnv{color:var(--warn)}
+  .rrow .rv.badv{color:var(--bad)}
+
+  /* ---------- stage (right) ---------- */
+  #stage{display:flex;flex-direction:column;min-height:0;gap:7px}
+
+  .srow{display:flex;flex-direction:column;gap:3px}
+  .srow .sh{display:flex;align-items:baseline;gap:8px;font-family:var(--mono)}
+  .srow .sh .sn{font-size:.82rem;font-weight:700;letter-spacing:.4px;color:var(--dim)}
+  .srow .sh .st{font-size:.68rem;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .srow .sh .sx{margin-left:auto;font-size:.76rem;font-weight:700;color:var(--dim);font-family:var(--mono)}
+
+  /* slot lanes */
+  #slots{display:flex;flex-direction:column;gap:5px;min-height:0}
+  .slot{display:flex;align-items:center;gap:7px}
+  .slot .slabel{flex:0 0 3.6rem;font-family:var(--mono);font-size:.72rem;color:var(--faint);white-space:nowrap}
+  .lane{flex:1;height:1.5rem;border-radius:7px;background:#0a0f1c;border:1px solid var(--line2);
+    position:relative;overflow:hidden;min-width:0}
+  .lane .occ{position:absolute;inset:0;display:flex;align-items:center;gap:2px;padding:0 5px;
+    font-family:var(--mono);font-size:.66rem;color:var(--txt);white-space:nowrap}
+  .lane .occ .rid{flex:0 0 auto;font-weight:700}
+  .lane .ticks{position:absolute;left:3.3rem;right:5px;top:50%;transform:translateY(-50%);
+    display:flex;gap:2px;align-items:center}
+  .lane .tk{width:.32rem;height:.5rem;border-radius:1px;background:var(--faint);opacity:.3;flex:0 0 auto}
+  .lane .tk.on{opacity:.95}
+  .lane.static-batch .tk.on{background:var(--accent2)}
+  .lane.cont-batch .tk.on{background:var(--accent)}
+  .lane .empty{position:absolute;inset:0;display:flex;align-items:center;padding-left:6px;
+    font-family:var(--mono);font-size:.66rem;color:var(--faint);opacity:.55}
+  .lane.batchwait{border-color:#4a3f1a}
+  .lane.batchwait .bw{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:.64rem;color:var(--warn);
+    background:repeating-linear-gradient(45deg,rgba(245,185,66,.10) 0 6px,rgba(245,185,66,.03) 6px 12px)}
+
+  /* waiting queue */
+  #queueWrap{display:flex;align-items:center;gap:7px}
+  #queueWrap .slabel{flex:0 0 3.6rem;font-family:var(--mono);font-size:.72rem;color:var(--faint)}
+  #queue{flex:1;min-height:1.5rem;border-radius:7px;background:#0a0f1c;border:1px solid var(--line2);
+    display:flex;flex-wrap:wrap;gap:3px;padding:3px 5px;align-content:flex-start;overflow:hidden;
+    max-height:3.6rem;position:relative}
+  #queue.growing{border-color:#5a2a2a}
+  .qr{flex:0 0 auto;width:1.15rem;height:1.15rem;border-radius:3px;
+    background:color-mix(in srgb,var(--warn) 22%,var(--panel2));border:1px solid #4a3f1a;
+    font-family:var(--mono);font-size:.56rem;color:var(--warn);display:flex;align-items:center;justify-content:center;font-weight:700}
+  .qr.hot{background:color-mix(in srgb,var(--bad) 22%,var(--panel2));border-color:#5a2a2a;color:var(--bad)}
+  #queueEmpty{font-family:var(--mono);font-size:.68rem;color:var(--faint);opacity:.55;position:absolute;left:6px;top:50%;transform:translateY(-50%)}
+
+  /* latency bars for recently-finished requests */
+  #latWrap{display:flex;flex-direction:column;gap:3px;min-height:0;flex:1 1 auto}
+  #latBars{display:flex;flex-direction:column;gap:3px;overflow-y:auto;scrollbar-width:thin;min-height:0;
+    border:1px solid var(--line2);border-radius:7px;background:#0a0f1c;padding:4px 6px}
+  .lb{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.66rem}
+  .lb .lbid{flex:0 0 3rem;color:var(--dim)}
+  .lb .lbtrack{flex:1;height:.72rem;border-radius:3px;background:var(--line2);position:relative;overflow:hidden;min-width:0}
+  .lb .lbwait{position:absolute;left:0;top:0;bottom:0;background:color-mix(in srgb,var(--accent2) 60%,transparent)}
+  .lb .lbserve{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--ok) 55%,transparent)}
+  .lb .lbms{flex:0 0 auto;color:var(--faint)}
+  .lb .lbms b{color:var(--txt)}
+  #latEmpty{font-family:var(--mono);font-size:.68rem;color:var(--faint);opacity:.55}
+  #latLegend{display:flex;gap:12px;font-family:var(--mono);font-size:.66rem;color:var(--faint)}
+  #latLegend .lw{color:var(--accent2)} #latLegend .ls{color:var(--ok)}
+
+  /* ---------- event log ---------- */
+  #events{flex:0 0 clamp(78px,7rem,124px);display:flex;flex-direction:column;min-height:0}
+  #events,#events *{cursor:default}
+  #evList{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6;scrollbar-width:thin}
+  .ev{display:flex;gap:8px;white-space:nowrap;overflow:hidden}
+  .ev .et{color:var(--faint);flex:0 0 4.2rem}
+  .ev .er{flex:0 0 5.6rem;color:var(--accent);font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .ev.admit .er{color:var(--ok)}
+  .ev.batch .er{color:var(--accent2)}
+  .ev.queue .er{color:var(--warn)}
+  .ev.over .er{color:var(--bad)}
+  .ev .em{flex:1;color:var(--txt);opacity:.9;overflow:hidden;text-overflow:ellipsis}
+  .ev.new{animation:evin .4s ease-out}
+  @keyframes evin{0%{background:rgba(76,201,240,.12)}100%{background:transparent}}
+  #note{margin-left:auto;font-size:1rem;color:var(--faint);cursor:help;position:relative;padding:0 4px}
+  #note:hover{color:var(--dim)}
+  #note:hover::after,#note:active::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 7px);
+    z-index:40;width:46ch;max-width:80vw;background:#0a0f1c;border:1px solid var(--line);border-radius:7px;padding:7px 10px;
+    color:var(--txt);text-align:left;white-space:normal;pointer-events:none;
+    font:.82rem/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    box-shadow:0 4px 16px rgba(0,0,0,.55)}
+
+  /* narrow fallback */
+  @media (max-width:620px){
+    body{overflow:auto}
+    #main{grid-template-columns:1fr}
+    #app{height:auto;min-height:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <h1><span class="llm">◇</span> Continuous Batching Visualizer</h1>
+    <span id="hsub">requests arrive over time · N slots serve them token by token</span>
+    <button id="reset" title="Reset the simulator to its starting state">↺ Reset</button>
+  </header>
+
+  <div id="challenge">
+    <span class="tag">Try this</span>
+    <span class="steps">
+      <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
+    </span>
+    <span class="txt" id="chTxt"></span>
+  </div>
+
+  <div id="main">
+    <!-- LEFT: controls + readouts -->
+    <div class="panel" id="controls">
+      <h2>Engine <span>· set load, pick the mode, run the clock</span></h2>
+
+      <div id="modeWrap" title="Static: a batch of requests starts together and no new request can join until EVERY request in that batch has finished. Continuous: at each token step a finished request leaves its slot and a waiting one joins immediately.">
+        <div class="cl" style="font-family:var(--mono);font-size:.76rem;color:var(--dim)">batching mode</div>
+        <div id="modeToggle">
+          <button id="modeStatic" class="on" title="Static batching: the slot batch runs until ALL its requests finish before any waiting request can start.">Static</button>
+          <button id="modeCont" class="cont" title="Continuous batching: a slot that frees up admits the next waiting request on the very next token step — no batch boundary.">Continuous</button>
+        </div>
+        <div id="modeHint"></div>
+      </div>
+
+      <div class="ctl" title="How often a new request shows up. Push it above what the slots can drain and a queue forms.">
+        <div class="cl">arrival rate <span><b><span id="arrVal">3.0</span></b> req/s</span></div>
+        <input type="range" id="arrRange" min="0.5" max="12" step="0.5" value="3">
+        <div class="cl"><span class="hint">↑ more traffic · above slot capacity → queue grows</span></div>
+      </div>
+
+      <div class="ctl" title="How many requests the engine can serve at the same time. Each slot works one request per token step.">
+        <div class="cl">engine slots <span><b><span id="slotVal">2</span></b></span></div>
+        <input type="range" id="slotRange" min="1" max="4" step="1" value="2">
+        <div class="cl"><span class="hint">↑ more slots = more concurrent capacity</span></div>
+      </div>
+
+      <button id="runBtn" title="Start / pause the virtual clock. Requests arrive, slots serve, the queue and readouts update live.">▶ Run clock</button>
+
+      <div class="readout" id="readout">
+        <div class="rrow"><span class="rl">throughput <small>completed/s</small></span><span class="rv thru" id="thruV">—</span></div>
+        <div class="rrow"><span class="rl">p50 wait <small>time in queue</small></span><span class="rv wait" id="waitV">—</span></div>
+        <div class="rrow"><span class="rl">slot utilization <small>busy slots</small></span><span class="rv util" id="utilV">—</span></div>
+        <div class="rrow"><span class="rl">queue depth <small>waiting now</small></span><span class="rv" id="qdepthV">—</span></div>
+        <div class="rrow"><span class="rl">completed <small>total</small></span><span class="rv" id="doneV">—</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: slots + queue + latency -->
+    <div class="panel" id="stage">
+      <div class="srow">
+        <div class="sh">
+          <span class="sn" id="modeName">STATIC BATCHING</span>
+          <span class="st" id="modeStage">a batch runs until every request in it finishes</span>
+          <span class="sx" id="stepLbl">step 0</span>
+        </div>
+        <div id="slots"></div>
+      </div>
+
+      <div class="srow">
+        <div id="queueWrap">
+          <span class="slabel">queue →</span>
+          <div id="queue"><span id="queueEmpty">no requests waiting — slots have capacity</span></div>
+        </div>
+      </div>
+
+      <div class="srow" id="latWrap">
+        <div class="sh">
+          <span class="sn" style="color:var(--accent)">FINISHED REQUESTS</span>
+          <span class="st">each bar: time spent waiting + time spent serving</span>
+          <span id="latLegend"><span class="lw">■ wait</span><span class="ls">■ serve</span></span>
+        </div>
+        <div id="latBars"><span id="latEmpty">completed requests appear here, newest on top</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="events">
+    <h2>Scheduler trace <span>— what the serving engine would log</span>
+      <span id="note" data-tip="Teaching model, not the real system. Every request is drawn as needing the same handful of token steps and every step takes the same virtual tick, so the two batching modes stand out cleanly. Real engines vary token count per request, overlap prefill and decode, and add PagedAttention memory limits. Real throughput and wait numbers for YOUR stack come from the M3 lab's bounded load test and the X-Ray Engine lens reading llama-server's requests_processing / requests_deferred metrics.">ⓘ</span></h2>
+    <div id="evList"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ------------------------------------------------------------------ model
+     A discrete-time queueing model of one serving engine.
+       - Requests ARRIVE on a Poisson-ish schedule set by arrivalRate (req/s).
+       - The engine has `slots` slots. Each active request needs TOKENS token steps.
+       - Every virtual TICK = one token step: each occupied slot advances its
+         request by one token; a request that reaches TOKENS finishes and frees its slot.
+       STATIC batching: slots fill as a *batch*. Once a batch is running, NO new
+         request may enter ANY slot until EVERY request in that batch has finished.
+         Then the next batch is admitted from the queue. (Head-of-line blocking:
+         a short request is trapped behind the longest one in its batch.)
+       CONTINUOUS batching: a slot that frees on a step immediately admits the head
+         of the queue on the very next step. No batch boundary; membership changes
+         every step.
+     Everything is illustrative — see the honest-model footnote. */
+  var TOKENS_MIN=6, TOKENS_MAX=14;   /* token steps a request needs (illustrative spread) */
+  var TICK_MS=90;                    /* wall-clock ms per virtual tick (one token step) */
+  var TICK_S=TICK_MS/1000;
+  var MAX_QUEUE=48;                  /* cap the drawn queue; beyond this we just count */
+
+  var DEFAULTS={arrivalRate:3, slots:2, mode:'static'};
+  var S=null, seed=0;
+
+  /* deterministic PRNG so the harness is flake-free */
+  function rng(){ seed=(seed*1103515245+12345)&0x7fffffff; return seed/0x7fffffff; }
+
+  function freshState(){
+    return {
+      arrivalRate:DEFAULTS.arrivalRate, slots:DEFAULTS.slots, mode:DEFAULTS.mode,
+      running:false, step:0, nextId:1,
+      slotReq:[null,null,null,null],   /* request object per slot, or null */
+      batchActive:false,               /* static: is a batch currently running? */
+      batchIds:[],                     /* static: ids in the running batch */
+      queue:[],                        /* waiting request objects, FIFO */
+      arrivalAccum:0,                  /* fractional arrivals carried between ticks */
+      finished:[],                     /* completed request objects (latency bars) */
+      totalDone:0,
+      recentDone:[],                   /* completion step timestamps for throughput */
+      recentWaits:[],                  /* wait ticks of recent completions for p50 */
+      maxQueueSeen:0
+    };
+  }
+
+  /* ------------------------------------------------------------------ events log */
+  var evList=$('evList'); var t0=Date.now();
+  function clock(){var s=Math.floor((Date.now()-t0)/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  function logEv(kind,reason,msg){
+    var d=document.createElement('div');
+    d.className='ev new '+(kind||'');
+    d.innerHTML='<span class="et"></span><span class="er"></span><span class="em"></span>';
+    d.children[0].textContent=clock();
+    d.children[1].textContent=reason; d.children[2].textContent=msg;
+    d.title=reason+'  —  '+msg;
+    evList.appendChild(d);
+    while(evList.children.length>90)evList.removeChild(evList.firstChild);
+    evList.scrollTop=evList.scrollHeight;
+  }
+
+  /* ------------------------------------------------------------------ core step
+     Advance the model by exactly one virtual tick (one token step). Pure w.r.t.
+     the DOM — the harness can call step() directly under virtual time. */
+  function occupiedCount(){var n=0;for(var i=0;i<S.slots;i++)if(S.slotReq[i])n++;return n;}
+  function freeSlotIndex(){for(var i=0;i<S.slots;i++)if(!S.slotReq[i])return i;return -1;}
+
+  function newRequest(){
+    var toks=TOKENS_MIN+Math.floor(rng()*(TOKENS_MAX-TOKENS_MIN+1));
+    return {id:S.nextId++, tokens:toks, done:0, arrivedStep:S.step, startedStep:null, waited:0};
+  }
+
+  function admit(req,slotIdx){
+    req.startedStep=S.step;
+    req.waited=S.step-req.arrivedStep;
+    S.slotReq[slotIdx]=req;
+    logEv('admit','admitted','req#'+req.id+' → slot '+(slotIdx+1)+' · needs '+req.tokens+' tok · waited '+req.waited+' step'+(req.waited===1?'':'s'));
+  }
+
+  function step(){
+    S.step++;
+
+    /* 1. ARRIVALS: accumulate fractional arrivals; enqueue whole ones */
+    S.arrivalAccum += S.arrivalRate*TICK_S;
+    while(S.arrivalAccum>=1){
+      S.arrivalAccum-=1;
+      var r=newRequest();
+      if(S.queue.length<MAX_QUEUE*4) S.queue.push(r);
+      else { S.queue.push(r); } /* still count it, drawing is capped later */
+    }
+
+    /* 2. ADVANCE occupied slots by one token; collect finishers */
+    var finishers=[];
+    for(var i=0;i<S.slots;i++){
+      var rq=S.slotReq[i];
+      if(rq){
+        rq.done++;
+        if(rq.done>=rq.tokens){ finishers.push({idx:i,req:rq}); }
+      }
+    }
+    finishers.forEach(function(f){
+      var rq=f.req;
+      S.slotReq[f.idx]=null;
+      rq.finishedStep=S.step;
+      S.totalDone++;
+      S.recentDone.push(S.step);
+      S.recentWaits.push(rq.waited);
+      S.finished.unshift(rq);
+      if(S.finished.length>40)S.finished.pop();
+      logEv('','completed','req#'+rq.id+' done · '+rq.tokens+' tok · waited '+rq.waited+' · served '+(rq.finishedStep-rq.startedStep)+' step'+((rq.finishedStep-rq.startedStep)===1?'':'s'));
+    });
+
+    /* 3. SCHEDULE: fill free slots according to the mode */
+    if(S.mode==='static'){
+      /* A batch runs until EVERY member finishes. Only when all slots are empty
+         (batch drained) do we admit a fresh batch from the queue. */
+      if(occupiedCount()===0){
+        if(S.batchActive){ S.batchActive=false; logEv('batch','batch closed','batch drained · slots free for the next batch'); }
+        if(S.queue.length>0){
+          var take=Math.min(S.slots,S.queue.length);
+          S.batchIds=[];
+          for(var k=0;k<take;k++){
+            var req=S.queue.shift();
+            admit(req,k);
+            S.batchIds.push(req.id);
+          }
+          S.batchActive=true;
+          logEv('batch','batch opened','batch of '+take+' admitted together · no new request joins until all '+take+' finish');
+        }
+      }
+      /* else: a batch is mid-flight — waiting requests MUST wait (head-of-line block) */
+    } else {
+      /* CONTINUOUS: any free slot admits the head of the queue this very step. */
+      var fi;
+      while(S.queue.length>0 && (fi=freeSlotIndex())>=0){
+        admit(S.queue.shift(),fi);
+      }
+    }
+
+    /* 4. queue-growth telemetry */
+    if(S.queue.length>S.maxQueueSeen)S.maxQueueSeen=S.queue.length;
+
+    /* trim throughput window to a trailing horizon */
+    var horizon=S.step-Math.round(3/TICK_S); /* ~3s window */
+    while(S.recentDone.length && S.recentDone[0]<horizon)S.recentDone.shift();
+    while(S.recentWaits.length>60)S.recentWaits.shift();
+  }
+
+  /* ------------------------------------------------------------------ derived readouts */
+  function metrics(){
+    var winSteps=Math.min(S.step, Math.round(3/TICK_S));
+    var winS=Math.max(winSteps*TICK_S, TICK_S);
+    var thru=S.recentDone.length/winS;                 /* completions per second */
+    var waits=S.recentWaits.slice().sort(function(a,b){return a-b});
+    var p50=waits.length?waits[Math.floor((waits.length-1)*0.5)]:0;
+    var p50ms=p50*TICK_MS;
+    var util=S.slots>0?occupiedCount()/S.slots:0;
+    return {throughput:thru, p50WaitMs:p50ms, p50WaitSteps:p50, utilization:util,
+            queueDepth:S.queue.length, done:S.totalDone};
+  }
+
+  /* ------------------------------------------------------------------ rendering */
+  function fmtMs(v){return v>=1000?(v/1000).toFixed(2)+' s':Math.round(v)+' ms'}
+
+  function renderSlots(){
+    var box=$('slots'); box.innerHTML='';
+    for(var i=0;i<S.slots;i++){
+      var rq=S.slotReq[i];
+      var lane=document.createElement('div'); lane.className='slot';
+      var lbl=document.createElement('span'); lbl.className='slabel'; lbl.textContent='slot '+(i+1);
+      var track=document.createElement('div');
+      track.className='lane '+(S.mode==='static'?'static-batch':'cont-batch');
+      if(rq){
+        var occ=document.createElement('div'); occ.className='occ';
+        var rid=document.createElement('span'); rid.className='rid'; rid.textContent='req#'+rq.id;
+        occ.appendChild(rid);
+        var ticks=document.createElement('span'); ticks.style.display='inline-flex'; ticks.style.gap='2px'; ticks.style.marginLeft='4px';
+        for(var t=0;t<rq.tokens;t++){
+          var tk=document.createElement('span'); tk.className='tk'+(t<rq.done?' on':'');
+          ticks.appendChild(tk);
+        }
+        occ.appendChild(ticks);
+        track.appendChild(occ);
+      } else {
+        /* static: if a batch is mid-flight, an empty slot is still "held" by the batch */
+        if(S.mode==='static' && S.batchActive){
+          lane.classList=lane.classList; /* no-op keep */
+          track.classList.add('batchwait');
+          var bw=document.createElement('div'); bw.className='bw';
+          bw.textContent='waiting for batch to drain';
+          track.appendChild(bw);
+        } else {
+          var em=document.createElement('span'); em.className='empty'; em.textContent='idle · free for next request';
+          track.appendChild(em);
+        }
+      }
+      lane.appendChild(lbl); lane.appendChild(track);
+      box.appendChild(lane);
+    }
+  }
+
+  function renderQueue(){
+    var q=$('queue'); q.innerHTML='';
+    var m=metrics();
+    if(S.queue.length===0){
+      var e=document.createElement('span'); e.id='queueEmpty'; e.textContent='no requests waiting — slots have capacity';
+      q.appendChild(e); q.classList.remove('growing');
+      return;
+    }
+    var drawn=Math.min(S.queue.length,MAX_QUEUE);
+    for(var i=0;i<drawn;i++){
+      var qr=document.createElement('span');
+      qr.className='qr'+(S.queue.length>S.slots*4?' hot':'');
+      qr.textContent=S.queue[i].id;
+      q.appendChild(qr);
+    }
+    if(S.queue.length>drawn){
+      var more=document.createElement('span'); more.className='qr'; more.style.width='auto'; more.style.padding='0 4px';
+      more.textContent='+'+(S.queue.length-drawn);
+      q.appendChild(more);
+    }
+    q.classList.toggle('growing', S.queue.length>S.slots*4);
+  }
+
+  var lastQueueDepth=0;
+  function renderLatBars(){
+    var box=$('latBars');
+    if(S.finished.length===0){
+      box.innerHTML='<span id="latEmpty">completed requests appear here, newest on top</span>';
+      return;
+    }
+    box.innerHTML='';
+    /* scale bars to the largest total (wait+serve) among shown finishers */
+    var shown=S.finished.slice(0,14);
+    var maxTotal=1;
+    shown.forEach(function(r){var tot=(r.finishedStep-r.arrivedStep);if(tot>maxTotal)maxTotal=tot;});
+    shown.forEach(function(r){
+      var waitSteps=r.startedStep-r.arrivedStep;
+      var serveSteps=r.finishedStep-r.startedStep;
+      var lb=document.createElement('div'); lb.className='lb';
+      var id=document.createElement('span'); id.className='lbid'; id.textContent='req#'+r.id;
+      var track=document.createElement('div'); track.className='lbtrack';
+      var w=document.createElement('div'); w.className='lbwait';
+      w.style.width=(waitSteps/maxTotal*100)+'%';
+      var sv=document.createElement('div'); sv.className='lbserve';
+      sv.style.left=(waitSteps/maxTotal*100)+'%';
+      sv.style.width=(serveSteps/maxTotal*100)+'%';
+      track.appendChild(w); track.appendChild(sv);
+      var ms=document.createElement('span'); ms.className='lbms';
+      ms.innerHTML='wait <b>'+fmtMs(waitSteps*TICK_MS)+'</b>';
+      lb.appendChild(id); lb.appendChild(track); lb.appendChild(ms);
+      box.appendChild(lb);
+    });
+  }
+
+  function renderReadouts(){
+    var m=metrics();
+    $('thruV').textContent=m.throughput.toFixed(1)+' /s';
+    $('waitV').textContent=fmtMs(m.p50WaitMs);
+    $('waitV').classList.toggle('warnv', m.p50WaitSteps>=6);
+    $('waitV').classList.toggle('badv', m.p50WaitSteps>=14);
+    $('utilV').textContent=Math.round(m.utilization*100)+'%';
+    $('qdepthV').textContent=m.queueDepth;
+    $('qdepthV').classList.toggle('warnv', m.queueDepth>S.slots*2);
+    $('qdepthV').classList.toggle('badv', m.queueDepth>S.slots*4);
+    $('doneV').textContent=m.done;
+    $('stepLbl').textContent='step '+S.step;
+    /* queue-growth narration */
+    if(m.queueDepth>lastQueueDepth+S.slots && m.queueDepth>S.slots*3){
+      logEv('queue','queue depth','queue at '+m.queueDepth+' ↑ — arrivals outrun the '+S.slots+' slot'+(S.slots===1?'':'s')+' · requests_deferred climbing');
+    }
+    lastQueueDepth=m.queueDepth;
+  }
+
+  function renderAll(){ renderSlots(); renderQueue(); renderLatBars(); renderReadouts(); updateChallenge(); }
+
+  /* ------------------------------------------------------------------ clock */
+  var timer=null;
+  function REDUCED(){return window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches}
+  function tickAndRender(){ step(); renderAll(); evalChallenge(); }
+  function startClock(){
+    if(S.running)return; S.running=true;
+    $('runBtn').textContent='⏸ Pause clock'; $('runBtn').classList.add('paused');
+    timer=setInterval(tickAndRender, TICK_MS);
+  }
+  function stopClock(){
+    S.running=false; if(timer){clearInterval(timer);timer=null;}
+    $('runBtn').textContent='▶ Run clock'; $('runBtn').classList.remove('paused');
+  }
+  function toggleClock(){ S.running?stopClock():startClock(); }
+
+  /* ------------------------------------------------------------------ mode + controls */
+  function setMode(mode){
+    if(S.mode===mode)return;
+    S.mode=mode;
+    /* changing mode resets the run so the comparison is honest and un-spoofable */
+    var keep={arrivalRate:S.arrivalRate, slots:S.slots};
+    var wasRunning=S.running; stopClock();
+    S=freshState(); S.arrivalRate=keep.arrivalRate; S.slots=keep.slots; S.mode=mode;
+    seed=0; lastQueueDepth=0;
+    CH_maybeArmMode();
+    syncModeUI();
+    logEv('','mode', 'switched to '+(mode==='static'?'STATIC batching — batch runs until all finish':'CONTINUOUS batching — slots join/leave per token step')+' · counters reset');
+    renderAll();
+    if(wasRunning)startClock();
+  }
+  function syncModeUI(){
+    $('modeStatic').classList.toggle('on', S.mode==='static');
+    $('modeCont').classList.toggle('on', S.mode==='continuous');
+    $('modeName').textContent=(S.mode==='static'?'STATIC BATCHING':'CONTINUOUS BATCHING');
+    $('modeStage').textContent=(S.mode==='static'
+      ? 'a batch runs until every request in it finishes'
+      : 'a freed slot admits the next waiting request instantly');
+    $('modeHint').textContent=(S.mode==='static'
+      ? 'batch waits for its slowest member · arrivals wait for the next batch'
+      : 'no batch boundary · membership changes every token step');
+  }
+
+  function syncLabels(){
+    $('arrVal').textContent=S.arrivalRate.toFixed(1);
+    $('slotVal').textContent=S.slots;
+    $('arrRange').value=S.arrivalRate;
+    $('slotRange').value=S.slots;
+  }
+
+  $('arrRange').addEventListener('input',function(){S.arrivalRate=+this.value;$('arrVal').textContent=S.arrivalRate.toFixed(1);updateChallenge();});
+  $('slotRange').addEventListener('input',function(){
+    var v=+this.value; S.slots=v; $('slotVal').textContent=v;
+    /* dropping slots below occupancy: park overflow requests back into the queue head */
+    for(var i=S.slots;i<4;i++){ if(S.slotReq[i]){ S.queue.unshift(S.slotReq[i]); S.slotReq[i]=null; } }
+    renderAll();
+  });
+  $('modeStatic').addEventListener('click',function(){setMode('static')});
+  $('modeCont').addEventListener('click',function(){setMode('continuous')});
+  $('runBtn').addEventListener('click',toggleClock);
+  $('reset').addEventListener('click',function(){location.reload()});
+
+  /* ------------------------------------------------------------------ challenge
+     Step 1: at the SAME load, switching from static to continuous cuts p50 wait.
+             (Detected by comparing a captured static p50 against a later continuous p50.)
+     Step 2: push arrival rate high enough that the queue grows without bound
+             (queue depth crosses a runaway threshold).
+     Step 3: add a slot (or slots) so the queue drains back down.
+     Detection is from MODEL STATE, never click-counting. */
+  var CH={step:1, done:[false,false,false],
+          staticP50:null,     /* p50 wait captured while in static mode under load */
+          contBeat:false,     /* did continuous later beat it at same-or-higher load? */
+          runawayDepth:0};    /* peak queue depth seen while saturated */
+  var CH_TEXT=[
+    'Step 1 — Run the clock in <b>Static</b> for a few seconds, then flip to <b>Continuous</b> at the same load. Watch <code>p50 wait</code> drop — same traffic, less waiting.',
+    'Step 2 — Push <code>arrival rate</code> above what the slots can drain and let it run. The <b>queue grows without bound</b> — arrivals outrun capacity (this is <code>requests_deferred</code> climbing in your lab).',
+    'Step 3 — Now <b>add a slot</b> (raise <code>engine slots</code>) and let it run — the queue <b>drains back down</b>. More concurrent capacity clears the backlog.'
+  ];
+  var SUCCESS='Challenge complete! You just felt why continuous batching wins. In <b>static</b> batching a slot batch waits for its slowest member and arrivals wait for the next batch — slots sit idle and short requests are trapped behind long ones. In <b>continuous</b> batching a freed slot admits the next request on the very next token step, so utilization stays high and <b>p50 wait drops at the same load</b>. And when <code>arrival rate</code> outruns your slots, the queue grows without bound — you saw <code>requests_deferred</code> climb — until you add capacity. That is exactly the behaviour you will watch live in the M3 lab’s load test and the X-Ray Engine lens.';
+
+  function CH_maybeArmMode(){
+    /* re-arm step 1 if the learner switches back to static before completing it */
+    if(CH.step===1 && S.mode==='static'){ CH.staticP50=null; CH.contBeat=false; }
+  }
+
+  function evalChallenge(){
+    var m=metrics();
+    if(CH.step===1){
+      /* capture a static p50 under real load, then require continuous to beat it
+         at the same-or-higher arrival rate. */
+      if(S.mode==='static'){
+        if(m.done>=4 && m.p50WaitSteps>0){ CH.staticP50=Math.max(CH.staticP50||0, m.p50WaitSteps); CH.staticRate=S.arrivalRate; }
+      } else if(S.mode==='continuous'){
+        if(CH.staticP50!=null && m.done>=4 && S.arrivalRate>=(CH.staticRate||0) && m.p50WaitSteps < CH.staticP50){
+          CH.done[0]=true; CH.step=2;
+          logEv('','try-this','Step 1 done — continuous p50 wait ('+m.p50WaitSteps+' steps) beat static ('+CH.staticP50+' steps) at the same load.');
+        }
+      }
+    } else if(CH.step===2){
+      /* runaway queue: depth must climb past a clear saturation threshold */
+      if(m.queueDepth>CH.runawayDepth)CH.runawayDepth=m.queueDepth;
+      if(m.queueDepth>=Math.max(12, S.slots*6)){
+        CH.done[1]=true; CH.step=3;
+        logEv('queue','try-this','Step 2 done — queue reached '+m.queueDepth+' and is still climbing. Arrivals outrun the slots.');
+      }
+    } else if(CH.step===3){
+      /* drain: the peak keeps updating while saturated; success when the queue has
+         fallen well below its peak (the growth reversed — capacity now exceeds load).
+         Anchored to the true peak, not the depth at the moment step 2 flipped. */
+      if(m.queueDepth>CH.runawayDepth)CH.runawayDepth=m.queueDepth;
+      var target=Math.max(2, Math.floor(CH.runawayDepth*0.5));
+      if(CH.runawayDepth>=8 && m.queueDepth<=target){
+        CH.done[2]=true; CH.step=4;
+        logEv('admit','try-this','Step 3 done — queue drained from a peak of '+CH.runawayDepth+' down to '+m.queueDepth+'. Adding a slot cleared the backlog.');
+      }
+    }
+    updateChallenge();
+  }
+  function updateChallenge(){
+    for(var i=1;i<=3;i++){
+      var d=$('d'+i);d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
+      d.textContent=CH.done[i-1]?'✓':i;
+    }
+    var box=$('challenge'),txt=$('chTxt');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;}
+    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[CH.step-1];}
+  }
+
+  /* ------------------------------------------------------------------ boot */
+  S=freshState();
+  syncLabels(); syncModeUI(); renderAll();
+  logEv('','ready','engine up · '+S.slots+' slots · static batching · press Run to start the clock');
+
+  /* ------------------------------------------------------------------ test hook (harmless in production)
+     Virtual-time driver: the harness calls stepN() to advance the clock deterministically,
+     never wall-clock sleeps. */
+  window.__sim={
+    S:function(){return S}, CH:CH,
+    setArrival:function(v){S.arrivalRate=v;syncLabels();updateChallenge();},
+    setSlots:function(v){$('slotRange').value=v;$('slotRange').dispatchEvent(new Event('input'));},
+    setMode:setMode,
+    stepN:function(n){for(var i=0;i<(n||1);i++){step();evalChallenge();}renderAll();},
+    metrics:metrics,
+    start:startClock, stop:stopClock, isRunning:function(){return S.running},
+    consts:{TOKENS_MIN:TOKENS_MIN,TOKENS_MAX:TOKENS_MAX,TICK_MS:TICK_MS,DEFAULTS:DEFAULTS},
+    reseed:function(v){seed=v||0;}
+  };
+})();
+</script>
+</body>
+</html>

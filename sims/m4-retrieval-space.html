@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retrieval Space — nearest-k search in embedding space</title>
+<style>
+  :root{
+    --bg:#0d1220; --panel:#151c2e; --panel2:#111827; --line:#26324e; --line2:#1c2740;
+    --txt:#dbe4f5; --dim:#8494b3; --faint:#5a6a8c;
+    --accent:#4cc9f0; --accent2:#7b6cf6;
+    --ok:#3ddc97; --warn:#f5b942; --bad:#ff6b6b;
+    /* per-cluster hues (semantic, muted) */
+    --cNet:#4cc9f0; --cDb:#7b6cf6; --cDep:#3ddc97; --cCert:#f5b942; --cMisc:#c08cff;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:clamp(10.5px,0.4vw + 9.1px,16px)}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:1rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  #app{display:flex;flex-direction:column;height:100%;padding:8px 10px;gap:6px}
+
+  /* ---------- header ---------- */
+  header{display:flex;align-items:center;gap:12px;flex:0 0 auto;flex-wrap:wrap}
+  header h1{font-size:1.05rem;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+  header h1 .llm{color:var(--accent)}
+  #hsub{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--faint);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #reset{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;
+    padding:3px 9px;font-size:.88rem;cursor:pointer;min-height:24px;flex:0 0 auto}
+  #reset:hover{color:var(--txt);border-color:var(--faint)}
+
+  /* ---------- challenge banner ---------- */
+  #challenge{flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    background:linear-gradient(90deg,rgba(123,108,246,.14),rgba(76,201,240,.07));
+    border:1px solid #3a3f6e;border-radius:8px;padding:4px 11px;min-height:30px}
+  #challenge .tag{font-size:.8rem;font-weight:700;letter-spacing:.8px;color:var(--accent2);
+    text-transform:uppercase;white-space:nowrap}
+  #challenge .steps{display:flex;gap:5px}
+  #challenge .dot{width:1.3rem;height:1.3rem;border-radius:50%;border:1.5px solid var(--faint);
+    font-size:.76rem;display:flex;align-items:center;justify-content:center;color:var(--faint);font-weight:700}
+  #challenge .dot.cur{border-color:var(--accent);color:var(--accent)}
+  #challenge .dot.done{border-color:var(--ok);background:rgba(61,220,151,.15);color:var(--ok)}
+  #challenge .txt{flex:1;color:var(--txt);font-size:.94rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  #challenge .txt code{font-family:var(--mono);font-size:.86rem;color:var(--accent);background:rgba(76,201,240,.08);
+    padding:0 4px;border-radius:4px}
+  #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
+  #challenge.success .tag{color:var(--ok)}
+  #challenge.success .txt{white-space:normal;line-height:1.3}
+
+  /* ---------- main grid ---------- */
+  #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(232px,20rem,330px) 1fr;gap:6px;min-height:0}
+  #main>.panel{min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;min-height:0}
+  .panel h2{font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .panel h2 span{text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- controls (left) ---------- */
+  #controls{display:flex;flex-direction:column;gap:9px;overflow-y:auto;scrollbar-width:thin}
+
+  .qhead{font-family:var(--mono);font-size:.76rem;color:var(--dim);margin-bottom:2px}
+  #queryChips{display:flex;flex-wrap:wrap;gap:4px}
+  .chip{font-size:.78rem;line-height:1.2;border:1px solid var(--line);border-radius:999px;
+    background:var(--panel2);color:var(--dim);padding:3px 9px;cursor:pointer;
+    transition:border-color .12s,color .12s,background .12s}
+  .chip:hover{border-color:var(--accent);color:var(--txt)}
+  .chip.active{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--panel2))}
+  .chip.offtopic{border-style:dashed}
+  .chip.offtopic:hover,.chip.offtopic.active{border-color:var(--warn);color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,var(--panel2))}
+
+  .ctl .cl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .ctl .cl b{color:var(--txt);font-weight:700}
+  .ctl .cl .hint{color:var(--faint);font-size:.68rem;font-weight:400}
+  .ctl input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:1.2rem}
+
+  /* ranked-results readout */
+  .readout{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line2);border-radius:8px;
+    background:var(--panel2);padding:6px 9px}
+  .readout,.readout *{cursor:default}
+  .readout .rh{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin-bottom:2px;display:flex;justify-content:space-between}
+  .rrow{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:1px 0}
+  .rrow .rk{font-family:var(--mono);font-size:.72rem;color:var(--faint);flex:0 0 1.1rem}
+  .rrow .rl{font-family:var(--mono);font-size:.78rem;color:var(--txt);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rrow .rv{font-family:var(--mono);font-size:.82rem;font-weight:700;color:var(--dim)}
+  .rrow.near .rv{color:var(--ok)} .rrow.mid .rv{color:var(--warn)} .rrow.far .rv{color:var(--bad)}
+  .rempty{font-family:var(--mono);font-size:.76rem;color:var(--faint)}
+
+  #warnBox{display:none;border:1px dashed var(--warn);border-radius:8px;background:rgba(245,185,66,.07);
+    padding:5px 9px;font-family:var(--mono);font-size:.78rem;color:var(--warn);line-height:1.35}
+  #warnBox.on{display:block}
+  #warnBox b{color:var(--warn)}
+
+  /* ---------- space (right) ---------- */
+  #space{display:flex;flex-direction:column;min-height:0;gap:6px}
+  #plotWrap{flex:1 1 auto;position:relative;min-height:0;border:1px solid var(--line2);border-radius:8px;
+    background:radial-gradient(circle at 50% 45%,#0f1626 0%,#0a0f1c 100%);overflow:hidden}
+  #plot{position:absolute;inset:0}
+  .dot{position:absolute;border-radius:50%;transform:translate(-50%,-50%);
+    box-shadow:0 0 0 1px rgba(0,0,0,.4);cursor:help;transition:opacity .2s,box-shadow .15s}
+  .dot:hover{box-shadow:0 0 0 2px var(--txt)}
+  .dot.hit{box-shadow:0 0 0 2px var(--txt),0 0 10px 2px currentColor}
+  .dot.dim{opacity:.28}
+  .qdot{position:absolute;width:1.05rem;height:1.05rem;border-radius:50%;transform:translate(-50%,-50%);
+    background:#fff;border:2px solid var(--accent2);z-index:6;
+    box-shadow:0 0 12px 3px rgba(123,108,246,.7);animation:qpop .35s ease-out}
+  .qdot::after{content:"?";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font:700 .7rem var(--mono);color:var(--accent2)}
+  @keyframes qpop{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+  svg#links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+  svg#links line{stroke:var(--txt);stroke-width:1.3;stroke-dasharray:3 3;opacity:.55}
+  svg#links line.near{stroke:var(--ok)} svg#links line.mid{stroke:var(--warn)} svg#links line.far{stroke:var(--bad)}
+  svg#links text{fill:var(--dim);font:600 .62rem var(--mono);paint-order:stroke;stroke:#0a0f1c;stroke-width:3px}
+  .clusterLbl{position:absolute;transform:translate(-50%,-50%);font:600 .68rem var(--mono);
+    color:var(--faint);letter-spacing:.5px;pointer-events:none;text-transform:uppercase;z-index:2;opacity:.65}
+  #hoverTip{position:absolute;z-index:9;pointer-events:none;background:#0a0f1c;border:1px solid var(--line);
+    border-radius:6px;padding:4px 8px;font:.74rem/1.35 var(--mono);color:var(--txt);
+    box-shadow:0 4px 14px rgba(0,0,0,.5);max-width:22ch;display:none}
+
+  #legend{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:2px 12px;font-family:var(--mono);font-size:.7rem;color:var(--faint)}
+  #legend span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+  #legend i{width:.6rem;height:.6rem;border-radius:50%;flex:0 0 auto}
+
+  /* ---------- event log ---------- */
+  #events{flex:0 0 clamp(84px,7.5rem,132px);display:flex;flex-direction:column;min-height:0}
+  #events,#events *{cursor:default}
+  #evList{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6;scrollbar-width:thin}
+  .ev{display:flex;gap:8px;white-space:nowrap;overflow:hidden}
+  .ev .et{color:var(--faint);flex:0 0 4.2rem}
+  .ev .er{flex:0 0 5.4rem;color:var(--accent);font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .ev.warn .er{color:var(--warn)} .ev.try .er{color:var(--accent2)}
+  .ev .em{flex:1;color:var(--txt);opacity:.9;overflow:hidden;text-overflow:ellipsis}
+  .ev.new{animation:evin .4s ease-out}
+  @keyframes evin{0%{background:rgba(76,201,240,.12)}100%{background:transparent}}
+  #note{margin-left:auto;font-size:1rem;color:var(--faint);cursor:help;position:relative;padding:0 4px}
+  #note:hover{color:var(--dim)}
+  #note:hover::after,#note:active::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 7px);
+    z-index:40;width:46ch;max-width:80vw;background:#0a0f1c;border:1px solid var(--line);border-radius:7px;padding:7px 10px;
+    color:var(--txt);text-align:left;white-space:normal;pointer-events:none;
+    font:.82rem/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    box-shadow:0 4px 16px rgba(0,0,0,.55)}
+
+  /* narrow fallback */
+  @media (max-width:620px){
+    body{overflow:auto}
+    #main{grid-template-columns:1fr}
+    #app{height:auto;min-height:100%}
+    #plotWrap{min-height:52vw}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <h1><span class="llm">◇</span> Retrieval Space</h1>
+    <span id="hsub">pick a question · watch the vector DB return its nearest chunks</span>
+    <button id="reset" title="Reset the simulator to its starting state">↺ Reset</button>
+  </header>
+
+  <div id="challenge">
+    <span class="tag">Try this</span>
+    <span class="steps">
+      <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
+    </span>
+    <span class="txt" id="chTxt"></span>
+  </div>
+
+  <div id="main">
+    <!-- LEFT: controls + ranked results -->
+    <div class="panel" id="controls">
+      <div class="qhead">query <span style="color:var(--faint)">· pick one, or its rephrase</span></div>
+      <div id="queryChips"></div>
+
+      <div class="ctl" title="How many nearest chunks the vector DB returns for the query. This is the k in nearest-k / top-k retrieval.">
+        <div class="cl">k — nearest chunks <span><b><span id="kVal">3</span></b></span></div>
+        <input type="range" id="kRange" min="1" max="5" step="1" value="3">
+        <div class="cl"><span class="hint">how many chunks the DB hands back</span></div>
+      </div>
+
+      <div class="ctl" title="How finely documents are cut before embedding. Small = many precise dots; large = few coarse blobs that blur distinct topics together.">
+        <div class="cl">chunk size <span><b><span id="csVal">300</span></b> tok</span></div>
+        <input type="range" id="csRange" min="0" max="2" step="1" value="1">
+        <div class="cl"><span class="hint">100 = fine &amp; precise · 800 = coarse blobs</span></div>
+      </div>
+
+      <div class="readout" id="readout">
+        <div class="rh"><span id="rhLeft">ranked chunks</span><span id="rhRight">cosine distance</span></div>
+        <div id="ranked"><div class="rempty">pick a query to retrieve the nearest chunks</div></div>
+      </div>
+
+      <div id="warnBox"></div>
+    </div>
+
+    <!-- RIGHT: the 2-D embedding space -->
+    <div class="panel" id="space">
+      <div id="plotWrap">
+        <svg id="links"></svg>
+        <div id="plot"></div>
+        <div id="hoverTip"></div>
+      </div>
+      <div id="legend"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="events">
+    <h2>Retrieval trace <span>— what the vector DB would log</span>
+      <span id="note" data-tip="Teaching model, not the real system. Real embeddings live in 768 dimensions (nomic-embed-text); the positions here are hand-placed 2-D projections so you can see clusters and distances. Distances are illustrative cosine-style values, not measured. The lab measures the real thing — send a query to /retrieve and read the actual distances your Chroma index returns.">ⓘ</span></h2>
+    <div id="evList"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ------------------------------------------------------------------ model
+     A 2-D toy of embedding space. ~20 doc-chunk dots sit in 5 semantic clusters.
+     A query maps to a fixed 2-D point; retrieval = the k nearest chunk dots by
+     Euclidean distance in the [0,1]x[0,1] plot, reported as a cosine-style value.
+
+     Chunk size regroups the dots:
+       100 -> FINE:   every chunk is its own dot (most dots, most precise).
+       300 -> MEDIUM: the course default (dots grouped per section).
+       800 -> COARSE: sibling dots merge into one blob per doc-region; two distinct
+                       topics can fall under a single blob (precision lost). */
+
+  /* clusters: id, label, hue var, centre (x,y in 0..1). Pulled toward the centre so
+     the corners stay genuinely empty — an off-topic query lands out there, far from
+     every cluster. */
+  var CLUSTERS=[
+    {id:'net',  label:'networking', hue:'--cNet',  cx:0.30, cy:0.34},
+    {id:'db',   label:'database',   hue:'--cDb',   cx:0.68, cy:0.34},
+    {id:'dep',  label:'deploy',     hue:'--cDep',  cx:0.34, cy:0.66},
+    {id:'cert', label:'certs',      hue:'--cCert', cx:0.67, cy:0.66},
+    {id:'misc', label:'misc',       hue:'--cMisc', cx:0.50, cy:0.50}
+  ];
+  var CMAP={}; CLUSTERS.forEach(function(c){CMAP[c.id]=c});
+
+  /* base chunk dots (fine grain). Each has a doc "region" so coarse mode can merge
+     siblings sharing (cluster+region) into one blob. Two topics deliberately share
+     a coarse region ("net/db share the 'infra' blob at 800") to show topic-blur. */
+  var BASE=[
+    // networking
+    {id:'dns-outage#symptoms',     c:'net', region:'infra', x:0.26, y:0.30},
+    {id:'dns-outage#resolution',   c:'net', region:'infra', x:0.31, y:0.38},
+    {id:'vpn-access#symptoms',     c:'net', region:'access',x:0.36, y:0.30},
+    {id:'vpn-access#fix',          c:'net', region:'access',x:0.32, y:0.42},
+    {id:'payments-5xx#diagnosis',  c:'net', region:'infra', x:0.28, y:0.36},
+    // database
+    {id:'db-failover#symptoms',    c:'db',  region:'infra', x:0.64, y:0.30},
+    {id:'db-failover#promote',     c:'db',  region:'infra', x:0.70, y:0.34},
+    {id:'queue-backlog#diagnosis', c:'db',  region:'data',  x:0.66, y:0.40},
+    {id:'cache-stampede#fix',      c:'db',  region:'data',  x:0.72, y:0.30},
+    // deploy
+    {id:'deploy-rollback#steps',   c:'dep', region:'ship',  x:0.30, y:0.64},
+    {id:'deploy-rollback#verify',  c:'dep', region:'ship',  x:0.36, y:0.62},
+    {id:'k8s-crashloop#diagnosis', c:'dep', region:'run',   x:0.32, y:0.70},
+    {id:'k8s-crashloop#fix',       c:'dep', region:'run',   x:0.38, y:0.68},
+    // certs
+    {id:'tls-rotation#steps',      c:'cert',region:'sec',   x:0.64, y:0.64},
+    {id:'tls-rotation#verify',     c:'cert',region:'sec',   x:0.70, y:0.62},
+    {id:'cert-expiry#alert',       c:'cert',region:'sec',   x:0.66, y:0.70},
+    // misc
+    {id:'oncall-escalation#ladder',c:'misc',region:'ops',   x:0.46, y:0.48},
+    {id:'backup-restore#procedure',c:'misc',region:'ops',   x:0.54, y:0.52},
+    {id:'disk-pressure#symptoms',  c:'misc',region:'ops',   x:0.50, y:0.44},
+    {id:'runbook-index#overview',  c:'misc',region:'ops',   x:0.50, y:0.56}
+  ];
+
+  /* queries: label, 2-D point, offtopic flag, and (for the wrong-cluster demo) a
+     `rephrase` id pointing at the corrected variant. The "wrong-cluster" query
+     is deliberately placed nearer the WRONG cluster at k=1; its rephrase lands right. */
+  var QUERIES=[
+    {id:'q-5xx',    label:'website throwing 500 errors',        x:0.27, y:0.33},
+    {id:'q-dns',    label:'DNS not resolving internally',       x:0.28, y:0.34},
+    {id:'q-failover',label:'primary database is down',          x:0.68, y:0.32},
+    {id:'q-tls',    label:'certificate about to expire',        x:0.66, y:0.65},
+    {id:'q-rollback',label:'roll back the last deploy',         x:0.33, y:0.65},
+    {id:'q-crash',  label:'pod keeps crash-looping',            x:0.34, y:0.69},
+    // WRONG-CLUSTER query: "connection refused after deploy" sits between deploy &
+    // misc and its top-1 lands in MISC — the wrong cluster for a deploy problem.
+    // Its rephrase pins it into deploy.
+    {id:'q-connrefused', label:'connection refused after deploy', x:0.43, y:0.57, wrong:true, rephrase:'q-connrefused-fix'},
+    {id:'q-connrefused-fix', label:'↳ rephrase: new pods fail readiness after rollout', x:0.34, y:0.66, hiddenUntilWrong:true},
+    // OFF-TOPIC: lands far in an empty corner, far from every cluster.
+    {id:'q-bread',  label:'how do I bake sourdough bread',      x:0.94, y:0.06, offtopic:true}
+  ];
+  var QMAP={}; QUERIES.forEach(function(q){QMAP[q.id]=q});
+
+  var DEFAULTS={k:3, cs:1, query:null}; /* cs index: 0=100,1=300,2=800 */
+  var CS_TOK=[100,300,800];
+  var S={k:DEFAULTS.k, cs:DEFAULTS.cs, query:null, t0:Date.now()};
+
+  /* the wrong-cluster query is revealed the moment the learner picks it (so the
+     rephrase chip appears next to it). Track which wrong queries are unlocked. */
+  var revealed={};
+
+  var CH={step:1, done:[false,false,false]};
+
+  /* ------------------------------------------------------------------ geometry */
+  function dist2(ax,ay,bx,by){var dx=ax-bx,dy=ay-by;return Math.sqrt(dx*dx+dy*dy);}
+  /* map plot Euclidean distance -> a cosine-style readout. Calibrated to the lesson's
+     own numbers: a real semantic hit reads a fraction (in-cluster ~0.3-0.5), a
+     cross-cluster neighbour reads higher, and an off-topic corner reads >0.85 — the
+     bad-retrieval smell. Affine floor keeps even the best hit off zero (no query is
+     byte-identical to a stored chunk). */
+  function cosLike(d){return +(0.30 + d*1.9).toFixed(2);}
+  function band(cd){return cd<0.55?'near':cd<0.85?'mid':'far';}
+
+  /* current dot set depends on chunk size. Returns [{id,c,x,y,members[]}]. */
+  function dotsFor(cs){
+    if(cs===0){ // FINE: every base chunk is its own dot
+      return BASE.map(function(b){return {id:b.id,c:b.c,x:b.x,y:b.y,members:[b.id],grain:'fine'};});
+    }
+    if(cs===1){ // MEDIUM (default): group by cluster+region (section-level)
+      return groupBy(function(b){return b.c+'/'+b.region;},'medium');
+    }
+    // COARSE (800): group by a shared "blob" key that deliberately merges
+    // networking+database "infra" regions into ONE blob (topic-blur).
+    return groupBy(function(b){
+      var key=b.c+'/'+b.region;
+      if(key==='net/infra'||key==='db/infra') return 'infra-blob';
+      return b.c;                 // one blob per cluster otherwise
+    },'coarse');
+  }
+  function groupBy(keyfn,grain){
+    var g={};
+    BASE.forEach(function(b){var k=keyfn(b);(g[k]||(g[k]=[])).push(b);});
+    return Object.keys(g).map(function(k){
+      var arr=g[k];
+      var x=arr.reduce(function(s,b){return s+b.x;},0)/arr.length;
+      var y=arr.reduce(function(s,b){return s+b.y;},0)/arr.length;
+      // a blob's cluster is its majority cluster; a mixed blob is tagged 'mixed'
+      var cs={}; arr.forEach(function(b){cs[b.c]=(cs[b.c]||0)+1;});
+      var clist=Object.keys(cs);
+      var c=clist.length>1?'mixed':clist[0];
+      var label=arr.length>1?(k+' ('+arr.length+' chunks)'):arr[0].id;
+      return {id:label,key:k,c:c,x:x,y:y,members:arr.map(function(b){return b.id;}),
+              clusters:clist,grain:grain,mixed:clist.length>1};
+    });
+  }
+
+  /* retrieve nearest-k dots for the active query under current chunk size. */
+  function retrieve(){
+    if(!S.query)return null;
+    var q=QMAP[S.query];
+    var dots=dotsFor(S.cs);
+    var scored=dots.map(function(d){
+      var cd=cosLike(dist2(q.x,q.y,d.x,d.y));
+      return {dot:d, cd:cd};
+    }).sort(function(a,b){return a.cd-b.cd;});
+    var topk=scored.slice(0,S.k);
+    var allFar=scored.length>0 && scored[0].cd>=0.85; // best match is still far
+    return {q:q, dots:dots, scored:scored, topk:topk, allFar:allFar};
+  }
+
+  /* ------------------------------------------------------------------ events log */
+  var evList=$('evList');
+  function clock(){var s=Math.floor((Date.now()-S.t0)/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  function logEv(kind,reason,msg){
+    var d=document.createElement('div');
+    d.className='ev new '+(kind||'');
+    d.innerHTML='<span class="et"></span><span class="er"></span><span class="em"></span>';
+    d.children[0].textContent=clock();
+    d.children[1].textContent=reason; d.children[2].textContent=msg;
+    d.title=reason+'  —  '+msg;
+    evList.appendChild(d);
+    while(evList.children.length>90)evList.removeChild(evList.firstChild);
+    evList.scrollTop=evList.scrollHeight;
+  }
+
+  /* ------------------------------------------------------------------ render: chips */
+  function renderChips(){
+    var wrap=$('queryChips'); wrap.innerHTML='';
+    QUERIES.forEach(function(q){
+      if(q.hiddenUntilWrong && !revealed[q.rephraseOf]) return;
+      var el=document.createElement('button');
+      el.className='chip'+(q.offtopic?' offtopic':'')+(S.query===q.id?' active':'');
+      el.textContent=q.label;
+      el.title=q.offtopic?'An off-topic query — watch it land far from every cluster.'
+              :q.wrong?'Watch its top-1 land in the WRONG cluster at k=1 — then pick its rephrase.'
+              :'Retrieve the nearest chunks for this query.';
+      el.setAttribute('data-q',q.id);
+      el.addEventListener('click',function(){pickQuery(q.id)});
+      wrap.appendChild(el);
+    });
+  }
+  // link rephrase -> its origin so we know when to reveal it
+  QUERIES.forEach(function(q){if(q.hiddenUntilWrong){var origin=QUERIES.filter(function(o){return o.rephrase===q.id;})[0];if(origin)q.rephraseOf=origin.id;}});
+
+  /* ------------------------------------------------------------------ render: legend */
+  function renderLegend(){
+    var l=$('legend'); l.innerHTML='';
+    CLUSTERS.forEach(function(c){
+      var s=document.createElement('span');
+      var hue=getComputedStyle(document.documentElement).getPropertyValue(c.hue).trim();
+      s.innerHTML='<i style="background:'+hue+'"></i>'+c.label;
+      l.appendChild(s);
+    });
+    var mix=document.createElement('span');
+    mix.innerHTML='<i style="background:#8a8fa8"></i>mixed blob';
+    l.appendChild(mix);
+  }
+
+  /* ------------------------------------------------------------------ render: plot */
+  var plot=$('plot'), links=$('links'), tip=$('hoverTip');
+  function hue(cid){
+    if(cid==='mixed')return '#8a8fa8';
+    var c=CMAP[cid]; if(!c)return '#8a8fa8';
+    return getComputedStyle(document.documentElement).getPropertyValue(c.hue).trim();
+  }
+  function dotRadius(grain){return grain==='fine'?0.55:grain==='medium'?0.8:1.25;} /* rem */
+
+  function renderPlot(){
+    var res=retrieve();
+    var dots=res?res.dots:dotsFor(S.cs);
+    plot.innerHTML=''; links.innerHTML='';
+
+    // cluster labels
+    CLUSTERS.forEach(function(c){
+      var t=document.createElement('div'); t.className='clusterLbl';
+      t.style.left=(c.cx*100)+'%'; t.style.top=(c.cy*100+ (c.id==='misc'?0:-11) )+'%';
+      t.textContent=c.label; plot.appendChild(t);
+    });
+
+    var hitIds={};
+    if(res) res.topk.forEach(function(t){hitIds[t.dot.id]=t.cd;});
+
+    dots.forEach(function(d){
+      var el=document.createElement('div'); el.className='dot';
+      var r=dotRadius(d.grain);
+      el.style.width=r+'rem'; el.style.height=r+'rem';
+      el.style.left=(d.x*100)+'%'; el.style.top=(d.y*100)+'%';
+      el.style.background=hue(d.c); el.style.color=hue(d.c);
+      el.setAttribute('data-id',d.id);
+      el.title=d.id+(d.mixed?'  — mixed blob: '+d.clusters.join('+'):'');
+      if(res){
+        if(d.id in hitIds){ el.classList.add('hit'); }
+        else { el.classList.add('dim'); }
+      }
+      el.addEventListener('mouseenter',function(e){showTip(d,e)});
+      el.addEventListener('mousemove',function(e){moveTip(e)});
+      el.addEventListener('mouseleave',hideTip);
+      plot.appendChild(el);
+    });
+
+    // query dot + distance lines
+    if(res){
+      var q=res.q;
+      var qd=document.createElement('div'); qd.className='qdot';
+      qd.style.left=(q.x*100)+'%'; qd.style.top=(q.y*100)+'%';
+      qd.title='query: '+q.label; plot.appendChild(qd);
+
+      var W=plot.clientWidth||600, H=plot.clientHeight||360;
+      res.topk.forEach(function(t){
+        var d=t.dot, ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+        ln.setAttribute('x1',q.x*W); ln.setAttribute('y1',q.y*H);
+        ln.setAttribute('x2',d.x*W); ln.setAttribute('y2',d.y*H);
+        ln.setAttribute('class',band(t.cd));
+        links.appendChild(ln);
+        var tx=document.createElementNS('http://www.w3.org/2000/svg','text');
+        tx.setAttribute('x',(q.x+d.x)/2*W); tx.setAttribute('y',(q.y+d.y)/2*H-2);
+        tx.textContent=t.cd.toFixed(2); links.appendChild(tx);
+      });
+    }
+    return res;
+  }
+  function showTip(d,e){tip.style.display='block';tip.textContent=d.id+(d.mixed?' — mixed: '+d.clusters.join('+'):'');moveTip(e);}
+  function moveTip(e){
+    var wrap=$('plotWrap').getBoundingClientRect();
+    tip.style.left=(e.clientX-wrap.left+10)+'px';
+    tip.style.top=(e.clientY-wrap.top+10)+'px';
+  }
+  function hideTip(){tip.style.display='none';}
+
+  /* ------------------------------------------------------------------ render: ranked list + warn */
+  function renderRanked(res){
+    var box=$('ranked'), warn=$('warnBox');
+    if(!res){box.innerHTML='<div class="rempty">pick a query to retrieve the nearest chunks</div>';
+      warn.classList.remove('on');return;}
+    box.innerHTML='';
+    res.topk.forEach(function(t,i){
+      var b=band(t.cd);
+      var row=document.createElement('div'); row.className='rrow '+b;
+      row.innerHTML='<span class="rk">'+(i+1)+'</span>'+
+        '<span class="rl">'+t.dot.id+'</span>'+
+        '<span class="rv">'+t.cd.toFixed(2)+'</span>';
+      row.title=t.dot.id+' — cosine distance '+t.cd.toFixed(2)+' ('+b+')';
+      box.appendChild(row);
+    });
+    if(res.allFar){
+      warn.classList.add('on');
+      warn.innerHTML='<b>no close match</b> — every distance is large ('+
+        res.topk[0].cd.toFixed(2)+'+). The query landed far from every cluster; '+
+        'this is the smell of a bad retrieval. Answering from these chunks would hallucinate.';
+    }else{
+      warn.classList.remove('on');
+    }
+  }
+
+  /* ------------------------------------------------------------------ challenge detection */
+  /* Step 1: pick the WRONG-cluster query at k=1, see top-1 in the wrong cluster,
+             then pick its rephrase so top-1 is in the RIGHT cluster.
+     Step 2: trigger the off-topic "no close match" warning.
+     Step 3: at chunk size 800, retrieve so that two DISTINCT topics share one blob
+             in the returned top-k (the coarse-blur). */
+  var wrongSeen=false;
+  function wrongClusterId(q){
+    // "connection refused after deploy" is a DEPLOY problem; right cluster = 'dep'.
+    return q.id==='q-connrefused' ? 'dep' : null;
+  }
+  function evalChallenge(res){
+    if(!res){updateChallenge();return;}
+    var q=res.q, top1=res.topk[0];
+
+    // Step 1
+    if(CH.step===1){
+      if(q.wrong && S.k===1){
+        var right=wrongClusterId(q);
+        if(top1 && top1.dot.c!==right && top1.dot.c!=='mixed'){
+          wrongSeen=true;
+          logEv('warn','wrong-cluster','top-1 is '+top1.dot.id+' in the '+CMAP[top1.dot.c].label+
+            ' cluster — but this is a deploy problem. Pick the rephrase.');
+        }
+      }
+      // completing: after seeing the wrong top-1, the rephrase's top-1 is in 'dep'
+      if(wrongSeen && q.id==='q-connrefused-fix' && top1 && (top1.dot.c==='dep')){
+        CH.done[0]=true;CH.step=2;
+        logEv('try','try-this','Step 1 done — the rephrase pins the query into the deploy cluster. Same intent, better wording, right chunks.');
+      }
+    } else if(CH.step===2){
+      if(res.allFar){
+        CH.done[1]=true;CH.step=3;
+        logEv('try','try-this','Step 2 done — off-topic query, every distance large. That is a retrieval you must NOT answer from.');
+      }
+    } else if(CH.step===3){
+      // a top-k entry that is a mixed/blur blob spanning >1 distinct cluster, at cs=800
+      if(S.cs===2){
+        var blur=res.topk.filter(function(t){return t.dot.mixed;})[0];
+        if(blur){
+          CH.done[2]=true;CH.step=4;
+          logEv('try','try-this','Step 3 done — at 800 tok, '+blur.dot.id+' merges '+blur.dot.clusters.join(' + ')+
+            ' into one blob. Coarse chunks blur distinct topics — that is precision lost.');
+        }
+      }
+    }
+    updateChallenge();
+  }
+
+  var CH_TEXT=[
+    'Step 1 — Set <code>k=1</code> and pick <code>connection refused after deploy</code>: its top-1 lands in the <b>wrong cluster</b>. Then pick its <b>rephrase</b> so the top-1 is right.',
+    'Step 2 — Pick the off-topic query <code>bake sourdough bread</code> and trigger the <b>no close match</b> warning — every distance large.',
+    'Step 3 — Drag <code>chunk size</code> to <b>800</b> and retrieve so a returned chunk is a <b>mixed blob</b> spanning two topics — coarse chunks blur distinct topics.'
+  ];
+  var SUCCESS='Challenge complete! You drove the whole retrieval intuition. A query that lands <b>inside a cluster</b> returns near, relevant chunks; reword it and it can jump clusters — retrieval is about <b>meaning, not words</b>. An <b>off-topic</b> query lands far from everything and every distance is large: that is the smell of a bad retrieval you must not answer from. And <b>chunk size</b> is the precision knob — cut too coarse (800) and two distinct topics blur into one blob, so the top-k stops being precise. When retrieval is wrong, this is where you look first.';
+
+  function updateChallenge(){
+    for(var i=1;i<=3;i++){
+      var d=$('d'+i);d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
+      d.textContent=CH.done[i-1]?'✓':i;
+    }
+    var box=$('challenge'),txt=$('chTxt');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;}
+    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[CH.step-1];}
+  }
+
+  /* ------------------------------------------------------------------ the one render pass */
+  function render(){
+    var res=renderPlot();
+    renderRanked(res);
+    $('rhLeft').textContent = res ? ('top-'+S.k+' chunks') : 'ranked chunks';
+    evalChallenge(res);
+    return res;
+  }
+
+  /* ------------------------------------------------------------------ actions */
+  function pickQuery(id){
+    var q=QMAP[id]; if(!q)return;
+    S.query=id;
+    if(q.wrong){revealed[q.id]=true; renderChips();} // unlock its rephrase chip
+    // mark active chip
+    Array.prototype.forEach.call(document.querySelectorAll('.chip'),function(el){
+      el.classList.toggle('active',el.getAttribute('data-q')===id);
+    });
+    var res=render();
+    if(res){
+      var top1=res.topk[0];
+      logEv(q.offtopic?'warn':'', 'retrieve',
+        'k='+S.k+' cs='+CS_TOK[S.cs]+' · "'+q.label+'" → '+top1.dot.id+' (d='+top1.cd.toFixed(2)+')'+
+        (res.allFar?' · NO CLOSE MATCH':''));
+    }
+  }
+  function setK(v){S.k=v;$('kVal').textContent=v;$('kRange').value=v;
+    if(S.query){var res=render();
+      logEv('','k','k='+v+' · returning nearest '+v+' chunk'+(v>1?'s':''));}
+    else render();}
+  function setCs(idx){S.cs=idx;$('csVal').textContent=CS_TOK[idx];$('csRange').value=idx;
+    var res=render();
+    logEv('','chunk','chunk size = '+CS_TOK[idx]+' tok · '+
+      (idx===0?'fine — many precise dots':idx===1?'medium — section-level (course default)':'coarse — blobs merge distinct topics'));
+  }
+
+  /* ------------------------------------------------------------------ controls wiring */
+  $('kRange').addEventListener('input',function(){setK(+this.value)});
+  $('csRange').addEventListener('input',function(){setCs(+this.value)});
+  $('reset').addEventListener('click',function(){location.reload()});
+  window.addEventListener('resize',function(){if(S.query)renderPlot();});
+
+  /* ------------------------------------------------------------------ boot */
+  renderChips();
+  renderLegend();
+  render();
+  updateChallenge();
+  logEv('','ready','index up · 20 chunks in 5 clusters · pick a query to retrieve');
+
+  /* ------------------------------------------------------------------ test hook */
+  window.__sim={
+    S:S, CH:CH,
+    QUERIES:QUERIES, CLUSTERS:CLUSTERS, CS_TOK:CS_TOK,
+    pick:function(id){pickQuery(id)},
+    setK:function(v){setK(v)},
+    setCs:function(v){setCs(v)},           /* v = index 0..2 */
+    retrieve:retrieve,                     /* pure: current query/k/cs */
+    dotsFor:dotsFor,
+    consts:{DEFAULTS:DEFAULTS, CS_TOK:CS_TOK},
+    /* convenience for assertions */
+    hitCount:function(){var r=retrieve();return r?r.topk.length:0;},
+    top1:function(){var r=retrieve();return r?r.topk[0]:null;},
+    allFar:function(){var r=retrieve();return r?r.allFar:false;}
+  };
+})();
+</script>
+</body>
+</html>

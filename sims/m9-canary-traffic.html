@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canary Traffic — split shows load, evals show quality</title>
+<style>
+  :root{
+    --bg:#0d1220; --panel:#151c2e; --panel2:#111827; --line:#26324e; --line2:#1c2740;
+    --txt:#dbe4f5; --dim:#8494b3; --faint:#5a6a8c;
+    --accent:#4cc9f0; --accent2:#7b6cf6;
+    --ok:#3ddc97; --warn:#f5b942; --bad:#ff6b6b;
+    --base:#4cc9f0; --canary:#f5b942;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:clamp(10.5px,0.4vw + 9.1px,16px)}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:1rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  #app{display:flex;flex-direction:column;height:100%;padding:8px 10px;gap:6px}
+
+  /* ---------- header ---------- */
+  header{display:flex;align-items:center;gap:12px;flex:0 0 auto;flex-wrap:wrap}
+  header h1{font-size:1.05rem;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+  header h1 .k8s{color:var(--accent)}
+  #hsub{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--faint);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #reset{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;
+    padding:3px 9px;font-size:.88rem;cursor:pointer;min-height:24px;flex:0 0 auto}
+  #reset:hover{color:var(--txt);border-color:var(--faint)}
+
+  /* ---------- challenge banner ---------- */
+  #challenge{flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    background:linear-gradient(90deg,rgba(123,108,246,.14),rgba(76,201,240,.07));
+    border:1px solid #3a3f6e;border-radius:8px;padding:4px 11px;min-height:30px}
+  #challenge .tag{font-size:.8rem;font-weight:700;letter-spacing:.8px;color:var(--accent2);
+    text-transform:uppercase;white-space:nowrap}
+  #challenge .steps{display:flex;gap:5px}
+  #challenge .dot{width:1.3rem;height:1.3rem;border-radius:50%;border:1.5px solid var(--faint);
+    font-size:.76rem;display:flex;align-items:center;justify-content:center;color:var(--faint);font-weight:700}
+  #challenge .dot.cur{border-color:var(--accent);color:var(--accent)}
+  #challenge .dot.done{border-color:var(--ok);background:rgba(61,220,151,.15);color:var(--ok)}
+  #challenge .txt{flex:1;color:var(--txt);font-size:.94rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  #challenge .txt code{font-family:var(--mono);font-size:.86rem;color:var(--accent);background:rgba(76,201,240,.08);
+    padding:0 4px;border-radius:4px}
+  #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
+  #challenge.success .tag{color:var(--ok)}
+  #challenge.success .txt{white-space:normal;line-height:1.3}
+
+  /* ---------- main grid ---------- */
+  #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(240px,21.5rem,350px) 1fr;gap:6px;min-height:0}
+  #main>.panel{min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;min-height:0}
+  .panel h2{font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .panel h2 span{text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- controls (left) ---------- */
+  #controls{display:flex;flex-direction:column;gap:9px;overflow-y:auto;scrollbar-width:thin}
+  .ctl .cl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .ctl .cl b{color:var(--txt);font-weight:700}
+  .ctl .cl b.can{color:var(--canary)}
+  .ctl .cl .hint{color:var(--faint);font-size:.68rem;font-weight:400}
+  .ctl input[type=range]{width:100%;accent-color:var(--canary);cursor:pointer;height:1.2rem}
+
+  /* segmented selectors (sample size + scenario) */
+  .seg{display:flex;gap:3px;flex-wrap:wrap}
+  .seg button{flex:1 1 auto;min-width:2.6rem;min-height:1.9rem;border-radius:6px;border:1px solid var(--line);
+    background:var(--panel2);color:var(--dim);font-family:var(--mono);font-size:.78rem;font-weight:600;cursor:pointer;
+    transition:border-color .15s,background .15s,color .15s;padding:2px 4px}
+  .seg button:hover{border-color:var(--faint);color:var(--txt)}
+  .seg button.on{border-color:var(--accent);color:var(--accent);background:rgba(76,201,240,.1)}
+
+  /* action buttons (run evals / rollback / promote) */
+  .actions{display:flex;flex-direction:column;gap:6px}
+  .btn{min-height:2rem;border-radius:7px;border:1px solid var(--line);background:var(--panel2);
+    color:var(--txt);font-family:var(--mono);font-size:.82rem;font-weight:700;cursor:pointer;
+    transition:border-color .15s,background .15s,color .15s;padding:5px 8px;display:flex;align-items:center;gap:7px;justify-content:center}
+  .btn:hover{border-color:var(--faint)}
+  .btn small{font-weight:400;color:var(--faint);font-family:var(--mono);font-size:.66rem}
+  .btn.eval{border-color:var(--accent2)} .btn.eval:hover{background:rgba(123,108,246,.12)}
+  .btn.roll{border-color:var(--bad);color:var(--bad)} .btn.roll:hover{background:rgba(255,107,107,.1)}
+  .btn.promote{border-color:var(--ok);color:var(--ok)} .btn.promote:hover{background:rgba(61,220,151,.1)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn:disabled:hover{border-color:var(--line);background:var(--panel2)}
+
+  /* readout: observed split + verdict */
+  .readout{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line2);border-radius:8px;
+    background:var(--panel2);padding:6px 9px}
+  .readout,.readout *{cursor:default}
+  .rrow{display:flex;justify-content:space-between;align-items:baseline;padding:1px 0}
+  .rrow.head{border-bottom:1px dashed var(--line2);margin-bottom:2px;padding-bottom:3px}
+  .rrow .rl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;align-items:center;gap:5px}
+  .rrow .rl .sw{width:.66rem;height:.66rem;border-radius:2px;flex:0 0 auto}
+  .rrow .rl .sw.b{background:var(--base)} .rrow .rl .sw.c{background:var(--canary)}
+  .rrow .rl small{color:var(--faint);font-size:.66rem}
+  .rrow .rv{font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--txt)}
+  .rrow .rv.basev{color:var(--base)} .rrow .rv.canv{color:var(--canary)}
+  .rrow .rv.jit{color:var(--warn)}
+  .rrow .rv.jit.tight{color:var(--ok)}
+
+  /* verdict pill */
+  #verdictRow{margin-top:3px;border-top:1px dashed var(--line2);padding-top:4px}
+  #verdict{font-family:var(--mono);font-size:.82rem;font-weight:800;letter-spacing:.5px;padding:1px 8px;border-radius:8px;
+    border:1px solid var(--faint);color:var(--faint);background:rgba(90,106,140,.1);white-space:nowrap}
+  #verdict.promote{border-color:rgba(61,220,151,.5);color:var(--ok);background:rgba(61,220,151,.12)}
+  #verdict.rollback{border-color:rgba(255,107,107,.5);color:var(--bad);background:rgba(255,107,107,.12)}
+
+  /* ---------- flow view (right) ---------- */
+  #flow{display:flex;flex-direction:column;min-height:0;gap:7px}
+  #flowHead{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.8rem;color:var(--dim);flex-wrap:wrap}
+  #flowHead .nn{color:var(--txt);font-weight:700}
+  #flowHead .cap{margin-left:auto;color:var(--faint)}
+
+  #stage{flex:1 1 auto;position:relative;border:1.5px solid var(--line);border-radius:10px;background:#0a0f1c;
+    overflow:hidden;min-height:0}
+  #stageSvg{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+  /* lane cards drawn over the SVG */
+  .lane{position:absolute;right:2.5%;width:31%;border:1.5px solid var(--line);border-radius:9px;
+    background:var(--panel);padding:6px 8px;display:flex;flex-direction:column;gap:3px;
+    transition:border-color .25s,box-shadow .25s,opacity .3s}
+  #laneBase{top:9%}
+  #laneCanary{bottom:9%}
+  .lane .lh{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.78rem;font-weight:700}
+  .lane .lh .dotc{width:.7rem;height:.7rem;border-radius:50%;flex:0 0 auto}
+  #laneBase .lh .dotc{background:var(--base)} #laneCanary .lh .dotc{background:var(--canary)}
+  .lane .lh .ver{color:var(--faint);font-weight:400;font-size:.68rem;margin-left:auto}
+  .lane .health{font-family:var(--mono);font-size:.68rem;font-weight:700;letter-spacing:.3px;
+    padding:0 6px;border-radius:7px;align-self:flex-start;
+    border:1px solid rgba(61,220,151,.4);color:var(--ok);background:rgba(61,220,151,.12)}
+  .lane .cnt{font-family:var(--mono);font-size:.82rem;color:var(--dim)}
+  .lane .cnt b{color:var(--txt);font-weight:700;font-size:1rem}
+  .lane .cnt b.b{color:var(--base)} .lane .cnt b.c{color:var(--canary)}
+  /* eval score bar — hidden until evals run */
+  .lane .eval{display:none;flex-direction:column;gap:2px}
+  .lane.evaled .eval{display:flex}
+  .lane .eval .el{font-family:var(--mono);font-size:.66rem;color:var(--faint);display:flex;justify-content:space-between}
+  .lane .eval .el b{font-weight:700}
+  .lane .ebar{height:.5rem;border-radius:4px;background:#0a0f1c;overflow:hidden;border:1px solid var(--line2)}
+  .lane .ebar>span{display:block;height:100%;border-radius:4px;transition:width .5s cubic-bezier(.3,1,.4,1)}
+  #laneBase .ebar>span{background:var(--base)}
+  #laneCanary .ebar>span{background:var(--canary)}
+  .lane.good .eval .el b{color:var(--ok)}
+  .lane.badq{border-color:rgba(255,107,107,.5);box-shadow:0 0 0 1px rgba(255,107,107,.28)}
+  .lane.badq .eval .el b{color:var(--bad)}
+  .lane.badq .ebar>span{background:var(--bad)}
+  .lane.dimmed{opacity:.35}
+
+  /* router node label */
+  #routerLbl{position:absolute;left:1%;top:50%;transform:translateY(-50%);
+    font-family:var(--mono);font-size:.72rem;color:var(--dim);text-align:center;width:15%;pointer-events:none}
+  #routerLbl b{display:block;color:var(--accent);font-size:.82rem}
+  #routerLbl small{color:var(--faint);font-size:.62rem}
+
+  /* request dots animate along the flow */
+  .req{position:absolute;width:.62rem;height:.62rem;border-radius:50%;pointer-events:none;
+    box-shadow:0 0 5px currentColor}
+  .req.b{background:var(--base);color:var(--base)}
+  .req.c{background:var(--canary);color:var(--canary)}
+
+  /* ---------- event log ---------- */
+  #events{flex:0 0 clamp(84px,7.5rem,132px);display:flex;flex-direction:column;min-height:0}
+  #events,#events *{cursor:default}
+  #evList{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6;scrollbar-width:thin}
+  .ev{display:flex;gap:8px;white-space:nowrap;overflow:hidden}
+  .ev .et{color:var(--faint);flex:0 0 4.2rem}
+  .ev .er{flex:0 0 7.4rem;color:var(--accent2);font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .ev.base .er{color:var(--base)}
+  .ev.canary .er{color:var(--canary)}
+  .ev.promote .er{color:var(--ok)}
+  .ev.rollback .er{color:var(--bad)}
+  .ev .em{flex:1;color:var(--txt);opacity:.9;overflow:hidden;text-overflow:ellipsis}
+  .ev.new{animation:evin .4s ease-out}
+  @keyframes evin{0%{background:rgba(76,201,240,.12)}100%{background:transparent}}
+  #note{margin-left:auto;font-size:1rem;color:var(--faint);cursor:help;position:relative;padding:0 4px}
+  #note:hover{color:var(--dim)}
+  #note:hover::after,#note:active::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 7px);
+    z-index:40;width:46ch;max-width:80vw;background:#0a0f1c;border:1px solid var(--line);border-radius:7px;padding:7px 10px;
+    color:var(--txt);text-align:left;white-space:normal;pointer-events:none;
+    font:.82rem/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    box-shadow:0 4px 16px rgba(0,0,0,.55)}
+
+  /* narrow fallback */
+  @media (max-width:620px){
+    body{overflow:auto}
+    #main{grid-template-columns:1fr}
+    #app{height:auto;min-height:100%}
+    #stage{min-height:18rem}
+    .lane{position:static;width:auto;margin-top:6px}
+    #routerLbl{position:static;transform:none;width:auto;margin-bottom:4px}
+    #note:hover::after,#note:active::after{right:auto;left:0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+    .req{display:none !important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <h1><span class="k8s">⎈</span> Canary Traffic</h1>
+    <span id="hsub">the split shows load — only evals show quality</span>
+    <button id="reset" title="Reset to the start: 10% canary, n=100, scenario A, evals not yet run">↺ Reset</button>
+  </header>
+
+  <div id="challenge">
+    <span class="tag">Try this</span>
+    <span class="steps">
+      <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
+    </span>
+    <span class="txt" id="chTxt"></span>
+  </div>
+
+  <div id="main">
+    <!-- LEFT: controls + readouts -->
+    <div class="panel" id="controls">
+      <h2>The router <span>· weight, sample size, verdict</span></h2>
+
+      <div class="ctl" title="The split_clients weight — how many requests the router sends to the canary. Edit this in the nginx ConfigMap; here it is a slider.">
+        <div class="cl">canary weight <span><b class="can"><span id="weightVal">10</span></b> %</span></div>
+        <input type="range" id="weightRange" min="0" max="100" step="5" value="10">
+        <div class="cl"><span class="hint">0% = all base · 100% = all canary</span></div>
+      </div>
+
+      <div class="ctl" title="How many requests you count before reading the split. A 10% split needs many samples to read honestly — at n=20 the observed share swings wildly.">
+        <div class="cl">sample size <span class="hint">how many requests you read</span></div>
+        <div class="seg" id="nSeg">
+          <button data-n="20">n=20</button>
+          <button data-n="100" class="on">n=100</button>
+          <button data-n="500">n=500</button>
+        </div>
+      </div>
+
+      <div class="ctl" title="Which candidate the canary lane is serving. A = the M6 loser (worse on the golden set); B = a genuine improvement. Health looks identical in both — only evals tell them apart.">
+        <div class="cl">candidate <span class="hint">hidden quality — evals reveal it</span></div>
+        <div class="seg" id="scenSeg">
+          <button data-s="A" class="on">A · M6 loser</button>
+          <button data-s="B">B · improved</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn eval" id="runEvals" title="Run the golden set against BOTH backends directly and reveal each lane's score. This is the manager tasting the food — the only signal that catches a healthy pod serving a bad model.">▶ Run evals <small>golden set → both lanes</small></button>
+        <button class="btn roll" id="rollback" title="Set the canary weight to 0 and rollout restart — pull all traffic back to base. Use when the gate says ROLLBACK.">⤺ Rollback <small>weight → 0</small></button>
+        <button class="btn promote" id="promote" title="Staged promote: step the weight 10 → 50 → 100, re-running the gate at each rung. Only enabled once evals show the canary is at least as good as base.">⏫ Promote a stage <small>gated 10→50→100</small></button>
+      </div>
+
+      <div class="readout" id="readout">
+        <div class="rrow head"><span class="rl">observed split <small>at n=<span id="nShow">100</span></small></span><span class="rv" id="totalShow">100 reqs</span></div>
+        <div class="rrow"><span class="rl"><span class="sw b"></span>base <small id="baseSub">served</small></span><span class="rv basev" id="baseObs">—</span></div>
+        <div class="rrow"><span class="rl"><span class="sw c"></span>canary <small id="canSub">served</small></span><span class="rv canv" id="canObs">—</span></div>
+        <div class="rrow"><span class="rl">observed vs configured <small id="jitSub">how far off the weight</small></span><span class="rv jit" id="jitV">—</span></div>
+        <div class="rrow" id="verdictRow"><span class="rl">gate verdict <small id="verdSub">run evals to decide</small></span><span id="verdict">— PENDING</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: the flow + two lanes -->
+    <div class="panel" id="flow">
+      <div id="flowHead">
+        <span class="nn">traffic</span> <span>client → router → base / canary</span>
+        <span class="cap" id="capLbl">X-Served-By names the lane</span>
+      </div>
+      <div id="stage">
+        <svg id="stageSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <!-- feed line into the router -->
+          <line id="feed" x1="0" y1="50" x2="16" y2="50"/>
+          <!-- split branches (weights set stroke-width in JS) -->
+          <path id="branchBase"   fill="none"/>
+          <path id="branchCanary" fill="none"/>
+        </svg>
+        <div id="routerLbl"><small>split_clients</small><b>router</b><small>hash → lane</small></div>
+
+        <div class="lane" id="laneBase">
+          <div class="lh"><span class="dotc"></span>opsmate-model<span class="ver">base · 1.0.0</span></div>
+          <div class="health" id="healthBase">1/1 Running</div>
+          <div class="cnt">served <b class="b" id="baseCnt">0</b> <span id="baseShare" style="color:var(--faint)"></span></div>
+          <div class="eval">
+            <div class="el">golden set <b id="baseScore">—</b></div>
+            <div class="ebar"><span id="baseBar" style="width:0%"></span></div>
+          </div>
+        </div>
+
+        <div class="lane" id="laneCanary">
+          <div class="lh"><span class="dotc"></span>opsmate-canary<span class="ver" id="canVer">candidate · 1.0.0-candidate</span></div>
+          <div class="health" id="healthCanary">1/1 Running</div>
+          <div class="cnt">served <b class="c" id="canCnt">0</b> <span id="canShare" style="color:var(--faint)"></span></div>
+          <div class="eval">
+            <div class="el">golden set <b id="canScore">—</b></div>
+            <div class="ebar"><span id="canBar" style="width:0%"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="events">
+    <h2>router <span>— X-Served-By header · nginx split_clients · golden-set gate</span>
+      <span id="note" data-tip="Teaching model, not the real system. Traffic here is a stylized stream and the eval scores are fixed per scenario with a little sampling jitter — the real lab runs nginx split_clients against two real model pods and scores them with the actual M5 golden set (retrieval tripwires + graded generation, wide contains-any nets). The illusion the sim makes honest — that a small sample lies about the split, and that a healthy pod can serve a worse model — is exactly what the lab reproduces on real numbers.">ⓘ</span></h2>
+    <div id="evList"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ================================================================== model
+     A router splits a request stream across two backends by WEIGHT. The
+     observed split is the configured weight ONLY in the limit of many samples;
+     at small n it jitters (binomial noise). Health of both lanes is identical
+     and green regardless of quality — the pod is Running whether the model is
+     good or bad. QUALITY is a HIDDEN per-lane number, revealed only by running
+     the golden set (evals). The gate compares canary score to base score:
+       canary >= base  → PROMOTE ;  canary < base → ROLLBACK.
+     Two scenarios: A = the M6 loser (canary worse) ; B = an improvement.
+     Traffic and eval numbers are stylized — the honest-model note says so. */
+
+  /* base golden-set score is fixed (the incumbent). Canary score depends on
+     scenario. Scores are "questions passed out of TOTAL". */
+  var GOLDEN_TOTAL=24;
+  var BASE_SCORE=19;                 /* the baseline the candidate must at least tie */
+  var SCEN={
+    A:{name:'M6 loser',      canScore:15, ver:'candidate · 1.0.0-candidate'},   /* worse: ROLLBACK */
+    B:{name:'improved tune', canScore:21, ver:'candidate · 1.0.1-rc'}           /* better: PROMOTE */
+  };
+
+  var NS=[20,100,500];
+  var DEFAULTS={weight:10, n:100, scenario:'A'};
+
+  var S={
+    weight:DEFAULTS.weight, n:DEFAULTS.n, scenario:DEFAULTS.scenario,
+    evalsRun:false,           /* have the golden-set evals been run at the CURRENT scenario? */
+    stage:0,                  /* staged-promote rung index into PROMOTE_STAGES that we've reached */
+    t0:Date.now(),
+    baseCnt:0, canCnt:0,      /* animated lifetime served counters (cosmetic stream) */
+    obsBase:0, obsCanary:0    /* the sampled split at the current n (the honest readout) */
+  };
+  var PROMOTE_STAGES=[10,50,100];
+  /* challenge: 3 steps
+     1 — at n=20, observe a split that reads >2x off the configured weight
+     2 — find the bad canary (scenario A) with evals and roll it back BEFORE health ever flickers
+     3 — complete a staged promote (scenario B) with an eval pass at each rung to 100% */
+  var CH={step:1, done:[false,false,false],
+    sawJitter:false,          /* step 1 */
+    rolledBadCanary:false,    /* step 2 */
+    promoteRungs:{10:false,50:false,100:false}};  /* step 3 — each rung eval-passed */
+
+  /* ---- deterministic-but-jittery sampler --------------------------------
+     Draw `n` requests at probability p=weight/100 to the canary. We use a
+     seeded PRNG so a given (weight,n,scenario,drawId) is reproducible for the
+     harness, while still swinging realistically at small n. The KEY teaching
+     property: variance of the observed share ∝ 1/n, so n=20 swings, n=500 is tight. */
+  var drawId=0;
+  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);
+    t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;}}
+  function sample(weight,n,seed){
+    var p=weight/100, rnd=mulberry32(seed|0), c=0;
+    for(var i=0;i<n;i++){if(rnd()<p)c++;}
+    return {canary:c, base:n-c};
+  }
+  /* the "expected worst-case swing" at this n — used only to seed a draw that
+     actually shows the point at n=20 for step 1; normal draws are unseeded-ish. */
+  function resample(){
+    drawId++;
+    var seed=(S.weight*7919 + S.n*104729 + (S.scenario==='A'?11:23) + drawId*2654435761)>>>0;
+    var r=sample(S.weight,S.n,seed);
+    S.obsBase=r.base; S.obsCanary=r.canary;
+    return r;
+  }
+
+  /* observed canary share as a percentage of n */
+  function obsPct(){return S.n>0 ? (S.obsCanary/S.n*100) : 0;}
+  /* how many x off the configured weight the observed share is (ratio), guarded */
+  function jitterRatio(){
+    var obs=obsPct(), cfg=S.weight;
+    if(cfg<=0) return obs>0? Infinity : 1;
+    return obs/cfg;
+  }
+
+  /* the gate verdict from the CURRENT scenario's revealed scores.
+     Only meaningful once evals have run. */
+  function verdict(){
+    var can=SCEN[S.scenario].canScore;
+    if(can>=BASE_SCORE) return 'PROMOTE';
+    return 'ROLLBACK';
+  }
+
+  /* ================================================================== events log */
+  var evList=$('evList');
+  function clock(){var s=Math.floor((Date.now()-S.t0)/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  function logEv(kind,reason,msg){
+    var d=document.createElement('div');
+    d.className='ev new '+(kind||'');
+    d.innerHTML='<span class="et"></span><span class="er"></span><span class="em"></span>';
+    d.children[0].textContent=clock();
+    d.children[1].textContent=reason; d.children[2].textContent=msg;
+    d.title=reason+'  —  '+msg;
+    evList.appendChild(d);
+    while(evList.children.length>90)evList.removeChild(evList.firstChild);
+    evList.scrollTop=evList.scrollHeight;
+  }
+
+  /* ================================================================== the flowing request dots */
+  var stage=$('stage'), reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var streamTimer=null;
+  function spawnReq(){
+    if(reduceMotion) return;
+    var toCanary=Math.random()<(S.weight/100);
+    var dot=document.createElement('div');
+    dot.className='req '+(toCanary?'c':'b');
+    stage.appendChild(dot);
+    var W=stage.clientWidth, H=stage.clientHeight;
+    /* start at the router (x≈16%), animate to the lane card (right side) */
+    var startX=0.02*W, midX=0.16*W;
+    var endX=0.72*W, endY=toCanary? 0.80*H : 0.20*H, midY=0.5*H;
+    var t0=performance.now(), dur=900+Math.random()*300;
+    (function step(now){
+      var k=Math.min(1,(now-t0)/dur);
+      var x,y;
+      if(k<0.28){var kk=k/0.28; x=startX+(midX-startX)*kk; y=midY;}
+      else{var kk=(k-0.28)/0.72; x=midX+(endX-midX)*kk; y=midY+(endY-midY)*kk;}
+      dot.style.left=x+'px'; dot.style.top=y+'px';
+      if(k>=1){ dot.remove(); if(toCanary)S.canCnt++; else S.baseCnt++; }
+      else requestAnimationFrame(step);
+    })(t0);
+  }
+  function startStream(){
+    if(streamTimer||reduceMotion) return;
+    streamTimer=setInterval(spawnReq, 220);
+  }
+
+  /* ================================================================== SVG branches (thickness ∝ weight) */
+  function renderBranches(){
+    var baseW=Math.max(0.6, (100-S.weight)/100*6);
+    var canW =Math.max(0.6, S.weight/100*6);
+    var bb=$('branchBase'), bc=$('branchCanary');
+    /* router at (16,50) → base lane card top-left (~70,20), canary (~70,80) */
+    bb.setAttribute('d','M16 50 C 40 50, 46 20, 70 20');
+    bc.setAttribute('d','M16 50 C 40 50, 46 80, 70 80');
+    bb.setAttribute('stroke','var(--base)');   bb.setAttribute('stroke-width',baseW);
+    bc.setAttribute('stroke','var(--canary)'); bc.setAttribute('stroke-width',canW);
+    bb.style.opacity = S.weight>=100?0.18:0.9;
+    bc.style.opacity = S.weight<=0?0.18:0.9;
+    $('feed').setAttribute('stroke','var(--dim)'); $('feed').setAttribute('stroke-width','1.2');
+  }
+
+  /* ================================================================== render */
+  function render(){
+    /* control mirrors */
+    $('weightVal').textContent=S.weight;
+    $('weightRange').value=S.weight;
+    $('nShow').textContent=S.n;
+    $('totalShow').textContent=S.n+' reqs';
+
+    /* observed split readout */
+    $('baseObs').textContent=S.obsBase+' ('+Math.round(S.obsBase/S.n*100)+'%)';
+    $('canObs').textContent=S.obsCanary+' ('+Math.round(S.obsCanary/S.n*100)+'%)';
+    var jr=jitterRatio();
+    var jv=$('jitV');
+    if(!isFinite(jr)){ jv.textContent='canary hits @0% weight'; jv.classList.remove('tight'); }
+    else{
+      jv.textContent = obsPct().toFixed(0)+'% obs vs '+S.weight+'% set  ('+jr.toFixed(1)+'×)';
+      /* "tight" (green) when within 25% of configured; else warn-colored */
+      var tight = Math.abs(obsPct()-S.weight) <= Math.max(2, S.weight*0.25);
+      jv.classList.toggle('tight',tight);
+    }
+
+    /* lane counters (cosmetic lifetime stream) + share of observed sample */
+    $('baseCnt').textContent=S.baseCnt;
+    $('canCnt').textContent=S.canCnt;
+    $('baseShare').textContent = S.weight>=100?'(idle)':'';
+    $('canShare').textContent  = S.weight<=0?'(idle)':'';
+
+    /* scenario version label */
+    $('canVer').textContent=SCEN[S.scenario].ver;
+
+    /* eval reveal */
+    var lb=$('laneBase'), lc=$('laneCanary');
+    if(S.evalsRun){
+      lb.classList.add('evaled'); lc.classList.add('evaled');
+      var can=SCEN[S.scenario].canScore;
+      $('baseScore').textContent=BASE_SCORE+'/'+GOLDEN_TOTAL;
+      $('canScore').textContent =can+'/'+GOLDEN_TOTAL;
+      $('baseBar').style.width=(BASE_SCORE/GOLDEN_TOTAL*100)+'%';
+      $('canBar').style.width =(can/GOLDEN_TOTAL*100)+'%';
+      lb.classList.add('good');
+      lc.classList.toggle('good', can>=BASE_SCORE);
+      lc.classList.toggle('badq', can<BASE_SCORE);
+    }else{
+      lb.classList.remove('evaled','good','badq'); lc.classList.remove('evaled','good','badq');
+      $('baseScore').textContent='—'; $('canScore').textContent='—';
+      $('baseBar').style.width='0%'; $('canBar').style.width='0%';
+    }
+
+    /* health is ALWAYS green — the teaching point: a probe cannot taste the food */
+    $('healthBase').textContent='1/1 Running';
+    $('healthCanary').textContent='1/1 Running';
+
+    /* verdict pill */
+    var vp=$('verdict');
+    if(!S.evalsRun){ vp.textContent='— PENDING'; vp.className=''; $('verdSub').textContent='run evals to decide'; }
+    else{
+      var v=verdict();
+      vp.textContent=v;
+      vp.className = v==='PROMOTE'?'promote':'rollback';
+      $('verdSub').textContent = v==='PROMOTE'
+        ? 'canary '+SCEN[S.scenario].canScore+' ≥ base '+BASE_SCORE
+        : 'canary '+SCEN[S.scenario].canScore+' < base '+BASE_SCORE;
+    }
+
+    /* promote button gating: enabled only when evals show PROMOTE and we're not at 100 */
+    var canPromote = S.evalsRun && verdict()==='PROMOTE' && S.weight<100;
+    $('promote').disabled = !canPromote;
+    $('rollback').disabled = S.weight===0;
+
+    renderBranches();
+    updateChallenge();
+  }
+
+  /* ================================================================== actions */
+  function doResample(logit){
+    resample();
+    if(logit){
+      logEv('', 'X-Served-By', 'counted '+S.n+' responses — base '+S.obsBase+', canary '+S.obsCanary
+        +' ('+Math.round(S.obsCanary/S.n*100)+'% observed vs '+S.weight+'% configured)');
+    }
+    render();
+  }
+
+  function runEvals(){
+    S.evalsRun=true;
+    var can=SCEN[S.scenario].canScore, v=verdict();
+    logEv('canary','golden-set','ran M5 golden set against BOTH lanes directly — base '+BASE_SCORE+'/'+GOLDEN_TOTAL
+      +', canary '+can+'/'+GOLDEN_TOTAL+' (both pods 1/1 Running the whole time)');
+    logEv(v==='PROMOTE'?'promote':'rollback', v==='PROMOTE'?'PROMOTE':'ROLLBACK',
+      v==='PROMOTE'
+        ? 'canary ties-or-beats base on the golden set → cleared to advance a stage'
+        : 'canary scores BELOW base — the pod is healthy but the model is worse. Data says roll back.');
+    /* mark a rung passed for staged-promote tracking */
+    if(v==='PROMOTE' && PROMOTE_STAGES.indexOf(S.weight)>=0) CH.promoteRungs[S.weight]=true;
+    render();
+  }
+
+  function rollback(){
+    var wasBad = S.evalsRun && verdict()==='ROLLBACK';
+    animateWeight(0, function(){
+      logEv('rollback','rollout-restart','set canary weight → 0 in the ConfigMap, rollout restart — all traffic back to base');
+      /* step 2 credit: rolled a bad canary that never flickered health */
+      if(wasBad && S.scenario==='A'){ CH.rolledBadCanary=true; }
+      render();
+    });
+  }
+
+  function promoteStage(){
+    if($('promote').disabled) return;
+    var idx=PROMOTE_STAGES.indexOf(S.weight);
+    var next = idx<0 ? PROMOTE_STAGES.find(function(w){return w>S.weight}) : PROMOTE_STAGES[idx+1];
+    if(next==null) next=100;
+    animateWeight(next, function(){
+      logEv('promote','stage-up','promoted canary weight → '+next+'% (rollout restart). Re-run the gate at this rung before the next.');
+      /* advancing a stage requires re-running evals to clear the NEXT rung */
+      S.evalsRun=false;  /* force a fresh eval pass at the new weight — the gate re-runs each rung */
+      if(next>=100){
+        logEv('promote','PROMOTE','canary is now the primary — run the gate once more at 100% to seal it.');
+      }
+      render();
+    });
+  }
+
+  /* animate the weight slider to a target (visual), then callback */
+  function animateWeight(target, done){
+    if(reduceMotion){ S.weight=target; doResample(false); if(done)done(); return; }
+    var from=S.weight, t0=performance.now(), dur=600;
+    (function step(now){
+      var k=Math.min(1,(now-t0)/dur);
+      S.weight=Math.round((from+(target-from)*k)/5)*5;
+      renderBranches(); $('weightVal').textContent=S.weight; $('weightRange').value=S.weight;
+      if(k>=1){ S.weight=target; doResample(false); if(done)done(); }
+      else requestAnimationFrame(step);
+    })(t0);
+  }
+
+  /* ================================================================== challenge */
+  var CH_TEXT=[
+    'Step 1 — Set <b>sample size</b> to <code>n=20</code> and keep re-reading the split (nudge the weight, it resamples). Catch a read where the observed canary share is <b>more than 2× off</b> the configured weight — proof that 20 requests lie.',
+    'Step 2 — On candidate <code>A</code>, click <b>Run evals</b>. Both lanes stayed <code>1/1 Running</code> the whole time, yet the golden set shows the canary is <i>worse</i>. <b>Roll it back</b> on that data — before any health ever flickered.',
+    'Step 3 — Switch to candidate <code>B</code>. <b>Run evals</b> (it passes), then <b>Promote a stage</b>, re-running the gate at each rung — <code>10 → 50 → 100</code>. Ship it the way a new driver earns the school van: one gated rung at a time.'
+  ];
+  var SUCCESS='Challenge complete! You just felt the whole module. The <b>traffic split</b> tells you which lane <i>answered</i> — and at small n it lies about even that. It never tells you whether the answers were any <i>good</i>. Both pods read <code>1/1 Running</code> the entire time; only <b>running the golden set</b> — the manager tasting the food — separated the M6 loser from a real improvement. Promotion and rollback stopped being crash verbs and became <b>data verbs</b>: you rolled back candidate A because it <i>scored</i> worse, and you promoted candidate B one gated rung at a time.';
+
+  function updateChallenge(){
+    /* Step 1: at n=20, an observed share >2x off configured weight (and weight in a readable band) */
+    if(CH.step===1 && !CH.done[0]){
+      if(S.n===20 && S.weight>0 && S.weight<100){
+        var jr=jitterRatio();
+        if(isFinite(jr) && (jr>=2 || jr<=0.5)){ CH.sawJitter=true; CH.done[0]=true; CH.step=2;
+          logEv('canary','try-this','Step 1 done — observed '+obsPct().toFixed(0)+'% at n=20 vs '+S.weight+'% set ('+jr.toFixed(1)+'×). Twenty requests cannot read a split.');
+        }
+      }
+    }else if(CH.step===2 && !CH.done[1]){
+      /* rolled a KNOWN-bad canary (scenario A, evals showed ROLLBACK) to weight 0 */
+      if(CH.rolledBadCanary && S.weight===0){ CH.done[1]=true; CH.step=3;
+        logEv('rollback','try-this','Step 2 done — the golden set killed a canary that never left 1/1 Running. Quality signal, not crash signal.');
+      }
+    }else if(CH.step===3 && !CH.done[2]){
+      /* staged promote to 100 on scenario B, with an eval pass recorded at each rung */
+      if(S.scenario==='B' && S.weight===100 &&
+         CH.promoteRungs[10] && CH.promoteRungs[50] && CH.promoteRungs[100]){
+        CH.done[2]=true; CH.step=4;
+        logEv('promote','try-this','Step 3 done — 10→50→100, an eval pass at every rung. That is a staged, gated promotion.');
+      }
+    }
+    for(var i=1;i<=3;i++){
+      var d=$('d'+i); d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
+      d.textContent=CH.done[i-1]?'✓':i;
+    }
+    var box=$('challenge'), txt=$('chTxt');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;}
+    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[CH.step-1];}
+  }
+
+  /* ================================================================== controls wiring */
+  function syncSeg(){
+    Array.prototype.forEach.call($('nSeg').children,function(b){b.classList.toggle('on',+b.dataset.n===S.n)});
+    Array.prototype.forEach.call($('scenSeg').children,function(b){b.classList.toggle('on',b.dataset.s===S.scenario)});
+  }
+
+  $('weightRange').addEventListener('input',function(){
+    S.weight=+this.value;
+    /* changing the weight moves us to a new operating point — a prior eval pass no
+       longer describes THIS weight, so the gate must be re-run (level-triggered). */
+    if(S.evalsRun){ S.evalsRun=false; logEv('','weight','weight changed to '+S.weight+'% — prior eval no longer applies to this rung; re-run the gate'); }
+    doResample(true);
+  });
+  $('nSeg').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    S.n=+b.dataset.n; syncSeg();
+    logEv('','sample-size','reading the split over '+S.n+' requests'+(S.n===20?' — small n, expect a noisy read':S.n===500?' — large n, the read converges':''));
+    doResample(true);
+  });
+  $('scenSeg').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    S.scenario=b.dataset.s; syncSeg();
+    /* switching candidate resets the eval reveal — a different model, unmeasured */
+    S.evalsRun=false;
+    CH.promoteRungs={10:false,50:false,100:false};
+    logEv('canary','candidate','canary lane now serves '+SCEN[S.scenario].ver+' — quality unknown until you run evals');
+    render();
+  });
+  $('runEvals').addEventListener('click',runEvals);
+  $('rollback').addEventListener('click',rollback);
+  $('promote').addEventListener('click',promoteStage);
+  $('reset').addEventListener('click',function(){location.reload()});
+
+  /* ================================================================== boot */
+  syncSeg();
+  resample();
+  render();
+  startStream();
+  window.addEventListener('resize',render);
+  logEv('','ready','router up · 90% base / 10% canary · X-Served-By header on every response');
+  logEv('','split_clients','hashing each request across the 0–100% space → base / canary by weight');
+
+  /* test hook (harmless in production) */
+  window.__sim={S:S,CH:CH,
+    setWeight:function(v){S.weight=v; if(S.evalsRun)S.evalsRun=false; doResample(false);},
+    setN:function(v){S.n=v; syncSeg(); doResample(false);},
+    setScenario:function(v){S.scenario=v; syncSeg(); S.evalsRun=false; CH.promoteRungs={10:false,50:false,100:false}; render();},
+    resample:function(seed){
+      if(seed!=null){ var r=sample(S.weight,S.n,seed>>>0); S.obsBase=r.base; S.obsCanary=r.canary; render(); return r; }
+      resample(); render(); return {base:S.obsBase,canary:S.obsCanary};
+    },
+    runEvals:runEvals, rollback:rollback, promoteStage:promoteStage,
+    verdict:verdict, obsPct:obsPct, jitterRatio:jitterRatio, sample:sample,
+    consts:{GOLDEN_TOTAL:GOLDEN_TOTAL,BASE_SCORE:BASE_SCORE,SCEN:SCEN,NS:NS,DEFAULTS:DEFAULTS,PROMOTE_STAGES:PROMOTE_STAGES}
+  };
+})();
+</script>
+</body>
+</html>

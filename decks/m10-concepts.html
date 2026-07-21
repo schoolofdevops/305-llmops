@@ -565,7 +565,46 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M10·13</div>
 </section>
 
-<!-- ═══════════════ SLIDE 14 · THE BILL RIDES ON THE SPAN (scene) ═══════════════ -->
+<!-- ═══════════════ SLIDE 14 · PIN THE SEMCONV (a moving standard) ═══════════════ -->
+<section>
+  <h2 class="t">Pin the names, or your traces shift underneath you</h2>
+  <p class="s">Those span names follow the OpenInference conventions Phoenix reads. A parallel effort — the OpenTelemetry GenAI semantic conventions — is standardising them across the industry, and it is still changing: names move between versions. So you pin the versions you build against.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="On the left, a settled set of span-attribute names that Phoenix reads, shown as a tidy blue card. In the middle, the OpenTelemetry GenAI semantic conventions drawn as a shifting orange signpost whose labels are sliding, marked still changing. On the right, a requirements.txt file with a padlock pinning the versions, so the names on the left stay steady — a green holds steady payoff.">
+    <!-- LEFT: the names Phoenix reads (settled data, blue) -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="50" y="70" width="300" height="200" rx="11"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="50" y="70" width="300" height="200" rx="11"/><line x1="70" y1="112" x2="330" y2="112"/></g>
+    <text x="200" y="100" text-anchor="middle" class="lbl-b">the names Phoenix reads</text>
+    <g class="lbl-g" text-anchor="start" style="font-size:16px">
+      <text x="72" y="146">CHAIN · RETRIEVER · LLM</text>
+      <text x="72" y="184">llm.token_count.*</text>
+      <text x="72" y="222">input.value</text>
+    </g>
+    <text x="200" y="256" text-anchor="middle" class="lbl-g" style="font-size:15px">OpenInference</text>
+
+    <!-- MIDDLE: the moving standard (caution, orange) -->
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><rect x="400" y="96" width="290" height="120" rx="11"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-dasharray="9 7"><rect x="400" y="96" width="290" height="120" rx="11"/></g>
+    <text x="545" y="130" text-anchor="middle" class="lbl-b">OTel GenAI semconv</text>
+    <!-- sliding labels (shifting names) -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M430,158 L520,158" marker-end="url(#ahg)"/><path d="M560,180 L650,180" marker-end="url(#ahg)"/></g>
+    <text x="545" y="204" text-anchor="middle" class="lbl-bad" style="font-size:15px">still changing — names move</text>
+
+    <!-- RIGHT: the pin (the fix, green + padlock) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="750" y="86" width="300" height="140" rx="11"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="750" y="86" width="300" height="140" rx="11"/></g>
+    <text x="900" y="120" text-anchor="middle" class="lbl-b">requirements.txt</text>
+    <text x="900" y="152" text-anchor="middle" class="lbl-g" style="font-size:16px">pin the versions</text>
+    <!-- padlock -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="872" y="176" width="56" height="40" rx="6"/><path d="M882,176 C882,150 918,150 918,176"/></g>
+    <!-- arrow: the pin holds the left card steady -->
+    <g filter="url(#rough)" fill="none" stroke="#2e7d32" stroke-width="2.8" stroke-linecap="round"><path d="M748,156 C560,300 360,300 200,278" marker-end="url(#ah)"/></g>
+    <text x="470" y="322" text-anchor="middle" class="lbl-good">pinned = the trace shape holds steady</text>
+  </svg>
+  <p class="takeaway">A moving standard is not a reason to avoid it — it is a reason to pin it.</p>
+  <div class="pageno">M10·14</div>
+</section>
+
+<!-- ═══════════════ SLIDE 15 · THE BILL RIDES ON THE SPAN (scene) ═══════════════ -->
 <section>
   <h2 class="t">The bill rides on the span</h2>
   <p class="s">Every response returns a usage block — prompt, completion, total tokens — and the app lifts them onto the generate span as llm.token_count. Sum token_count.total across a day's traces and that is your bill, sliceable by user, endpoint, or prompt length. Cost stops being a monthly surprise.</p>
@@ -593,10 +632,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="930" y="240" text-anchor="start" class="lbl-g" style="font-size:15px">by prompt len</text>
   </svg>
   <p class="takeaway">Cost becomes a per-request attribute.</p>
-  <div class="pageno">M10·14</div>
+  <div class="pageno">M10·15</div>
 </section>
 
-<!-- ═══════════════ SLIDE 15 · THE REGISTER (scene) ═══════════════ -->
+<!-- ═══════════════ SLIDE 16 · THE REGISTER (scene) ═══════════════ -->
 <section>
   <h2 class="t">The visit, not the confession</h2>
   <p class="s">The ask span's input.value is the full user question, kept for debugging — but every trace then holds the exact text, visible to anyone with Phoenix. The register records that the visit happened, not what was whispered behind the closed door. Keep it or redact it, but choose.</p>
@@ -621,10 +660,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="510" y="232" text-anchor="middle" class="lbl-b">NOT logged</text>
   </svg>
   <p class="takeaway">Logging a prompt is a decision.</p>
-  <div class="pageno">M10·15</div>
+  <div class="pageno">M10·16</div>
 </section>
 
-<!-- ═══════════════ SLIDE 16 · SERVICE-LINK CRASH (exhibit) ═══════════════ -->
+<!-- ═══════════════ SLIDE 17 · SERVICE-LINK CRASH (exhibit) ═══════════════ -->
 <section>
   <h2 class="t">Two labels, one name</h2>
   <p class="s">Kubernetes injects a NAME_PORT env var for every Service. A Service named phoenix injects PHOENIX_PORT=tcp://…, but Phoenix reads PHOENIX_PORT as its listen port and expects an integer — so it crashes, with a log naming the fix. Set the env explicitly, or enableServiceLinks:false. One collision teaches the whole class.</p>
@@ -656,10 +695,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="970" y="211" text-anchor="middle" class="lbl-sm">enableServiceLinks: false</text>
   </svg>
   <p class="takeaway">Why is this env a <code>tcp://</code> string?</p>
-  <div class="pageno">M10·16</div>
+  <div class="pageno">M10·17</div>
 </section>
 
-<!-- ═══════════════ SLIDE 17 · GAUGE DRIVES THE DIAL (scene) ═══════════════ -->
+<!-- ═══════════════ SLIDE 18 · GAUGE DRIVES THE DIAL (scene) ═══════════════ -->
 <section>
   <h2 class="t">The gauge drives the dial</h2>
   <p class="s">OpsMate is now observable — metrics on a wall, traces of every request, cost per request. You cannot autoscale what you cannot measure. Today a hand just watches the deferred gauge; in M11 the linkage drives a replica dial — queue builds add an engine, drains remove one.</p>
@@ -687,10 +726,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="900" y="212" text-anchor="start" class="lbl-g" style="font-size:16px">drains → − engine</text>
   </svg>
   <p class="takeaway">You can't autoscale what you can't measure.</p>
-  <div class="pageno">M10·17</div>
+  <div class="pageno">M10·18</div>
 </section>
 
-<!-- ═══════════════ SLIDE 18 · CLOSING — three icons + bridge ═══════════════ -->
+<!-- ═══════════════ SLIDE 19 · CLOSING — three icons + bridge ═══════════════ -->
 <section>
   <p class="kicker">MODULE 10 &nbsp;·&nbsp; OBSERVABILITY — SEEING THE PLATFORM</p>
   <h2 class="t" style="font-size:2.0em">OpsMate can finally be seen</h2>
@@ -712,7 +751,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1050" y="200" text-anchor="middle" class="lbl-g" style="font-size:15px">→ M11</text>
   </svg>
   <p class="credit">OpsMate is <b>v2.5, part one</b> — the platform you can finally see &nbsp;·&nbsp; now open <b>Module 10 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M10·18</div>
+  <div class="pageno">M10·19</div>
 </section>
 </div></div>
 <script>/* reveal.js 5.x (inlined) */

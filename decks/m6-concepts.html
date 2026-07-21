@@ -200,24 +200,30 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Climb the decision ladder — tune only when the cheaper rung genuinely can't</h2>
   <p class="s">Three rungs, cheapest first. Reach for the cheapest tool that solves the problem, and climb only when the rung below truly cannot fix it — tuning is the expensive, easy-to-fool-yourself rung.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A three-rung staircase, cheapest at the bottom. Bottom rung, widest and inked: prompt edit, minutes, free, reversible, fixes format, tone, refusals, citations. Middle rung: RAG, put the right facts in front, fixes missing knowledge and freshness, M4 and M5. Top rung: fine-tune, hours, data plus compute, fixes voice, format, and behaviour that survives with no prompt and no context. A gray dashed back-arrow runs from the top rung down to the bottom, tagged: most we-need-to-fine-tune requests are prompt problems, so climb only when the rung below truly cannot fix it.">
-    <!-- rung 1 prompt edit (bottom, widest) — green = the cheap, reach-first rung -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="70" y="266" width="620" height="66" rx="11" class="f-green"/>
+    <!-- rung 1 prompt edit (bottom, widest) — green = the cheap, reach-first rung (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+        <rect x="70" y="266" width="620" height="66" rx="11" class="f-green"/>
+      </g>
+      <text x="120" y="298" text-anchor="start" class="lbl-b">1 · PROMPT EDIT</text>
+      <text x="120" y="322" text-anchor="start" class="lbl-g">minutes · free · reversible → format, tone, refusals, citations</text>
     </g>
-    <text x="120" y="298" text-anchor="start" class="lbl-b">1 · PROMPT EDIT</text>
-    <text x="120" y="322" text-anchor="start" class="lbl-g">minutes · free · reversible → format, tone, refusals, citations</text>
-    <!-- rung 2 RAG — blue = the knowledge method -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="160" y="180" width="560" height="66" rx="11" class="f-blue"/>
+    <!-- rung 2 RAG — blue = the knowledge method (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="160" y="180" width="560" height="66" rx="11" class="f-blue"/>
+      </g>
+      <text x="210" y="212" text-anchor="start" class="lbl-b">2 · RAG</text>
+      <text x="210" y="236" text-anchor="start" class="lbl-g">put the right facts in front → missing knowledge, freshness (M4/M5)</text>
     </g>
-    <text x="210" y="212" text-anchor="start" class="lbl-b">2 · RAG</text>
-    <text x="210" y="236" text-anchor="start" class="lbl-g">put the right facts in front → missing knowledge, freshness (M4/M5)</text>
-    <!-- rung 3 fine-tune (top, protagonist) — orange = the expensive, easy-to-fool-yourself rung -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="250" y="94" width="560" height="66" rx="11" class="f-orange"/>
+    <!-- rung 3 fine-tune (top, protagonist) — orange = the expensive, easy-to-fool-yourself rung (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+        <rect x="250" y="94" width="560" height="66" rx="11" class="f-orange"/>
+      </g>
+      <text x="300" y="126" text-anchor="start" class="lbl-b">3 · FINE-TUNE</text>
+      <text x="300" y="150" text-anchor="start" class="lbl-g">hours · data + compute → behaviour that survives NO prompt, NO context</text>
     </g>
-    <text x="300" y="126" text-anchor="start" class="lbl-b">3 · FINE-TUNE</text>
-    <text x="300" y="150" text-anchor="start" class="lbl-g">hours · data + compute → behaviour that survives NO prompt, NO context</text>
     <!-- the honest back-arrow -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7" stroke-linecap="round">
       <path d="M840,120 C960,150 960,270 720,296" marker-end="url(#ahg)"/>
@@ -271,6 +277,40 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M6·03</div>
 </section>
 
+<!-- ============ SLIDE 3b — WHERE THE SMALL NUMBER COMES FROM (low-rank intuition) ============ -->
+<section>
+  <h2 class="t">The "low-rank" trick — approximate a big update with two thin matrices</h2>
+  <p class="s">Where does 0.19% come from? A full update to a layer is a big dense matrix. LoRA approximates it as the product of two much <em>thinner</em> matrices whose shared inner dimension is the rank <code>r</code>. A small rank (this lab uses <code>r=8</code>) makes both matrices tiny, so the trainable count is tiny — enough to nudge behaviour, not rebuild it.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="On the left, a large gray dense square marked full update, big dense matrix, frozen. An equals sign leads to the product of two thin blue matrices: a tall-skinny one and a short-wide one, their shared narrow edge labelled r equals 8, the rank. A note reads: small r means tiny matrices means few trainable params. On the right, a small card names which layers get an adapter: q_proj plus v_proj, the attention query and value projections, the common minimal choice. A band reads: more rank and more layers buy more capacity to learn — and more room to overfit.">
+    <!-- full dense update (gray, frozen) -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7"><rect x="60" y="110" width="150" height="150" rx="8"/></g>
+    <text x="135" y="188" text-anchor="middle" class="lbl-sm">full update</text>
+    <text x="135" y="290" text-anchor="middle" class="lbl-g">big dense matrix</text>
+    <text x="250" y="192" text-anchor="middle" class="lbl-b">≈</text>
+    <!-- two thin matrices (blue = the trainable adapter) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="296" y="110" width="46" height="150" rx="7" class="f-blue"/></g>
+    <text x="319" y="284" text-anchor="middle" class="lbl-g">tall-skinny</text>
+    <text x="360" y="192" text-anchor="middle" class="lbl-b">×</text>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="378" y="150" width="150" height="46" rx="7" class="f-blue"/></g>
+    <text x="453" y="220" text-anchor="middle" class="lbl-g">short-wide</text>
+    <!-- rank annotation -->
+    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round"><path d="M319,96 L319,104 M300,100 L338,100"/></g>
+    <text x="319" y="86" text-anchor="middle" class="lbl-good">r = 8 (the rank)</text>
+    <text x="300" y="322" text-anchor="start" class="lbl-g">small r → tiny matrices → few trainable params</text>
+    <!-- which layers card -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="600" y="110" width="440" height="120" rx="12" class="f-blue"/></g>
+    <text x="820" y="146" text-anchor="middle" class="lbl-b">which layers get an adapter?</text>
+    <text x="820" y="178" text-anchor="middle" class="lbl">q_proj + v_proj</text>
+    <text x="820" y="206" text-anchor="middle" class="lbl-g">attention query &amp; value projections — the common minimal choice</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="600" y="256" width="440" height="60" rx="10"/></g>
+    <text x="820" y="284" text-anchor="middle" class="lbl-g">more rank · more layers = more capacity to learn</text>
+    <text x="820" y="306" text-anchor="middle" class="lbl-g">…and more room to <tspan class="lbl-b">overfit</tspan></text>
+  </svg>
+  <p class="takeaway">The small number is the low-rank trick — a big dense update is approximated by two thin matrices of rank r=8 on q_proj and v_proj, so you train a tiny slice that is still enough to shift behaviour.</p>
+  <div class="pageno">M6·04</div>
+</section>
+
 <!-- ============ SLIDE 4 — QLoRA ============ -->
 <section>
   <h2 class="t">QLoRA is LoRA one tier up — a 4-bit frozen base so a bigger model fits</h2>
@@ -308,7 +348,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="815" y="288" text-anchor="middle" class="lbl-g">¼ the memory → a 7B/13B fits on one small GPU</text>
   </svg>
   <p class="takeaway">QLoRA is LoRA with the frozen base stored 4-bit so a much bigger model fits on a small GPU — a memory trick for the frozen part, and overkill on a 0.6B that already fits.</p>
-  <div class="pageno">M6·04</div>
+  <div class="pageno">M6·05</div>
 </section>
 
 <!-- ============ SLIDE 5 — SYNTHETIC DATA PIPELINE ============ -->
@@ -367,7 +407,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="905" y="298" text-anchor="middle" class="lbl-g">the data is worth training on</text>
   </svg>
   <p class="takeaway">You build training data as a practice question bank from the corpus — and because a model generating its own data produces garbage, the filter is the part that decides whether the data is worth training on.</p>
-  <div class="pageno">M6·05</div>
+  <div class="pageno">M6·06</div>
 </section>
 
 <!-- ============ SLIDE 6 — CONTAMINATION BOUNDARY ============ -->
@@ -423,7 +463,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="342" text-anchor="middle" class="lbl-b">same sources · different questions · test set held out</text>
   </svg>
   <p class="takeaway">Your training data and your golden test set must never overlap — the synthesizer reads only the corpus, so questions share sources with the golden set but are freshly generated and the test set stays held out.</p>
-  <div class="pageno">M6·06</div>
+  <div class="pageno">M6·07</div>
 </section>
 
 <!-- ============ SLIDE 7 — READING THE LOSS CURVE ============ -->
@@ -456,7 +496,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="840" y="324" text-anchor="middle" class="lbl-g">memorizing, not learning · fails real Qs</text>
   </svg>
   <p class="takeaway">The loss is a live readout — a healthy curve falls then flattens (stop there), but on a tiny set a curve diving toward zero is overfitting, so train a few epochs and stop rather than driving it into the floor.</p>
-  <div class="pageno">M6·07</div>
+  <div class="pageno">M6·08</div>
 </section>
 
 <!-- ============ SLIDE 8 — MERGE OR SERVE APART ============ -->
@@ -486,7 +526,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="322" text-anchor="middle" class="lbl-g">merge wins here — the goal is <tspan class="lbl-b">one servable model</tspan> that drops into the existing stack</text>
   </svg>
   <p class="takeaway">Once the adapter is trained you either merge it into the base for one drop-in standalone model or serve them apart to keep it swappable — OpsMate merges, because the goal is a single servable model.</p>
-  <div class="pageno">M6·08</div>
+  <div class="pageno">M6·09</div>
 </section>
 
 <!-- ============ SLIDE 9 — CONVERT TO GGUF ============ -->
@@ -535,7 +575,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="308" text-anchor="middle" class="lbl-g">it's a normal model now — convert it the way <tspan class="lbl-b">M3</tspan> taught, and drop it beside the base</text>
   </svg>
   <p class="takeaway">The merged model is just a normal model, so you convert it to a q8_0 GGUF with the same path M3 taught and drop it beside the base — the tuned file M7 will version as v1.0.</p>
-  <div class="pageno">M6·09</div>
+  <div class="pageno">M6·10</div>
 </section>
 
 <!-- ============ SLIDE 10 — THE SWAP ============ -->
@@ -582,14 +622,47 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="324" text-anchor="middle" class="lbl-g">the <tspan class="lbl-b">OpenAI-compatible endpoint never changed</tspan> — that's why a model you trained drops in where the base was</text>
   </svg>
   <p class="takeaway">Deploying a model you trained is one env var and a restart — the tuned GGUF drops into the same stack because the OpenAI-compatible endpoint never changed, so the API, retrieval, and evals are untouched.</p>
-  <div class="pageno">M6·10</div>
+  <div class="pageno">M6·11</div>
+</section>
+
+<!-- ============ SLIDE 10b — TWO CONTROLS BEFORE YOU READ THE NUMBER ============ -->
+<section>
+  <h2 class="t">Set two controls before you read the number — or you'll misread it</h2>
+  <p class="s">Before beat-tie-lose means anything, two controls make the comparison clean. Retrieval is a control: you tuned the model, not the index, so its score must be unchanged — if it moved, find the bug first. And a no-RAG tuned-direct arm isolates what tuning bought <em>on its own</em>, with retrieval taken out of the picture.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="Two control panels. Left, a retrieval-as-control panel: retrieval 24 of 24 before, 24 of 24 after, filled green with a note tuning changed the model, not the index — if this moved, find the bug before trusting anything else. Right, a no-RAG arm panel: the tuned model with no context versus the base model with no context, filled blue, with a bracket labelled the gap = the value tuning added on its own, isolated from RAG. A band reads: a control that stays put, and an isolated arm — now the beat-tie-lose reading is clean.">
+    <!-- retrieval-as-control (green) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.8"><rect x="50" y="70" width="470" height="200" rx="12" class="f-green"/></g>
+    <text x="285" y="104" text-anchor="middle" class="lbl-b">control 1 · retrieval</text>
+    <text x="285" y="146" text-anchor="middle" class="lbl">24/24 before → 24/24 after</text>
+    <text x="285" y="182" text-anchor="middle" class="lbl-g">you tuned the model, not the index —</text>
+    <text x="285" y="206" text-anchor="middle" class="lbl-g">the retrieval score must not move</text>
+    <text x="285" y="244" text-anchor="middle" class="lbl-good">if it moved → find the bug first</text>
+    <!-- no-RAG arm (blue) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.8"><rect x="580" y="70" width="470" height="200" rx="12" class="f-blue"/></g>
+    <text x="815" y="104" text-anchor="middle" class="lbl-b">control 2 · a no-RAG arm</text>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="610" y="128" width="180" height="52" rx="9" class="f-blue"/></g>
+    <text x="700" y="152" text-anchor="middle" class="lbl-sm">tuned · no context</text>
+    <text x="700" y="172" text-anchor="middle" class="lbl-g">on its own</text>
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="840" y="128" width="180" height="52" rx="9"/></g>
+    <text x="930" y="152" text-anchor="middle" class="lbl-sm">base · no context</text>
+    <text x="930" y="172" text-anchor="middle" class="lbl-g">(M5's arm)</text>
+    <!-- gap bracket -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M700,196 L930,196 M700,190 L700,202 M930,190 L930,202"/></g>
+    <text x="815" y="226" text-anchor="middle" class="lbl-g">the gap = the value tuning added,</text>
+    <text x="815" y="250" text-anchor="middle" class="lbl-b">isolated from RAG</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="160" y="296" width="780" height="40" rx="10"/></g>
+    <text x="550" y="323" text-anchor="middle" class="lbl-g">a control that stays put + an isolated arm → now <tspan class="lbl-b">beat / tie / lose</tspan> reads clean</text>
+  </svg>
+  <p class="takeaway">Two controls make the reading clean — retrieval must stay 24/24 (or you have a bug), and a no-RAG tuned-direct arm isolates the value tuning added on its own before you judge beat, tie, or lose.</p>
+  <div class="pageno">M6·12</div>
 </section>
 
 <!-- ============ SLIDE 11 — MEASUREMENT RITUAL (scene) ============ -->
 <section>
   <h2 class="t">Weigh it on the same scale — beat, tie, or lose, every outcome teaches</h2>
   <p class="s">A tuned model always <em>feels</em> better — you built it, you wanted it to work. Feelings are not evidence. "I lost weight" means nothing unless you weighed before <em>and</em> after on the <em>same scale</em>.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="A weighing scene. Two bathroom scales. The BEFORE scale, gray, reads M5 baseline.md, RAG 6 of 15, retrieval 24 of 24, tagged recorded, committed. The AFTER scale, inked, holds the tuned model and is tagged same golden set, same graders. Two gray control notes float beside them: retrieval is a control, 24 of 24 to 24 of 24, or find the bug; and add a no-RAG tuned-direct arm, the value tuning added. Below, a three-way fork from the reading: BEAT, voice improvement, measured; TIE, no regression, ship the voice free; LOSE, honest, a knowledge golden set may not measure the voice you fixed. A band reads: same scale, read it honestly — beat, tie, or lose, every outcome teaches.">
+  <svg viewBox="0 0 1100 360" role="img" aria-label="A weighing scene. Two bathroom scales. The BEFORE scale, gray, reads M5 baseline.md, RAG 6 of 15, retrieval 24 of 24, tagged recorded, committed. The AFTER scale, inked, holds the tuned model and is tagged same golden set, same graders. A note recalls the controls set on the previous slide — retrieval held, no-RAG arm isolated — so now you read the number. Below, a three-way fork from the reading: BEAT, voice improvement, measured; TIE, no regression, ship the voice free; LOSE, honest, a knowledge golden set may not measure the voice you fixed. A band reads: same scale, read it honestly — beat, tie, or lose, every outcome teaches.">
     <!-- BEFORE scale — blue = the recorded M5 baseline data -->
     <g filter="url(#rough)" stroke="#757575" stroke-width="2.4">
       <rect x="60" y="80" width="220" height="96" rx="14" class="f-blue"/>
@@ -607,11 +680,11 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="440" y="66" text-anchor="middle" class="lbl-b">AFTER</text>
     <text x="440" y="134" text-anchor="middle" class="lbl-b">tuned model</text>
     <text x="440" y="200" text-anchor="middle" class="lbl-g">same golden set · same graders</text>
-    <!-- control notes -->
-    <text x="600" y="112" text-anchor="start" class="lbl-g">· retrieval = control (24/24 → 24/24,</text>
-    <text x="620" y="138" text-anchor="start" class="lbl-g">or find the bug)</text>
-    <text x="600" y="176" text-anchor="start" class="lbl-g">· + a no-RAG tuned-direct arm</text>
-    <text x="620" y="202" text-anchor="start" class="lbl-g">= the value tuning added</text>
+    <!-- controls carried from the prior slide -->
+    <text x="700" y="120" text-anchor="middle" class="lbl-g">controls set (prev slide):</text>
+    <text x="700" y="148" text-anchor="middle" class="lbl-g">retrieval held · no-RAG arm isolated</text>
+    <text x="700" y="184" text-anchor="middle" class="lbl-b">now read the number —</text>
+    <text x="700" y="208" text-anchor="middle" class="lbl-g">beat, tie, or lose</text>
     <!-- three-way fork — BEAT green (win), TIE orange (in-between), LOSE red (the honest loss) -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="70" y="252" width="300" height="66" rx="10" class="f-green"/>
@@ -630,7 +703,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="880" y="306" text-anchor="middle" class="lbl-g">a knowledge set may miss the voice</text>
   </svg>
   <p class="takeaway">A tuned model always feels better, so weigh it on the same committed scale — retrieval as a control, a no-RAG arm for the isolated value, and the honesty rule that beat, tie, and lose all teach something real.</p>
-  <div class="pageno">M6·11</div>
+  <div class="pageno">M6·13</div>
 </section>
 
 <!-- ============ SLIDE 12 — HAND OFF TO M7 ============ -->
@@ -682,7 +755,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="312" text-anchor="middle" class="lbl-g">the artifacts are not scratch — they are <tspan class="lbl-b">v1.0</tspan>, packaged and signed in M7 alongside the v0 base</text>
   </svg>
   <p class="takeaway">Teardown keeps the adapter, the tuned GGUF, and the training logs because they are not scratch — M7 packages and signs them as OpsMate v1.0 alongside the v0 base.</p>
-  <div class="pageno">M6·12</div>
+  <div class="pageno">M6·14</div>
 </section>
 
 <!-- ============ SLIDE 13 — CLOSING ============ -->
@@ -713,7 +786,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="130" y="276" text-anchor="start" class="lbl-g">same committed scale — read beat/tie/lose straight, not the feeling</text>
   </svg>
   <p class="credit">the part most people skip is <b>#4</b> &nbsp;·&nbsp; now open <b>Module 6 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M6·13</div>
+  <div class="pageno">M6·15</div>
 </section>
 </div></div>
 

@@ -276,11 +276,48 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M4·03</div>
 </section>
 
+<!-- ============ SLIDE 3b — THE 768 NUMBERS (the one number to hold) ============ -->
+<section>
+  <h2 class="t">One sentence becomes 768 numbers — that's the whole "meaning as coordinates"</h2>
+  <p class="s">The embedding model this course uses, <code>nomic-embed-text</code>, turns any text into a vector of exactly 768 numbers. That is the map position — 768 coordinates instead of the two or three you can picture, but the idea is identical: a point in space where closeness means closeness in meaning.</p>
+  <svg viewBox="0 0 1100 330" role="img" aria-label="One sentence flows through the embedding model into a long row of small cells labelled 768 numbers, filled blue as the data being studied, and that row lands as a single dot on the meaning-map. A note reads: you never picture 768 axes — you only ever ask for the nearest points.">
+    <!-- the sentence -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="120" width="230" height="70" rx="11" class="f-blue"/></g>
+    <text x="155" y="150" text-anchor="middle" class="lbl-b">"payments 500s"</text>
+    <text x="155" y="176" text-anchor="middle" class="lbl-g">one sentence</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M274,155 L330,155" marker-end="url(#ah)"/></g>
+    <!-- embedding model -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="334" y="120" width="180" height="70" rx="11"/></g>
+    <text x="424" y="150" text-anchor="middle" class="lbl-b">embedding model</text>
+    <text x="424" y="176" text-anchor="middle" class="lbl-g">nomic-embed-text</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M518,155 L566,155" marker-end="url(#ah)"/></g>
+    <!-- the 768-cell vector -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="574" y="126" width="30" height="58" rx="4" class="f-blue"/><rect x="608" y="126" width="30" height="58" rx="4" class="f-blue"/>
+      <rect x="642" y="126" width="30" height="58" rx="4" class="f-blue"/><rect x="676" y="126" width="30" height="58" rx="4" class="f-blue"/>
+      <rect x="744" y="126" width="30" height="58" rx="4" class="f-blue"/><rect x="778" y="126" width="30" height="58" rx="4" class="f-blue"/>
+    </g>
+    <text x="716" y="162" text-anchor="middle" class="lbl-b">…</text>
+    <text x="740" y="112" text-anchor="middle" class="lbl-g">768 numbers</text>
+    <!-- lands as a dot on the map -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M814,155 L872,155" marker-end="url(#ah)"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="880" y="96" width="180" height="140" rx="12"/></g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="960" cy="166" r="12" class="f-blue"/></g>
+    <text x="970" y="126" text-anchor="middle" class="lbl-g">a point on</text>
+    <text x="970" y="150" text-anchor="middle" class="lbl-g">the map</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="200" y="266" width="700" height="40" rx="10"/></g>
+    <text x="550" y="292" text-anchor="middle" class="lbl-g">you never picture 768 axes — you only ever ask for the <tspan class="lbl-b">nearest points</tspan></text>
+  </svg>
+  <p class="takeaway">A vector is just the sentence's coordinates — 768 of them from nomic-embed-text — and every RAG operation is one thing: find the nearest points to a given point.</p>
+  <div class="pageno">M4·04</div>
+</section>
+
 <!-- ============ SLIDE 4 — DISTANCE YOU READ ============ -->
 <section>
   <h2 class="t">How near is near — a distance you read, not a threshold you memorise</h2>
   <p class="s">Cosine distance: 0 means identical meaning, larger means less related. You don't memorise a cutoff — you read the numbers.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="A gray ruler runs from zero on the left, labelled identical meaning, toward larger on the right. Below it, two rows. An inked winning row shows the query five-hundred errors matching the payments runbook at distance about 0.80, noted as a semantic hit with zero shared words. A gray dashed row shows an off-topic query where every distance is high and none clearly wins. A band explains you read distances: a clear winner versus none is a good versus bad retrieval.">
+  <svg viewBox="0 0 1100 360" role="img" aria-label="A gray ruler runs from zero on the left, labelled identical meaning, toward larger on the right. Below it, two rows. An inked winning row shows the query five-hundred errors matching the payments runbook at distance about 0.45, noted as a semantic hit with zero shared words. A gray dashed row shows an off-topic query where every distance is high and none clearly wins. A band explains you read distances: a clear winner versus none is a good versus bad retrieval.">
     <!-- ruler -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round"><path d="M90,70 L1010,70" marker-end="url(#ahg)"/></g>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><path d="M90,60 L90,80"/></g>
@@ -290,9 +327,9 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- winning row (green = the good retrieval) -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3"><rect x="90" y="140" width="920" height="70" rx="11" class="f-green"/></g>
     <text x="114" y="172" class="lbl-b" text-anchor="start">"website throwing 500 errors"  ↔  payments runbook</text>
-    <text x="114" y="198" class="lbl-g" text-anchor="start">distance ≈ 0.80 &nbsp;·&nbsp; wins over every other runbook</text>
+    <text x="114" y="198" class="lbl-g" text-anchor="start">distance ≈ 0.45 &nbsp;·&nbsp; wins over every other runbook</text>
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="820" y="152" width="170" height="46" rx="9" class="f-green"/></g>
-    <text x="905" y="182" text-anchor="middle" class="lbl-good">≈ 0.80 ✓</text>
+    <text x="905" y="182" text-anchor="middle" class="lbl-good">≈ 0.45 ✓</text>
     <text x="905" y="128" text-anchor="middle" class="lbl-g">zero shared words</text>
     <!-- off-topic row (red = the bad retrieval) -->
     <g filter="url(#rough)" stroke="#c62828" stroke-width="2.4" stroke-dasharray="9 7"><rect x="90" y="234" width="920" height="70" rx="11" class="f-red"/></g>
@@ -305,7 +342,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="345" text-anchor="middle" class="lbl-g">you <tspan class="lbl-b">read</tspan> distances — a clear low winner vs none = a good vs bad retrieval</text>
   </svg>
   <p class="takeaway">Cosine distance is a number you read, not a threshold you memorise — a clear low winner is a good retrieval; all-high, no-winner is a bad one.</p>
-  <div class="pageno">M4·04</div>
+  <div class="pageno">M4·05</div>
 </section>
 
 <!-- ============ SLIDE 5 — CHUNKING = REVISION CARDS (scene) ============ -->
@@ -346,7 +383,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="349" text-anchor="middle" class="lbl-g">when retrieval is bad, chunking is the <tspan class="lbl-b">first knob to revisit</tspan></text>
   </svg>
   <p class="takeaway">A chunk is a revision card for your docs — one coherent idea, standing on its own; too big blurs, too small fragments, and chunking is the highest-leverage retrieval knob.</p>
-  <div class="pageno">M4·05</div>
+  <div class="pageno">M4·06</div>
 </section>
 
 <!-- ============ SLIDE 6 — VECTOR DB = CARD CATALOGUE ============ -->
@@ -380,7 +417,44 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="146" y="336" class="lbl-g" text-anchor="start">usually HNSW — how many vectors before it needs sharding, replication, a cluster?</text>
   </svg>
   <p class="takeaway">A vector DB is the card catalogue for meaning-space — pick it on four ops criteria (footprint, persistence, filtering, index/scale); Chroma-embedded is the course default.</p>
-  <div class="pageno">M4·06</div>
+  <div class="pageno">M4·07</div>
+</section>
+
+<!-- ============ SLIDE 6b — STORE CHOICE BY FIT (the comparison table) ============ -->
+<section>
+  <h2 class="t">Pick the store on fit — Chroma for the laptop, a server tier only when you outgrow it</h2>
+  <p class="s">Read the four stores as one question: how big is the corpus, and where does it run? Chroma embedded is the course default because it runs in-process on the 8&nbsp;GB budget; you move up the tiers only when scale, filtering, or query volume force you to — the app code barely changes.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="A decision fan-out from one question, how big and where does it run, to four store cards. Chroma embedded, filled green as the course default, in-process library on sqlite for dev and laptop stacks. pgvector, blue, vectors beside your Postgres rows. Qdrant, blue, a standalone server for production scale and heavy filtering. Milvus or Weaviate, orange, a distributed cluster for very large corpora and high query volume. A band reads: same code, higher tier — you move up on fit, not hype.">
+    <!-- the question -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="150" width="200" height="80" rx="12"/></g>
+    <text x="160" y="184" text-anchor="middle" class="lbl-b">how big?</text>
+    <text x="160" y="210" text-anchor="middle" class="lbl-g">where does it run?</text>
+    <!-- fan-out arrows -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M264,168 C330,120 360,70 420,66" marker-end="url(#ahg)"/>
+      <path d="M264,182 C340,170 360,150 420,150" marker-end="url(#ahg)"/>
+      <path d="M264,198 C340,210 360,236 420,238" marker-end="url(#ahg)"/>
+      <path d="M264,212 C330,260 360,318 420,322" marker-end="url(#ahg)"/>
+    </g>
+    <!-- Chroma (course default, green) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3"><rect x="428" y="40" width="620" height="52" rx="10" class="f-green"/></g>
+    <text x="452" y="62" class="lbl-b" text-anchor="start">Chroma — embedded</text>
+    <text x="452" y="84" class="lbl-g" text-anchor="start">in-process library · sqlite on disk · dev / laptop / small corpus — <tspan class="lbl-good">course default</tspan></text>
+    <!-- pgvector (blue) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="428" y="124" width="620" height="52" rx="10" class="f-blue"/></g>
+    <text x="452" y="146" class="lbl-b" text-anchor="start">pgvector</text>
+    <text x="452" y="168" class="lbl-g" text-anchor="start">an extension inside Postgres · vectors beside your relational rows</text>
+    <!-- Qdrant (blue) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="428" y="212" width="620" height="52" rx="10" class="f-blue"/></g>
+    <text x="452" y="234" class="lbl-b" text-anchor="start">Qdrant</text>
+    <text x="452" y="256" class="lbl-g" text-anchor="start">a standalone server you run &amp; monitor · production scale, heavy filtering</text>
+    <!-- Milvus / Weaviate (orange, the far tier) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="428" y="300" width="620" height="52" rx="10" class="f-orange"/></g>
+    <text x="452" y="322" class="lbl-b" text-anchor="start">Milvus / Weaviate</text>
+    <text x="452" y="344" class="lbl-g" text-anchor="start">a distributed cluster · very large corpora, high query volume</text>
+  </svg>
+  <p class="takeaway">Same near-k code, four footprints — Chroma-embedded fits the laptop, and pgvector / Qdrant / Milvus are the tiers you climb to on fit, not hype.</p>
+  <div class="pageno">M4·08</div>
 </section>
 
 <!-- ============ SLIDE 7 — RAG PIPELINE (2 fragments) ============ -->
@@ -444,19 +518,19 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="takeaway">RAG is a librarian mechanised — build the index once, then per question fetch the nearest chunks and answer from them; the model never changed, only what you put in front of it.</p>
-  <div class="pageno">M4·07</div>
+  <div class="pageno">M4·09</div>
 </section>
 
 <!-- ============ SLIDE 8 — RETRIEVAL INSPECTION ============ -->
 <section>
   <h2 class="t">Retrieval inspection — a semantic hit with zero shared words</h2>
   <p class="s">The core RAG debugging skill. Read what comes back: a clear low-distance winner, or every distance high with no winner.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels. On the left, the query website throwing 500 errors returns the payments runbook as the winner at distance about 0.80, with a note that 500 errors and 5xx share no words yet are still nearest. On the right, an off-corpus query returns rows where every distance is high with no clear winner, the smell of a bad retrieval. A band explains that returning the sources every time lets you tell a retrieval failure from a generation failure at a glance.">
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels. On the left, the query website throwing 500 errors returns the payments runbook as the winner at distance about 0.45, with a note that 500 errors and 5xx share no words yet are still nearest. On the right, an off-corpus query returns rows where every distance is high with no clear winner, the smell of a bad retrieval. A band explains that returning the sources every time lets you tell a retrieval failure from a generation failure at a glance.">
     <!-- LEFT: good retrieval (green winner) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="50" y="34" width="480" height="256" rx="12"/></g>
     <text x="290" y="66" text-anchor="middle" class="lbl-b">query: "website throwing 500 errors"</text>
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3"><rect x="80" y="88" width="420" height="56" rx="9" class="f-green"/></g>
-    <text x="100" y="122" class="lbl-b" text-anchor="start">payments runbook &nbsp;·&nbsp; dist ≈ 0.80 ✓</text>
+    <text x="100" y="122" class="lbl-b" text-anchor="start">payments runbook &nbsp;·&nbsp; dist ≈ 0.45 ✓</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="80" y="152" width="420" height="40" rx="8"/></g>
     <text x="100" y="178" class="lbl-g" text-anchor="start">tls-cert runbook &nbsp;·&nbsp; farther</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="80" y="200" width="420" height="40" rx="8"/></g>
@@ -477,7 +551,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="336" text-anchor="middle" class="lbl-g">sources returned every time → tells <tspan class="lbl-b">retrieval-wrong</tspan> from <tspan class="lbl-b">generation-wrong</tspan> at a glance</text>
   </svg>
   <p class="takeaway">Inspecting retrieval is the core RAG skill — a low-distance winner with no shared words is a good semantic hit; all-high, no-winner is a bad retrieval you can see.</p>
-  <div class="pageno">M4·08</div>
+  <div class="pageno">M4·10</div>
 </section>
 
 <!-- ============ SLIDE 9 — THREE FAILURE MODES ============ -->
@@ -485,30 +559,36 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">When RAG goes wrong — three named failure modes, three different fixes</h2>
   <p class="s">Knowing them by name is what lets you debug a wrong answer fast instead of staring at it.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three numbered rows. One: hallucination despite context, where the right chunks were retrieved but the model still made something up, which is a generation failure fixed at the prompt or model, not the index. Two: lost in the middle, where too many chunks bury a fact the model misses, so you retrieve a few good chunks not twenty mediocre ones. Three: stale index, where a runbook was updated but not re-ingested, so the database serves yesterday's procedure, and re-ingesting is an ops job. A gray footline notes each has a different fix, retrieval-or-generation is always the first question, and M5 makes these measurable.">
-    <!-- row 1 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="80" cy="58" r="24"/></g>
-    <text x="80" y="67" text-anchor="middle" class="num">1</text>
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="124" y="30" width="936" height="58" rx="10" class="f-red"/></g>
-    <text x="146" y="56" class="lbl-b" text-anchor="start">hallucination despite context</text>
-    <text x="146" y="80" class="lbl-g" text-anchor="start">right chunks, wrong answer → a GENERATION failure — fix the prompt / model, not the index</text>
-    <!-- row 2 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="80" cy="150" r="24"/></g>
-    <text x="80" y="159" text-anchor="middle" class="num">2</text>
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="124" y="122" width="936" height="58" rx="10" class="f-red"/></g>
-    <text x="146" y="148" class="lbl-b" text-anchor="start">lost in the middle</text>
-    <text x="146" y="172" class="lbl-g" text-anchor="start">too many chunks bury the signal → retrieve a FEW good chunks, not twenty mediocre ones</text>
-    <!-- row 3 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="80" cy="242" r="24"/></g>
-    <text x="80" y="251" text-anchor="middle" class="num">3</text>
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="124" y="214" width="936" height="58" rx="10" class="f-red"/></g>
-    <text x="146" y="240" class="lbl-b" text-anchor="start">stale index</text>
-    <text x="146" y="264" class="lbl-g" text-anchor="start">updated the doc, didn't re-ingest → a snapshot serving yesterday — re-ingesting is an ops job</text>
+    <!-- row 1 (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="80" cy="58" r="24"/></g>
+      <text x="80" y="67" text-anchor="middle" class="num">1</text>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="124" y="30" width="936" height="58" rx="10" class="f-red"/></g>
+      <text x="146" y="56" class="lbl-b" text-anchor="start">hallucination despite context</text>
+      <text x="146" y="80" class="lbl-g" text-anchor="start">right chunks, wrong answer → a GENERATION failure — fix the prompt / model, not the index</text>
+    </g>
+    <!-- row 2 (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="80" cy="150" r="24"/></g>
+      <text x="80" y="159" text-anchor="middle" class="num">2</text>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="124" y="122" width="936" height="58" rx="10" class="f-red"/></g>
+      <text x="146" y="148" class="lbl-b" text-anchor="start">lost in the middle</text>
+      <text x="146" y="172" class="lbl-g" text-anchor="start">too many chunks bury the signal → retrieve a FEW good chunks, not twenty mediocre ones</text>
+    </g>
+    <!-- row 3 (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="80" cy="242" r="24"/></g>
+      <text x="80" y="251" text-anchor="middle" class="num">3</text>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="124" y="214" width="936" height="58" rx="10" class="f-red"/></g>
+      <text x="146" y="240" class="lbl-b" text-anchor="start">stale index</text>
+      <text x="146" y="264" class="lbl-g" text-anchor="start">updated the doc, didn't re-ingest → a snapshot serving yesterday — re-ingesting is an ops job</text>
+    </g>
     <!-- footline -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="124" y="298" width="936" height="46" rx="10"/></g>
     <text x="592" y="327" text-anchor="middle" class="lbl-g">each a different fix — <tspan class="lbl-b">"retrieval or generation?"</tspan> is always the first question · M5 makes these measurable</text>
   </svg>
   <p class="takeaway">RAG's three failure modes have three different fixes — hallucination-despite-context is generation, lost-in-the-middle is too many chunks, stale-index is an ops miss; name them to debug fast.</p>
-  <div class="pageno">M4·09</div>
+  <div class="pageno">M4·11</div>
 </section>
 
 <!-- ============ SLIDE 10 — UNTRUSTED CORPUS (scene) ============ -->
@@ -542,7 +622,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="342" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">indirect prompt injection</tspan> — the attack rides in on the DATA, not the user's question</text>
   </svg>
   <p class="takeaway">A retrieved document is untrusted input — a sentence planted to read like an instruction rides in on the data and lands in the prompt; that is indirect prompt injection.</p>
-  <div class="pageno">M4·10</div>
+  <div class="pageno">M4·12</div>
 </section>
 
 <!-- ============ SLIDE 11 — TODAY'S HYGIENE ============ -->
@@ -575,7 +655,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="333" text-anchor="middle" class="lbl-g">reduces the risk — does <tspan class="lbl-b">not</tspan> eliminate it &nbsp;·&nbsp; real guardrails = <tspan class="lbl-b">M12</tspan></text>
   </svg>
   <p class="takeaway">Today's hygiene is separation and source-tagging — fence the context, tag its source, tell the model it is reference not commands; it reduces the risk, M12 is the real guardrail.</p>
-  <div class="pageno">M4·11</div>
+  <div class="pageno">M4·13</div>
 </section>
 
 <!-- ============ SLIDE 12 — OPSMATE v0.5 ARCHITECTURE ============ -->
@@ -619,7 +699,42 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="337" text-anchor="middle" class="lbl-g">one model service · one embedded DB · one backend · one UI = <tspan class="lbl-b">OpsMate v0.5</tspan> &nbsp;·&nbsp; template prefix-stable (M3)</text>
   </svg>
   <p class="takeaway">OpsMate v0.5 is two new services on the M3 spine — a thin UI, a FastAPI app that owns RAG with Chroma embedded inside it, embeddings from host Ollama, generation through the M3 model.</p>
-  <div class="pageno">M4·12</div>
+  <div class="pageno">M4·14</div>
+</section>
+
+<!-- ============ SLIDE 12b — PREFIX-STABLE TEMPLATE (M3 carry-forward) ============ -->
+<section>
+  <h2 class="t">Keep the system prompt byte-identical — the M3 prefix-caching lesson, applied</h2>
+  <p class="s">M3's deep dive showed that a stable prompt prefix lets the engine reuse cached prefill. The RAG template is built prefix-stable on purpose: the long system instruction is byte-identical on every call, and only the retrieved context and the question change at the end — so the standing prompt is served from cache, not re-computed.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A prompt template drawn as a stacked bar. A long green segment marked system instruction, byte-identical every call, tagged served from cache. A short blue segment marked retrieved context, and a short blue segment marked the question, both tagged varies at the end. A gray arrow shows the cached prefix reused across three calls while only the tail changes. A band reads: stable prefix in front, variable tail at the end — the M3 prefix-caching lesson applied.">
+    <!-- the template bar -->
+    <text x="120" y="80" text-anchor="start" class="lbl-b">the RAG prompt template</text>
+    <!-- stable system prefix (green, long) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="100" width="600" height="70" rx="10" class="f-green"/></g>
+    <text x="420" y="132" text-anchor="middle" class="lbl-b">system instruction — byte-identical every call</text>
+    <text x="420" y="158" text-anchor="middle" class="lbl-good">served from cache (prefill reused)</text>
+    <!-- variable context (blue) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="724" y="100" width="150" height="70" rx="10" class="f-blue"/></g>
+    <text x="799" y="132" text-anchor="middle" class="lbl-sm">retrieved</text>
+    <text x="799" y="156" text-anchor="middle" class="lbl-sm">context</text>
+    <!-- variable question (blue) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="878" y="100" width="150" height="70" rx="10" class="f-blue"/></g>
+    <text x="953" y="132" text-anchor="middle" class="lbl-sm">the</text>
+    <text x="953" y="156" text-anchor="middle" class="lbl-sm">question</text>
+    <text x="876" y="192" text-anchor="middle" class="lbl-g">varies at the end</text>
+    <!-- three calls reusing the prefix -->
+    <text x="120" y="232" text-anchor="start" class="lbl-g">every call:</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M210,250 L700,250" marker-end="url(#ahg)"/>
+      <path d="M210,278 L700,278" marker-end="url(#ahg)"/>
+      <path d="M210,306 L700,306" marker-end="url(#ahg)"/>
+    </g>
+    <text x="240" y="244" text-anchor="start" class="lbl-g">call 1 · call 2 · call 3 — same prefix reused, only the tail changes</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="160" y="322" width="780" height="14" rx="6" opacity="0"/></g>
+  </svg>
+  <p class="takeaway">The RAG template puts the byte-identical system prompt first and the varying context and question last, so the engine serves the standing prefix from cache — the M3 prefix-caching lesson, applied.</p>
+  <div class="pageno">M4·15</div>
 </section>
 
 <!-- ============ SLIDE 13 — CLOSING ============ -->
@@ -647,7 +762,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="164" y="296" class="lbl-g" text-anchor="start">fence + tag today · real guardrails in M12</text>
   </svg>
   <p class="credit">Now open <b>Module 4 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M4·13</div>
+  <div class="pageno">M4·16</div>
 </section>
 
 </div></div>

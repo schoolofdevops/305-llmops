@@ -175,121 +175,239 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·01</div>
 </section>
 
-<!-- ═══════════════ SLIDE 2 · COURIER SCENE ═══════════════ -->
+<!-- ═══════════════ SLIDE 2 · A NAME-ONLY PARCEL IS UNTRUSTWORTHY ═══════════════ -->
 <section>
-  <h2 class="t">A filename is not a version — the courier without a manifest</h2>
-  <p class="s">A parcel with just a name scrawled on the side is a problem the moment it leaves your hands. A parcel that travels properly carries a manifest: a label of what is inside, a tracking number unique to <em>this</em> parcel, and a tamper-evident seal. Copying a model file onto a server is shipping the parcel with a name and nothing else.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A two-panel comparison. On the left, name only: a parcel labelled Gourav's box, tagged nobody knows what's inside, was it swapped in transit, equals copying a file onto a server. On the right, manifest: the same parcel carrying three attached tags — a label of what's inside, a tracking number that names this parcel, and a wax seal that shows whether it was opened. A band reads: the name is for humans, the manifest is what a chain of hands can trust.">
-    <!-- LEFT: name only -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
-      <rect x="40" y="60" width="470" height="192" rx="12"/>
+  <h2 class="t">A name on the side is trustworthy only in your own hands</h2>
+  <p class="s">Picture a parcel with just a name scrawled on it — "Gourav's box." The moment it leaves you, nobody down the line knows what is inside, whether it is the box you meant, or whether someone opened it in transit and swapped the contents. Copying a model file onto a server is shipping exactly that.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A single parcel labelled Gourav's box, drawn red, leaves your hands and passes through a chain of hands: build, registry, deploy, rollback. Question marks hang over every handoff. A band reads a name is for you, holding it — every handoff after that is a place you can no longer say what you are serving.">
+    <!-- the parcel, name only -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="60" y="96" width="200" height="130" rx="9"/>
+      <path d="M60,150 L260,150"/>
+      <path d="M160,96 L160,226"/>
     </g>
-    <text x="70" y="90" text-anchor="start" class="lbl-b">NAME ONLY</text>
-    <!-- parcel — name only, untrustworthy (red) -->
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4">
-      <rect x="90" y="112" width="180" height="110" rx="8"/>
+    <text x="160" y="86" text-anchor="middle" class="lbl-b">"Gourav's box"</text>
+    <text x="160" y="252" text-anchor="middle" class="lbl-g">a name, nothing else</text>
+    <!-- leaves your hands into a chain of hands -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M260,150 L322,150" marker-end="url(#ah)"/>
     </g>
+    <text x="292" y="138" text-anchor="middle" class="lbl-g">leaves your hands</text>
+    <!-- chain of hands: build → registry → deploy → rollback -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <path d="M90,150 L270,150"/>
-      <path d="M180,112 L180,222"/>
+      <rect x="326" y="122" width="150" height="56" rx="9"/>
+      <rect x="512" y="122" width="150" height="56" rx="9"/>
+      <rect x="698" y="122" width="150" height="56" rx="9"/>
+      <rect x="884" y="122" width="150" height="56" rx="9"/>
     </g>
-    <text x="180" y="180" text-anchor="middle" class="lbl-g">"Gourav's box"</text>
-    <text x="300" y="140" text-anchor="start" class="lbl-g">nobody knows what's inside</text>
-    <text x="300" y="168" text-anchor="start" class="lbl-g">was it swapped in transit?</text>
-    <text x="300" y="212" text-anchor="start" class="lbl-sm">= copying a file onto a server</text>
-    <!-- RIGHT: manifest -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="560" y="60" width="500" height="192" rx="12"/>
+    <text x="401" y="156" text-anchor="middle" class="lbl">build</text>
+    <text x="587" y="156" text-anchor="middle" class="lbl">registry</text>
+    <text x="773" y="156" text-anchor="middle" class="lbl">deploy</text>
+    <text x="959" y="156" text-anchor="middle" class="lbl">rollback</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M476,150 L508,150" marker-end="url(#ahg)"/>
+      <path d="M662,150 L694,150" marker-end="url(#ahg)"/>
+      <path d="M848,150 L880,150" marker-end="url(#ahg)"/>
     </g>
-    <text x="590" y="90" text-anchor="start" class="lbl-b">MANIFEST</text>
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="600" y="106" width="120" height="120" rx="8"/>
-    </g>
-    <text x="660" y="172" text-anchor="middle" class="lbl-g">parcel</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
-      <path d="M720,126 L758,122" marker-end="url(#ah)"/>
-      <path d="M720,166 L758,166" marker-end="url(#ah)"/>
-      <path d="M720,206 L758,210" marker-end="url(#ah)"/>
-    </g>
-    <text x="766" y="130" text-anchor="start" class="lbl-sm">label: what's inside</text>
-    <text x="766" y="170" text-anchor="start" class="lbl-sm">tracking #: names THIS parcel</text>
-    <text x="766" y="210" text-anchor="start" class="lbl-sm">wax seal: opened? y/n</text>
+    <!-- question marks over every handoff -->
+    <text x="401" y="108" text-anchor="middle" class="lbl-b">?</text>
+    <text x="587" y="108" text-anchor="middle" class="lbl-b">?</text>
+    <text x="773" y="108" text-anchor="middle" class="lbl-b">?</text>
+    <text x="959" y="108" text-anchor="middle" class="lbl-b">?</text>
+    <text x="680" y="206" text-anchor="middle" class="lbl-g">every handoff — a place you can no longer say what you are serving</text>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="150" y="286" width="800" height="46" rx="10"/>
+      <rect x="180" y="288" width="740" height="44" rx="10"/>
     </g>
-    <text x="550" y="315" text-anchor="middle" class="lbl-g">the <tspan class="lbl-b">name</tspan> is for humans — the <tspan class="lbl-b">manifest</tspan> is what a chain of hands can trust</text>
+    <text x="550" y="316" text-anchor="middle" class="lbl-g">a <tspan class="lbl-b">name</tspan> works for exactly one person — you, holding the box</text>
   </svg>
-  <p class="takeaway">A filename travels like a parcel with a name scrawled on the side — trustworthy only in your own hands; an artifact carries a manifest of a label, a unique address, and a seal, so a chain of hands can trust it.</p>
+  <p class="takeaway">A filename is a name scrawled on a parcel — fine while it is in your hands, useless the moment it passes through a build, a registry, a deploy, a rollback.</p>
   <div class="pageno">M7·02</div>
 </section>
 
-<!-- ═══════════════ SLIDE 3 · MODEL = BUNDLE ═══════════════ -->
+<!-- ═══════════════ SLIDE 3 · THE MANIFEST CARRIES THREE THINGS ═══════════════ -->
 <section>
-  <h2 class="t">A model on disk is a bundle, not one thing — one recap, not a re-teach</h2>
-  <p class="s">You already know this from M2, so this is a callback. A model is a small bundle of files that only mean something together — and shipping it well means shipping the <em>whole</em> bundle as one versioned unit, plus what was true <em>about</em> this model when it was built.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A big outer box labelled the model equals one bundle holds four inner boxes: weights the bulk, tokenizer, config, and chat template. A gray note reads GGUF is one file, safetensors is a directory, same bundle. An arrow leads out to two extra crates, prompts and the golden eval set, tagged what was true about this model, an audit trail you can re-run.">
-    <!-- outer bundle box -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="40" y="66" width="600" height="220" rx="13"/>
+  <h2 class="t">A proper parcel carries a manifest — label, tracking number, seal</h2>
+  <p class="s">A parcel that travels properly carries three things a bare name cannot. A label of exactly what is inside, a tracking number unique to <em>this</em> parcel and no other, and a tamper-evident seal so the recipient can tell if it was opened. Those three map straight onto where this module is going.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A green parcel in the centre carries three attached tags, each pointing to what it becomes for a model. Label of what's inside becomes versioned. Tracking number that names this parcel becomes addressed. Wax seal, opened yes or no, becomes signed. A band reads the name is for humans, the manifest is what a chain of hands can trust.">
+    <!-- the parcel with a manifest -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="70" y="120" width="160" height="130" rx="9"/>
     </g>
-    <text x="340" y="98" text-anchor="middle" class="lbl-b">the model = one bundle</text>
-    <!-- inner boxes -->
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="66" y="120" width="270" height="140" rx="10"/>
+    <text x="150" y="108" text-anchor="middle" class="lbl-b">the parcel</text>
+    <text x="150" y="192" text-anchor="middle" class="lbl-g">+ manifest</text>
+    <!-- three tags -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M230,150 L300,120" marker-end="url(#ah)"/>
+      <path d="M230,185 L300,185" marker-end="url(#ah)"/>
+      <path d="M230,220 L300,250" marker-end="url(#ah)"/>
     </g>
-    <text x="201" y="180" text-anchor="middle" class="lbl-b">weights</text>
-    <text x="201" y="208" text-anchor="middle" class="lbl-g">the bulk of the bytes</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
-      <rect x="360" y="120" width="256" height="42" rx="8"/>
-      <rect x="360" y="170" width="256" height="42" rx="8"/>
-      <rect x="360" y="220" width="256" height="42" rx="8"/>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="304" y="92" width="360" height="56" rx="9"/>
+      <rect x="304" y="158" width="360" height="56" rx="9"/>
+      <rect x="304" y="224" width="360" height="56" rx="9"/>
     </g>
-    <text x="488" y="147" text-anchor="middle" class="lbl-g">tokenizer</text>
-    <text x="488" y="197" text-anchor="middle" class="lbl-g">config</text>
-    <text x="488" y="247" text-anchor="middle" class="lbl-g">chat template</text>
-    <!-- note -->
-    <text x="340" y="304" text-anchor="middle" class="lbl-g">GGUF = one file &nbsp;·&nbsp; safetensors = a directory — same bundle</text>
-    <!-- arrow out to the extra crates -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M640,150 L700,150" marker-end="url(#ah)"/>
+    <text x="324" y="126" text-anchor="start" class="lbl"><tspan class="lbl-b">label</tspan> — what's inside</text>
+    <text x="324" y="192" text-anchor="start" class="lbl"><tspan class="lbl-b">tracking #</tspan> — names THIS parcel</text>
+    <text x="324" y="258" text-anchor="start" class="lbl"><tspan class="lbl-b">wax seal</tspan> — opened? y/n</text>
+    <!-- becomes -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M664,120 L742,120" marker-end="url(#ahg)"/>
+      <path d="M664,186 L742,186" marker-end="url(#ahg)"/>
+      <path d="M664,252 L742,252" marker-end="url(#ahg)"/>
     </g>
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="704" y="106" width="176" height="42" rx="8"/>
-      <rect x="704" y="158" width="176" height="42" rx="8"/>
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="746" y="92" width="300" height="56" rx="9"/>
     </g>
-    <text x="792" y="133" text-anchor="middle" class="lbl">+ prompts</text>
-    <text x="792" y="185" text-anchor="middle" class="lbl">+ golden eval set</text>
-    <text x="792" y="234" text-anchor="middle" class="lbl-g">what was true</text>
-    <text x="792" y="256" text-anchor="middle" class="lbl-g">ABOUT this model</text>
-    <text x="792" y="278" text-anchor="middle" class="lbl-sm">→ an audit trail you can re-run</text>
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="746" y="158" width="300" height="56" rx="9"/>
+    </g>
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="746" y="224" width="300" height="56" rx="9"/>
+    </g>
+    <text x="896" y="126" text-anchor="middle" class="lbl-b">VERSIONED</text>
+    <text x="896" y="192" text-anchor="middle" class="lbl-b">ADDRESSED</text>
+    <text x="896" y="258" text-anchor="middle" class="lbl-b">SIGNED</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="150" y="300" width="800" height="44" rx="10"/>
+    </g>
+    <text x="550" y="328" text-anchor="middle" class="lbl-g">the name is for humans — the <tspan class="lbl-b">manifest</tspan> is what a chain of hands can trust</text>
   </svg>
-  <p class="takeaway">A model is a bundle — weights, tokenizer, config, chat template — so shipping it well means shipping the whole bundle plus its prompts and eval set as one versioned unit.</p>
+  <p class="takeaway">A manifest carries a label, a unique tracking number, and a tamper-evident seal — the three properties this module builds into the model: versioned, addressed, signed.</p>
   <div class="pageno">M7·03</div>
 </section>
 
-<!-- ═══════════════ SLIDE 4 · OCI ARTIFACTS + LAYERS ═══════════════ -->
+<!-- ═══════════════ SLIDE 4 · A MODEL IS A BUNDLE OF FOUR FILES ═══════════════ -->
 <section>
-  <h2 class="t">OCI artifacts ride the rails you already have — and inside are layers</h2>
-  <p class="s">You do not need a new system. The container world already solved package a bundle, address it by a unique ID, push and pull it, verify it did not change — that is OCI, and a model packaged that way rides the same rails as your images. Inside, the goods are separately-listed crates: layers. Read the sizes — the whole point is in them.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A shipping container labelled OCI artifact, tagged same registries, push-pull, and digests as your images. Inside, a manifest header names each layer by digest, media type, and size, over three horizontal bars drawn to scale: a long model layer of about 610 megabytes the heavy crate, a tiny dataset layer of about 16 kilobytes the golden set, and a tiny code layer of about 5 kilobytes the prompts. A gray note reads one crate off the ship, pull the prompts without the 610 megabytes. A band reads not one opaque blob, a set of digest-addressed layers.">
+  <h2 class="t">A model on disk is a bundle, not one thing — a recap from M2</h2>
+  <p class="s">You already know this, so it is a callback. A model on disk is a small bundle of files that only mean something together: the weights, the tokenizer, the config, and the chat template. GGUF packs them into one file; safetensors is a directory. Either way, "the model" is that bundle.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A big outer box labelled the model equals one bundle holds four inner boxes: weights, drawn blue, the bulk of the bytes; tokenizer; config; and chat template. A gray note reads GGUF is one file, safetensors is a directory, same bundle.">
+    <!-- outer bundle box -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="150" y="56" width="800" height="210" rx="13"/>
+    </g>
+    <text x="550" y="90" text-anchor="middle" class="lbl-b">the model = one bundle</text>
+    <!-- weights, the heavy one, blue -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="180" y="114" width="360" height="126" rx="10"/>
+    </g>
+    <text x="360" y="172" text-anchor="middle" class="lbl-b">weights</text>
+    <text x="360" y="200" text-anchor="middle" class="lbl-g">the bulk of the bytes</text>
+    <!-- the three small metadata files -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+      <rect x="566" y="114" width="356" height="36" rx="8"/>
+      <rect x="566" y="156" width="356" height="36" rx="8"/>
+      <rect x="566" y="204" width="356" height="36" rx="8"/>
+    </g>
+    <text x="744" y="139" text-anchor="middle" class="lbl">tokenizer <tspan class="lbl-g">— text → token IDs</tspan></text>
+    <text x="744" y="181" text-anchor="middle" class="lbl">config <tspan class="lbl-g">— how to load it</tspan></text>
+    <text x="744" y="229" text-anchor="middle" class="lbl">chat template <tspan class="lbl-g">— how turns serialize</tspan></text>
+    <!-- note -->
+    <text x="550" y="298" text-anchor="middle" class="lbl-g">GGUF = one file &nbsp;·&nbsp; safetensors = a directory — same bundle</text>
+  </svg>
+  <p class="takeaway">A model is a bundle of four files that only mean anything together — weights, tokenizer, config, chat template — whether GGUF packs them into one file or safetensors spreads them across a directory.</p>
+  <div class="pageno">M7·04</div>
+</section>
+
+<!-- ═══════════════ SLIDE 5 · SHIP THE WHOLE BUNDLE + EVAL SET ═══════════════ -->
+<section>
+  <h2 class="t">Ship the whole bundle plus what was true about it</h2>
+  <p class="s">If a model is a bundle, shipping it well means shipping the <em>whole</em> bundle as one versioned unit — not just the weights, but what was true <em>about</em> this model when it was built: the prompts it expects and the eval set it was measured on. A model that carries its own eval set is an audit trail made physical.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="The bundle box on the left, drawn blue, gains two green crates: plus prompts, and plus the golden eval set. An arrow leads to the payoff: anyone who pulls it can re-run the measurement instead of trusting a number in a report. A band reads carrying its own eval set is an audit trail made physical.">
+    <!-- the bundle -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="60" y="96" width="230" height="150" rx="12"/>
+    </g>
+    <text x="175" y="150" text-anchor="middle" class="lbl-b">the bundle</text>
+    <text x="175" y="178" text-anchor="middle" class="lbl-g">weights + 3 files</text>
+    <!-- plus two green crates -->
+    <text x="330" y="130" text-anchor="middle" class="lbl-b">+</text>
+    <text x="330" y="220" text-anchor="middle" class="lbl-b">+</text>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="366" y="96" width="240" height="60" rx="9"/>
+      <rect x="366" y="186" width="240" height="60" rx="9"/>
+    </g>
+    <text x="486" y="132" text-anchor="middle" class="lbl">prompts it expects</text>
+    <text x="486" y="222" text-anchor="middle" class="lbl">the golden eval set</text>
+    <text x="486" y="76" text-anchor="middle" class="lbl-g">what was true ABOUT this model</text>
+    <!-- payoff -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M606,171 L676,171" marker-end="url(#ah)"/>
+    </g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="680" y="120" width="384" height="104" rx="12"/>
+    </g>
+    <text x="872" y="158" text-anchor="middle" class="lbl-b">re-run the measurement</text>
+    <text x="872" y="188" text-anchor="middle" class="lbl-g">instead of trusting a number</text>
+    <text x="872" y="210" text-anchor="middle" class="lbl-g">in a report</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="180" y="286" width="740" height="44" rx="10"/>
+    </g>
+    <text x="550" y="314" text-anchor="middle" class="lbl-g">a model that carries its own eval set is an <tspan class="lbl-b">audit trail made physical</tspan></text>
+  </svg>
+  <p class="takeaway">Shipping a model well means shipping the whole bundle as one versioned unit — plus the prompts and the eval set it was measured on, so anyone can re-run the measurement.</p>
+  <div class="pageno">M7·05</div>
+</section>
+
+<!-- ═══════════════ SLIDE 6 · OCI RIDES YOUR EXISTING RAILS ═══════════════ -->
+<section>
+  <h2 class="t">You do not need a new system — OCI already ships anything</h2>
+  <p class="s">The container world already solved package a bundle, address it by a unique ID, push and pull it, verify it did not change — that is a container image, and the standard underneath, OCI, is general enough to package <em>anything</em>. A model packaged as an OCI artifact rides the exact same rails your images do.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A standardized shipping container labelled your model, as an OCI artifact, sits on rails that carry it from a truck to a train to a ship to a crane — the same rails your container images already ride. Three shared rails are named: same registries, same push and pull, same digests. A band reads you are not inventing a distribution system, you are putting the model in the container everyone already moves.">
+    <!-- the shipping container -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="60" y="70" width="300" height="110" rx="12"/>
+    </g>
+    <text x="210" y="118" text-anchor="middle" class="lbl-b">your model</text>
+    <text x="210" y="146" text-anchor="middle" class="lbl-g">as an OCI artifact</text>
+    <!-- on rails -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M360,125 L470,125" marker-end="url(#ah)"/>
+    </g>
+    <!-- three shared rails -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="474" y="66" width="560" height="42" rx="9"/>
+      <rect x="474" y="116" width="560" height="42" rx="9"/>
+      <rect x="474" y="166" width="560" height="42" rx="9"/>
+    </g>
+    <text x="754" y="93" text-anchor="middle" class="lbl">same registries</text>
+    <text x="754" y="143" text-anchor="middle" class="lbl">same push / pull</text>
+    <text x="754" y="193" text-anchor="middle" class="lbl">same digests</text>
+    <text x="1054" y="120" text-anchor="end" class="lbl-g"></text>
+    <text x="270" y="210" text-anchor="middle" class="lbl-g">truck → train → ship → crane, any port, sight unseen</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="150" y="264" width="800" height="44" rx="10"/>
+    </g>
+    <text x="550" y="292" text-anchor="middle" class="lbl-g">not a new distribution system — the <tspan class="lbl-b">container everyone already knows how to move</tspan></text>
+  </svg>
+  <p class="takeaway">OCI is the shipping-container standard for software artifacts — package the model that way and every registry, CI system, and cluster that speaks OCI handles it, sight unseen.</p>
+  <div class="pageno">M7·06</div>
+</section>
+
+<!-- ═══════════════ SLIDE 7 · INSIDE ARE LAYERS — READ THE SIZES ═══════════════ -->
+<section>
+  <h2 class="t">Inside the artifact are layers — and the sizes are the whole point</h2>
+  <p class="s">The goods inside are not one solid mass — they are separately-listed crates OCI calls layers, each with its own content address, named in a manifest. OpsMate's kit has three. Read the sizes: the model layer is hundreds of megabytes, the metadata layers are kilobytes.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A manifest header names each layer by digest, media type, and size, over three horizontal bars drawn to scale: a long blue model layer of about 610 megabytes, the heavy crate; a tiny green dataset layer of about 16 kilobytes, the golden set; and a tiny green code layer of about 5 kilobytes, the prompts. Because each is separately addressed you can take one crate off the ship. A band reads not one opaque blob, a set of digest-addressed layers.">
     <!-- outer container -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="40" y="52" width="840" height="212" rx="13"/>
+      <rect x="40" y="52" width="1020" height="212" rx="13"/>
     </g>
     <text x="150" y="82" text-anchor="middle" class="lbl-b">OCI artifact</text>
-    <text x="640" y="80" text-anchor="middle" class="lbl-g">same registries · push/pull · digests as your images</text>
     <!-- manifest header -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 6">
-      <rect x="64" y="96" width="792" height="36" rx="8"/>
+      <rect x="64" y="96" width="972" height="36" rx="8"/>
     </g>
-    <text x="460" y="121" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">manifest</tspan> — names each layer by digest · media type · size</text>
+    <text x="550" y="121" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">manifest</tspan> — names each layer by digest · media type · size</text>
     <!-- size bars (to scale) — blue heavy model crate dwarfs the green KB crates -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="64" y="144" width="700" height="40" rx="7"/>
+      <rect x="64" y="144" width="820" height="40" rx="7"/>
     </g>
     <text x="80" y="170" text-anchor="start" class="lbl-b">model layer  ~610 MB</text>
-    <text x="770" y="170" text-anchor="start" class="lbl-g">the heavy crate</text>
+    <text x="892" y="170" text-anchor="start" class="lbl-g">the heavy crate</text>
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#757575" stroke-width="2.2">
       <rect x="64" y="192" width="30" height="26" rx="5"/>
     </g>
@@ -298,92 +416,150 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="64" y="226" width="20" height="26" rx="5"/>
     </g>
     <text x="94" y="246" text-anchor="start" class="lbl-g">code layer ~5 KB — prompts</text>
-    <!-- one crate off the ship -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
-      <path d="M880,224 L936,224" marker-end="url(#ah)"/>
-    </g>
-    <text x="1005" y="212" text-anchor="middle" class="lbl-sm">one crate</text>
-    <text x="1005" y="234" text-anchor="middle" class="lbl-sm">off the ship</text>
-    <text x="1005" y="256" text-anchor="middle" class="lbl-g">(prompts, not the 610 MB)</text>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="140" y="292" width="820" height="42" rx="10"/>
     </g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">not one opaque blob — a set of <tspan class="lbl-b">digest-addressed layers</tspan></text>
   </svg>
-  <p class="takeaway">OCI packages any bundle as an artifact that rides your existing image rails, and inside it is layers — a 610 MB weights crate beside KB metadata crates, each separately addressable.</p>
-  <div class="pageno">M7·04</div>
+  <p class="takeaway">An artifact is a set of layers, each digest-addressed and listed in the manifest — a 610 MB weights crate beside KB metadata crates, which is why you can take one crate without unloading the ship.</p>
+  <div class="pageno">M7·07</div>
 </section>
 
-<!-- ═══════════════ SLIDE 5 · KITFILE = DOCKERFILE FOR MODELS ═══════════════ -->
+<!-- ═══════════════ SLIDE 8 · KITFILE = DOCKERFILE, SECTIONS → LAYERS ═══════════════ -->
 <section>
-  <h2 class="t">The Kitfile is a Dockerfile for models — every section becomes a layer</h2>
-  <p class="s">KitOps packages the bundle as an OCI artifact it calls a ModelKit, described by a Kitfile — to a ModelKit what a Dockerfile is to an image. Every top-level section becomes a layer, and every path is relative so the artifact stays portable.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A Kitfile box, tagged the packing list you write, a Dockerfile for models, with three labelled arrows: model colon leads to a model layer GGUF, datasets colon leads to a dataset layer golden.yaml, and code colon leads to a code layer prompts. The three layers converge into kit pack, one OCI artifact, then kit push to a registry. A gray callout reads every path relative, absolute paths rejected for portability. A gray footline reads KitOps is CNCF Sandbox, the concept is durable and the tool a current choice, and ModelPack standardizes the media types.">
+  <h2 class="t">The Kitfile is a Dockerfile for models — each section becomes a layer</h2>
+  <p class="s">KitOps packages the bundle as an OCI artifact it calls a ModelKit, described by a Kitfile — to a ModelKit what a Dockerfile is to an image. Every top-level section becomes a layer: <code>model:</code>, <code>datasets:</code>, <code>code:</code>. Then <code>kit pack</code> builds one artifact and <code>kit push</code> sends it.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A Kitfile box, the packing list you write, with three labelled arrows: model colon leads to a blue model layer GGUF, datasets colon leads to a green dataset layer golden.yaml, and code colon leads to a green code layer prompts. The three layers converge into kit pack, one OCI artifact, then kit push to a registry. A band reads a plain-text manifest read by pack, the same shape as a Dockerfile.">
     <!-- Kitfile -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="36" y="86" width="180" height="150" rx="12"/>
+      <rect x="36" y="96" width="180" height="150" rx="12"/>
     </g>
-    <text x="126" y="150" text-anchor="middle" class="lbl-b">Kitfile</text>
-    <text x="126" y="176" text-anchor="middle" class="lbl-g">the packing list</text>
-    <text x="126" y="198" text-anchor="middle" class="lbl-g">you write</text>
+    <text x="126" y="160" text-anchor="middle" class="lbl-b">Kitfile</text>
+    <text x="126" y="186" text-anchor="middle" class="lbl-g">the packing list</text>
+    <text x="126" y="208" text-anchor="middle" class="lbl-g">you write</text>
     <!-- three mapped arrows -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
-      <path d="M216,120 L300,104" marker-end="url(#ah)"/>
-      <path d="M216,161 L300,161" marker-end="url(#ah)"/>
-      <path d="M216,202 L300,218" marker-end="url(#ah)"/>
+      <path d="M216,130 L300,114" marker-end="url(#ah)"/>
+      <path d="M216,171 L300,171" marker-end="url(#ah)"/>
+      <path d="M216,212 L300,228" marker-end="url(#ah)"/>
     </g>
-    <text x="258" y="98" text-anchor="middle" class="lbl-sm">model:</text>
-    <text x="258" y="150" text-anchor="middle" class="lbl-sm">datasets:</text>
-    <text x="258" y="240" text-anchor="middle" class="lbl-sm">code:</text>
+    <text x="258" y="108" text-anchor="middle" class="lbl-sm">model:</text>
+    <text x="258" y="160" text-anchor="middle" class="lbl-sm">datasets:</text>
+    <text x="258" y="250" text-anchor="middle" class="lbl-sm">code:</text>
     <!-- three layers — model blue, dataset + code green -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="304" y="80" width="230" height="44" rx="8"/>
+      <rect x="304" y="90" width="230" height="44" rx="8"/>
     </g>
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="304" y="140" width="230" height="44" rx="8"/>
-      <rect x="304" y="200" width="230" height="44" rx="8"/>
+      <rect x="304" y="150" width="230" height="44" rx="8"/>
+      <rect x="304" y="210" width="230" height="44" rx="8"/>
     </g>
-    <text x="419" y="107" text-anchor="middle" class="lbl">model layer (GGUF)</text>
-    <text x="419" y="167" text-anchor="middle" class="lbl">dataset layer (golden.yaml)</text>
-    <text x="419" y="227" text-anchor="middle" class="lbl">code layer (prompts/)</text>
+    <text x="419" y="117" text-anchor="middle" class="lbl">model layer (GGUF)</text>
+    <text x="419" y="177" text-anchor="middle" class="lbl">dataset (golden.yaml)</text>
+    <text x="419" y="237" text-anchor="middle" class="lbl">code layer (prompts/)</text>
     <!-- converge into pack -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
-      <path d="M534,102 L604,150" marker-end="url(#ah)"/>
-      <path d="M534,162 L604,162" marker-end="url(#ah)"/>
-      <path d="M534,222 L604,174" marker-end="url(#ah)"/>
+      <path d="M534,112 L604,160" marker-end="url(#ah)"/>
+      <path d="M534,172 L604,172" marker-end="url(#ah)"/>
+      <path d="M534,232 L604,184" marker-end="url(#ah)"/>
     </g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="608" y="130" width="190" height="70" rx="11"/>
+      <rect x="608" y="140" width="190" height="70" rx="11"/>
     </g>
-    <text x="703" y="160" text-anchor="middle" class="lbl-b">kit pack</text>
-    <text x="703" y="186" text-anchor="middle" class="lbl-g">→ one OCI artifact</text>
+    <text x="703" y="170" text-anchor="middle" class="lbl-b">kit pack</text>
+    <text x="703" y="196" text-anchor="middle" class="lbl-g">→ one OCI artifact</text>
     <!-- push to registry -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M798,165 L858,165" marker-end="url(#ah)"/>
+      <path d="M798,175 L858,175" marker-end="url(#ah)"/>
     </g>
-    <text x="828" y="152" text-anchor="middle" class="lbl-sm">kit push</text>
+    <text x="828" y="162" text-anchor="middle" class="lbl-sm">kit push</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <path d="M866,138 a56,14 0 0 0 112,0 a56,14 0 0 0 -112,0 v54 a56,14 0 0 0 112,0 v-54"/>
+      <path d="M866,148 a56,14 0 0 0 112,0 a56,14 0 0 0 -112,0 v54 a56,14 0 0 0 112,0 v-54"/>
     </g>
-    <text x="922" y="176" text-anchor="middle" class="lbl-g">registry</text>
-    <!-- relative-path callout -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="640" y="222" width="360" height="40" rx="9"/>
+    <text x="922" y="186" text-anchor="middle" class="lbl-g">registry</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="200" y="292" width="700" height="42" rx="10"/>
     </g>
-    <text x="820" y="248" text-anchor="middle" class="lbl-g">every path <tspan class="lbl-b">RELATIVE</tspan> — absolute paths rejected</text>
-    <!-- footline -->
-    <text x="550" y="308" text-anchor="middle" class="lbl-g">KitOps = CNCF Sandbox · concept durable, tool a current choice · ModelPack standardizes the media types</text>
+    <text x="550" y="319" text-anchor="middle" class="lbl-g">a plain-text manifest read by <tspan class="lbl-b">pack</tspan> — the same shape as a Dockerfile</text>
   </svg>
-  <p class="takeaway">KitOps packs a bundle into a ModelKit from a Kitfile — a Dockerfile for models where every section becomes a layer and every path is relative so the artifact stays portable.</p>
-  <div class="pageno">M7·05</div>
+  <p class="takeaway">A Kitfile is to a ModelKit what a Dockerfile is to an image — every top-level section becomes a layer, kit pack builds one artifact, kit push sends it to the registry.</p>
+  <div class="pageno">M7·08</div>
 </section>
 
-<!-- ═══════════════ SLIDE 6 · SELECTIVE PULL ═══════════════ -->
+<!-- ═══════════════ SLIDE 9 · EVERY PATH RELATIVE ═══════════════ -->
+<section>
+  <h2 class="t">Every path in a Kitfile is relative — absolute paths are rejected</h2>
+  <p class="s">One rule the lab makes you feel on purpose. An artifact has to be portable, and a path like <code>/Users/you/models/…</code> only exists on your machine — so <code>kit pack</code> rejects it. The pack context, the directory the Kitfile sits in, is the root everything resolves against, exactly like a Docker build context.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="Two Kitfile paths compared. On the left, drawn red and crossed out, an absolute path slash Users slash you slash models, tagged only exists on your machine, kit pack rejects it. On the right, drawn green, a relative path dot slash models slash model.gguf, tagged resolves against the pack context, travels anywhere. A band reads reading the error once is how you remember the rule.">
+    <!-- absolute path, rejected -->
+    <text x="270" y="42" text-anchor="middle" class="lbl-b">ABSOLUTE</text>
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="60" y="66" width="420" height="120" rx="12"/>
+    </g>
+    <text x="270" y="118" text-anchor="middle" class="lbl">/Users/you/models/…</text>
+    <text x="270" y="152" text-anchor="middle" class="lbl-g">only exists on your machine</text>
+    <!-- cross-out -->
+    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.8" stroke-linecap="round">
+      <path d="M78,176 L462,78"/>
+    </g>
+    <text x="270" y="210" text-anchor="middle" class="lbl-g">kit pack REJECTS it</text>
+    <!-- relative path, portable -->
+    <text x="830" y="42" text-anchor="middle" class="lbl-b">RELATIVE</text>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="620" y="66" width="420" height="120" rx="12"/>
+    </g>
+    <text x="830" y="118" text-anchor="middle" class="lbl">./models/model.gguf</text>
+    <text x="830" y="152" text-anchor="middle" class="lbl-g">resolves against the pack context</text>
+    <text x="830" y="210" text-anchor="middle" class="lbl-g">travels anywhere → portable</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="180" y="278" width="740" height="44" rx="10"/>
+    </g>
+    <text x="550" y="306" text-anchor="middle" class="lbl-g">you hit the error on purpose — <tspan class="lbl-b">reading it once is how you remember the rule</tspan></text>
+  </svg>
+  <p class="takeaway">Every Kitfile path is relative to the pack context so the artifact stays portable — an absolute path only exists on your machine, and kit pack rejects it.</p>
+  <div class="pageno">M7·09</div>
+</section>
+
+<!-- ═══════════════ SLIDE 10 · KITOPS IS A CURRENT CHOICE, NOT PERMANENT ═══════════════ -->
+<section>
+  <h2 class="t">The concept is durable — the tool is a current, reasonable choice</h2>
+  <p class="s">Know what you are adopting. KitOps is a CNCF <em>Sandbox</em> project — real, open, OCI-native, but early-stage, not graduated like Kubernetes or Prometheus. An interchange effort, ModelPack, is standardizing the media types so kits from different tools can be read by any of them. The idea is the bet; the tool is the tool.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="Two layers separated. On top, drawn blue and solid, the durable concept: a model as a layered, versioned OCI artifact, tagged vendor-neutral, the bet. Below it, drawn orange and dashed, the current tooling: KitOps, CNCF Sandbox, early-stage, and ModelPack standardizing the media types, tagged a reasonable choice, not a permanent commitment. A band reads adopt the idea firmly, hold the tool loosely.">
+    <!-- the durable concept -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="150" y="60" width="800" height="86" rx="13"/>
+    </g>
+    <text x="550" y="96" text-anchor="middle" class="lbl-b">the concept — a model as a layered, versioned OCI artifact</text>
+    <text x="550" y="126" text-anchor="middle" class="lbl-g">vendor-neutral · durable · the bet</text>
+    <!-- separator -->
+    <text x="550" y="172" text-anchor="middle" class="lbl-g">rests on ↓ but is not the same as</text>
+    <!-- the current tooling -->
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="150" y="188" width="390" height="86" rx="12"/>
+      <rect x="560" y="188" width="390" height="86" rx="12"/>
+    </g>
+    <text x="345" y="222" text-anchor="middle" class="lbl-b">KitOps</text>
+    <text x="345" y="250" text-anchor="middle" class="lbl-g">CNCF Sandbox · early-stage</text>
+    <text x="755" y="222" text-anchor="middle" class="lbl-b">ModelPack</text>
+    <text x="755" y="250" text-anchor="middle" class="lbl-g">standardizes the media types</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="200" y="290" width="700" height="42" rx="10"/>
+    </g>
+    <text x="550" y="317" text-anchor="middle" class="lbl-g">adopt the <tspan class="lbl-b">idea</tspan> firmly, hold the <tspan class="lbl-b">tool</tspan> loosely</text>
+  </svg>
+  <p class="takeaway">The durable, vendor-neutral idea is a model as a layered versioned OCI artifact — KitOps is a current CNCF Sandbox choice, and ModelPack is standardizing the media types across tools.</p>
+  <div class="pageno">M7·10</div>
+</section>
+
+<!-- ═══════════════ SLIDE 11 · SELECTIVE PULL ═══════════════ -->
 <section>
   <h2 class="t">Selective pull — take one crate off the ship, not the whole thing</h2>
-  <p class="s">A ModelKit moves like any OCI artifact: kit push sends it, kit pull brings it back. The move that matters is selective pull. Because the manifest lists each layer by digest, the client fetches exactly the crate you ask for — the prompts without the weights.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A registry cylinder holds the three-layer artifact. A kit unpack with filter code arrow pulls down only a small prompts folder of about 5 kilobytes, while the 610 megabyte weights layer stays on the registry, tagged left behind. A struck-through gray arrow shows the naive download-the-model path moving all 610 megabytes, crossed out and tagged what you did not have to do. A band reads each layer is digest-addressed, fetch exactly the crate you want.">
+  <p class="s">A ModelKit moves like any OCI artifact: <code>kit push</code> sends it, <code>kit pull</code> brings it back. The move that matters is selective pull. Because the manifest lists each layer by digest, the client fetches exactly the crate you ask for — the prompts without the weights.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A registry cylinder holds the three-layer artifact. A kit unpack with filter code arrow pulls down only a small green prompts folder of about 5 kilobytes, while the 610 megabyte weights layer stays on the registry, tagged left behind. A struck-through gray arrow shows the naive download-the-model path moving all 610 megabytes, crossed out and tagged what you did not have to do. A band reads each layer is digest-addressed, fetch exactly the crate you want.">
     <!-- registry cylinder -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
       <path d="M110,74 a110,26 0 0 0 220,0 a110,26 0 0 0 -220,0 v150 a110,26 0 0 0 220,0 v-150"/>
@@ -423,67 +599,103 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="319" text-anchor="middle" class="lbl-g">each layer is <tspan class="lbl-b">digest-addressed</tspan> → fetch exactly the crate you want</text>
   </svg>
   <p class="takeaway">Selective pull retrieves one layer by its digest — kit unpack --filter=code brings back 5 KB of prompts and leaves the 610 MB of weights on the registry.</p>
-  <div class="pageno">M7·06</div>
+  <div class="pageno">M7·11</div>
 </section>
 
-<!-- ═══════════════ SLIDE 7 · WAX SEAL SCENE ═══════════════ -->
+<!-- ═══════════════ SLIDE 12 · WAX SEAL — AUTHENTICITY + INTEGRITY ═══════════════ -->
 <section>
-  <h2 class="t">The wax seal proves origin, not quality — and binds to a digest, not a tag</h2>
-  <p class="s">Packaging answers what is inside and how to address it, not did anyone tamper with it. For that you sign. A wax seal does not hide the letter — anyone can read it — it proves two things: sealed by whoever holds the ring, and unopened since. Signing is tamper-evidence, not secrecy.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A letter is pressed with a signet ring, leaving a wax seal. Two proof tags float off the seal: authenticity, sealed by the ring holder, and integrity, unopened since. A gray note reads readable — tamper-evidence not secrecy, proves origin not quality. Below, a digest box labelled sha256 acbf is the bytes and cannot point elsewhere, so sign this; beside it a gray dashed tag box labelled 1.0.0 is a movable label, so never sign a tag. A band reads a signature vouches for these exact bytes, sign and verify by digest.">
+  <h2 class="t">The wax seal proves origin, not quality — tamper-evidence, not secrecy</h2>
+  <p class="s">Packaging answers what is inside and how to address it, not did anyone tamper with it. For that you sign. A wax seal does not hide the letter — anyone can read it — it proves two things: sealed by whoever holds the ring, and unopened since. Swap the weights after signing and verification fails.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A readable letter is pressed with a signet ring, leaving a purple wax seal. Two proof tags float off the seal: authenticity, sealed by the ring holder, and integrity, unopened since. A gray note reads readable — tamper-evidence, not secrecy; a signed model is not encrypted, anyone can pull it; it proves origin, not quality. A band reads break the seal and it cannot re-form without the ring.">
     <!-- letter + ring + seal -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="60" y="66" width="200" height="150" rx="8"/>
-      <path d="M78,96 L242,96"/>
-      <path d="M78,120 L242,120"/>
-      <path d="M78,144 L200,144"/>
+      <rect x="60" y="76" width="200" height="150" rx="8"/>
+      <path d="M78,106 L242,106"/>
+      <path d="M78,130 L242,130"/>
+      <path d="M78,154 L200,154"/>
     </g>
-    <text x="160" y="182" text-anchor="middle" class="lbl-g">the letter</text>
-    <text x="160" y="206" text-anchor="middle" class="lbl-sm">(readable by anyone)</text>
+    <text x="160" y="192" text-anchor="middle" class="lbl-g">the letter</text>
+    <text x="160" y="216" text-anchor="middle" class="lbl-sm">(readable by anyone)</text>
     <!-- ring pressing -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <circle cx="316" cy="150" r="30"/>
+      <circle cx="316" cy="160" r="30"/>
     </g>
-    <text x="316" y="204" text-anchor="middle" class="lbl-sm">signet ring</text>
+    <text x="316" y="214" text-anchor="middle" class="lbl-sm">signet ring</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
-      <path d="M348,150 L392,150" marker-end="url(#ah)"/>
+      <path d="M348,160 L392,160" marker-end="url(#ah)"/>
     </g>
     <!-- wax seal -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3">
-      <circle cx="440" cy="150" r="42"/>
+      <circle cx="440" cy="160" r="42"/>
     </g>
-    <text x="440" y="158" text-anchor="middle" class="lbl-b">seal</text>
+    <text x="440" y="168" text-anchor="middle" class="lbl-b">seal</text>
     <!-- two proof tags -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
-      <path d="M482,128 L524,110" marker-end="url(#ah)"/>
-      <path d="M482,172 L524,190" marker-end="url(#ah)"/>
+      <path d="M482,138 L524,120" marker-end="url(#ah)"/>
+      <path d="M482,182 L524,200" marker-end="url(#ah)"/>
     </g>
-    <text x="532" y="106" text-anchor="start" class="lbl"><tspan class="lbl-b">authenticity</tspan> — sealed by the ring holder</text>
-    <text x="532" y="196" text-anchor="start" class="lbl"><tspan class="lbl-b">integrity</tspan> — unopened since</text>
-    <text x="760" y="150" text-anchor="middle" class="lbl-g">readable! — tamper-EVIDENCE,</text>
-    <text x="760" y="172" text-anchor="middle" class="lbl-g">not secrecy · proves ORIGIN, not quality</text>
-    <!-- digest vs tag — green (sign THIS) vs red (never sign a tag) -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="120" y="238" width="360" height="58" rx="10"/>
+    <text x="532" y="116" text-anchor="start" class="lbl"><tspan class="lbl-b">authenticity</tspan> — sealed by the ring holder</text>
+    <text x="532" y="206" text-anchor="start" class="lbl"><tspan class="lbl-b">integrity</tspan> — unopened since</text>
+    <text x="770" y="160" text-anchor="middle" class="lbl-g">readable! — tamper-EVIDENCE,</text>
+    <text x="770" y="182" text-anchor="middle" class="lbl-g">not secrecy · proves ORIGIN, not quality</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="180" y="284" width="740" height="44" rx="10"/>
     </g>
-    <text x="300" y="266" text-anchor="middle" class="lbl-b">digest sha256:acbf…</text>
-    <text x="300" y="288" text-anchor="middle" class="lbl-g">IS the bytes → sign THIS</text>
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
-      <rect x="620" y="238" width="360" height="58" rx="10"/>
-    </g>
-    <text x="800" y="266" text-anchor="middle" class="lbl-g">tag 1.0.0 — a movable label</text>
-    <text x="800" y="288" text-anchor="middle" class="lbl-g">→ never sign a tag</text>
-    <text x="550" y="322" text-anchor="middle" class="lbl-sm">a signature vouches for <tspan class="lbl-b">these exact bytes</tspan> — sign and verify by digest</text>
+    <text x="550" y="312" text-anchor="middle" class="lbl-g">break the seal and it <tspan class="lbl-b">cannot re-form without the ring</tspan></text>
   </svg>
-  <p class="takeaway">Signing is a wax seal: it proves the bytes came from the key holder and are unchanged — origin not quality, tamper-evidence not secrecy — and it binds to the digest, never a movable tag.</p>
-  <div class="pageno">M7·07</div>
+  <p class="takeaway">Signing is a wax seal — it proves the bytes came from the key holder and are unchanged, origin not quality, tamper-evidence not secrecy; anyone can still pull a signed model.</p>
+  <div class="pageno">M7·12</div>
 </section>
 
-<!-- ═══════════════ SLIDE 8 · VERIFY-BEFORE-DEPLOY GATE ═══════════════ -->
+<!-- ═══════════════ SLIDE 13 · SIGN THE DIGEST, NOT THE TAG ═══════════════ -->
+<section>
+  <h2 class="t">Sign the digest, never the tag — a tag is a label someone can move</h2>
+  <p class="s">The precision that makes signing work: a signature binds to a <em>digest</em>, not a tag. A tag like <code>1.0.0</code> is a human-friendly label someone can move to point at different bytes tomorrow; a digest like <code>sha256:acbf…</code> <em>is</em> the bytes. This module uses Cosign with a local key pair — keep the private key secret, it is your signet ring.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="Two boxes compared. On the left, drawn green, a digest sha256 acbf is the bytes, a cryptographic hash that cannot point anywhere else, tagged sign THIS. On the right, drawn red and dashed, a tag 1.0.0 is a movable label someone can re-point tomorrow, tagged never sign a tag. Below, the Cosign flow: generate-key-pair makes the keys, cosign sign seals by digest, cosign verify checks the seal; keep the private key secret. A band reads always sign and verify by digest.">
+    <!-- digest, green, sign this -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="70" y="56" width="440" height="96" rx="12"/>
+    </g>
+    <text x="290" y="92" text-anchor="middle" class="lbl-b">digest sha256:acbf…</text>
+    <text x="290" y="122" text-anchor="middle" class="lbl-g">IS the bytes — cannot point elsewhere</text>
+    <text x="290" y="176" text-anchor="middle" class="lbl-sm">→ sign THIS</text>
+    <!-- tag, red, never -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="590" y="56" width="440" height="96" rx="12"/>
+    </g>
+    <text x="810" y="92" text-anchor="middle" class="lbl-b">tag 1.0.0</text>
+    <text x="810" y="122" text-anchor="middle" class="lbl-g">a movable label — re-pointable tomorrow</text>
+    <text x="810" y="176" text-anchor="middle" class="lbl-sm">→ never sign a tag</text>
+    <!-- cosign flow -->
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="120" y="210" width="270" height="56" rx="10"/>
+      <rect x="415" y="210" width="270" height="56" rx="10"/>
+      <rect x="710" y="210" width="270" height="56" rx="10"/>
+    </g>
+    <text x="255" y="244" text-anchor="middle" class="lbl">generate-key-pair</text>
+    <text x="550" y="244" text-anchor="middle" class="lbl">cosign sign (by digest)</text>
+    <text x="845" y="244" text-anchor="middle" class="lbl">cosign verify</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M390,238 L411,238" marker-end="url(#ah)"/>
+      <path d="M685,238 L706,238" marker-end="url(#ah)"/>
+    </g>
+    <text x="550" y="292" text-anchor="middle" class="lbl-g">keep the private key secret — it is your signet ring</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="200" y="310" width="700" height="36" rx="10"/>
+    </g>
+    <text x="550" y="334" text-anchor="middle" class="lbl-g">a signature vouches for <tspan class="lbl-b">these exact bytes</tspan> — always sign and verify by digest</text>
+  </svg>
+  <p class="takeaway">A signature binds to a digest, which IS the bytes, never a movable tag — Cosign with a local key pair signs and verifies by digest, and the private key is your signet ring.</p>
+  <div class="pageno">M7·13</div>
+</section>
+
+<!-- ═══════════════ SLIDE 14 · VERIFY-BEFORE-DEPLOY GATE ═══════════════ -->
 <section>
   <h2 class="t">A seal nobody checks is decoration — verify before you run</h2>
-  <p class="s">Signing is only useful if something downstream verifies before it runs. That bottom branch — no signature means refuse to deploy — is the whole point. cosign verify checks the digest: were the bytes changed, and were they signed by the key holder?</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="A model artifact plus its digest flows into cosign verify with the public key, then into a diamond asking are the bytes unchanged and signed by the key holder. A yes arrow leads to deploy with a check mark. A no or no-signature arrow leads to refuse to deploy with a cross, tagged the whole point. A gray note under the gate reads wired into OpsMate's preflight now, a Kubernetes admission policy in M8. A band reads a seal nobody checks is decoration, verify before you run.">
+  <p class="s">Signing is only useful if something downstream verifies before it runs. That bottom branch — no signature means refuse to deploy — is the whole point. <code>cosign verify</code> checks the digest: were the bytes changed, and were they signed by the key holder?</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A model artifact plus its digest flows into cosign verify with the public key, then into a diamond asking are the bytes unchanged and signed by the key holder. A yes arrow leads to a green deploy. A no or no-signature arrow leads to a red refuse to deploy, tagged the whole point. A gray note under the gate reads wired into OpsMate's preflight now, a Kubernetes admission policy in M8. A band reads a seal nobody checks is decoration, verify before you run.">
     <!-- artifact -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="36" y="112" width="180" height="70" rx="11"/>
@@ -533,61 +745,86 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="313" text-anchor="middle" class="lbl-g">a seal nobody checks is <tspan class="lbl-b">decoration</tspan> — verify before you run</text>
   </svg>
   <p class="takeaway">Signing only matters if something verifies before it runs — the gate refuses an unsigned or altered model, first in OpsMate's preflight, then as a Kubernetes admission policy in M8.</p>
-  <div class="pageno">M7·08</div>
+  <div class="pageno">M7·14</div>
 </section>
 
-<!-- ═══════════════ SLIDE 9 · SEMVER = TEXTBOOK EDITIONS ═══════════════ -->
+<!-- ═══════════════ SLIDE 15 · SEMVER = TEXTBOOK EDITIONS ═══════════════ -->
 <section>
-  <h2 class="t">Semver for models — textbook editions, plus the -candidate suffix</h2>
-  <p class="s">A version number should tell you what changed without diffing two artifacts. Semver carries over to models like editions of a textbook — with one honest caveat: the field has no universal standard, so you adopt a convention and state it.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="Three edition rungs. MAJOR is a new edition where old references break, tagged new base or behaviour shift equals an API break. MINOR is a revised printing, better within the same edition, tagged a better tune, same interface, re-test. PATCH is a corrected reprint where the words are unchanged, tagged packaging only — prompts, eval set, metadata. Set apart below is the candidate suffix box: real, packaged, pushed, but not promoted to release, tagged the hinge of this module. A band reads read the number, know what changed, without diffing the artifacts.">
+  <h2 class="t">Semver for models reads like textbook editions</h2>
+  <p class="s">A version number should tell you what changed without diffing two artifacts. Semver — MAJOR.MINOR.PATCH — carries over to models with one honest caveat: the field has no universal standard, so you adopt a convention and state it. Reading the number tells a consumer how to treat the new model.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="Three edition rungs. MAJOR, drawn orange, is a new edition where old references break — new base or behaviour shift, an API break, treat as breaking. MINOR, drawn blue, is a revised printing, better within the same edition — a better tune, same interface, re-test. PATCH, drawn green, is a corrected reprint where the words are unchanged — packaging only, drop in blindly. A band reads read the number, know what changed, without diffing the artifacts.">
     <!-- three rungs — MAJOR caution (orange), MINOR re-test (blue), PATCH drop-in (green) -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="60" y="56" width="640" height="52" rx="9"/>
+      <rect x="60" y="64" width="700" height="66" rx="9"/>
     </g>
-    <text x="90" y="89" text-anchor="start" class="lbl-b">MAJOR</text>
-    <text x="230" y="80" text-anchor="start" class="lbl">new edition — old references break</text>
-    <text x="230" y="101" text-anchor="start" class="lbl-g">new base / behaviour shift = API break</text>
+    <text x="90" y="98" text-anchor="start" class="lbl-b">MAJOR</text>
+    <text x="250" y="90" text-anchor="start" class="lbl">new edition — old references break</text>
+    <text x="250" y="116" text-anchor="start" class="lbl-g">new base / behaviour shift = API break</text>
+    <text x="900" y="102" text-anchor="middle" class="lbl-sm">→ treat as breaking</text>
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="60" y="118" width="640" height="52" rx="9"/>
+      <rect x="60" y="142" width="700" height="66" rx="9"/>
     </g>
-    <text x="90" y="151" text-anchor="start" class="lbl-b">MINOR</text>
-    <text x="230" y="142" text-anchor="start" class="lbl">revised printing — better within the edition</text>
-    <text x="230" y="163" text-anchor="start" class="lbl-g">a better tune, same interface, re-test</text>
+    <text x="90" y="176" text-anchor="start" class="lbl-b">MINOR</text>
+    <text x="250" y="168" text-anchor="start" class="lbl">revised printing — better within the edition</text>
+    <text x="250" y="194" text-anchor="start" class="lbl-g">a better tune, same interface</text>
+    <text x="900" y="180" text-anchor="middle" class="lbl-sm">→ re-test</text>
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="60" y="180" width="640" height="52" rx="9"/>
+      <rect x="60" y="220" width="700" height="66" rx="9"/>
     </g>
-    <text x="90" y="213" text-anchor="start" class="lbl-b">PATCH</text>
-    <text x="230" y="204" text-anchor="start" class="lbl">corrected reprint — words unchanged</text>
-    <text x="230" y="225" text-anchor="start" class="lbl-g">packaging only — prompts / eval set / metadata</text>
-    <!-- the drop-in signal, right column -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="4 6">
-      <rect x="724" y="56" width="336" height="176" rx="10"/>
-    </g>
-    <text x="892" y="92" text-anchor="middle" class="lbl-g">reading the number tells a consumer:</text>
-    <text x="892" y="128" text-anchor="middle" class="lbl-sm">MAJOR → treat as breaking</text>
-    <text x="892" y="160" text-anchor="middle" class="lbl-sm">MINOR → re-test</text>
-    <text x="892" y="192" text-anchor="middle" class="lbl-sm">PATCH → drop in blindly</text>
-    <!-- candidate suffix, set apart — the special hinge (purple) -->
-    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="200" y="252" width="700" height="46" rx="10"/>
-    </g>
-    <text x="550" y="281" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">-candidate</tspan> — real · packaged · pushed, but NOT promoted → the hinge of this module</text>
+    <text x="90" y="254" text-anchor="start" class="lbl-b">PATCH</text>
+    <text x="250" y="246" text-anchor="start" class="lbl">corrected reprint — words unchanged</text>
+    <text x="250" y="272" text-anchor="start" class="lbl-g">packaging only — prompts / eval set / metadata</text>
+    <text x="900" y="258" text-anchor="middle" class="lbl-sm">→ drop in blindly</text>
     <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="250" y="310" width="600" height="34" rx="9"/>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="200" y="302" width="700" height="40" rx="10"/>
     </g>
-    <text x="550" y="333" text-anchor="middle" class="lbl-g">read the number, know what changed — without diffing the artifacts</text>
+    <text x="550" y="328" text-anchor="middle" class="lbl-g">read the number, know what changed — <tspan class="lbl-b">without diffing the artifacts</tspan></text>
   </svg>
-  <p class="takeaway">Semver reads like textbook editions — MAJOR breaks references, MINOR improves within, PATCH is packaging only — plus the -candidate suffix for a build that is real and pushed but not yet promoted.</p>
-  <div class="pageno">M7·09</div>
+  <p class="takeaway">Semver reads like textbook editions — MAJOR breaks references (treat as breaking), MINOR improves within (re-test), PATCH is packaging only (drop in blindly).</p>
+  <div class="pageno">M7·15</div>
 </section>
 
-<!-- ═══════════════ SLIDE 10 · THE TWO TAGS (SPINE) ═══════════════ -->
+<!-- ═══════════════ SLIDE 16 · THE -CANDIDATE SUFFIX (HINGE) ═══════════════ -->
+<section>
+  <h2 class="t">The -candidate suffix names a build that is real but not promoted</h2>
+  <p class="s">The one addition models borrow from software is the pre-release suffix — <code>1.0.0-candidate</code>. A candidate build exists, is real, is packaged and pushed — but has <em>not</em> been promoted to the plain <code>1.0.0</code> release. It is a version you can point at, measure, and talk about precisely, without it being the thing that ships. That suffix is the hinge of this module.</p>
+  <svg viewBox="0 0 1100 330" role="img" aria-label="A number line from a candidate to a release. On the left, drawn purple, 1.0.0-candidate: real, packaged, pushed, addressable — but NOT promoted. An arrow labelled promote leads right to a green 1.0.0, the release that ships. A gray note reads a candidate is a version you can point at and measure without it being what ships. A band reads the -candidate suffix is the hinge of this module's story.">
+    <!-- candidate -->
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="70" y="96" width="400" height="130" rx="13"/>
+    </g>
+    <text x="270" y="136" text-anchor="middle" class="lbl-b">1.0.0-candidate</text>
+    <text x="270" y="166" text-anchor="middle" class="lbl-g">real · packaged · pushed · addressable</text>
+    <text x="270" y="196" text-anchor="middle" class="lbl-g">but NOT promoted</text>
+    <!-- promote arrow -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+      <path d="M470,161 L620,161" marker-end="url(#ah)"/>
+    </g>
+    <text x="545" y="146" text-anchor="middle" class="lbl-sm">promote</text>
+    <!-- release -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="624" y="96" width="400" height="130" rx="13"/>
+    </g>
+    <text x="824" y="146" text-anchor="middle" class="lbl-b">1.0.0</text>
+    <text x="824" y="178" text-anchor="middle" class="lbl-g">the release that SHIPS</text>
+    <!-- note -->
+    <text x="550" y="256" text-anchor="middle" class="lbl-g">a candidate is a version you can point at and measure — without it being what ships</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="200" y="286" width="700" height="42" rx="10"/>
+    </g>
+    <text x="550" y="313" text-anchor="middle" class="lbl-g">the <tspan class="lbl-b">-candidate</tspan> suffix is the hinge of this module's story</text>
+  </svg>
+  <p class="takeaway">The -candidate suffix names a build that is real, packaged, and pushed but not promoted to release — a version you can measure precisely without it being the thing that ships.</p>
+  <div class="pageno">M7·16</div>
+</section>
+
+<!-- ═══════════════ SLIDE 17 · THE TWO TAGS (SPINE) ═══════════════ -->
 <section>
   <h2 class="t">The two tags — the registry records history, not just winners</h2>
   <p class="s">Straight out of M6: you tuned a model, measured it honestly, and it lost — so it did not ship. Packaging forces the question, what happens to it now? Not delete it (lose the record), not leave it lying around (served by accident) — push both, as two tags of one repository.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="Inside one frame labelled opsmate/model, one repository, two tags. On the left, 1.0.0, the base Qwen, the baseline holder that serves, signed, carrying its golden set and prompts, leading to gate deploys. On the right, in gray dashed, 1.0.0-candidate, the M6 tuned model, measured, lost, recorded, not signed on purpose, carrying the same golden set it was weighed on, leading to gate blocked. A gray note bridges them: same golden set on both, so the comparison is reproducible from the artifacts. A band reads the registry records history, not just winners — kit list, not a Slack search.">
+  <svg viewBox="0 0 1100 350" role="img" aria-label="Inside one frame labelled opsmate/model, one repository, two tags. On the left, drawn green, 1.0.0, the base Qwen, the baseline holder that serves, signed, carrying its golden set and prompts, leading to gate deploys. On the right, drawn red and dashed, 1.0.0-candidate, the M6 tuned model, measured, lost, recorded, not signed on purpose, carrying the same golden set it was weighed on, leading to gate blocked. A gray note bridges them: same golden set on both, so the comparison is reproducible from the artifacts. A band reads the registry records history, not just winners — kit list, not a Slack search.">
     <!-- repo frame -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 6">
       <rect x="36" y="52" width="1028" height="212" rx="12"/>
@@ -624,14 +861,14 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="332" text-anchor="middle" class="lbl-g">the registry records <tspan class="lbl-b">history, not just winners</tspan> — kit list, not a Slack search</text>
   </svg>
   <p class="takeaway">You push both models as two tags — the signed base that serves and the unsigned M6 candidate the gate blocks — each carrying its golden set, so the registry preserves the whole history, not just the winner.</p>
-  <div class="pageno">M7·10</div>
+  <div class="pageno">M7·17</div>
 </section>
 
-<!-- ═══════════════ SLIDE 11 · REGISTRY LANDSCAPE ═══════════════ -->
+<!-- ═══════════════ SLIDE 18 · REGISTRY LANDSCAPE ═══════════════ -->
 <section>
-  <h2 class="t">Zot here, Harbor and ECR and HF in production — the address changes, not the format</h2>
+  <h2 class="t">Zot here, Harbor and ECR and HF in production — address changes, not format</h2>
   <p class="s">The registry is where artifacts live, and you have choices. This lab runs Zot because it starts in seconds and needs no cloud. In production you would meet one of the others — and the point is that your artifact does not change, only where it is stored does.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A hub-and-spoke. At the center, your OCI artifact, unchanged. Four spokes lead to registries: Zot, the lab choice, seconds, no cloud, CNCF, tagged here; Harbor, self-hosted enterprise with RBAC, scanning, and signing policy; Artifactory, ECR, and GHCR, managed registries where your images already live; and Hugging Face Hub, git-LFS-based, the odd one out, where base models start. A band reads packaged as OCI, so moving registries is a change of address, not format.">
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A hub-and-spoke. At the center, drawn blue, your OCI artifact, unchanged. Four spokes lead to registries: Zot, drawn green, the lab choice, seconds, no cloud, CNCF, tagged here; Harbor, self-hosted enterprise with RBAC, scanning, and signing policy; Artifactory, ECR, and GHCR, managed registries where your images already live; and Hugging Face Hub, git-LFS-based, the odd one out, where base models start. A band reads packaged as OCI, so moving registries is a change of address, not format.">
     <!-- center hub — the artifact under study (blue) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
       <rect x="420" y="132" width="260" height="86" rx="12"/>
@@ -680,10 +917,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="333" text-anchor="middle" class="lbl-g">packaged as OCI → moving registries is a change of <tspan class="lbl-b">address, not format</tspan></text>
   </svg>
   <p class="takeaway">The lab runs Zot but the artifact is portable — Harbor, ECR/GHCR, and Hugging Face are just different addresses for the same OCI artifact, because you did not invent your own format.</p>
-  <div class="pageno">M7·11</div>
+  <div class="pageno">M7·18</div>
 </section>
 
-<!-- ═══════════════ SLIDE 12 · CLOSING + M8 HAND-OFF ═══════════════ -->
+<!-- ═══════════════ SLIDE 19 · CLOSING + M8 HAND-OFF ═══════════════ -->
 <section>
   <p class="kicker">MODULE 7 &nbsp;·&nbsp; SHIP THE MODEL — KITOPS, OCI ARTIFACTS &amp; SIGNING</p>
   <h2 class="t" style="font-size:2.05em">The loose file is gone — M8's cluster pulls this signed, versioned kit</h2>
@@ -711,7 +948,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="600" y="242" text-anchor="middle" class="lbl">→ <tspan class="lbl-b">M8</tspan>: the cluster pulls opsmate/model:1.0.0, verifies the signature, serves it</text>
   </svg>
   <p class="credit">the loose file is gone &nbsp;·&nbsp; now open <b>Module 7 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M7·12</div>
+  <div class="pageno">M7·19</div>
 </section>
 
 </div></div>

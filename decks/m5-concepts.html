@@ -242,35 +242,78 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M5·02</div>
 </section>
 
+<!-- ============ SLIDE 2b — WHY NOW: THE BASELINE BEFORE M6 ============ -->
+<section>
+  <h2 class="t">Record the number before you touch the model — or M6 has nothing to beat</h2>
+  <p class="s">There's a second reason this matters right now. M6 fine-tunes the model, and a fine-tuned model always <em>feels</em> better because you wanted it to. Against what do you measure whether it actually improved? A baseline that exists <em>before</em> you touch the model, written to a file — so the comparison is real, not a memory.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A timeline. On the left, a purple baseline.md card recorded now, before any change, tagged the before-number, committed. An arrow crosses a dashed now line into M6, where the model is fine-tuned, and the tuned result is weighed against the same recorded card. A red note warns: no recorded baseline means you compare against a memory — and a tuned model always feels better. A band reads: you cannot fine-tune responsibly without a number recorded first.">
+    <!-- baseline recorded now -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="110" width="240" height="110" rx="12" class="f-purple"/></g>
+    <text x="180" y="150" text-anchor="middle" class="lbl-b">baseline.md</text>
+    <text x="180" y="178" text-anchor="middle" class="lbl-g">the "before" number</text>
+    <text x="180" y="204" text-anchor="middle" class="lbl-g">recorded &amp; committed — now</text>
+    <!-- the now line -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="4 6"><path d="M420,60 L420,300"/></g>
+    <text x="420" y="48" text-anchor="middle" class="lbl-g">now</text>
+    <!-- arrow across -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M304,165 L560,165" marker-end="url(#ah)"/></g>
+    <text x="470" y="150" text-anchor="middle" class="lbl-g">later</text>
+    <!-- M6 weighs against it -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="566" y="110" width="240" height="110" rx="12" class="f-blue"/></g>
+    <text x="686" y="150" text-anchor="middle" class="lbl-b">M6 · fine-tune</text>
+    <text x="686" y="178" text-anchor="middle" class="lbl-g">weigh the tuned model</text>
+    <text x="686" y="204" text-anchor="middle" class="lbl-g">against the SAME card</text>
+    <!-- the warning -->
+    <g filter="url(#rough)" stroke="#c62828" stroke-width="2.2" stroke-dasharray="9 7"><rect x="836" y="110" width="210" height="110" rx="12" class="f-red"/></g>
+    <text x="941" y="146" text-anchor="middle" class="lbl-bad">no baseline?</text>
+    <text x="941" y="176" text-anchor="middle" class="lbl-g">you compare against</text>
+    <text x="941" y="200" text-anchor="middle" class="lbl-g">a memory — and it</text>
+    <text x="941" y="222" text-anchor="middle" class="lbl-g">always "feels better"</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="160" y="272" width="780" height="42" rx="10"/></g>
+    <text x="550" y="299" text-anchor="middle" class="lbl-g">you <tspan class="lbl-b">cannot fine-tune responsibly</tspan> without a number recorded first — this module records it</text>
+  </svg>
+  <p class="takeaway">The baseline has to exist before M6 touches the model — a fine-tuned model always feels better, so the only honest comparison is against a number you recorded first and committed.</p>
+  <div class="pageno">M5·03</div>
+</section>
+
 <!-- ============ SLIDE 3 — EVAL PYRAMID ============ -->
 <section>
   <h2 class="t">Four ways to grade an answer, cheapest first — climb only when you must</h2>
   <p class="s">A pyramid: cheap, deterministic checks at the wide bottom, expensive human judgement at the narrow top. Push grading down as far as it will go.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Four stacked bands form a pyramid, widest at the bottom. Bottom, widest and inked: assertions, exact or contains or regex or source-in-top-k, free, instant, deterministic. Next: similarity, embedding distance to a reference, tolerates paraphrase. Next: LLM-as-judge, a model grades a rubric, reads nuance but is itself noisy. Top, narrowest and gray: human, gold standard but too slow for every change. A gray arrow on the side reads cheap and deterministic downward, expensive and human upward. A footline reads push grading down as far as it goes.">
-    <!-- band 1 assertions (widest) — green = cheap, deterministic, reliable -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
-      <path class="f-green" d="M120,300 L980,300 L900,246 L200,246 Z"/>
+    <!-- band 1 assertions (widest) — green = cheap, deterministic, reliable (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+        <path class="f-green" d="M120,300 L980,300 L900,246 L200,246 Z"/>
+      </g>
+      <text x="550" y="270" text-anchor="middle" class="lbl-b">assertions</text>
+      <text x="550" y="294" text-anchor="middle" class="lbl-g">exact / contains / regex / source-in-top-k · free, instant, deterministic</text>
     </g>
-    <text x="550" y="270" text-anchor="middle" class="lbl-b">assertions</text>
-    <text x="550" y="294" text-anchor="middle" class="lbl-g">exact / contains / regex / source-in-top-k · free, instant, deterministic</text>
-    <!-- band 2 similarity — blue = the data-similarity method -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
-      <path class="f-blue" d="M200,240 L900,240 L826,192 L274,192 Z"/>
+    <!-- band 2 similarity — blue = the data-similarity method (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+        <path class="f-blue" d="M200,240 L900,240 L826,192 L274,192 Z"/>
+      </g>
+      <text x="550" y="216" text-anchor="middle" class="lbl-b">similarity</text>
+      <text x="550" y="234" text-anchor="middle" class="lbl-g">embedding distance to a reference · tolerates paraphrase</text>
     </g>
-    <text x="550" y="216" text-anchor="middle" class="lbl-b">similarity</text>
-    <text x="550" y="234" text-anchor="middle" class="lbl-g">embedding distance to a reference · tolerates paraphrase</text>
-    <!-- band 3 judge — orange = caution, itself noisy -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
-      <path class="f-orange" d="M274,186 L826,186 L752,138 L348,138 Z"/>
+    <!-- band 3 judge — orange = caution, itself noisy (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+        <path class="f-orange" d="M274,186 L826,186 L752,138 L348,138 Z"/>
+      </g>
+      <text x="550" y="162" text-anchor="middle" class="lbl-b">LLM-as-judge</text>
+      <text x="550" y="180" text-anchor="middle" class="lbl-g">a model grades a rubric · reads nuance, itself noisy</text>
     </g>
-    <text x="550" y="162" text-anchor="middle" class="lbl-b">LLM-as-judge</text>
-    <text x="550" y="180" text-anchor="middle" class="lbl-g">a model grades a rubric · reads nuance, itself noisy</text>
-    <!-- band 4 human (narrowest) — purple = the special, gold-standard grader -->
-    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <path class="f-purple" d="M348,132 L752,132 L640,84 L460,84 Z"/>
+    <!-- band 4 human (narrowest) — purple = the special, gold-standard grader (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+        <path class="f-purple" d="M348,132 L752,132 L640,84 L460,84 Z"/>
+      </g>
+      <text x="550" y="112" text-anchor="middle" class="lbl-b">human</text>
+      <text x="550" y="126" text-anchor="middle" class="lbl-g">gold standard · too slow for every change</text>
     </g>
-    <text x="550" y="112" text-anchor="middle" class="lbl-b">human</text>
-    <text x="550" y="126" text-anchor="middle" class="lbl-g">gold standard · too slow for every change</text>
     <!-- side arrow -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M1015,110 L1015,296" marker-end="url(#ahg)"/>
@@ -278,7 +321,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1035" y="120" text-anchor="start" class="lbl-g" transform="rotate(90 1035 120)">expensive + human ↑ &nbsp;·&nbsp; cheap + deterministic ↓</text>
   </svg>
   <p class="takeaway">Grade with the cheapest layer that works — most of a good suite is assertions; you climb to similarity or a judge only where exact checks are too brittle.</p>
-  <div class="pageno">M5·03</div>
+  <div class="pageno">M5·04</div>
 </section>
 
 <!-- ============ SLIDE 4 — GOLDEN SET DESIGN ============ -->
@@ -286,21 +329,27 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">A golden set that discriminates — from sources, with honesty probes</h2>
   <p class="s">A set is only as good as its questions. Three principles separate a real one from a checkbox.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Three numbered rows. One: author from a source, each question from a runbook passage with the source recorded, making it answerable, retrieval-checkable, and reusable in Module 6. Two: make it discriminate, so the right answer and a plausible-wrong answer clearly diverge and a broken system fails it. Three: honesty probes, unanswerable-from-corpus questions whose correct answer is no runbook for that, where a confident bluff is a failure. A footline reads a good golden question is one a broken system would get wrong.">
-    <!-- row 1 (blue circles = the golden set being designed) -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="70" r="22" class="f-blue"/></g>
-    <text x="90" y="79" text-anchor="middle" class="num">1</text>
-    <text x="130" y="62" text-anchor="start" class="lbl-b">author FROM a source</text>
-    <text x="130" y="90" text-anchor="start" class="lbl-g">each Q from a runbook passage, <tspan class="lbl">source:</tspan> recorded → answerable · retrieval-checkable · reusable in M6</text>
-    <!-- row 2 -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="160" r="22" class="f-blue"/></g>
-    <text x="90" y="169" text-anchor="middle" class="num">2</text>
-    <text x="130" y="152" text-anchor="start" class="lbl-b">make it DISCRIMINATE</text>
-    <text x="130" y="180" text-anchor="start" class="lbl-g">right answer vs plausible-wrong clearly diverge — "payments 500s → pool exhaustion", not "what company is this?"</text>
-    <!-- row 3 -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="250" r="22" class="f-blue"/></g>
-    <text x="90" y="259" text-anchor="middle" class="num">3</text>
-    <text x="130" y="242" text-anchor="start" class="lbl-b">honesty probes</text>
-    <text x="130" y="270" text-anchor="start" class="lbl-g">unanswerable-from-corpus Qs · correct = "no runbook for that" · a confident bluff = <tspan class="lbl">FAIL</tspan> (dangerous in an incident)</text>
+    <!-- row 1 (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="70" r="22" class="f-blue"/></g>
+      <text x="90" y="79" text-anchor="middle" class="num">1</text>
+      <text x="130" y="62" text-anchor="start" class="lbl-b">author FROM a source</text>
+      <text x="130" y="90" text-anchor="start" class="lbl-g">each Q from a runbook passage, <tspan class="lbl">source:</tspan> recorded → answerable · retrieval-checkable · reusable in M6</text>
+    </g>
+    <!-- row 2 (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="160" r="22" class="f-blue"/></g>
+      <text x="90" y="169" text-anchor="middle" class="num">2</text>
+      <text x="130" y="152" text-anchor="start" class="lbl-b">make it DISCRIMINATE</text>
+      <text x="130" y="180" text-anchor="start" class="lbl-g">right answer vs plausible-wrong clearly diverge — "payments 500s → pool exhaustion", not "what company is this?"</text>
+    </g>
+    <!-- row 3 (fragment) -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="250" r="22" class="f-blue"/></g>
+      <text x="90" y="259" text-anchor="middle" class="num">3</text>
+      <text x="130" y="242" text-anchor="start" class="lbl-b">honesty probes</text>
+      <text x="130" y="270" text-anchor="start" class="lbl-g">unanswerable-from-corpus Qs · correct = "no runbook for that" · a confident bluff = <tspan class="lbl">FAIL</tspan> (dangerous in an incident)</text>
+    </g>
     <!-- footline -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
       <rect x="80" y="296" width="940" height="38" rx="9"/>
@@ -308,7 +357,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="320" text-anchor="middle" class="lbl-g">a good golden question is one a <tspan class="lbl-b">broken system would get wrong</tspan></text>
   </svg>
   <p class="takeaway">A golden set discriminates only when every question is authored from a source, forces right and wrong apart, and includes unanswerables that catch a confident bluff.</p>
-  <div class="pageno">M5·04</div>
+  <div class="pageno">M5·05</div>
 </section>
 
 <!-- ============ SLIDE 5 — THE SPIKE EXHIBIT ============ -->
@@ -347,7 +396,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="317" text-anchor="middle" class="lbl-g">exact-phrase asserts break on small models — <tspan class="lbl-b">go wide</tspan>, and let a <tspan class="lbl-b">judge</tspan> read the nuance</text>
   </svg>
   <p class="takeaway">A correct answer failed an exact-phrase assert because the 0.6B model paraphrased — the fix is wide contains-any nets plus a judge, never a one-phrase gotcha.</p>
-  <div class="pageno">M5·05</div>
+  <div class="pageno">M5·06</div>
 </section>
 
 <!-- ============ SLIDE 6 — COURIER PARCEL (scene) ============ -->
@@ -399,7 +448,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="329" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">retrieval</tspan> = right parcel &nbsp;·&nbsp; <tspan class="lbl-b">generation</tspan> = arrived intact &nbsp;·&nbsp; grade them <tspan class="lbl-b">APART</tspan></text>
   </svg>
   <p class="takeaway">A RAG answer fails in two independent places — wrong parcel (retrieval) or crushed parcel (generation); grade them together and you are back to the shrug.</p>
-  <div class="pageno">M5·06</div>
+  <div class="pageno">M5·07</div>
 </section>
 
 <!-- ============ SLIDE 7 — TWO-LAYER ARCHITECTURE ============ -->
@@ -455,7 +504,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="324" text-anchor="middle" class="lbl-g">each Q tagged with its layer → a run reports "<tspan class="lbl-b">retrieval 22/24 · generation 14/15</tspan>" = two teams of fixes</text>
   </svg>
   <p class="takeaway">The two layers are built differently on purpose — retrieval is a deterministic tripwire, generation is graded — so two numbers point at two different fixes.</p>
-  <div class="pageno">M5·07</div>
+  <div class="pageno">M5·08</div>
 </section>
 
 <!-- ============ SLIDE 8 — PROMPTS AS CONFIG (scene) ============ -->
@@ -503,7 +552,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="323" text-anchor="middle" class="lbl-g">A/B <tspan class="lbl-b">system.txt</tspan> vs <tspan class="lbl-b">system-v2.txt</tspan> on the SAME suite — scores move, code untouched</text>
   </svg>
   <p class="takeaway">Externalize the prompt to a versioned file and it becomes a lever you can pull, test, and un-pull — a recipe card you swap, not a rule carved into the chef.</p>
-  <div class="pageno">M5·08</div>
+  <div class="pageno">M5·09</div>
 </section>
 
 <!-- ============ SLIDE 9 — THE LOCAL JUDGE ============ -->
@@ -539,7 +588,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="317" text-anchor="middle" class="lbl-g">trust it to catch the obvious · corroborate with the deterministic layers · <tspan class="lbl-b">never one grade as ground truth</tspan></text>
   </svg>
   <p class="takeaway">A local 0.6B judge is a smoke detector — it reliably catches the gross failures but is noisy on the margins, so corroborate it and never treat one grade as ground truth.</p>
-  <div class="pageno">M5·09</div>
+  <div class="pageno">M5·10</div>
 </section>
 
 <!-- ============ SLIDE 10 — THE BASELINE RITUAL ============ -->
@@ -584,7 +633,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="316" text-anchor="middle" class="lbl-b">→ written to baseline.md, committed</text>
   </svg>
   <p class="takeaway">Run the suite twice — no-RAG vs RAG — and the gap is the measured value of retrieval; record modest, honest numbers, because a believable 62% beats an invented 95%.</p>
-  <div class="pageno">M5·10</div>
+  <div class="pageno">M5·11</div>
 </section>
 
 <!-- ============ SLIDE 11 — THE FILE IS A CONTRACT ============ -->
@@ -633,7 +682,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="279" text-anchor="middle" class="lbl-g">a number in a chat is gone tomorrow — a number in a <tspan class="lbl-b">committed file is a contract</tspan> the next change must meet</text>
   </svg>
   <p class="takeaway">The baseline lives in a committed file because that makes it a contract — M6 must beat it, M12 gates on it, M13 replays it; the file outlives every run.</p>
-  <div class="pageno">M5·11</div>
+  <div class="pageno">M5·12</div>
 </section>
 
 <!-- ============ SLIDE 12 — CLOSING ============ -->
@@ -664,7 +713,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="285" text-anchor="middle" class="lbl-g">the baseline you record here is the <tspan class="lbl-b">yardstick for the whole course</tspan> — now open Module 5 · Lab</text>
   </svg>
   <p class="credit">Now open <b>Module 5 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M5·12</div>
+  <div class="pageno">M5·13</div>
 </section>
 </div></div>
 

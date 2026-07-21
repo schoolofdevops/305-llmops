@@ -451,10 +451,9 @@ footer, header, hgroup, main, menu, nav, section {
       </g>
       <g class="lbl-g" text-anchor="start" style="font-size:15px">
         <text x="700" y="160">branding says "0.6b" — the card rounds nothing</text>
-        <text x="700" y="210">but ollama ps runs it at 4096 — supports ≠ configured</text>
-        <text x="700" y="222">(40k context would pin ~4.5 GB of KV alone — M1)</text>
+        <text x="700" y="210">the max it supports — but you run it smaller (next slide)</text>
         <text x="700" y="274">same card, one field, on the q8_0 variant: Q8_0</text>
-        <text x="700" y="322">what you may legally ship (slide 8)</text>
+        <text x="700" y="322">what you may legally ship (slide 9)</text>
       </g>
     </g>
   </svg>
@@ -462,7 +461,61 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M2·07</div>
 </section>
 
-<!-- ============ SLIDE 8 — LICENCE CLASSES ============ -->
+<!-- ============ SLIDE 8 — CONTEXT: SUPPORTS ≠ CONFIGURED ============ -->
+<section>
+  <h2 class="t">"Supports 40k" is not "running at 40k"</h2>
+  <p class="s">The context-length field is a trap. The card advertises the maximum the model can handle; the memory bill comes from the context you actually configure. Confusing the two is how people run out of memory.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Two window frames sized to the same model card. The left frame configured at 4096 tokens is small with a modest blue KV-cache block beneath it. The right frame at the full 40960 tokens is ten times wider, its KV-cache block swelling red to roughly 4.5 gigabytes. A caption reads: you pay for the context you configure, not the max the card advertises.">
+    <!-- the card's advertised max (the data) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="380" y="34" width="340" height="52" rx="9"/>
+    </g>
+    <text x="550" y="60" text-anchor="middle" class="lbl-b">model card: context length 40960</text>
+    <text x="550" y="78" text-anchor="middle" class="lbl-g" style="font-size:14px">the most it can handle — an upper bound, not a setting</text>
+
+    <!-- LEFT: configured 4096 — small, cheap -->
+    <text x="215" y="130" text-anchor="middle" class="lbl-b">what you run: 4096</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="80" y="146" width="150" height="44" rx="8"/>
+    </g>
+    <text x="155" y="174" text-anchor="middle" class="lbl-g">context window</text>
+    <!-- its KV block (modest, blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="80" y="210" width="150" height="70" rx="8"/>
+    </g>
+    <text x="155" y="248" text-anchor="middle" class="lbl-b">KV cache</text>
+    <text x="155" y="272" text-anchor="middle" class="lbl-g" style="font-size:15px">modest</text>
+    <text x="155" y="316" text-anchor="middle" class="lbl-g">you pay for this</text>
+
+    <!-- divider -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
+      <line x1="300" y1="120" x2="300" y2="330"/>
+    </g>
+
+    <!-- RIGHT: the full 40960 — huge, costly -->
+    <text x="640" y="130" text-anchor="middle" class="lbl-b">if you ran it at 40960…</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="360" y="146" width="700" height="44" rx="8"/>
+    </g>
+    <text x="710" y="174" text-anchor="middle" class="lbl-g">context window — 10× wider</text>
+    <!-- its KV block (swollen, red) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#c62828" stroke-width="2.8">
+      <rect x="360" y="210" width="700" height="70" rx="8"/>
+    </g>
+    <text x="710" y="248" text-anchor="middle" class="lbl-b">KV cache</text>
+    <text x="710" y="272" text-anchor="middle" class="lbl-g" fill="#c62828" style="font-size:16px">≈ 4.5 GB alone — 40960 × ~112 KiB/token (M1)</text>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="352" width="820" height="42" rx="10"/>
+    </g>
+    <text x="550" y="379" text-anchor="middle" class="lbl-g">you pay for the context you <em>configure</em>, not the maximum the card advertises</text>
+  </svg>
+  <p class="takeaway">Context length on the card is the ceiling, not the setting — the KV bill grows with the context you configure, so size it to what you need.</p>
+  <div class="pageno">M2·08</div>
+</section>
+
+<!-- ============ SLIDE 9 — LICENCE CLASSES ============ -->
 <section>
   <h2 class="t">The licence field decides what you may ship</h2>
   <p class="s">The field engineers skip and lawyers do not. Three classes permit very different things — and Qwen3's is why this course can build on it.</p>
@@ -497,10 +550,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="320" text-anchor="middle" class="lbl-g">read the licence BEFORE you build — finding out after you ship is a rebuild, not a config change</text>
   </svg>
   <p class="takeaway">The licence class decides what you may legally do — read it before you build, because finding out after you ship is a rebuild.</p>
-  <div class="pageno">M2·08</div>
+  <div class="pageno">M2·09</div>
 </section>
 
-<!-- ============ SLIDE 9 — FORMAT PICKS THE ENGINE ============ -->
+<!-- ============ SLIDE 10 — FORMAT PICKS THE ENGINE ============ -->
 <section>
   <h2 class="t">Format picks the engine — GGUF for Ollama, safetensors for vLLM</h2>
   <p class="s">Last question on the brain: what format is it, and what am I serving it on? Those two answers pick your engine.</p>
@@ -538,10 +591,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="316" text-anchor="middle" class="lbl-g">handed a model, ask two things: what format? · what am I serving on?</text>
   </svg>
   <p class="takeaway">Format and serving target pick your engine — GGUF on a laptop CPU means Ollama; safetensors on a GPU means vLLM.</p>
-  <div class="pageno">M2·09</div>
+  <div class="pageno">M2·10</div>
 </section>
 
-<!-- ============ SLIDE 10 — CALL CENTRE WITH NO MEMORY (scene) ============ -->
+<!-- ============ SLIDE 11 — CALL CENTRE WITH NO MEMORY (scene) ============ -->
 <section>
   <h2 class="t">The API is a call centre with no memory</h2>
   <p class="s">Now the second decision — the contract. The OpenAI-compatible API is stateless: the server remembers nothing, so the client carries the whole story.</p>
@@ -596,10 +649,57 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="356" text-anchor="middle" class="lbl-g">the model didn't remember saying "Paris" — the client reminded it</text>
   </svg>
   <p class="takeaway">The chat API is stateless — the client carries the context, resending the whole history (system · user · assistant) every single turn.</p>
-  <div class="pageno">M2·10</div>
+  <div class="pageno">M2·11</div>
 </section>
 
-<!-- ============ SLIDE 11 — READING A RESPONSE ============ -->
+<!-- ============ SLIDE 12 — MULTI-TURN RESEND (tokens grow each turn) ============ -->
+<section>
+  <h2 class="t">Every turn resends the whole chat — so tokens climb</h2>
+  <p class="s">Because the server keeps no session, each turn carries every turn before it. A ten-turn chat is not ten cheap calls — the tenth call ships all nine turns ahead of it, and tokens are the meter.</p>
+  <svg viewBox="0 0 1100 380" role="img" aria-label="A staircase of chat turns climbing left to right. Turn one is a single small blue message block; each later turn is a taller stack because it re-sends every message before it, plus the new one. By turn ten the stack is the tallest and shaded red, labelled carries all nine turns before it. A gray band reads: stateless server means the client re-tells the whole story every turn.">
+    <!-- climbing staircase of turns -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="70"  y="250" width="90" height="60"  rx="8"/>
+      <rect x="190" y="210" width="90" height="100" rx="8"/>
+      <rect x="310" y="170" width="90" height="140" rx="8"/>
+      <rect x="430" y="130" width="90" height="180" rx="8"/>
+    </g>
+    <!-- the costly tenth turn (red) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#c62828" stroke-width="2.8">
+      <rect x="700" y="60" width="110" height="250" rx="8"/>
+    </g>
+    <!-- gap ellipsis -->
+    <text x="600" y="200" text-anchor="middle" class="lbl-b">· · ·</text>
+    <g class="lbl-b" text-anchor="middle">
+      <text x="115" y="286">turn 1</text>
+      <text x="235" y="246">turn 2</text>
+      <text x="355" y="206">turn 3</text>
+      <text x="475" y="166">turn 4</text>
+      <text x="755" y="96">turn 10</text>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="115" y="330">1 message</text>
+      <text x="235" y="330">re-sends 1</text>
+      <text x="355" y="330">re-sends 2</text>
+      <text x="475" y="330">re-sends 3</text>
+      <text x="755" y="330" fill="#c62828">all 9 before it</text>
+    </g>
+    <!-- rising arrow along the tops -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="6 6">
+      <path d="M115,244 C300,150 560,120 745,66" marker-end="url(#ahg)"/>
+    </g>
+    <text x="470" y="112" text-anchor="middle" class="lbl-g">tokens per call keep climbing — the meter (M1) rises every turn</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="150" y="352" width="800" height="26" rx="9"/>
+    </g>
+    <text x="550" y="371" text-anchor="middle" class="lbl-g" style="font-size:15px">stateless server → the client re-tells the whole story every turn</text>
+  </svg>
+  <p class="takeaway">Statelessness has a cost you feel: every turn resends the whole history, so a long conversation sends more tokens each turn — the meter climbs.</p>
+  <div class="pageno">M2·12</div>
+</section>
+
+<!-- ============ SLIDE 13 — READING A RESPONSE ============ -->
 <section>
   <h2 class="t">Read the response: usage is the billing meter</h2>
   <p class="s">Three parts earn an operator's attention: what it cost, why it stopped, and how it arrives when you stream.</p>
@@ -640,15 +740,68 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="takeaway">Usage is the billing meter made explicit, and finish_reason tells "finished" from "guillotined" — read both before you trust the text.</p>
-  <div class="pageno">M2·11</div>
+  <div class="pageno">M2·13</div>
 </section>
 
-<!-- ============ SLIDE 12 — DRIFT + GATEWAY ============ -->
+<!-- ============ SLIDE 14 — COMPATIBILITY DRIFT (present) ============ -->
 <section>
-  <h2 class="t">"Compatible" drifts — a gateway absorbs it</h2>
-  <p class="s">Every engine mostly-but-not-perfectly keeps the spec. When many backends differ, one endpoint in front presents a single API and translates.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="Three backends — Ollama, vLLM and a provider API — each tagged plus drift, converge on a single gateway box presenting one API, which a single client speaks to. The gateway is tagged M12.">
-    <!-- three backends, each +drift (warning) -->
+  <h2 class="t">"Compatible" is mostly kept, not perfectly</h2>
+  <p class="s">Every engine implements the spec its own way at the edges. In M1 you saw Ollama's stream surface an extra <code>delta.reasoning</code> field the OpenAI spec never defines — minor here, but it grows as engines add features faster than the shared spec settles.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="A two-panel comparison. On the left, the OpenAI spec's defined streaming chunk lists role, content and finish_reason. On the right, Ollama's actual chunk lists the same fields plus an extra field delta.reasoning boxed in red and captioned not in the spec. A line reads: the same call, an extra field — compatibility drift.">
+    <!-- LEFT: the spec (neutral, the agreed shape) -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="70" y="60" width="420" height="220" rx="12"/>
+    </g>
+    <text x="280" y="98" text-anchor="middle" class="lbl-b">what the OpenAI spec defines</text>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.2">
+      <rect x="110" y="126" width="340" height="40" rx="8"/>
+      <rect x="110" y="176" width="340" height="40" rx="8"/>
+      <rect x="110" y="226" width="340" height="40" rx="8"/>
+    </g>
+    <g class="lbl" text-anchor="start">
+      <text x="130" y="152">delta.role</text>
+      <text x="130" y="202">delta.content</text>
+      <text x="130" y="252">finish_reason</text>
+    </g>
+
+    <!-- divider -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
+      <line x1="550" y1="70" x2="550" y2="300"/>
+    </g>
+
+    <!-- RIGHT: Ollama's actual chunk (spec + extra) -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="610" y="60" width="420" height="270" rx="12"/>
+    </g>
+    <text x="820" y="98" text-anchor="middle" class="lbl-b">what Ollama's stream actually sends</text>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.2">
+      <rect x="650" y="126" width="340" height="40" rx="8"/>
+      <rect x="650" y="176" width="340" height="40" rx="8"/>
+      <rect x="650" y="226" width="340" height="40" rx="8"/>
+    </g>
+    <!-- the drift: an extra field the spec never defined (red) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#c62828" stroke-width="2.8" stroke-dasharray="4 5">
+      <rect x="650" y="276" width="340" height="40" rx="8"/>
+    </g>
+    <g class="lbl" text-anchor="start">
+      <text x="670" y="152">delta.role</text>
+      <text x="670" y="202">delta.content</text>
+      <text x="670" y="252">finish_reason</text>
+      <text x="670" y="302">delta.reasoning</text>
+    </g>
+    <text x="1010" y="302" text-anchor="end" class="lbl-g" fill="#c62828" style="font-size:15px">not in the spec</text>
+    <text x="550" y="348" text-anchor="middle" class="lbl-g">same call, an extra field — this is compatibility drift, and it grows with every new feature</text>
+  </svg>
+  <p class="takeaway">"OpenAI-compatible" is a promise mostly kept — engines add fields their own way, so a client meant for many backends must expect the drift.</p>
+  <div class="pageno">M2·14</div>
+</section>
+
+<!-- ============ SLIDE 15 — MOVING TARGET + GATEWAY (future) ============ -->
+<section>
+  <h2 class="t">The API is a moving target — a gateway absorbs it</h2>
+  <p class="s">Chat Completions is the stable contract, but not the only one: the newer Responses API and provider-native APIs diverge — tool-call semantics most of all. When many backends differ, one endpoint in front presents a single API and translates.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="Three backends — Ollama, vLLM and a provider API — each tagged with its own divergence, converge on a single purple gateway box presenting one API, which a single client speaks to. The gateway is tagged M12.">
+    <!-- three backends, each with its own divergence (warning) -->
     <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4">
       <rect x="60" y="50" width="230" height="60" rx="10"/>
       <rect x="60" y="140" width="230" height="60" rx="10"/>
@@ -662,7 +815,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="lbl-g" text-anchor="start" style="font-size:15px">
       <text x="300" y="86">+ delta.reasoning</text>
       <text x="300" y="176">+ its own extras</text>
-      <text x="300" y="266">+ Responses API shape</text>
+      <text x="300" y="266">+ Responses API · tool-calls differ</text>
     </g>
     <!-- converge on gateway -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
@@ -684,13 +837,13 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="930" y="130" width="140" height="80" rx="11"/>
     </g>
     <text x="1000" y="178" text-anchor="middle" class="lbl-b">client</text>
-    <text x="550" y="322" text-anchor="middle" class="lbl-g">the client speaks one API — the gateway translates each backend's drift behind it</text>
+    <text x="550" y="322" text-anchor="middle" class="lbl-g">the client speaks one API — the gateway translates each backend's drift and shape behind it</text>
   </svg>
-  <p class="takeaway">"OpenAI-compatible" is a promise mostly kept, not perfectly — a gateway is the one endpoint that absorbs the drift (M12).</p>
-  <div class="pageno">M2·12</div>
+  <p class="takeaway">Chat Completions is stable but not alone — the API evolves, and a gateway is the one endpoint that absorbs both the drift and the divergence (M12).</p>
+  <div class="pageno">M2·15</div>
 </section>
 
-<!-- ============ SLIDE 13 — CLOSING: THREE DECISIONS ============ -->
+<!-- ============ SLIDE 16 — CLOSING: THREE DECISIONS ============ -->
 <section>
   <p class="kicker">MODULE 2 &nbsp;·&nbsp; TAKEAWAYS</p>
   <h2 class="t" style="font-size:2.0em">Three decisions you can now defend</h2>
@@ -721,7 +874,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 2 · Lab</b> — you'll size the two quants, read the card, and tour the API on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M2·13</div>
+  <div class="pageno">M2·16</div>
 </section>
 
 </div></div>

@@ -364,37 +364,76 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M3·06</div>
 </section>
 
-<!-- ============ SLIDE 7 — APPLE-SILICON PLACEMENT ============ -->
+<!-- ============ SLIDE 7 — WHY A MAC CONTAINER IS CPU-ONLY (scene) ============ -->
 <section>
-  <h2 class="t">Containers can't see Metal — native for GPU, container for portability</h2>
-  <p class="s">A container on a Mac runs inside a Linux VM with no path to Apple's Metal — so it is CPU-only, always. Native reaches Metal; the portable middle is CPU in a container.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels. On your Mac: Ollama running native reaches the Metal GPU and is fast, while a container is CPU-only because there is no path to Metal. On a Linux node with NVIDIA: a container gets GPU passthrough, which is how vLLM runs in production. A gray line notes the containerized CPU path runs identically everywhere — the course's portable middle.">
-    <!-- Mac panel -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="50" y="40" width="470" height="230" rx="13"/></g>
-    <text x="285" y="76" text-anchor="middle" class="lbl-b">your Mac</text>
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3"><rect x="80" y="100" width="410" height="66" rx="10"/></g>
-    <text x="285" y="130" text-anchor="middle" class="lbl-b">Ollama (native) → Metal GPU ✓</text>
-    <text x="285" y="156" text-anchor="middle" class="lbl-g">inside the building — fast</text>
-    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="80" y="184" width="410" height="66" rx="10"/></g>
-    <text x="285" y="214" text-anchor="middle" class="lbl-b">container → CPU only</text>
-    <text x="285" y="240" text-anchor="middle" class="lbl-g">next door — no corridor to Metal</text>
+  <h2 class="t">On a Mac, a container can't see the GPU</h2>
+  <p class="s">Think of the GPU as a workshop with one door that opens only from inside the building. A native program is inside — it walks straight in. A container is the building next door, with no corridor to the workshop — it works, but only with the CPU tools it brought.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Two buildings on a Mac. The left building holds a native program and connects by an open door to a GPU workshop labelled Metal, marked with a green tick and fast. The right building holds a containerized program; a dashed crossed-out corridor shows it has no path to the workshop, so it falls back to CPU tools only.">
+    <!-- the GPU workshop (the resource behind one door) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8"><rect x="430" y="34" width="240" height="90" rx="12"/></g>
+    <text x="550" y="72" text-anchor="middle" class="lbl-b">GPU workshop</text>
+    <text x="550" y="100" text-anchor="middle" class="lbl-g">Apple Metal · one door, opens from inside</text>
 
-    <!-- Linux panel -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="580" y="40" width="470" height="230" rx="13"/></g>
-    <text x="815" y="76" text-anchor="middle" class="lbl-b">Linux node + NVIDIA</text>
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3"><rect x="610" y="120" width="410" height="110" rx="10"/></g>
-    <text x="815" y="164" text-anchor="middle" class="lbl-b">container → GPU passthrough ✓</text>
-    <text x="815" y="196" text-anchor="middle" class="lbl-g">the runtime passes the GPU through — vLLM in prod</text>
+    <!-- LEFT building: native, inside -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="70" y="170" width="380" height="150" rx="12"/></g>
+    <text x="260" y="206" text-anchor="middle" class="lbl-b">the building — native on the Mac</text>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="230" width="280" height="66" rx="10"/></g>
+    <text x="260" y="260" text-anchor="middle" class="lbl-b">Ollama (native)</text>
+    <text x="260" y="286" text-anchor="middle" class="lbl-g">inside — walks into the workshop</text>
+    <!-- open door: native -> workshop (green, works) -->
+    <g filter="url(#rough)" fill="none" stroke="#2e7d32" stroke-width="3" stroke-linecap="round"><path d="M300,228 C360,190 420,150 470,126" marker-end="url(#ah)"/></g>
+    <text x="360" y="150" text-anchor="middle" class="lbl-g" fill="#2e7d32">✓ fast</text>
 
-    <!-- footline -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="200" y="300" width="700" height="46" rx="10"/></g>
-    <text x="550" y="329" text-anchor="middle" class="lbl-g">containerized-CPU runs identically on Mac · Linux · WSL2 — the course's portable middle</text>
+    <!-- RIGHT building: container, next door -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="650" y="170" width="380" height="150" rx="12"/></g>
+    <text x="840" y="206" text-anchor="middle" class="lbl-b">next door — a container (Linux VM)</text>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7"><rect x="700" y="230" width="280" height="66" rx="10"/></g>
+    <text x="840" y="260" text-anchor="middle" class="lbl-b">container → CPU only</text>
+    <text x="840" y="286" text-anchor="middle" class="lbl-g">only the hand tools it brought</text>
+    <!-- crossed-out corridor: container -> workshop (no path) -->
+    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.6" stroke-dasharray="6 6"><path d="M760,228 C700,190 640,150 600,128"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="3" stroke-linecap="round"><path d="M660,158 L710,196"/></g>
+    <text x="700" y="148" text-anchor="middle" class="lbl-g" fill="#c62828">no corridor</text>
   </svg>
-  <p class="takeaway">Containers can't reach the Mac's Metal — so native when you want its GPU, containerized-CPU when you want portability, containerized-GPU on Linux for production.</p>
+  <p class="takeaway">A container on a Mac runs in a Linux VM with no path to Metal — so a containerized model server on a Mac is CPU-only, always.</p>
   <div class="pageno">M3·07</div>
 </section>
 
-<!-- ============ SLIDE 8 — CONTINUOUS BATCHING (scene, 2 fragments) ============ -->
+<!-- ============ SLIDE 8 — THE THREE PLACEMENTS (the rule) ============ -->
+<section>
+  <h2 class="t">Native for Metal, container-CPU for portability, Linux-GPU for prod</h2>
+  <p class="s">That one fact sets a placement rule for the whole course stack. It has three settings, and picking the wrong one is the "works on my machine, dies in the cluster" bug in one decision.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Three placements. On your Mac, Ollama native reaches Metal and is fast. On any machine, a CPU-in-a-container runs identically on Mac, Linux and WSL2 — the portable middle. On a Linux node with NVIDIA, a container gets GPU passthrough, which is how vLLM runs in production.">
+    <!-- placement 1: native / Metal (green, fast) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8"><rect x="40" y="70" width="320" height="200" rx="13"/></g>
+    <text x="200" y="106" text-anchor="middle" class="lbl-b">native on the Mac</text>
+    <text x="200" y="150" text-anchor="middle" class="lbl">Ollama → Metal ✓</text>
+    <text x="200" y="188" text-anchor="middle" class="lbl-g">when you want the Mac's GPU</text>
+    <text x="200" y="240" text-anchor="middle" class="lbl-g" fill="#2e7d32">fast, but Mac-only</text>
+
+    <!-- placement 2: container-CPU / portable (orange, the middle) -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="3"><rect x="390" y="70" width="320" height="200" rx="13"/></g>
+    <text x="550" y="106" text-anchor="middle" class="lbl-b">CPU in a container</text>
+    <text x="550" y="150" text-anchor="middle" class="lbl">llama-server</text>
+    <text x="550" y="188" text-anchor="middle" class="lbl-g">Mac · Linux · WSL2 — identical</text>
+    <text x="550" y="240" text-anchor="middle" class="lbl-g">the portable middle — the course stack</text>
+
+    <!-- placement 3: Linux GPU passthrough (green, prod) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8"><rect x="740" y="70" width="320" height="200" rx="13"/></g>
+    <text x="900" y="106" text-anchor="middle" class="lbl-b">container on Linux + NVIDIA</text>
+    <text x="900" y="150" text-anchor="middle" class="lbl">vLLM → GPU ✓</text>
+    <text x="900" y="188" text-anchor="middle" class="lbl-g">the runtime passes the GPU through</text>
+    <text x="900" y="240" text-anchor="middle" class="lbl-g" fill="#2e7d32">production throughput</text>
+
+    <!-- footline -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="230" y="300" width="640" height="46" rx="10"/></g>
+    <text x="550" y="329" text-anchor="middle" class="lbl-g">the OpsMate stack uses the portable middle — the same compose.yaml runs on every machine</text>
+  </svg>
+  <p class="takeaway">Native when you want the Mac's GPU, containerized-CPU when you want portability, containerized-GPU on Linux for production — one rule, three settings.</p>
+  <div class="pageno">M3·08</div>
+</section>
+
+<!-- ============ SLIDE 9 — CONTINUOUS BATCHING (scene, 2 fragments) ============ -->
 <section>
   <h2 class="t">Static batching waits for the whole lift; continuous picks up every floor</h2>
   <p class="s">The biggest reason a production engine beats a naive one. An old lift won't move until full and won't stop until everyone's dropped; a modern lift picks up and drops off at every floor.</p>
@@ -440,10 +479,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="341" text-anchor="middle" class="lbl-g">keeps the engine busy &amp; full — no batch boundary for anyone to wait behind</text>
   </svg>
   <p class="takeaway">Continuous batching lets a finished request leave and a new one join every token-step — no one waits for a batch boundary, so throughput and latency both improve.</p>
-  <div class="pageno">M3·08</div>
+  <div class="pageno">M3·09</div>
 </section>
 
-<!-- ============ SLIDE 9 — PAGEDATTENTION (scene) ============ -->
+<!-- ============ SLIDE 10 — PAGEDATTENTION (scene) ============ -->
 <section>
   <h2 class="t">PagedAttention — numbered cubbies on demand, not one long plank each</h2>
   <p class="s">Many requests each grow a KV cache (M1) of unpredictable length in shared memory. The old way hands each one long shelf; the fix hands out small numbered blocks as needed.</p>
@@ -486,10 +525,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="327" text-anchor="middle" class="lbl-g">stop over-reserving · stop fragmenting = far more concurrent requests per box</text>
   </svg>
   <p class="takeaway">PagedAttention gives each request small numbered blocks on demand with a block table — no over-reservation, no gaps, so far more concurrent requests fit the same memory.</p>
-  <div class="pageno">M3·09</div>
+  <div class="pageno">M3·10</div>
 </section>
 
-<!-- ============ SLIDE 10 — PREFIX CACHING (2 fragments) ============ -->
+<!-- ============ SLIDE 11 — PREFIX CACHING (2 fragments) ============ -->
 <section>
   <h2 class="t">Prefix caching — don't re-read the same opening every request</h2>
   <p class="s">Real apps start every request with the same opening — a long system prompt, a runbook preamble — and only the last line differs. Prefill that opening once, then reuse it.</p>
@@ -526,10 +565,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="348" text-anchor="middle" class="lbl-g">the response reports <tspan class="lbl-b">cached_tokens</tspan> — prefill you did not pay for</text>
   </svg>
   <p class="takeaway">Prefix caching reuses the KV of a shared opening instead of re-prefilling it — cached_tokens in the response is the prefill you did not pay for.</p>
-  <div class="pageno">M3·10</div>
+  <div class="pageno">M3·11</div>
 </section>
 
-<!-- ============ SLIDE 11 — THE COMPOSE SPINE ============ -->
+<!-- ============ SLIDE 12 — THE COMPOSE SPINE ============ -->
 <section>
   <h2 class="t">The stack stops being a command and becomes a file</h2>
   <p class="s">From this module OpsMate is a stack brought up and torn down as a unit. Today it holds exactly one service — small on purpose.</p>
@@ -549,10 +588,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="307" text-anchor="middle" class="lbl-g">one service now → grows one per module → full system (M13) · make up / make down carry the whole way</text>
   </svg>
   <p class="takeaway">The stack becomes a file today with one hand-authored service — small on purpose, so every line is one you can read when something breaks in M10.</p>
-  <div class="pageno">M3·11</div>
+  <div class="pageno">M3·12</div>
 </section>
 
-<!-- ============ SLIDE 12 — READING /metrics ============ -->
+<!-- ============ SLIDE 13 — READING /metrics ============ -->
 <section>
   <h2 class="t">Read the engine's /metrics — queueing made visible</h2>
   <p class="s">An engine exposes a Prometheus /metrics surface. Two families carry the story: the token meter, and the in-flight gauges that show the queue live.</p>
@@ -576,10 +615,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="298" text-anchor="middle" class="lbl-g">11 llamacpp:* families exposed (measured on the real llama-server)</text>
   </svg>
   <p class="takeaway">The engine's /metrics turns batching and paging into numbers you can watch — requests_deferred climbing is the queue forming, live.</p>
-  <div class="pageno">M3·12</div>
+  <div class="pageno">M3·13</div>
 </section>
 
-<!-- ============ SLIDE 13 — HONEST CROSS-ARCH VERDICT ============ -->
+<!-- ============ SLIDE 14 — HONEST CROSS-ARCH VERDICT ============ -->
 <section>
   <h2 class="t">The honest cross-arch verdict — one measured table</h2>
   <p class="s">Engineering honesty is a feature. Here is what the M3 spike actually found, on this course's Apple-Silicon host.</p>
@@ -611,10 +650,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="319" text-anchor="middle" class="lbl-g">a CPU image being present for your arch ≠ it works on your host</text>
   </svg>
   <p class="takeaway">The honest verdict: llama-server runs everywhere the course goes; vLLM-CPU arm64 boots but crashes on inference — a present image is not a working one.</p>
-  <div class="pageno">M3·13</div>
+  <div class="pageno">M3·14</div>
 </section>
 
-<!-- ============ SLIDE 14 — CLOSING: THREE DECISIONS ============ -->
+<!-- ============ SLIDE 15 — CLOSING: THREE DECISIONS ============ -->
 <section>
   <h2 class="t">The engine decision you can now defend</h2>
   <p class="s">Three things you carry into the lab — where you prove the one-model, two-engines swap on your own machine.</p>
@@ -639,7 +678,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="560" y="272" class="lbl-g" text-anchor="start">one /v1 API — swap engines under an unchanged client</text>
   </svg>
   <p class="credit">Now open <b>Module 3 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M3·14</div>
+  <div class="pageno">M3·15</div>
 </section>
 
 </div></div>

@@ -69,6 +69,14 @@ footer, header, hgroup, main, menu, nav, section {
     --ink:#1e1e1e;
     --gray:#757575;
     --paper:#ffffff;
+    /* pastel accent fills (founder directive, 2026-07-21) — soft fills only, linework stays ink/gray */
+    --p-green:#d5e8d4;   /* good · healthy · pass · win            */
+    --p-red:#f8cecc;     /* bad · fail · overfit · lose            */
+    --p-blue:#dae8fc;    /* neutral data · the thing being studied */
+    --p-orange:#ffe6cc;  /* caution · attention · in-between      */
+    --p-purple:#e1d5e7;  /* special · meta · management/control   */
+    --good:#2e7d32;      /* muted payoff annotation — good reading */
+    --bad:#c62828;       /* muted payoff annotation — bad reading  */
   }
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
@@ -109,6 +117,15 @@ footer, header, hgroup, main, menu, nav, section {
   .lbl-g{ fill:var(--gray); font-size:17px; }
   .lbl-b{ fill:var(--ink); font-size:23px; font-weight:700; }
   .num{ fill:var(--ink); font-size:24px; font-weight:700; }
+  /* muted payoff-annotation text (one or two per slide, never body text) */
+  .lbl-good{ fill:var(--good); font-size:19px; font-weight:700; }
+  .lbl-bad{ fill:var(--bad); font-size:19px; font-weight:700; }
+  /* pastel fill helpers for SVG shapes — stroke still supplied by the ink/gray group */
+  .f-green{ fill:var(--p-green); }
+  .f-red{ fill:var(--p-red); }
+  .f-blue{ fill:var(--p-blue); }
+  .f-orange{ fill:var(--p-orange); }
+  .f-purple{ fill:var(--p-purple); }
 </style>
 </head>
 <body>
@@ -156,18 +173,18 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M384,116 L440,96" marker-end="url(#ahg)"/>
       <path d="M384,140 L440,164" marker-end="url(#ahg)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="446" y="66" width="520" height="52" rx="10"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="446" y="66" width="520" height="52" rx="10" class="f-green"/>
     </g>
     <text x="470" y="97" text-anchor="start" class="lbl">"check <tspan class="lbl-b">db_pool_in_use</tspan>, cancel the blocking backend"</text>
-    <text x="978" y="88" text-anchor="start" class="lbl-b">your</text>
-    <text x="978" y="110" text-anchor="start" class="lbl-b">voice</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="446" y="140" width="520" height="52" rx="10"/>
+    <text x="978" y="88" text-anchor="start" class="lbl-good">your</text>
+    <text x="978" y="110" text-anchor="start" class="lbl-good">voice</text>
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
+      <rect x="446" y="140" width="520" height="52" rx="10" class="f-red"/>
     </g>
     <text x="470" y="171" text-anchor="start" class="lbl-g">"you may want to investigate whether connections…"</text>
-    <text x="978" y="162" text-anchor="start" class="lbl-g">generic</text>
-    <text x="978" y="184" text-anchor="start" class="lbl-g">voice</text>
+    <text x="978" y="162" text-anchor="start" class="lbl-bad">generic</text>
+    <text x="978" y="184" text-anchor="start" class="lbl-bad">voice</text>
     <!-- the split band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="120" y="248" width="860" height="46" rx="10"/>
@@ -183,21 +200,21 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Climb the decision ladder — tune only when the cheaper rung genuinely can't</h2>
   <p class="s">Three rungs, cheapest first. Reach for the cheapest tool that solves the problem, and climb only when the rung below truly cannot fix it — tuning is the expensive, easy-to-fool-yourself rung.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A three-rung staircase, cheapest at the bottom. Bottom rung, widest and inked: prompt edit, minutes, free, reversible, fixes format, tone, refusals, citations. Middle rung: RAG, put the right facts in front, fixes missing knowledge and freshness, M4 and M5. Top rung: fine-tune, hours, data plus compute, fixes voice, format, and behaviour that survives with no prompt and no context. A gray dashed back-arrow runs from the top rung down to the bottom, tagged: most we-need-to-fine-tune requests are prompt problems, so climb only when the rung below truly cannot fix it.">
-    <!-- rung 1 prompt edit (bottom, widest, ink) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="70" y="266" width="620" height="66" rx="11"/>
+    <!-- rung 1 prompt edit (bottom, widest) — green = the cheap, reach-first rung -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="70" y="266" width="620" height="66" rx="11" class="f-green"/>
     </g>
     <text x="120" y="298" text-anchor="start" class="lbl-b">1 · PROMPT EDIT</text>
     <text x="120" y="322" text-anchor="start" class="lbl-g">minutes · free · reversible → format, tone, refusals, citations</text>
-    <!-- rung 2 RAG -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="160" y="180" width="560" height="66" rx="11"/>
+    <!-- rung 2 RAG — blue = the knowledge method -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="160" y="180" width="560" height="66" rx="11" class="f-blue"/>
     </g>
     <text x="210" y="212" text-anchor="start" class="lbl-b">2 · RAG</text>
     <text x="210" y="236" text-anchor="start" class="lbl-g">put the right facts in front → missing knowledge, freshness (M4/M5)</text>
-    <!-- rung 3 fine-tune (top, ink, protagonist) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="250" y="94" width="560" height="66" rx="11"/>
+    <!-- rung 3 fine-tune (top, protagonist) — orange = the expensive, easy-to-fool-yourself rung -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="250" y="94" width="560" height="66" rx="11" class="f-orange"/>
     </g>
     <text x="300" y="126" text-anchor="start" class="lbl-b">3 · FINE-TUNE</text>
     <text x="300" y="150" text-anchor="start" class="lbl-g">hours · data + compute → behaviour that survives NO prompt, NO context</text>
@@ -218,19 +235,19 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">LoRA renovates with removable fittings — you train 0.19% of the model</h2>
   <p class="s">Full fine-tuning updates all 597 million parameters — more memory than a laptop has. LoRA freezes the building and bolts on a thin adapter you train instead. You are a tenant: you can't touch the walls, but you can add removable fittings.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A large wobbly building box labelled base model, tagged frozen weights, the landlord froze the structure. Bolted onto its side is a small adapter fitting, inked, tagged removable, rank eight, q_proj plus v_proj. A callout box carries the real number: trainable one million one hundred forty-six thousand eight hundred eighty of five hundred ninety-seven million, equals 0.19 percent. Two gray notes read: swappable, many adapters on one base; and tiny to ship, M7 versions it as v1.0. A band reads: train only the fittings, 0.19 percent of the model, the rest stays frozen.">
-    <!-- the frozen building (base model) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- the frozen building (base model) — GRAY, unfilled: frozen = de-emphasized -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7">
       <rect x="70" y="90" width="360" height="200" rx="12"/>
     </g>
     <text x="250" y="150" text-anchor="middle" class="lbl-b">base model</text>
     <text x="250" y="182" text-anchor="middle" class="lbl-g">~597M params · FROZEN</text>
     <text x="250" y="212" text-anchor="middle" class="lbl-g">(the landlord froze the walls)</text>
-    <!-- the bolted-on adapter -->
+    <!-- the bolted-on adapter — BLUE: the small trainable thing you actually study -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
       <path d="M430,150 L470,150 M430,230 L470,230"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="470" y="130" width="150" height="120" rx="11"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="470" y="130" width="150" height="120" rx="11" class="f-blue"/>
     </g>
     <text x="545" y="172" text-anchor="middle" class="lbl-b">adapter</text>
     <text x="545" y="200" text-anchor="middle" class="lbl-g">removable</text>
@@ -259,11 +276,13 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">QLoRA is LoRA one tier up — a 4-bit frozen base so a bigger model fits</h2>
   <p class="s">One addition to LoRA: store the frozen base quantized — 4-bit instead of 16-bit — while the adapter still trains in higher precision on top. The building is kept in compressed storage while you renovate; the fittings are unaffected.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, inked: LoRA — frozen base at 16-bit plus an adapter that trains on top, tagged a 0.6B fits on CPU as-is, the lab's path. Right, inked: QLoRA — frozen base stored 4-bit plus an adapter that trains on top, tagged a quarter of the memory, so a 7B or 13B fits on one small GPU. A gray footline reads: same idea, one tier up — reach for QLoRA only when the base is too big to fit; on a 0.6B it is overkill.">
-    <!-- LoRA panel -->
+    <!-- LoRA panel — frozen base unfilled, adapter blue -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="70" y="80" width="430" height="170" rx="12"/>
       <rect x="104" y="150" width="260" height="70" rx="10"/>
-      <rect x="380" y="150" width="86" height="70" rx="10"/>
+    </g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="380" y="150" width="86" height="70" rx="10" class="f-blue"/>
     </g>
     <text x="285" y="120" text-anchor="middle" class="lbl-b">LoRA</text>
     <text x="234" y="180" text-anchor="middle" class="lbl">frozen base</text>
@@ -271,11 +290,15 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="423" y="180" text-anchor="middle" class="lbl-sm">adapter</text>
     <text x="423" y="204" text-anchor="middle" class="lbl-g">trains</text>
     <text x="285" y="288" text-anchor="middle" class="lbl-g">0.6B fits on CPU as-is → the lab's path</text>
-    <!-- QLoRA panel -->
+    <!-- QLoRA panel — 4-bit frozen base (orange = the compression trick), adapter blue -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="600" y="80" width="430" height="170" rx="12"/>
-      <rect x="634" y="150" width="150" height="70" rx="10"/>
-      <rect x="800" y="150" width="86" height="70" rx="10"/>
+    </g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="634" y="150" width="150" height="70" rx="10" class="f-orange"/>
+    </g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="800" y="150" width="86" height="70" rx="10" class="f-blue"/>
     </g>
     <text x="815" y="120" text-anchor="middle" class="lbl-b">QLoRA</text>
     <text x="709" y="180" text-anchor="middle" class="lbl">frozen base</text>
@@ -293,9 +316,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Build a practice question bank from the corpus — generate, FILTER, split</h2>
   <p class="s">The bottleneck of fine-tuning is the data, not the training. You don't re-read the textbook to study — you build a practice question bank from it. Walk the corpus, ask a local model for grounded Q&amp;A per section, then filter hard.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A pipeline. The corpus, the textbook, flows into generate — per section, ask a local model for grounded Q&A pairs. Generate flows into filter, the emphasized inked box — length plus format plus dedupe plus grounded-in-the-section. Filter flows into split — train.jsonl plus a small eval slice. A gray dashed drop-off from filter leads down to rejects.jsonl, logged with reasons, inspect the garbage you kept out. A band under filter reads: garbage in, garbage out — the filter is not cleanup, it decides whether the data is worth training on.">
-    <!-- corpus -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <rect x="40" y="110" width="150" height="72" rx="11"/>
+    <!-- corpus — blue = the source data -->
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4">
+      <rect x="40" y="110" width="150" height="72" rx="11" class="f-blue"/>
     </g>
     <text x="115" y="142" text-anchor="middle" class="lbl-b">corpus/*.md</text>
     <text x="115" y="167" text-anchor="middle" class="lbl-g">(the textbook)</text>
@@ -311,9 +334,9 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M436,146 L488,146" marker-end="url(#ah)"/>
     </g>
-    <!-- filter (protagonist) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="492" y="100" width="220" height="92" rx="12"/>
+    <!-- filter (protagonist) — green = the gate that decides data quality -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="492" y="100" width="220" height="92" rx="12" class="f-green"/>
     </g>
     <text x="602" y="134" text-anchor="middle" class="lbl-b">FILTER</text>
     <text x="602" y="160" text-anchor="middle" class="lbl-g">length · format · dedupe ·</text>
@@ -331,8 +354,8 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round">
       <path d="M602,192 L602,244" marker-end="url(#ahg)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="470" y="248" width="264" height="46" rx="10"/>
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
+      <rect x="470" y="248" width="264" height="46" rx="10" class="f-red"/>
     </g>
     <text x="602" y="277" text-anchor="middle" class="lbl-g">rejects.jsonl — logged with reasons</text>
     <!-- band -->
@@ -373,13 +396,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M200,226 L200,266" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="110" y="270" width="180" height="48" rx="10"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="110" y="270" width="180" height="48" rx="10" class="f-blue"/>
     </g>
     <text x="200" y="300" text-anchor="middle" class="lbl">train.jsonl</text>
-    <!-- right lane: golden held out -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="740" y="150" width="290" height="100" rx="11"/>
+    <!-- right lane: golden held out — purple = the special, protected test set -->
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="740" y="150" width="290" height="100" rx="11" class="f-purple"/>
     </g>
     <text x="885" y="184" text-anchor="middle" class="lbl-b">golden.yaml</text>
     <text x="885" y="212" text-anchor="middle" class="lbl-g">M5 test set — HELD OUT</text>
@@ -388,11 +411,11 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round">
       <path d="M600,120 C660,140 700,155 730,168"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.8" stroke-linecap="round">
       <path d="M636,124 L700,168"/>
     </g>
     <text x="612" y="290" text-anchor="middle" class="lbl-g">overlap = grading on the answer key</text>
-    <text x="612" y="312" text-anchor="middle" class="lbl-g">silent · inflated · meaningless</text>
+    <text x="612" y="312" text-anchor="middle" class="lbl-bad">silent · inflated · meaningless</text>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="330" y="330" width="440" height="14" rx="6" opacity="0"/>
@@ -409,7 +432,7 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">The loss is how wrong the model's predictions are, step by step (the M1 vocabulary: it predicts the next token, the loss measures its surprise). There are two shapes to tell apart while it trains.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels, each a sketched loss curve on axes. Left, inked and labelled healthy: a curve falling from about 5.05 and then flattening toward about 3.54, tagged falls then flattens, more steps buy little, stop here, the real spike shape. Right, gray-dashed and labelled suspicious: a curve diving toward zero on a tiny set, tagged keeps dropping to zero equals overfit, memorizing not learning, aces training but fails the real questions. A band reads: train a few epochs and stop — you want it to generalize, not memorize.">
     <!-- left panel HEALTHY -->
-    <text x="280" y="60" text-anchor="middle" class="lbl-b">HEALTHY</text>
+    <text x="280" y="60" text-anchor="middle" class="lbl-good">HEALTHY</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M100,90 L100,270 L500,270"/>
     </g>
@@ -421,11 +444,11 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="300" y="300" text-anchor="middle" class="lbl-g">falls then flattens → more steps buy little · STOP</text>
     <text x="300" y="324" text-anchor="middle" class="lbl-g">(the real spike shape)</text>
     <!-- right panel SUSPICIOUS -->
-    <text x="820" y="60" text-anchor="middle" class="lbl-b">SUSPICIOUS</text>
+    <text x="820" y="60" text-anchor="middle" class="lbl-bad">SUSPICIOUS</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M640,90 L640,270 L1040,270"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.8" stroke-dasharray="9 7" stroke-linecap="round">
+    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.8" stroke-dasharray="9 7" stroke-linecap="round">
       <path d="M650,110 C740,150 800,240 900,262 C960,272 1010,268 1030,267"/>
     </g>
     <text x="1000" y="258" text-anchor="middle" class="lbl-g">→ 0</text>
@@ -441,9 +464,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Merge the adapter in, or serve base + adapter apart — OpsMate merges</h2>
   <p class="s">Once the adapter is trained you have a choice, and it comes back in M7. Fold the fittings into the walls for one standalone model, or keep them bolted on and swappable.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels. Left, inked with a thicker frame, marked OpsMate's choice: MERGE — fold the adapter into the base to get one standalone model. Plus, it serves like any other model, the stack is unchanged. Minus, the fittings are built in, you cannot swap without re-merging. Right, gray: base plus adapter kept apart — the runtime loads the adapter at serve time. Plus, the adapter stays swappable, one base, many adapters. Minus, the runtime must support adapter loading, not every engine does. A band reads: merge wins here — the goal is one servable model that drops into the existing stack.">
-    <!-- MERGE panel (chosen) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="60" y="80" width="450" height="200" rx="12"/>
+    <!-- MERGE panel (chosen) — green = OpsMate's choice -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="60" y="80" width="450" height="200" rx="12" class="f-green"/>
     </g>
     <text x="285" y="118" text-anchor="middle" class="lbl-b">MERGE</text>
     <text x="285" y="150" text-anchor="middle" class="lbl-g">fold the adapter into the base → one standalone model</text>
@@ -500,8 +523,8 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="736" y="172" text-anchor="middle" class="lbl-g">base.gguf</text>
     <text x="736" y="196" text-anchor="middle" class="lbl-g">v0</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="844" y="140" width="184" height="72" rx="10"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="844" y="140" width="184" height="72" rx="10" class="f-green"/>
     </g>
     <text x="936" y="172" text-anchor="middle" class="lbl-b">opsmate-tuned</text>
     <text x="936" y="196" text-anchor="middle" class="lbl">.gguf · v1.0</text>
@@ -536,17 +559,17 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M510,206 L610,206" marker-end="url(#ah)"/>
     </g>
     <text x="700" y="112" text-anchor="middle" class="lbl-b">MODEL_GGUF</text>
-    <!-- base struck -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="616" y="140" width="200" height="52" rx="10"/>
+    <!-- base struck — red = the file being swapped away from -->
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
+      <rect x="616" y="140" width="200" height="52" rx="10" class="f-red"/>
     </g>
     <text x="716" y="172" text-anchor="middle" class="lbl-g">base.gguf</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.4" stroke-linecap="round">
       <path d="M628,188 L804,146"/>
     </g>
-    <!-- tuned chosen -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="616" y="210" width="200" height="52" rx="10"/>
+    <!-- tuned chosen — green = the file we swap to -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="616" y="210" width="200" height="52" rx="10" class="f-green"/>
     </g>
     <text x="716" y="242" text-anchor="middle" class="lbl-b">opsmate-tuned.gguf</text>
     <text x="850" y="192" text-anchor="start" class="lbl-g">change one env var</text>
@@ -567,10 +590,10 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Weigh it on the same scale — beat, tie, or lose, every outcome teaches</h2>
   <p class="s">A tuned model always <em>feels</em> better — you built it, you wanted it to work. Feelings are not evidence. "I lost weight" means nothing unless you weighed before <em>and</em> after on the <em>same scale</em>.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A weighing scene. Two bathroom scales. The BEFORE scale, gray, reads M5 baseline.md, RAG 6 of 15, retrieval 24 of 24, tagged recorded, committed. The AFTER scale, inked, holds the tuned model and is tagged same golden set, same graders. Two gray control notes float beside them: retrieval is a control, 24 of 24 to 24 of 24, or find the bug; and add a no-RAG tuned-direct arm, the value tuning added. Below, a three-way fork from the reading: BEAT, voice improvement, measured; TIE, no regression, ship the voice free; LOSE, honest, a knowledge golden set may not measure the voice you fixed. A band reads: same scale, read it honestly — beat, tie, or lose, every outcome teaches.">
-    <!-- BEFORE scale -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <rect x="60" y="80" width="220" height="96" rx="14"/>
-      <circle cx="170" cy="128" r="30"/>
+    <!-- BEFORE scale — blue = the recorded M5 baseline data -->
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4">
+      <rect x="60" y="80" width="220" height="96" rx="14" class="f-blue"/>
+      <circle cx="170" cy="128" r="30" fill="none"/>
     </g>
     <text x="170" y="66" text-anchor="middle" class="lbl-b">BEFORE</text>
     <text x="170" y="124" text-anchor="middle" class="lbl-sm">baseline.md</text>
@@ -589,19 +612,21 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="620" y="138" text-anchor="start" class="lbl-g">or find the bug)</text>
     <text x="600" y="176" text-anchor="start" class="lbl-g">· + a no-RAG tuned-direct arm</text>
     <text x="620" y="202" text-anchor="start" class="lbl-g">= the value tuning added</text>
-    <!-- three-way fork -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="70" y="252" width="300" height="66" rx="10"/>
-      <rect x="400" y="252" width="300" height="66" rx="10"/>
+    <!-- three-way fork — BEAT green (win), TIE orange (in-between), LOSE red (the honest loss) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="70" y="252" width="300" height="66" rx="10" class="f-green"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
-      <rect x="730" y="252" width="300" height="66" rx="10"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="400" y="252" width="300" height="66" rx="10" class="f-orange"/>
     </g>
-    <text x="220" y="282" text-anchor="middle" class="lbl-b">BEAT</text>
+    <g filter="url(#rough)" stroke="#c62828" stroke-width="2.2" stroke-dasharray="9 7">
+      <rect x="730" y="252" width="300" height="66" rx="10" class="f-red"/>
+    </g>
+    <text x="220" y="282" text-anchor="middle" class="lbl-good">BEAT</text>
     <text x="220" y="306" text-anchor="middle" class="lbl-g">voice improvement, measured</text>
     <text x="550" y="282" text-anchor="middle" class="lbl-b">TIE</text>
     <text x="550" y="306" text-anchor="middle" class="lbl-g">no regression, ship the voice free</text>
-    <text x="880" y="282" text-anchor="middle" class="lbl-b">LOSE</text>
+    <text x="880" y="282" text-anchor="middle" class="lbl-bad">LOSE</text>
     <text x="880" y="306" text-anchor="middle" class="lbl-g">a knowledge set may miss the voice</text>
   </svg>
   <p class="takeaway">A tuned model always feels better, so weigh it on the same committed scale — retrieval as a control, a no-RAG arm for the isolated value, and the honesty rule that beat, tie, and lose all teach something real.</p>
@@ -618,10 +643,10 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="50" y="90" width="260" height="180" rx="12"/>
     </g>
     <text x="180" y="122" text-anchor="middle" class="lbl-b">Teardown KEEPS</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
-      <rect x="76" y="140" width="208" height="36" rx="8"/>
-      <rect x="76" y="184" width="208" height="36" rx="8"/>
-      <rect x="76" y="228" width="208" height="36" rx="8"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="76" y="140" width="208" height="36" rx="8" class="f-blue"/>
+      <rect x="76" y="184" width="208" height="36" rx="8" class="f-blue"/>
+      <rect x="76" y="228" width="208" height="36" rx="8" class="f-blue"/>
     </g>
     <text x="180" y="164" text-anchor="middle" class="lbl-sm">adapter (few MB)</text>
     <text x="180" y="208" text-anchor="middle" class="lbl-sm">tuned GGUF (q8_0)</text>
@@ -643,8 +668,8 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="630" y="96" width="420" height="168" rx="12"/>
     </g>
     <text x="840" y="126" text-anchor="middle" class="lbl-b">model registry</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="656" y="150" width="180" height="94" rx="10"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="656" y="150" width="180" height="94" rx="10" class="f-green"/>
     </g>
     <text x="746" y="188" text-anchor="middle" class="lbl-b">OpsMate v1.0</text>
     <text x="746" y="214" text-anchor="middle" class="lbl-g">versioned · signed</text>
@@ -666,23 +691,23 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t" style="font-size:2.05em">The whole loop — decide, build the data, tune, and measure honestly</h2>
   <p class="s">The skill you leave with is the whole loop, and the part most people skip is the last one. Four moves go with you into the lab.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Four numbered takeaways. One: decide — climb the ladder, tune only for behaviour that survives with no prompt and no context. Two: build the data — a practice question bank from the corpus, filtered hard, golden set held out. Three: run the tune — LoRA, 0.19 percent trainable, minutes on CPU, watch the loss flatten. Four: measure honestly — same committed scale, read beat, tie, or lose straight, not the feeling. A footline reads: the part most people skip is number four — now open Module 6 Lab.">
-    <!-- row 1 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="46" r="22"/></g>
+    <!-- row 1 — orange = the judgment call -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="46" r="22" class="f-orange"/></g>
     <text x="90" y="55" text-anchor="middle" class="num">1</text>
     <text x="130" y="40" text-anchor="start" class="lbl-b">DECIDE</text>
     <text x="130" y="66" text-anchor="start" class="lbl-g">climb the ladder — tune only for behaviour that survives NO prompt, NO context</text>
     <!-- row 2 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="116" r="22"/></g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="116" r="22" class="f-blue"/></g>
     <text x="90" y="125" text-anchor="middle" class="num">2</text>
     <text x="130" y="110" text-anchor="start" class="lbl-b">BUILD THE DATA</text>
     <text x="130" y="136" text-anchor="start" class="lbl-g">a practice question bank from the corpus — filtered hard, golden set held out</text>
     <!-- row 3 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="186" r="22"/></g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="186" r="22" class="f-blue"/></g>
     <text x="90" y="195" text-anchor="middle" class="num">3</text>
     <text x="130" y="180" text-anchor="start" class="lbl-b">RUN THE TUNE</text>
     <text x="130" y="206" text-anchor="start" class="lbl-g">LoRA — 0.19% trainable, minutes on CPU, watch the loss flatten</text>
     <!-- row 4 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="256" r="22"/></g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="256" r="22" class="f-green"/></g>
     <text x="90" y="265" text-anchor="middle" class="num">4</text>
     <text x="130" y="250" text-anchor="start" class="lbl-b">MEASURE HONESTLY</text>
     <text x="130" y="276" text-anchor="start" class="lbl-g">same committed scale — read beat/tie/lose straight, not the feeling</text>

@@ -69,6 +69,13 @@ footer, header, hgroup, main, menu, nav, section {
     --ink:#1e1e1e;
     --gray:#757575;
     --paper:#ffffff;
+    /* pastel accent fills (founder directive 2026-07-21): green=good/healthy,
+       red=bad/full/waste, blue=neutral data, orange=caution, purple=meta/control */
+    --p-green:#d5e8d4;
+    --p-red:#f8cecc;
+    --p-blue:#dae8fc;
+    --p-orange:#ffe6cc;
+    --p-purple:#e1d5e7;
   }
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
@@ -109,6 +116,9 @@ footer, header, hgroup, main, menu, nav, section {
   .lbl-g{ fill:var(--gray); font-size:17px; }
   .lbl-b{ fill:var(--ink); font-size:23px; font-weight:700; }
   .num{ fill:var(--ink); font-size:24px; font-weight:700; }
+  /* muted payoff-annotation colours (one or two short labels per slide, never body) */
+  .lbl-good{ fill:#2e7d32; font-size:18px; }
+  .lbl-bad{ fill:#c62828; font-size:18px; }
 </style>
 </head>
 <body>
@@ -158,6 +168,8 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- open hand = feel -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M470,300 C470,286 460,282 460,296 M470,300 C470,282 478,280 478,296 M478,300 C478,282 488,282 488,296 M470,300 C470,290 452,296 460,308 L470,320 C482,326 494,318 490,300"/></g>
     <text x="512" y="316" text-anchor="start" class="lbl-b">feel</text>
+    <!-- crossed-out eye = can't see (the bad state): red fill -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><path d="M700,304 C720,286 756,286 776,304 C756,322 720,322 700,304 Z"/></g>
     <!-- crossed-out eye = can't see -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><path d="M700,304 C720,286 756,286 776,304 C756,322 720,322 700,304 Z"/><circle cx="738" cy="304" r="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><line x1="700" y1="322" x2="778" y2="286"/></g>
@@ -170,8 +182,10 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 2 · THE WARD CHART (scene, build A) ═══════════════ -->
 <section>
   <h2 class="t">The ward chart</h2>
+  <p class="s">A hospital watches vitals — heart rate, pressure, temperature — sampled every few minutes and plotted as lines, for every patient at once. That is state over time across the whole ward. What it cannot give you is the story of one bad afternoon.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A ward chart drawn as a clipboard at the foot of a bed, showing three vitals lines trending over time with tick-marks for sampling. Behind it, a bracket spans several tiny beds, labelled every patient.">
-    <!-- clipboard body -->
+    <!-- clipboard body: pastel blue fill = the data being studied -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="300" y="70" width="500" height="240" rx="14"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="300" y="70" width="500" height="240" rx="14"/><rect x="470" y="52" width="160" height="34" rx="10"/></g>
     <!-- vitals graph axes -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><line x1="340" y1="270" x2="770" y2="270"/><line x1="340" y1="110" x2="340" y2="270"/></g>
@@ -197,8 +211,12 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 3 · THE CASE FILE (scene, build B) ═══════════════ -->
 <section>
   <h2 class="t">The case file</h2>
+  <p class="s">One patient's full record of a single episode — admitted 2:04, bloods 2:11, consultant 2:40, imaging 3:05 — every step timestamped, so you see exactly where the delay was. What it cannot tell you is whether the ward is trending badly.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A case file drawn as an open folder holding one patient's timestamped step-list down a vertical timeline: admitted 2:04, bloods 2:11, consultant 2:40, imaging 3:05. A magnifying glass hovers over the 2:40 row, where the delay was.">
-    <!-- folder -->
+    <!-- folder: pastel blue fill = the data being studied -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><path d="M250,90 L470,90 L500,120 L820,120 L820,320 L250,320 Z"/></g>
+    <!-- red highlight behind the 2:40 delay row = the bad step -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="300" y="234" width="330" height="34" rx="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M250,90 L470,90 L500,120 L820,120 L820,320 L250,320 Z"/></g>
     <!-- timeline spine -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><line x1="330" y1="150" x2="330" y2="296"/></g>
@@ -223,15 +241,18 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 4 · YOU NEED BOTH (scene, build C) ═══════════════ -->
 <section>
   <h2 class="t">You need both</h2>
+  <p class="s">Metrics are the ward chart, traces the case file — and neither one substitutes for the other. A dashboard cannot say why one request was slow; a single case file cannot say the ward is trending badly. So you carry both instruments.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The two instruments side by side and joined under one bracket: a small clipboard tagged metrics for the whole ward, a not-equals sign, and a small folder tagged traces for one request. A bracket over both reads BOTH — neither substitutes for the other.">
-    <!-- clipboard (left) -->
+    <!-- clipboard (left): pastel blue fill -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="120" y="120" width="230" height="150" rx="12"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="120" y="120" width="230" height="150" rx="12"/><rect x="200" y="104" width="70" height="26" rx="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M150,230 C200,220 250,180 320,150"/></g>
     <text x="235" y="252" text-anchor="middle" class="lbl-b">METRICS</text>
     <text x="235" y="298" text-anchor="middle" class="lbl-g">whole ward</text>
     <!-- not-equals -->
     <text x="550" y="200" text-anchor="middle" class="lbl-b" style="font-size:52px">≠</text>
-    <!-- folder (right) -->
+    <!-- folder (right): pastel blue fill -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><path d="M750,130 L860,130 L878,150 L1000,150 L1000,270 L750,270 Z"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><path d="M750,130 L860,130 L878,150 L1000,150 L1000,270 L750,270 Z"/></g>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="800" y1="172" x2="800" y2="256"/><circle cx="800" cy="182" r="5"/><circle cx="800" cy="218" r="5"/><circle cx="800" cy="252" r="5"/></g>
     <text x="875" y="252" text-anchor="middle" class="lbl-b">TRACES</text>
@@ -247,7 +268,10 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 5 · TWO STOPWATCHES (scene) ═══════════════ -->
 <section>
   <h2 class="t">Two stopwatches, not one</h2>
+  <p class="s">A request runs two phases, each with its own clock. Prefill reads the prompt — that is TTFT, driven by prompt length. Decode writes the answer — that is TPOT, the steady rhythm. So the first question is never how slow, but slow to start or slow to finish.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A request drawn as an envelope travelling left to right through two phase-boxes, each with its own stopwatch: prefill (read prompt) with a stopwatch labelled TTFT, then decode (write answer) with a stopwatch labelled TPOT. A scroll feeds prefill; output tokens drip from decode.">
+    <!-- phase boxes: pastel blue fills = the two things being measured -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="190" y="110" width="290" height="130" rx="14"/><rect x="560" y="110" width="290" height="130" rx="14"/></g>
     <!-- envelope entering -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="150" width="70" height="46" rx="6"/><path d="M40,150 L75,178 L110,150"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M118,173 L182,173" marker-end="url(#ah)"/></g>
@@ -280,7 +304,11 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 6 · THE QUEUE (scene) ═══════════════ -->
 <section>
   <h2 class="t">A third stopwatch: the queue</h2>
+  <p class="s">A third signal is neither phase — it is load. Requests-processing is what the engine works on now; requests-deferred is what waits for a slot. When both phase clocks look fine and it still feels slow, the request is not slow, it is waiting.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The queue drawn as a line of envelopes waiting at a closed door labelled requests_deferred waiting, with one envelope through the door labelled requests_processing now. The two phase-boxes sit small behind. A note reads phase clocks fine yet a long line means waiting, not slow.">
+    <!-- waiting envelopes: red fill = full/waiting; the one working now: green fill = healthy -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="120" y="200" width="54" height="36" rx="5"/><rect x="190" y="200" width="54" height="36" rx="5"/><rect x="260" y="200" width="54" height="36" rx="5"/><rect x="330" y="200" width="54" height="36" rx="5"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="680" y="200" width="54" height="36" rx="5"/></g>
     <!-- small phase-boxes behind -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5"><rect x="60" y="70" width="120" height="54" rx="10"/><rect x="200" y="70" width="120" height="54" rx="10"/></g>
     <text x="120" y="102" text-anchor="middle" class="lbl-g" style="font-size:15px">prefill</text>
@@ -313,7 +341,12 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 7 · ONE CLOCK OVER THE DOOR (scene, P50 build A) ═══════════════ -->
 <section>
   <h2 class="t">One clock over the door</h2>
+  <p class="s">You would never judge a restaurant on one number, walk-in to walk-out. It blends how long the kitchen took to cook and how long the waiter took to bring it — different problems, different fixes — and a door-to-door average lets opposites look identical.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A restaurant storefront with a single big stopwatch mounted over the door, a diner walking in one side and out the other. Inside, faintly drawn, a kitchen and a waiter — both hidden behind that one door-to-door number, which is drawn dashed to signal distrust.">
+    <!-- the single door-to-door clock is the number to distrust: red fill behind it -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><circle cx="550" cy="150" r="26"/></g>
+    <!-- hidden kitchen + waiter = unknown in-between states: orange fills -->
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><rect x="300" y="180" width="130" height="80" rx="8"/><rect x="670" y="180" width="130" height="80" rx="8"/></g>
     <!-- storefront -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="260" y="120" width="580" height="180" rx="10"/><path d="M240,120 L860,120 L820,80 L280,80 Z"/></g>
     <!-- door -->
@@ -329,6 +362,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="365" y="226" text-anchor="middle" class="lbl-g" style="font-size:16px">kitchen?</text>
     <text x="735" y="226" text-anchor="middle" class="lbl-g" style="font-size:16px">waiter?</text>
     <text x="550" y="326" text-anchor="middle" class="lbl-g">blends both</text>
+    <text x="640" y="120" text-anchor="start" class="lbl-bad">distrust this</text>
   </svg>
   <p class="takeaway">One number hides two problems.</p>
   <div class="pageno">M10·07</div>
@@ -337,7 +371,12 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 8 · KITCHEN + WAITER CLOCKS (scene, P50 build B) ═══════════════ -->
 <section>
   <h2 class="t">Kitchen clock AND waiter clock</h2>
+  <p class="s">So split the clock in two. A clock in the kitchen is prefill, your TTFT; a clock on the waiter is decode, your TPOT. Measure them separately, or you are blind on both — two SLOs, never one blended number over the door.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The same restaurant split into two zones, each with its own clock: a kitchen with a clock tagged equals prefill TTFT, and a waiter carrying a plate with a clock tagged equals decode TPOT. The single over-the-door clock is crossed out with a rough diagonal stroke.">
+    <!-- two separate clocks = the right approach: green fills on both zones -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="90" y="110" width="380" height="170" rx="12"/><rect x="630" y="110" width="380" height="170" rx="12"/></g>
+    <!-- the crossed-out single clock = the bad number: red fill -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><circle cx="550" cy="70" r="24"/></g>
     <!-- KITCHEN zone -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="90" y="110" width="380" height="170" rx="12"/></g>
     <text x="280" y="152" text-anchor="middle" class="lbl-b">KITCHEN</text>
@@ -366,11 +405,12 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 9 · TWO HUMPS UNDER ONE LINE (scene, P50 build C) ═══════════════ -->
 <section>
   <h2 class="t">Two humps, one average</h2>
+  <p class="s">Mixed traffic — many short questions, a few long ones. P50 lands among the short, so it sits under target and the dashboard is green. Meanwhile every long request blows the SLO up in the tail the median cannot see. Watch the tail, not the median.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A hand-drawn latency distribution: a tall cluster of short-request dots on the left with a P50 marker sitting among them, and a few long-request dots stranded far right in the tail, each tagged SLO failed. A single straight average line is drawn through, hiding the two humps.">
     <!-- axis -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="90" y1="270" x2="1030" y2="270"/></g>
-    <!-- short-request hump (many dots) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+    <!-- short-request hump (many dots): green fill = fast/passing -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.2">
       <circle cx="200" cy="250" r="7"/><circle cx="230" cy="230" r="7"/><circle cx="260" cy="212" r="7"/><circle cx="290" cy="196" r="7"/><circle cx="320" cy="210" r="7"/><circle cx="350" cy="232" r="7"/><circle cx="380" cy="250" r="7"/>
       <circle cx="245" cy="252" r="7"/><circle cx="305" cy="248" r="7"/><circle cx="335" cy="252" r="7"/>
     </g>
@@ -378,9 +418,10 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- P50 marker among short -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M300,110 L300,262" marker-end="url(#ah)"/></g>
     <text x="300" y="100" text-anchor="middle" class="lbl-b">P50 ✓</text>
-    <!-- long-request tail (few dots) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="820" cy="252" r="7"/><circle cx="890" cy="248" r="7"/><circle cx="960" cy="250" r="7"/></g>
+    <!-- long-request tail (few dots): red fill = slow/failing -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="2.2"><circle cx="820" cy="252" r="7"/><circle cx="890" cy="248" r="7"/><circle cx="960" cy="250" r="7"/></g>
     <text x="890" y="160" text-anchor="middle" class="lbl-g">long (few)</text>
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="800" y="176" width="180" height="34" rx="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="800" y="176" width="180" height="34" rx="8"/></g>
     <text x="890" y="199" text-anchor="middle" class="lbl-b">SLO ✗ · the tail</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round"><path d="M890,214 L890,240" marker-end="url(#ah)"/></g>
@@ -394,7 +435,12 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 10 · PUMP THE POD (scene) ═══════════════ -->
 <section>
   <h2 class="t">Pump the pod every 5s</h2>
+  <p class="s">A scraper polls each target's /metrics on an interval and stores the samples. M10's Prometheus is one pod, a ConfigMap listing one target — opsmate-model:8080 — scraped every five seconds. The mechanism is not new, so the module spends its attention on which families matter.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The scrape drawn as a pump with a hose reaching into a pod labelled opsmate-model 8080 slash metrics, pulling little number-tags up the hose into the Prometheus box. A 5s tick sits on the pump handle.">
+    <!-- pod being scraped = the data source: blue fill -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="80" y="150" width="230" height="140" rx="14"/></g>
+    <!-- Prometheus = the scraper/control tool: purple fill -->
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="660" y="150" width="260" height="140" rx="14"/></g>
     <!-- pod -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="80" y="150" width="230" height="140" rx="14"/></g>
     <text x="195" y="200" text-anchor="middle" class="lbl-b" style="font-size:19px">opsmate-model</text>
@@ -422,7 +468,10 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 11 · REACH PAST UP (scene) ═══════════════ -->
 <section>
   <h2 class="t">Reach past <code>up</code></h2>
+  <p class="s">A basic tutorial shows up and http_requests_total — the engine is alive, it took N calls, and neither says whether the model is healthy. The families that matter are token rates, phase timings, and queue gauges. Knowing which family to reach for is the skill; standing up Prometheus is not.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two gauges on a shelf. A dusty gray gauge labelled up and http_requests_total is passed over — process alive, says nothing about the model. A hand reaches instead for an inked gauge labelled requests_deferred and tokens per second — is the model healthy.">
+    <!-- the gauge reached for = the right/healthy choice: green fill -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><circle cx="770" cy="180" r="80"/></g>
     <!-- shelf -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><line x1="80" y1="270" x2="1020" y2="270"/></g>
     <!-- gray gauge (passed over) -->
@@ -446,7 +495,11 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 12 · THE WALL (scene) ═══════════════ -->
 <section>
   <h2 class="t">One wall, one shared fact</h2>
+  <p class="s">A metric no one looks at is not observability, it is storage. The dashboard is where a number becomes a shared fact the PM, finance, and on-call all point at instead of trading stories. Ship one checked-in Grafana artifact — same for everyone who applies the file.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A Grafana wall drawn as a wall of five mini-panels: a decode tokens-per-second line, a prompt-rate line, a climbing requests_deferred gauge, a token-counters bar, and an in-flight number. Three stick figures — PM, finance, on-call — point at the same climbing panel.">
+    <!-- panel fills: neutral data panels blue, the climbing deferred panel red = full/bad -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="384" y="70" width="200" height="86" rx="8"/><rect x="600" y="70" width="200" height="86" rx="8"/><rect x="384" y="188" width="200" height="70" rx="8"/><rect x="600" y="188" width="200" height="70" rx="8"/></g>
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="816" y="70" width="220" height="140" rx="8"/></g>
     <!-- wall frame -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="360" y="50" width="700" height="230" rx="10"/></g>
     <!-- panel 1: decode tok/s line -->
@@ -479,18 +532,23 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 13 · THE TRACE WATERFALL (scene, fragments) ═══════════════ -->
 <section>
   <h2 class="t">Where did the 11s go?</h2>
+  <p class="s">A trace is one request broken into spans, nested to show what called what. Read the waterfall: retrieve is 40ms so it was not the cause, generate is 9s and holds 500 tokens — the time and the cost are both in the model call. Evidence, not guessing.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The trace drawn as a staircase of three bars. A wide top bar ask at 9.2 seconds; nested beneath, a tiny retrieve bar at 0.04 seconds, and a long generate bar at 9.1 seconds carrying a price tag of 500 tokens. A magnifying glass on generate and a faint tag reading prefill plus decode inside.">
-    <!-- ask bar (always) -->
+    <!-- ask bar (always): blue fill = the whole request being studied -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="90" y="70" width="920" height="54" rx="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="90" y="70" width="920" height="54" rx="8"/></g>
     <text x="120" y="104" text-anchor="start" class="lbl-b">ask</text>
     <text x="980" y="104" text-anchor="end" class="lbl-g">9.2s</text>
-    <!-- retrieve bar (fragment b) -->
+    <!-- retrieve bar (fragment b): green fill = fast, exonerated -->
     <g class="fragment" data-fragment-index="1">
+      <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="150" y="148" width="70" height="46" rx="7"/></g>
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="150" y="148" width="70" height="46" rx="7"/></g>
       <text x="240" y="178" text-anchor="start" class="lbl">retrieve <tspan class="lbl-g">0.04s</tspan></text>
+      <text x="150" y="140" text-anchor="start" class="lbl-good">not it</text>
     </g>
-    <!-- generate bar (fragment c) with price tag -->
+    <!-- generate bar (fragment c) with price tag: red fill = the slow, costly culprit -->
     <g class="fragment" data-fragment-index="2">
+      <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="150" y="212" width="820" height="54" rx="8"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="150" y="212" width="820" height="54" rx="8"/></g>
       <text x="180" y="246" text-anchor="start" class="lbl-b">generate <tspan class="lbl-g" style="font-size:17px">9.1s</tspan></text>
       <!-- hand-drawn price tag -->
@@ -510,7 +568,12 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 14 · THE BILL RIDES ON THE SPAN (scene) ═══════════════ -->
 <section>
   <h2 class="t">The bill rides on the span</h2>
+  <p class="s">Every response returns a usage block — prompt, completion, total tokens — and the app lifts them onto the generate span as llm.token_count. Sum token_count.total across a day's traces and that is your bill, sliceable by user, endpoint, or prompt length. Cost stops being a monthly surprise.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The generate span with a usage receipt dropping onto it as llm.token_count, an arrow to a stack of traces, then to a hand-drawn invoice reading sum of tokens equals the bill. Three slice-tags fan off the bill: by user, by endpoint, by prompt length.">
+    <!-- generate span = the data: blue fill -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="60" y="150" width="200" height="54" rx="8"/></g>
+    <!-- the invoice = the summed cost/management artifact: purple fill -->
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="622" y="120" width="230" height="130" rx="10"/></g>
     <!-- generate span -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="150" width="200" height="54" rx="8"/></g>
     <text x="160" y="184" text-anchor="middle" class="lbl-b" style="font-size:19px">span</text>
@@ -536,7 +599,12 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 15 · THE REGISTER (scene) ═══════════════ -->
 <section>
   <h2 class="t">The visit, not the confession</h2>
+  <p class="s">The ask span's input.value is the full user question, kept for debugging — but every trace then holds the exact text, visible to anyone with Phoenix. The register records that the visit happened, not what was whispered behind the closed door. Keep it or redact it, but choose.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A reception desk with an open register listing journey rows: arrived 2:04, saw Dr Rao, retrieved 3 docs, 9.2 seconds. Behind a closed door, a speech bubble reading input.value equals the question is crossed out — the whispered confession that must not be copied into the register. An arrow from the bubble to the register is blocked.">
+    <!-- register / ledger = the record of what may be kept: purple fill -->
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><path d="M80,90 L400,90 L400,300 L80,300 Z"/></g>
+    <!-- the confession bubble = what must NOT be logged: red fill -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><ellipse cx="720" cy="150" rx="130" ry="50"/></g>
     <!-- register / ledger -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M80,90 L400,90 L400,300 L80,300 Z"/><line x1="240" y1="90" x2="240" y2="300"/></g>
     <text x="100" y="140" text-anchor="start" class="lbl-sm">arrived 2:04</text>
@@ -559,7 +627,12 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 16 · SERVICE-LINK CRASH (exhibit) ═══════════════ -->
 <section>
   <h2 class="t">Two labels, one name</h2>
+  <p class="s">Kubernetes injects a NAME_PORT env var for every Service. A Service named phoenix injects PHOENIX_PORT=tcp://…, but Phoenix reads PHOENIX_PORT as its listen port and expects an integer — so it crashes, with a log naming the fix. Set the env explicitly, or enableServiceLinks:false. One collision teaches the whole class.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A crashed phoenix pod tipped over with a CrashLoopBackOff tag. Two labels tug on one name-tag PHOENIX_PORT — one reading tcp injected by Kubernetes, the other reading wants an integer from Phoenix — with a jagged clash-mark where they meet. Two fix-chips below: set PHOENIX_PORT to 6006, or enableServiceLinks false.">
+    <!-- crashed pod = the failure: red fill -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none" transform="rotate(-8 200 180)"><rect x="90" y="130" width="220" height="120" rx="14"/></g>
+    <!-- the two fix chips = the resolution: green fills -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="860" y="120" width="220" height="46" rx="10"/><rect x="860" y="182" width="220" height="46" rx="10"/></g>
     <!-- crashed pod (tipped, with X) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" transform="rotate(-8 200 180)"><rect x="90" y="130" width="220" height="120" rx="14"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="150" y1="150" x2="250" y2="220"/><line x1="250" y1="150" x2="150" y2="220"/></g>
@@ -589,7 +662,12 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 17 · GAUGE DRIVES THE DIAL (scene) ═══════════════ -->
 <section>
   <h2 class="t">The gauge drives the dial</h2>
+  <p class="s">OpsMate is now observable — metrics on a wall, traces of every request, cost per request. You cannot autoscale what you cannot measure. Today a hand just watches the deferred gauge; in M11 the linkage drives a replica dial — queue builds add an engine, drains remove one.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The M11 bridge drawn as a control mechanism: a requests_deferred gauge with a climbing needle, a belt linkage connecting it to a replica dial that turns from one to two to three engines. An eye labelled watch today sits by the gauge; the linkage, labelled M11 act, drives the dial. A feedback curl reads queue builds add engine, drains remove engine.">
+    <!-- deferred gauge = the queue building signal: red fill -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><circle cx="220" cy="180" r="90"/></g>
+    <!-- replica dial = the control mechanism that acts: purple fill -->
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><circle cx="620" cy="180" r="90"/></g>
     <!-- deferred gauge -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><circle cx="220" cy="180" r="90"/><path d="M220,180 L282,132"/><line x1="220" y1="86" x2="220" y2="98"/><line x1="130" y1="180" x2="142" y2="180"/><line x1="310" y1="180" x2="298" y2="180"/></g>
     <text x="220" y="298" text-anchor="middle" class="lbl-b">requests_deferred</text>
@@ -617,13 +695,15 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 10 &nbsp;·&nbsp; OBSERVABILITY — SEEING THE PLATFORM</p>
   <h2 class="t" style="font-size:2.0em">OpsMate can finally be seen</h2>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Three carried ideas drawn as icons: a clipboard and folder for two instruments, a split clock for per-phase SLOs, and a register with a locked door for a trace that records the journey not the confession. A drawn bridge arrow leads to a small M11 autoscaler dial.">
-    <!-- icon 1: clipboard + folder -->
+    <!-- icon 1: clipboard + folder = the two instruments/data: blue fills -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="80" y="70" width="90" height="110" rx="10"/><path d="M150,120 L200,120 L212,132 L270,132 L270,200 L150,200 Z"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="80" y="70" width="90" height="110" rx="10"/><rect x="108" y="60" width="34" height="18" rx="5"/><path d="M150,120 L200,120 L212,132 L270,132 L270,200 L150,200 Z"/></g>
     <text x="175" y="234" text-anchor="middle" class="lbl-b" style="font-size:18px">two instruments</text>
     <!-- icon 2: split clock -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><circle cx="500" cy="125" r="66"/><line x1="500" y1="59" x2="500" y2="191"/><line x1="500" y1="125" x2="546" y2="100"/><line x1="500" y1="125" x2="460" y2="152"/></g>
     <text x="500" y="234" text-anchor="middle" class="lbl-b" style="font-size:18px">per-phase SLOs</text>
-    <!-- icon 3: register + lock -->
+    <!-- icon 3: register + lock = the record you control: purple fill -->
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="800" y="66" width="130" height="120" rx="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="800" y="66" width="130" height="120" rx="8"/><line x1="800" y1="100" x2="930" y2="100"/><rect x="852" y="130" width="42" height="36" rx="6"/><path d="M860,130 C860,112 886,112 886,130"/></g>
     <text x="865" y="234" text-anchor="middle" class="lbl-b" style="font-size:18px">the register</text>
     <!-- bridge arrow to M11 -->

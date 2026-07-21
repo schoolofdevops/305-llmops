@@ -138,17 +138,17 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t" style="font-size:2.3em">One model, many riders</h2>
   <p class="s" style="font-size:1.2em">Until now you ran the model for one person — you, at a terminal. Now one copy has to answer many people at once, and which engine turns your model file into that shared service is a real decision.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="One model box on the left fans out through a serving engine to many little user figures on the right. A gray footline names the three things the engine choice decides: cost per answer, latency under load, and whether it runs everywhere.">
-    <!-- the model -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- the model (studied artefact = blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
       <rect x="60" y="112" width="200" height="96" rx="12"/>
     </g>
     <text x="160" y="152" text-anchor="middle" class="lbl-b">one model</text>
     <text x="160" y="182" text-anchor="middle" class="lbl-g">the artefact (M2)</text>
-    <!-- serving engine hub -->
+    <!-- serving engine hub (the control layer = purple) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
       <path d="M262,160 L360,160" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
       <rect x="368" y="120" width="180" height="80" rx="12"/>
     </g>
     <text x="458" y="152" text-anchor="middle" class="lbl-b">serving engine</text>
@@ -190,14 +190,16 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="220" y="212" text-anchor="middle" class="lbl-b">scooter · one rider</text>
     <text x="220" y="242" text-anchor="middle" class="lbl-g">cheap · instant · no overhead</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="188" y="262" width="64" height="40" rx="7"/></g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.4"><rect x="188" y="262" width="64" height="40" rx="7"/></g>
     <text x="220" y="290" text-anchor="middle" class="lbl-g">$</text>
 
     <text x="550" y="150" text-anchor="middle" class="lbl-b">vs</text>
 
-    <!-- bus: full load -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- bus: full load (the other fit, not "better" = purple) -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
       <rect x="660" y="80" width="320" height="120" rx="16"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <circle cx="730" cy="212" r="26"/>
       <circle cx="910" cy="212" r="26"/>
     </g>
@@ -207,7 +209,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="820" y="242" text-anchor="middle" class="lbl-b">bus · a full load</text>
     <text x="820" y="272" text-anchor="middle" class="lbl-g">cost per rider is tiny — everyone rides together</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="788" y="290" width="64" height="34" rx="7"/></g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#757575" stroke-width="2.4"><rect x="788" y="290" width="64" height="34" rx="7"/></g>
     <text x="820" y="314" text-anchor="middle" class="lbl-g">$ ÷ many</text>
 
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
@@ -224,20 +226,20 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Three axes decide the engine — a fit question, not a best one</h2>
   <p class="s">Answer these three before you pick. None has a "best" answer; each has a fit that changes with the trip.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three numbered rows name the three axes. One: dev box or production. Two: CPU only or GPU, the hardware axis where the wrong architecture may not run at all. Three: one user or many at once, where multi-tenant needs two mechanisms a single-user engine never does. A gray band reads: no best, a fit that changes with the trip.">
-    <!-- row 1 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="66" r="26"/></g>
+    <!-- row 1 (decision markers = purple) -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="66" r="26"/></g>
     <text x="90" y="76" text-anchor="middle" class="num">1</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="140" y="34" width="900" height="64" rx="11"/></g>
     <text x="164" y="62" class="lbl-b" text-anchor="start">dev box or production?</text>
     <text x="164" y="88" class="lbl-g" text-anchor="start">zero setup, one user, easy swaps&nbsp; vs&nbsp; throughput + metrics under concurrent load</text>
     <!-- row 2 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="176" r="26"/></g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="176" r="26"/></g>
     <text x="90" y="186" text-anchor="middle" class="num">2</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="140" y="144" width="900" height="64" rx="11"/></g>
     <text x="164" y="172" class="lbl-b" text-anchor="start">CPU only or GPU?</text>
     <text x="164" y="198" class="lbl-g" text-anchor="start">the hardware axis — on the wrong architecture some engines don't run at all</text>
     <!-- row 3 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="286" r="26"/></g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="286" r="26"/></g>
     <text x="90" y="296" text-anchor="middle" class="num">3</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="140" y="254" width="900" height="64" rx="11"/></g>
     <text x="164" y="282" class="lbl-b" text-anchor="start">one user or many at once?</text>
@@ -252,33 +254,33 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Walk the tree — three questions in order pick the engine</h2>
   <p class="s">The same three axes as the path an engineer actually walks: dev or prod, then CPU or GPU.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A decision tree. A model to serve leads to the question dev or prod. The dev branch reaches Ollama. The prod branch reaches the question CPU or GPU, which splits to CPU reaching llama-server and GPU reaching vLLM.">
-    <!-- start -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="150" width="180" height="70" rx="11"/></g>
+    <!-- start (the model being routed = blue data) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="150" width="180" height="70" rx="11"/></g>
     <text x="130" y="182" text-anchor="middle" class="lbl-b">a model</text>
     <text x="130" y="208" text-anchor="middle" class="lbl-g">to serve</text>
-    <!-- Q1 -->
+    <!-- Q1 (decision node = purple) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M222,185 L290,185" marker-end="url(#ah)"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="298" y="150" width="180" height="70" rx="11"/></g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.8"><rect x="298" y="150" width="180" height="70" rx="11"/></g>
     <text x="388" y="192" text-anchor="middle" class="lbl-b">dev or prod?</text>
-    <!-- dev branch -> Ollama -->
+    <!-- dev branch -> Ollama (blue) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round"><path d="M388,150 C388,100 460,86 540,86" marker-end="url(#ahg)"/></g>
     <text x="452" y="104" text-anchor="middle" class="lbl-g">dev / laptop</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="548" y="56" width="200" height="60" rx="11"/></g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6"><rect x="548" y="56" width="200" height="60" rx="11"/></g>
     <text x="648" y="93" text-anchor="middle" class="lbl-b">Ollama</text>
-    <!-- prod branch -> Q2 -->
+    <!-- prod branch -> Q2 (decision node = purple) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M388,220 C388,255 460,262 540,262" marker-end="url(#ah)"/></g>
     <text x="452" y="248" text-anchor="middle" class="lbl-g">production</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="548" y="232" width="180" height="60" rx="11"/></g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.8"><rect x="548" y="232" width="180" height="60" rx="11"/></g>
     <text x="638" y="270" text-anchor="middle" class="lbl-b">CPU or GPU?</text>
-    <!-- Q2 -> llama-server (CPU) -->
+    <!-- Q2 -> llama-server (CPU, orange) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round"><path d="M728,248 C800,232 840,208 900,204" marker-end="url(#ahg)"/></g>
     <text x="828" y="212" text-anchor="middle" class="lbl-g">CPU</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="900" y="178" width="180" height="56" rx="11"/></g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6"><rect x="900" y="178" width="180" height="56" rx="11"/></g>
     <text x="990" y="213" text-anchor="middle" class="lbl-b">llama-server</text>
-    <!-- Q2 -> vLLM (GPU) -->
+    <!-- Q2 -> vLLM (GPU, purple) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M728,276 C800,292 840,306 900,308" marker-end="url(#ah)"/></g>
     <text x="828" y="322" text-anchor="middle" class="lbl-g">GPU</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="900" y="284" width="180" height="56" rx="11"/></g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3"><rect x="900" y="284" width="180" height="56" rx="11"/></g>
     <text x="990" y="319" text-anchor="middle" class="lbl-b">vLLM</text>
   </svg>
   <p class="takeaway">The framework is a short walk: dev vs prod, then CPU vs GPU — three questions in order land you on one engine.</p>
@@ -290,20 +292,20 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Three engines, placed on the axes</h2>
   <p class="s">Each engine is a choice, not a name — here is where each sits, and what it is built for.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three stacked rows place the engines. Ollama is the dev-box engine: pull-and-run, native, reaches Metal on a Mac, wraps llama.cpp. llama-server is the portable CPU engine: containerized, speaks slash-v-one, exposes slash-metrics, runs identically everywhere. vLLM is the production engine: GPU, high concurrency, where continuous batching and PagedAttention were popularised.">
-    <!-- Ollama -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="30" width="980" height="86" rx="12"/></g>
+    <!-- Ollama (blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="30" width="980" height="86" rx="12"/></g>
     <text x="86" y="66" class="lbl-b" text-anchor="start">Ollama</text>
     <text x="86" y="96" class="lbl-g" text-anchor="start">the dev box</text>
     <text x="560" y="66" class="lbl" text-anchor="start">pull-and-run · native (reaches Metal on a Mac)</text>
     <text x="560" y="96" class="lbl-g" text-anchor="start">friendly library · wraps llama.cpp underneath</text>
-    <!-- llama-server -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="136" width="980" height="86" rx="12"/></g>
+    <!-- llama-server (orange — the course's portable middle) -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="136" width="980" height="86" rx="12"/></g>
     <text x="86" y="172" class="lbl-b" text-anchor="start">llama-server</text>
     <text x="86" y="202" class="lbl-g" text-anchor="start">portable CPU</text>
     <text x="560" y="172" class="lbl" text-anchor="start">containerized · /v1 · /metrics · continuous batching</text>
     <text x="560" y="202" class="lbl-g" text-anchor="start">runs identically on Mac · Linux · WSL2 — you build on it</text>
-    <!-- vLLM -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="60" y="242" width="980" height="86" rx="12"/></g>
+    <!-- vLLM (purple) -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="242" width="980" height="86" rx="12"/></g>
     <text x="86" y="278" class="lbl-b" text-anchor="start">vLLM</text>
     <text x="86" y="308" class="lbl-g" text-anchor="start">production</text>
     <text x="560" y="278" class="lbl" text-anchor="start">GPU · high concurrency · the industry default</text>
@@ -318,10 +320,14 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">One contract — swap the engine under a client that never changes</h2>
   <p class="s">All three speak the same OpenAI-compatible /v1 API. That M2 contract is why you can move between them without touching your code.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three engine boxes — Ollama, llama-server, and vLLM — each tagged with slash-v-one, converge on a single OpenAI-compatible slash-v-one API box, which a single unchanged client speaks to. A gray line notes: change one env var, same code, two engines.">
-    <!-- three engines -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+    <!-- three engines (blue / orange / purple — same identity as slides 4-5) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.4">
       <rect x="60" y="40" width="230" height="60" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#757575" stroke-width="2.4">
       <rect x="60" y="150" width="230" height="60" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#757575" stroke-width="2.4">
       <rect x="60" y="260" width="230" height="60" rx="10"/>
     </g>
     <g class="lbl-b" text-anchor="middle">
@@ -340,14 +346,14 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M292,180 L540,180" marker-end="url(#ah)"/>
       <path d="M292,290 C400,290 440,210 540,192" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
       <rect x="548" y="130" width="270" height="100" rx="13"/>
     </g>
     <text x="683" y="172" text-anchor="middle" class="lbl-b">OpenAI-compatible</text>
     <text x="683" y="202" text-anchor="middle" class="lbl-g">/v1 · one API</text>
-    <!-- client -->
+    <!-- client (unchanged = blue) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M820,180 L900,180" marker-end="url(#ah)"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="908" y="146" width="170" height="68" rx="11"/></g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8"><rect x="908" y="146" width="170" height="68" rx="11"/></g>
     <text x="993" y="182" text-anchor="middle" class="lbl-b">client</text>
     <text x="993" y="130" text-anchor="middle" class="lbl-g">unchanged</text>
     <!-- footline -->
@@ -366,17 +372,17 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- Mac panel -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="50" y="40" width="470" height="230" rx="13"/></g>
     <text x="285" y="76" text-anchor="middle" class="lbl-b">your Mac</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="80" y="100" width="410" height="66" rx="10"/></g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3"><rect x="80" y="100" width="410" height="66" rx="10"/></g>
     <text x="285" y="130" text-anchor="middle" class="lbl-b">Ollama (native) → Metal GPU ✓</text>
     <text x="285" y="156" text-anchor="middle" class="lbl-g">inside the building — fast</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="80" y="184" width="410" height="66" rx="10"/></g>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="80" y="184" width="410" height="66" rx="10"/></g>
     <text x="285" y="214" text-anchor="middle" class="lbl-b">container → CPU only</text>
     <text x="285" y="240" text-anchor="middle" class="lbl-g">next door — no corridor to Metal</text>
 
     <!-- Linux panel -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="580" y="40" width="470" height="230" rx="13"/></g>
     <text x="815" y="76" text-anchor="middle" class="lbl-b">Linux node + NVIDIA</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="610" y="120" width="410" height="110" rx="10"/></g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3"><rect x="610" y="120" width="410" height="110" rx="10"/></g>
     <text x="815" y="164" text-anchor="middle" class="lbl-b">container → GPU passthrough ✓</text>
     <text x="815" y="196" text-anchor="middle" class="lbl-g">the runtime passes the GPU through — vLLM in prod</text>
 
@@ -397,15 +403,15 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="60" y="40" width="440" height="250" rx="12"/></g>
       <text x="280" y="74" text-anchor="middle" class="lbl-b">STATIC batching</text>
-      <!-- lift car full -->
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="120" y="100" width="150" height="150" rx="8"/></g>
+      <!-- lift car full (rigid batch = red waste) -->
+      <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8"><rect x="120" y="100" width="150" height="150" rx="8"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
         <circle cx="160" cy="150" r="16"/><circle cx="230" cy="150" r="16"/><circle cx="195" cy="205" r="16"/>
       </g>
       <text x="195" y="278" text-anchor="middle" class="lbl-g">won't move till full · won't stop till done</text>
-      <!-- queued rider stuck outside -->
+      <!-- queued rider stuck outside (waiting = red) -->
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="360" cy="150" r="16"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="315" y="180" width="150" height="50" rx="9"/></g>
+      <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="315" y="180" width="150" height="50" rx="9"/></g>
       <text x="390" y="211" text-anchor="middle" class="lbl-g">waits for the whole trip</text>
     </g>
 
@@ -415,8 +421,8 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="600" y="40" width="440" height="250" rx="12"/></g>
       <text x="820" y="74" text-anchor="middle" class="lbl-b">CONTINUOUS batching</text>
-      <!-- lift car mid-shaft -->
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="720" y="100" width="150" height="150" rx="8"/></g>
+      <!-- lift car mid-shaft (busy & efficient = green) -->
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8"><rect x="720" y="100" width="150" height="150" rx="8"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="795" cy="175" r="16"/></g>
       <!-- one leaves -->
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M868,140 L930,140" marker-end="url(#ah)"/></g>
@@ -445,12 +451,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- OLD: contiguous plank -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="50" y="40" width="470" height="230" rx="12"/></g>
     <text x="285" y="72" text-anchor="middle" class="lbl-b">contiguous KV — one long plank</text>
-    <!-- long shelf mostly empty -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="80" y="100" width="360" height="46" rx="6"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><rect x="86" y="106" width="70" height="34" rx="4"/></g>
+    <!-- long shelf mostly empty (reserved-to-MAX waste = red; used slice = blue KV data) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.6"><rect x="80" y="100" width="360" height="46" rx="6"/></g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2"><rect x="86" y="106" width="70" height="34" rx="4"/></g>
     <text x="285" y="130" text-anchor="middle" class="lbl-g">reserved to MAX — mostly wasted</text>
-    <!-- fragmentation gap -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="80" y="176" width="120" height="44" rx="6"/></g>
+    <!-- fragmentation gap (unusable = red) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="80" y="176" width="120" height="44" rx="6"/></g>
     <text x="330" y="204" text-anchor="middle" class="lbl-g">gaps too small for anyone = fragmentation</text>
 
     <text x="550" y="160" text-anchor="middle" class="lbl-b">vs</text>
@@ -458,18 +464,18 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- NEW: paged cubbies -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="580" y="40" width="470" height="230" rx="12"/></g>
     <text x="815" y="72" text-anchor="middle" class="lbl-b">PagedAttention — small blocks on demand</text>
-    <!-- scattered numbered cubbies -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <!-- scattered numbered cubbies (in-use blocks = blue KV data) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="610" y="100" width="54" height="54" rx="6"/>
       <rect x="742" y="100" width="54" height="54" rx="6"/>
       <rect x="874" y="100" width="54" height="54" rx="6"/>
     </g>
     <g class="lbl-sm" text-anchor="middle"><text x="637" y="133">3</text><text x="769" y="133">7</text><text x="901" y="133">12</text></g>
-    <!-- block table index card -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="960" y="100" width="70" height="54" rx="6"/></g>
+    <!-- block table index card (the control structure = purple) -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#757575" stroke-width="2.2"><rect x="960" y="100" width="70" height="54" rx="6"/></g>
     <text x="995" y="176" text-anchor="middle" class="lbl-g">block<tspan x="995" dy="22">table</tspan></text>
-    <!-- free cubbies -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5">
+    <!-- free cubbies (reusable by anyone = green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2" stroke-dasharray="5 5">
       <rect x="676" y="100" width="54" height="54" rx="6"/>
       <rect x="808" y="100" width="54" height="54" rx="6"/>
     </g>
@@ -491,9 +497,9 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- request 1 (fragment 1) -->
     <g class="fragment">
       <text x="70" y="72" class="lbl-b" text-anchor="start">request 1</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="210" y="40" width="520" height="56" rx="9"/></g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8"><rect x="210" y="40" width="520" height="56" rx="9"/></g>
       <text x="380" y="75" text-anchor="middle" class="lbl">system prompt · · · · · ·</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="620" y="46" width="104" height="44" rx="7"/></g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6"><rect x="620" y="46" width="104" height="44" rx="7"/></g>
       <text x="672" y="75" text-anchor="middle" class="lbl-sm">new line</text>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M732,68 L800,68" marker-end="url(#ah)"/></g>
       <text x="900" y="62" text-anchor="middle" class="lbl-g">prefill ALL</text>
@@ -503,12 +509,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- request 2 (fragment 2) -->
     <g class="fragment">
       <text x="70" y="216" class="lbl-b" text-anchor="start">request 2</text>
-      <!-- prefix served from cache (dashed gray) -->
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="210" y="184" width="520" height="56" rx="9"/></g>
+      <!-- prefix served from cache (saved work = green) -->
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="210" y="184" width="520" height="56" rx="9"/></g>
       <text x="380" y="219" text-anchor="middle" class="lbl-g">same system prompt</text>
       <text x="470" y="270" text-anchor="middle" class="lbl-g">served from cache — no re-prefill</text>
-      <!-- new line inked -->
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="620" y="190" width="104" height="44" rx="7"/></g>
+      <!-- new line inked (real prefill = blue) -->
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8"><rect x="620" y="190" width="104" height="44" rx="7"/></g>
       <text x="672" y="219" text-anchor="middle" class="lbl-sm">new line</text>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M732,212 L800,212" marker-end="url(#ah)"/></g>
       <text x="900" y="216" text-anchor="middle" class="lbl-g">only the new line</text>
@@ -528,11 +534,11 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The stack stops being a command and becomes a file</h2>
   <p class="s">From this module OpsMate is a stack brought up and torn down as a unit. Today it holds exactly one service — small on purpose.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="An outer box labelled labs slash opsmate slash compose dot yaml contains one inner block: service model, listing llama-server in a container, the Qwen3 0.6B GGUF on port 8080 with the slash-v-one API, and a 2 gigabyte memory limit with a slash-health check and metrics on. A gray footline notes: one service now, grows one per module, to the full system in M13, and make up slash make down carry the whole way.">
-    <!-- outer file box -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="40" width="860" height="200" rx="14"/></g>
+    <!-- outer file box (the config/spec = meta = purple) -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="40" width="860" height="200" rx="14"/></g>
     <text x="550" y="74" text-anchor="middle" class="lbl-b">labs/opsmate/compose.yaml</text>
-    <!-- one service block -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="160" y="100" width="780" height="118" rx="11"/></g>
+    <!-- one service block (the service itself = blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8"><rect x="160" y="100" width="780" height="118" rx="11"/></g>
     <text x="196" y="140" class="lbl-b" text-anchor="start">service: model</text>
     <g class="lbl-g" text-anchor="start">
       <text x="196" y="176">llama-server (container) · Qwen3-0.6B GGUF · :8080 · /v1</text>
@@ -554,16 +560,16 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- metrics box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="34" width="860" height="230" rx="14"/></g>
     <text x="550" y="68" text-anchor="middle" class="lbl-b">/metrics&nbsp;&nbsp;(Prometheus)</text>
-    <!-- row meter -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="160" y="90" width="780" height="46" rx="9"/></g>
+    <!-- row meter (neutral data = blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6"><rect x="160" y="90" width="780" height="46" rx="9"/></g>
     <text x="184" y="120" class="lbl" text-anchor="start">tokens_predicted_total · prompt_tokens_total</text>
     <text x="916" y="120" class="lbl-g" text-anchor="end">the meter</text>
-    <!-- row processing -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="160" y="146" width="780" height="46" rx="9"/></g>
+    <!-- row processing (working now, healthy = green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6"><rect x="160" y="146" width="780" height="46" rx="9"/></g>
     <text x="184" y="176" class="lbl" text-anchor="start">requests_processing</text>
     <text x="916" y="176" class="lbl-g" text-anchor="end">working now</text>
-    <!-- row deferred (dashed watch) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="160" y="202" width="780" height="46" rx="9"/></g>
+    <!-- row deferred (the queue backing up = red, dashed watch) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="160" y="202" width="780" height="46" rx="9"/></g>
     <text x="184" y="232" class="lbl-b" text-anchor="start">requests_deferred</text>
     <text x="916" y="232" class="lbl-g" text-anchor="end">waiting — the queue, live</text>
     <!-- tag -->
@@ -578,8 +584,8 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The honest cross-arch verdict — one measured table</h2>
   <p class="s">Engineering honesty is a feature. Here is what the M3 spike actually found, on this course's Apple-Silicon host.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two verdict panels. On the left, llama-server: boots to health in seconds, gives a real slash-v-one answer, exposes slash-metrics, and uses 1.5 gigabytes under a 2 gigabyte cap — so it runs everywhere. On the right, vLLM-CPU on arm64: the images are real and boot and the slash-v-one surface comes up, but inference crashes across five tested configs — so hands-on is x86 with AVX or cloud. A gray band reads: a CPU image being present for your architecture does not mean it works on your host.">
-    <!-- llama-server verdict -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="50" y="40" width="470" height="212" rx="13"/></g>
+    <!-- llama-server verdict (pass = green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3"><rect x="50" y="40" width="470" height="212" rx="13"/></g>
     <text x="285" y="76" text-anchor="middle" class="lbl-b">llama-server ✓</text>
     <g class="lbl-g" text-anchor="middle">
       <text x="285" y="118">boots to /health in seconds</text>
@@ -587,14 +593,14 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="285" y="182">1.5 GiB under a 2 GiB cap</text>
     </g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="120" y="204" width="330" height="34" rx="8"/></g>
-    <text x="285" y="228" text-anchor="middle" class="lbl-b">runs everywhere the course goes</text>
+    <text x="285" y="228" text-anchor="middle" class="lbl-b" fill="#2e7d32">runs everywhere the course goes</text>
 
-    <!-- vLLM verdict -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7"><rect x="580" y="40" width="470" height="212" rx="13"/></g>
+    <!-- vLLM verdict (boots-but-crashes = fail = red) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7"><rect x="580" y="40" width="470" height="212" rx="13"/></g>
     <text x="815" y="76" text-anchor="middle" class="lbl-b">vLLM-CPU · arm64</text>
     <g class="lbl-g" text-anchor="middle">
       <text x="815" y="118">images real · boot · /v1 surface up</text>
-      <text x="815" y="150">inference CRASHES the engine</text>
+      <text x="815" y="150" fill="#c62828">inference CRASHES the engine</text>
       <text x="815" y="182">(5 configs tested — all failed)</text>
     </g>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="650" y="204" width="330" height="34" rx="8"/></g>
@@ -613,20 +619,20 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The engine decision you can now defend</h2>
   <p class="s">Three things you carry into the lab — where you prove the one-model, two-engines swap on your own machine.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="Three numbered takeaways. One: choose on three axes — a fit, not a best. Two: the two mechanisms — continuous batching keeps the engine busy, PagedAttention keeps memory dense, together fitting many users per box. Three: the one contract — a single slash-v-one API lets you swap engines under an unchanged client.">
-    <!-- row 1 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="110" cy="66" r="26"/></g>
+    <!-- row 1 (decision markers = purple, as slide 3) -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><circle cx="110" cy="66" r="26"/></g>
     <text x="110" y="76" text-anchor="middle" class="num">1</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="164" y="36" width="860" height="58" rx="11"/></g>
     <text x="188" y="72" class="lbl-b" text-anchor="start">CHOOSE on three axes</text>
     <text x="560" y="72" class="lbl-g" text-anchor="start">dev/prod · CPU/GPU · single/multi-tenant — a fit, not a "best"</text>
     <!-- row 2 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="110" cy="166" r="26"/></g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><circle cx="110" cy="166" r="26"/></g>
     <text x="110" y="176" text-anchor="middle" class="num">2</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="164" y="136" width="860" height="58" rx="11"/></g>
     <text x="188" y="172" class="lbl-b" text-anchor="start">MECHANISMS</text>
     <text x="560" y="172" class="lbl-g" text-anchor="start">batching busy + paging dense = many users per box</text>
     <!-- row 3 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="110" cy="266" r="26"/></g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><circle cx="110" cy="266" r="26"/></g>
     <text x="110" y="276" text-anchor="middle" class="num">3</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="164" y="236" width="860" height="58" rx="11"/></g>
     <text x="188" y="272" class="lbl-b" text-anchor="start">CONTRACT</text>

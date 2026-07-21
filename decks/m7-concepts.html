@@ -69,6 +69,14 @@ footer, header, hgroup, main, menu, nav, section {
     --ink:#1e1e1e;
     --gray:#757575;
     --paper:#ffffff;
+    /* pastel accent fills (founder directive 2026-07-21): semantic only */
+    --p-green:#d5e8d4;   /* good · healthy · pass */
+    --p-red:#f8cecc;     /* bad · full · fail · warning */
+    --p-blue:#dae8fc;    /* neutral data · the thing being studied */
+    --p-orange:#ffe6cc;  /* caution · attention · in-between */
+    --p-purple:#e1d5e7;  /* special · meta · management/control */
+    --good:#2e7d32;      /* muted payoff annotation — good reading */
+    --bad:#c62828;       /* muted payoff annotation — bad reading */
   }
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
@@ -143,7 +151,7 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="60" y="86" width="300" height="118" rx="13"/>
     </g>
     <text x="210" y="122" text-anchor="middle" class="lbl-b">serving box</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
       <rect x="90" y="138" width="240" height="46" rx="9"/>
     </g>
     <text x="210" y="167" text-anchor="middle" class="lbl-g">opsmate-tuned-q8_0.gguf</text>
@@ -177,9 +185,11 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="40" y="60" width="470" height="192" rx="12"/>
     </g>
     <text x="70" y="90" text-anchor="start" class="lbl-b">NAME ONLY</text>
-    <!-- parcel -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+    <!-- parcel — name only, untrustworthy (red) -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4">
       <rect x="90" y="112" width="180" height="110" rx="8"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
       <path d="M90,150 L270,150"/>
       <path d="M180,112 L180,222"/>
     </g>
@@ -192,7 +202,7 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="560" y="60" width="500" height="192" rx="12"/>
     </g>
     <text x="590" y="90" text-anchor="start" class="lbl-b">MANIFEST</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="600" y="106" width="120" height="120" rx="8"/>
     </g>
     <text x="660" y="172" text-anchor="middle" class="lbl-g">parcel</text>
@@ -225,7 +235,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="340" y="98" text-anchor="middle" class="lbl-b">the model = one bundle</text>
     <!-- inner boxes -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
       <rect x="66" y="120" width="270" height="140" rx="10"/>
     </g>
     <text x="201" y="180" text-anchor="middle" class="lbl-b">weights</text>
@@ -244,7 +254,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M640,150 L700,150" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="704" y="106" width="176" height="42" rx="8"/>
       <rect x="704" y="158" width="176" height="42" rx="8"/>
     </g>
@@ -274,17 +284,17 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="64" y="96" width="792" height="36" rx="8"/>
     </g>
     <text x="460" y="121" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">manifest</tspan> — names each layer by digest · media type · size</text>
-    <!-- size bars (to scale) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- size bars (to scale) — blue heavy model crate dwarfs the green KB crates -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
       <rect x="64" y="144" width="700" height="40" rx="7"/>
     </g>
     <text x="80" y="170" text-anchor="start" class="lbl-b">model layer  ~610 MB</text>
     <text x="770" y="170" text-anchor="start" class="lbl-g">the heavy crate</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#757575" stroke-width="2.2">
       <rect x="64" y="192" width="30" height="26" rx="5"/>
     </g>
     <text x="104" y="212" text-anchor="start" class="lbl-g">dataset layer ~16 KB — golden set</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#757575" stroke-width="2.2">
       <rect x="64" y="226" width="20" height="26" rx="5"/>
     </g>
     <text x="94" y="246" text-anchor="start" class="lbl-g">code layer ~5 KB — prompts</text>
@@ -326,9 +336,11 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="258" y="98" text-anchor="middle" class="lbl-sm">model:</text>
     <text x="258" y="150" text-anchor="middle" class="lbl-sm">datasets:</text>
     <text x="258" y="240" text-anchor="middle" class="lbl-sm">code:</text>
-    <!-- three layers -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <!-- three layers — model blue, dataset + code green -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="304" y="80" width="230" height="44" rx="8"/>
+    </g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="304" y="140" width="230" height="44" rx="8"/>
       <rect x="304" y="200" width="230" height="44" rx="8"/>
     </g>
@@ -385,7 +397,7 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M330,148 L470,148" marker-end="url(#ah)"/>
     </g>
     <text x="400" y="134" text-anchor="middle" class="lbl-sm">kit unpack --filter=code</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
       <rect x="474" y="118" width="200" height="62" rx="11"/>
     </g>
     <text x="574" y="147" text-anchor="middle" class="lbl-b">prompts/</text>
@@ -437,7 +449,7 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M348,150 L392,150" marker-end="url(#ah)"/>
     </g>
     <!-- wax seal -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3">
       <circle cx="440" cy="150" r="42"/>
     </g>
     <text x="440" y="158" text-anchor="middle" class="lbl-b">seal</text>
@@ -450,13 +462,13 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="532" y="196" text-anchor="start" class="lbl"><tspan class="lbl-b">integrity</tspan> — unopened since</text>
     <text x="760" y="150" text-anchor="middle" class="lbl-g">readable! — tamper-EVIDENCE,</text>
     <text x="760" y="172" text-anchor="middle" class="lbl-g">not secrecy · proves ORIGIN, not quality</text>
-    <!-- digest vs tag -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+    <!-- digest vs tag — green (sign THIS) vs red (never sign a tag) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8">
       <rect x="120" y="238" width="360" height="58" rx="10"/>
     </g>
     <text x="300" y="266" text-anchor="middle" class="lbl-b">digest sha256:acbf…</text>
     <text x="300" y="288" text-anchor="middle" class="lbl-g">IS the bytes → sign THIS</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
       <rect x="620" y="238" width="360" height="58" rx="10"/>
     </g>
     <text x="800" y="266" text-anchor="middle" class="lbl-g">tag 1.0.0 — a movable label</text>
@@ -482,7 +494,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M216,147 L266,147" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="2.8">
       <rect x="270" y="112" width="204" height="70" rx="11"/>
     </g>
     <text x="372" y="142" text-anchor="middle" class="lbl-b">cosign verify</text>
@@ -498,7 +510,7 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M738,120 L820,96" marker-end="url(#ah)"/>
     </g>
     <text x="775" y="92" text-anchor="middle" class="lbl-sm">yes</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
       <rect x="824" y="72" width="230" height="52" rx="10"/>
     </g>
     <text x="939" y="104" text-anchor="middle" class="lbl-b">✓ deploy</text>
@@ -507,7 +519,7 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M738,174 L820,200" marker-end="url(#ah)"/>
     </g>
     <text x="775" y="216" text-anchor="middle" class="lbl-sm">no / no signature</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="2.8">
       <rect x="824" y="176" width="230" height="52" rx="10"/>
     </g>
     <text x="939" y="200" text-anchor="middle" class="lbl-b">✗ refuse to deploy</text>
@@ -529,20 +541,20 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Semver for models — textbook editions, plus the -candidate suffix</h2>
   <p class="s">A version number should tell you what changed without diffing two artifacts. Semver carries over to models like editions of a textbook — with one honest caveat: the field has no universal standard, so you adopt a convention and state it.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Three edition rungs. MAJOR is a new edition where old references break, tagged new base or behaviour shift equals an API break. MINOR is a revised printing, better within the same edition, tagged a better tune, same interface, re-test. PATCH is a corrected reprint where the words are unchanged, tagged packaging only — prompts, eval set, metadata. Set apart below is the candidate suffix box: real, packaged, pushed, but not promoted to release, tagged the hinge of this module. A band reads read the number, know what changed, without diffing the artifacts.">
-    <!-- three rungs -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- three rungs — MAJOR caution (orange), MINOR re-test (blue), PATCH drop-in (green) -->
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="3">
       <rect x="60" y="56" width="640" height="52" rx="9"/>
     </g>
     <text x="90" y="89" text-anchor="start" class="lbl-b">MAJOR</text>
     <text x="230" y="80" text-anchor="start" class="lbl">new edition — old references break</text>
     <text x="230" y="101" text-anchor="start" class="lbl-g">new base / behaviour shift = API break</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="60" y="118" width="640" height="52" rx="9"/>
     </g>
     <text x="90" y="151" text-anchor="start" class="lbl-b">MINOR</text>
     <text x="230" y="142" text-anchor="start" class="lbl">revised printing — better within the edition</text>
     <text x="230" y="163" text-anchor="start" class="lbl-g">a better tune, same interface, re-test</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="60" y="180" width="640" height="52" rx="9"/>
     </g>
     <text x="90" y="213" text-anchor="start" class="lbl-b">PATCH</text>
@@ -556,8 +568,8 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="892" y="128" text-anchor="middle" class="lbl-sm">MAJOR → treat as breaking</text>
     <text x="892" y="160" text-anchor="middle" class="lbl-sm">MINOR → re-test</text>
     <text x="892" y="192" text-anchor="middle" class="lbl-sm">PATCH → drop in blindly</text>
-    <!-- candidate suffix, set apart -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- candidate suffix, set apart — the special hinge (purple) -->
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3">
       <rect x="200" y="252" width="700" height="46" rx="10"/>
     </g>
     <text x="550" y="281" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">-candidate</tspan> — real · packaged · pushed, but NOT promoted → the hinge of this module</text>
@@ -581,8 +593,8 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="36" y="52" width="1028" height="212" rx="12"/>
     </g>
     <text x="550" y="80" text-anchor="middle" class="lbl-b">opsmate/model — one repository, two tags</text>
-    <!-- LEFT: 1.0.0 base -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- LEFT: 1.0.0 base — signed, serves, passes the gate (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
       <rect x="70" y="100" width="440" height="140" rx="11"/>
     </g>
     <text x="290" y="130" text-anchor="middle" class="lbl-b">1.0.0</text>
@@ -592,8 +604,8 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="150" y="198" width="280" height="34" rx="8"/>
     </g>
     <text x="290" y="222" text-anchor="middle" class="lbl-sm">gate: DEPLOYS</text>
-    <!-- RIGHT: candidate -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+    <!-- RIGHT: candidate — the M6 loser, unsigned, blocked (red) -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="590" y="100" width="440" height="140" rx="11"/>
     </g>
     <text x="810" y="130" text-anchor="middle" class="lbl-b">1.0.0-candidate</text>
@@ -620,8 +632,8 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Zot here, Harbor and ECR and HF in production — the address changes, not the format</h2>
   <p class="s">The registry is where artifacts live, and you have choices. This lab runs Zot because it starts in seconds and needs no cloud. In production you would meet one of the others — and the point is that your artifact does not change, only where it is stored does.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A hub-and-spoke. At the center, your OCI artifact, unchanged. Four spokes lead to registries: Zot, the lab choice, seconds, no cloud, CNCF, tagged here; Harbor, self-hosted enterprise with RBAC, scanning, and signing policy; Artifactory, ECR, and GHCR, managed registries where your images already live; and Hugging Face Hub, git-LFS-based, the odd one out, where base models start. A band reads packaged as OCI, so moving registries is a change of address, not format.">
-    <!-- center hub -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- center hub — the artifact under study (blue) -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
       <rect x="420" y="132" width="260" height="86" rx="12"/>
     </g>
     <text x="550" y="168" text-anchor="middle" class="lbl-b">your OCI artifact</text>
@@ -637,8 +649,8 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round">
       <path d="M680,200 L800,254" marker-end="url(#ahg)"/>
     </g>
-    <!-- Zot -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+    <!-- Zot — the lab choice, here (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8">
       <rect x="70" y="60" width="240" height="64" rx="10"/>
     </g>
     <text x="190" y="88" text-anchor="middle" class="lbl-b">Zot <tspan class="lbl-g">— here</tspan></text>
@@ -678,17 +690,17 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">You leave with the model turned from a file into an artifact with three properties you can prove — and the reason it had to happen now is the module after this one.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One: versioned — semver plus the candidate suffix, read what changed without diffing. Two: addressed — an OCI artifact of layers, digest-addressed, on rails your images already ride. Three: signed — a wax seal verified before deploy, base signed, candidate blocked. Below, an arrow to M8: the cluster pulls opsmate/model 1.0.0, verifies the signature, and serves it. A footline reads the loose file is gone, now open Module 7 Lab.">
     <!-- row 1 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>
     <text x="90" y="51" text-anchor="middle" class="num">1</text>
     <text x="130" y="36" text-anchor="start" class="lbl-b">VERSIONED</text>
     <text x="130" y="62" text-anchor="start" class="lbl-g">semver + the -candidate suffix — read what changed without diffing</text>
     <!-- row 2 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="108" r="22"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="108" r="22"/></g>
     <text x="90" y="117" text-anchor="middle" class="num">2</text>
     <text x="130" y="102" text-anchor="start" class="lbl-b">ADDRESSED</text>
     <text x="130" y="128" text-anchor="start" class="lbl-g">an OCI artifact of layers, digest-addressed, on rails your images already ride</text>
     <!-- row 3 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="174" r="22"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="174" r="22"/></g>
     <text x="90" y="183" text-anchor="middle" class="num">3</text>
     <text x="130" y="168" text-anchor="start" class="lbl-b">SIGNED</text>
     <text x="130" y="194" text-anchor="start" class="lbl-g">a wax seal verified before deploy — base signed, candidate blocked</text>

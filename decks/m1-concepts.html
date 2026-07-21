@@ -160,7 +160,8 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="610" y="70" width="420" height="108" rx="12"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+    <!-- reply word-chips — the streamed reply (blue data) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.2">
       <rect x="636" y="98" width="70" height="34" rx="6"/>
       <rect x="716" y="98" width="70" height="34" rx="6"/>
       <rect x="796" y="98" width="70" height="34" rx="6"/>
@@ -279,8 +280,8 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
         <path d="M700,165 L760,165" marker-end="url(#ah)"/>
       </g>
-      <!-- eight chips over two rows -->
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+      <!-- eight chips over two rows — tokens are the data being studied (blue) -->
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
         <rect x="770" y="120" width="70" height="40" rx="8"/>
         <rect x="850" y="120" width="52" height="40" rx="8"/>
         <rect x="912" y="120" width="60" height="40" rx="8"/>
@@ -288,8 +289,8 @@ footer, header, hgroup, main, menu, nav, section {
         <rect x="912" y="230" width="120" height="40" rx="8"/>
         <rect x="1042" y="230" width="30" height="40" rx="8"/>
       </g>
-      <!-- the disconnect + ing pair, boxed together -->
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+      <!-- the disconnect + ing pair, boxed together — one word split into two tokens (blue) -->
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
         <rect x="770" y="180" width="98" height="40" rx="8"/>
         <rect x="874" y="180" width="46" height="40" rx="8"/>
       </g>
@@ -363,14 +364,14 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="290" y="260">to pick me up at the station"</text>
     </g>
     <text x="290" y="288" text-anchor="middle" class="lbl-g">many words</text>
-    <!-- left coin stack (tall) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <!-- left coin stack (tall) — costly, the waste (red) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4">
       <ellipse cx="290" cy="376" rx="46" ry="12"/>
       <ellipse cx="290" cy="358" rx="46" ry="12"/>
       <ellipse cx="290" cy="340" rx="46" ry="12"/>
       <ellipse cx="290" cy="322" rx="46" ry="12"/>
     </g>
-    <text x="380" y="352" text-anchor="start" class="lbl-b">$$$$</text>
+    <text x="380" y="352" text-anchor="start" class="lbl-b" fill="#c62828">$$$$</text>
     <!-- divider -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
       <line x1="550" y1="166" x2="550" y2="388"/>
@@ -381,18 +382,115 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="810" y="244" text-anchor="middle" class="lbl-b">"ARRIVING MON SEND CAR"</text>
     <text x="810" y="288" text-anchor="middle" class="lbl-g">same idea, tight</text>
-    <!-- right coin stack (short) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <!-- right coin stack (short) — cheap, the win (green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
       <ellipse cx="810" cy="376" rx="46" ry="12"/>
       <ellipse cx="810" cy="358" rx="46" ry="12"/>
     </g>
-    <text x="900" y="372" text-anchor="start" class="lbl-b">$</text>
+    <text x="900" y="372" text-anchor="start" class="lbl-b" fill="#2e7d32">$</text>
   </svg>
   <p class="takeaway">The meter counts pieces, not meaning — tighten the prompt and the bill drops with no change to what you asked.</p>
   <div class="pageno">M1·04</div>
 </section>
 
-<!-- ============ SLIDE 5 — THREE MODEL SHAPES ============ -->
+<!-- ============ SLIDE 5 — CONTEXT WINDOW IS A HARD BUDGET ============ -->
+<section>
+  <h2 class="t">Every token also eats a fixed window</h2>
+  <p class="s">Still the tokenize stop, the other cost of a token: the model can hold only so many at once. That limit is the context window — a hard budget, and every token of prompt and answer spends from it.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the tokenize stage lit. A fixed-width context-window bar fills left to right with blue token chips; a shorter prompt leaves room to spare, while a longer prompt fills the bar and spills past a red overflow edge marked context limit, showing tokens are a bounded budget not just a meter.">
+    <!-- journey strip: tokenize lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="360" y="16" width="150" height="48" rx="9"/>
+      <rect x="525" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="195" y="12" width="150" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="435" y="45">model reads</text>
+      <text x="600" y="45">writes</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="270" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">tokenize</text>
+
+    <!-- TOP: a short prompt, room to spare -->
+    <text x="70" y="128" text-anchor="start" class="lbl-b">a short prompt</text>
+    <!-- the fixed window frame -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="70" y="140" width="900" height="48" rx="8"/>
+    </g>
+    <!-- filled token chips (blue = tokens, the data) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8">
+      <rect x="78"  y="146" width="34" height="36" rx="6"/>
+      <rect x="116" y="146" width="34" height="36" rx="6"/>
+      <rect x="154" y="146" width="34" height="36" rx="6"/>
+      <rect x="192" y="146" width="34" height="36" rx="6"/>
+      <rect x="230" y="146" width="34" height="36" rx="6"/>
+      <rect x="268" y="146" width="34" height="36" rx="6"/>
+    </g>
+    <text x="640" y="168" text-anchor="middle" class="lbl-g">room to spare — the rest of the window is still yours</text>
+
+    <!-- BOTTOM: a long prompt, filled and spilling over -->
+    <text x="70" y="252" text-anchor="start" class="lbl-b">a longer prompt + a long answer</text>
+    <!-- the same fixed window frame -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="70" y="264" width="900" height="48" rx="8"/>
+    </g>
+    <!-- window packed full with token chips (blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8">
+      <rect x="78"  y="270" width="34" height="36" rx="6"/>
+      <rect x="116" y="270" width="34" height="36" rx="6"/>
+      <rect x="154" y="270" width="34" height="36" rx="6"/>
+      <rect x="192" y="270" width="34" height="36" rx="6"/>
+      <rect x="230" y="270" width="34" height="36" rx="6"/>
+      <rect x="268" y="270" width="34" height="36" rx="6"/>
+      <rect x="306" y="270" width="34" height="36" rx="6"/>
+      <rect x="344" y="270" width="34" height="36" rx="6"/>
+      <rect x="382" y="270" width="34" height="36" rx="6"/>
+      <rect x="420" y="270" width="34" height="36" rx="6"/>
+      <rect x="458" y="270" width="34" height="36" rx="6"/>
+      <rect x="496" y="270" width="34" height="36" rx="6"/>
+      <rect x="534" y="270" width="34" height="36" rx="6"/>
+      <rect x="572" y="270" width="34" height="36" rx="6"/>
+      <rect x="610" y="270" width="34" height="36" rx="6"/>
+      <rect x="648" y="270" width="34" height="36" rx="6"/>
+      <rect x="686" y="270" width="34" height="36" rx="6"/>
+      <rect x="724" y="270" width="34" height="36" rx="6"/>
+      <rect x="762" y="270" width="34" height="36" rx="6"/>
+      <rect x="800" y="270" width="34" height="36" rx="6"/>
+      <rect x="838" y="270" width="34" height="36" rx="6"/>
+      <rect x="876" y="270" width="34" height="36" rx="6"/>
+      <rect x="914" y="270" width="34" height="36" rx="6"/>
+    </g>
+    <!-- the hard limit edge + spilled tokens beyond it (red = full/over budget) -->
+    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="3">
+      <line x1="970" y1="250" x2="970" y2="326"/>
+    </g>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#c62828" stroke-width="1.8">
+      <rect x="982"  y="270" width="34" height="36" rx="6"/>
+      <rect x="1020" y="270" width="34" height="36" rx="6"/>
+    </g>
+    <text x="1015" y="252" text-anchor="middle" class="lbl-g" fill="#c62828">context limit</text>
+    <text x="1015" y="332" text-anchor="middle" class="lbl-g" fill="#c62828">won't fit</text>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="352" width="820" height="42" rx="10"/>
+    </g>
+    <text x="550" y="379" text-anchor="middle" class="lbl-g">a longer prompt costs more <em>and</em> fills the window faster — the same feature, written loose, hits the limit twice as fast</text>
+  </svg>
+  <p class="takeaway">Tokens are a bounded budget, not just a meter — every token of prompt and answer spends from a fixed context window.</p>
+  <div class="pageno">M1·05</div>
+</section>
+
+<!-- ============ SLIDE 6 — THREE MODEL SHAPES ============ -->
 <section>
   <h2 class="t">Three shapes of model — you use the writer</h2>
   <p class="s">Stop two, the model. "Decoder-only" is a choice, not jargon — here is what else exists, and why chat uses this one.</p>
@@ -422,7 +520,7 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="70" y="96" width="960" height="86" rx="10"/>
       <rect x="70" y="196" width="960" height="86" rx="10"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
       <rect x="70" y="296" width="960" height="90" rx="10"/>
     </g>
     <!-- row 1: encoder-only -->
@@ -440,10 +538,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="925" y="348" text-anchor="middle" class="lbl-b">you are here</text>
   </svg>
   <p class="takeaway">ChatGPT is decoder-only — built to <em>generate</em>: given all the tokens so far, predict the single next one.</p>
-  <div class="pageno">M1·05</div>
+  <div class="pageno">M1·06</div>
 </section>
 
-<!-- ============ SLIDE 6 — AUTOREGRESSIVE LOOP ============ -->
+<!-- ============ SLIDE 7 — AUTOREGRESSIVE LOOP ============ -->
 <section>
   <h2 class="t">One token, then look back and write the next</h2>
   <p class="s">Inside the model stop: it predicts one next token, appends it, and re-reads everything so far to get the next.</p>
@@ -497,7 +595,7 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
         <path d="M802,190 L860,190" marker-end="url(#ah)"/>
       </g>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
         <rect x="870" y="140" width="190" height="100" rx="12"/>
       </g>
       <text x="965" y="182" text-anchor="middle" class="lbl-b">next token</text>
@@ -512,10 +610,10 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="takeaway">A 200-token answer is 200 trips round this loop, each one re-reading everything before it — that is where the time goes.</p>
-  <div class="pageno">M1·06</div>
+  <div class="pageno">M1·07</div>
 </section>
 
-<!-- ============ SLIDE 7 — WORD-AT-A-TIME PLAYER (scene) ============ -->
+<!-- ============ SLIDE 8 — WORD-AT-A-TIME PLAYER (scene) ============ -->
 <section>
   <h2 class="t">Read the whole line, say one word, read it again</h2>
   <p class="s">A well-read player never skips ahead — every new word is a fresh read of everything up to that point.</p>
@@ -549,8 +647,8 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M130,292 L104,350"/>
       <path d="M130,292 L158,350"/>
     </g>
-    <!-- speech bubble: next word -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <!-- speech bubble: next word — the produced token (blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="176" y="116" width="150" height="56" rx="12"/>
       <path d="M196,172 L182,198 L214,174"/>
     </g>
@@ -580,10 +678,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="600" y="322" text-anchor="middle" class="lbl-g">re-read the whole line — now including the word just said</text>
   </svg>
   <p class="takeaway">The model never skips ahead — every new word is a fresh read of everything up to that point.</p>
-  <div class="pageno">M1·07</div>
+  <div class="pageno">M1·08</div>
 </section>
 
-<!-- ============ SLIDE 8 — ONE BREATH: TWO PHASES ============ -->
+<!-- ============ SLIDE 9 — ONE BREATH: TWO PHASES ============ -->
 <section>
   <h2 class="t">Read everything at once, then write one piece at a time</h2>
   <p class="s">The whole journey in one breath: the model reads all the prompt pieces in one go, then generates the answer one piece at a time, streaming as it goes.</p>
@@ -618,7 +716,8 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="280" y="152" text-anchor="middle" class="lbl-b">PHASE 1 · read the prompt</text>
     <text x="280" y="182" text-anchor="middle" class="lbl-g">all the pieces, in one go</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+    <!-- prefill cells — read together, fast (green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
       <rect x="110" y="210" width="60" height="46" rx="6"/>
       <rect x="182" y="210" width="60" height="46" rx="6"/>
       <rect x="254" y="210" width="60" height="46" rx="6"/>
@@ -642,7 +741,8 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="820" y="152" text-anchor="middle" class="lbl-b">PHASE 2 · write the answer</text>
     <text x="820" y="182" text-anchor="middle" class="lbl-g">one piece at a time, streamed</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <!-- decode cells — written one at a time, the slow serial phase (orange) -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="648" y="210" width="76" height="46" rx="6"/>
       <rect x="792" y="210" width="76" height="46" rx="6"/>
     </g>
@@ -661,10 +761,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="820" y="320" text-anchor="middle" class="lbl-g">one, then the next, then the next</text>
   </svg>
   <p class="takeaway">One request is two kinds of work: a fast whole-prompt read, then a slow word-at-a-time write.</p>
-  <div class="pageno">M1·08</div>
+  <div class="pageno">M1·09</div>
 </section>
 
-<!-- ============ SLIDE 9 — EXAM: READ vs WRITE (scene) ============ -->
+<!-- ============ SLIDE 10 — EXAM: READ vs WRITE (scene) ============ -->
 <section>
   <h2 class="t">Reading the paper is one job; writing is another</h2>
   <p class="s">The two phases as an exam: you read the whole question paper in one quick pass — then write the answer slowly, line by line.</p>
@@ -693,8 +793,8 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="727" y="45">model writes</text>
     </g>
 
-    <!-- LEFT: read the whole paper -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+    <!-- LEFT: read the whole paper — one fast pass (green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8">
       <rect x="90" y="110" width="330" height="210" rx="8"/>
     </g>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
@@ -714,8 +814,8 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
       <line x1="550" y1="100" x2="550" y2="330"/>
     </g>
-    <!-- RIGHT: write the answer line by line -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+    <!-- RIGHT: write the answer line by line — slow serial write (orange) -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.8">
       <rect x="680" y="110" width="330" height="210" rx="8"/>
     </g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
@@ -737,10 +837,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="845" y="358" text-anchor="middle" class="lbl-b">WRITE the answer — line by line</text>
   </svg>
   <p class="takeaway">Reading the paper is one kind of work; writing the answer, line by line, is a completely different kind.</p>
-  <div class="pageno">M1·09</div>
+  <div class="pageno">M1·10</div>
 </section>
 
-<!-- ============ SLIDE 10 — PREFILL vs DECODE (mechanism) ============ -->
+<!-- ============ SLIDE 11 — PREFILL vs DECODE (mechanism) ============ -->
 <section>
   <h2 class="t">Prefill reads together; decode writes one at a time</h2>
   <p class="s">Now the two phases get their names — one processes the whole prompt in parallel, the other is the serial loop.</p>
@@ -751,8 +851,8 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="270" y="108" text-anchor="middle" class="lbl-b">PREFILL</text>
     <text x="270" y="138" text-anchor="middle" class="lbl-g">read the whole prompt</text>
-    <!-- all prompt tokens processed together (a block of cells, one bracket) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+    <!-- all prompt tokens processed together (a block of cells, one bracket) — fast parallel read (green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
       <rect x="100" y="160" width="52" height="44" rx="6"/>
       <rect x="162" y="160" width="52" height="44" rx="6"/>
       <rect x="224" y="160" width="52" height="44" rx="6"/>
@@ -776,8 +876,8 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="830" y="108" text-anchor="middle" class="lbl-b">DECODE</text>
     <text x="830" y="138" text-anchor="middle" class="lbl-g">write the answer</text>
-    <!-- serial chain: token -> token -> token -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <!-- serial chain: token -> token -> token — slow serial write (orange) -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="648" y="160" width="76" height="44" rx="6"/>
       <rect x="792" y="160" width="76" height="44" rx="6"/>
       <rect x="936" y="160" width="76" height="44" rx="6"/>
@@ -794,10 +894,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="830" y="258" text-anchor="middle" class="lbl-g">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
   </svg>
   <p class="takeaway">Prefill is parallel and compute-bound; decode is serial and bandwidth-bound — two phases, sized and billed apart.</p>
-  <div class="pageno">M1·10</div>
+  <div class="pageno">M1·11</div>
 </section>
 
-<!-- ============ SLIDE 11 — KV CACHE = ROUGH WORK (scene) ============ -->
+<!-- ============ SLIDE 12 — KV CACHE = ROUGH WORK (scene) ============ -->
 <section>
   <h2 class="t">The KV cache is rough work — computed once, kept</h2>
   <p class="s">Why decode stays fast: each token's key and value are worked out once and stored; every later token reads them instead of redoing them.</p>
@@ -825,8 +925,8 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
       <line x1="510" y1="55" x2="510" y2="315"/>
     </g>
-    <!-- token cells writing K,V once into a store -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <!-- token cells writing K,V once into a store — tokens (blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="560" y="80" width="90" height="60" rx="8"/>
       <rect x="680" y="80" width="90" height="60" rx="8"/>
       <rect x="800" y="80" width="90" height="60" rx="8"/>
@@ -842,17 +942,18 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M845,142 L845,200" marker-end="url(#ah)"/>
     </g>
     <text x="940" y="176" text-anchor="middle" class="lbl-g">write K,V once</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- KV cache store — the kept rough work, the data being studied (blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
       <rect x="545" y="210" width="440" height="90" rx="12"/>
     </g>
     <text x="765" y="252" text-anchor="middle" class="lbl-b">KV cache</text>
     <text x="765" y="284" text-anchor="middle" class="lbl-g">the model's rough work — read, don't redo</text>
   </svg>
   <p class="takeaway">Compute each token's key and value once, keep them — the cache is what holds decode at a steady rhythm.</p>
-  <div class="pageno">M1·11</div>
+  <div class="pageno">M1·12</div>
 </section>
 
-<!-- ============ SLIDE 12 — WHAT YOU FEEL: TTFT + STREAMING ============ -->
+<!-- ============ SLIDE 13 — WHAT YOU FEEL: TTFT + STREAMING ============ -->
 <section>
   <h2 class="t">What you feel: the wait, then the drip</h2>
   <p class="s">Back at your screen — the streams-back stop. The wait before the first word is TTFT; the steady drip of words after it is decode = TPOT.</p>
@@ -879,9 +980,11 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="797" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">streams back</text>
 
-    <!-- stopwatch = the wait to first token -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <!-- stopwatch = the wait to first token (orange caution) -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <circle cx="140" cy="210" r="52"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M140,210 L140,176"/>
       <path d="M140,210 L166,224"/>
       <path d="M140,148 L140,158"/>
@@ -893,11 +996,11 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="250" y="176" text-anchor="middle" class="lbl-b">TTFT</text>
     <text x="250" y="300" text-anchor="middle" class="lbl-g">= prefill · your prompt</text>
-    <!-- reply chips at a steady beat -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <!-- reply chips at a steady beat — the drip that's working (green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="310" y="184" width="120" height="52" rx="8"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="470" y="184" width="120" height="52" rx="8"/>
       <rect x="630" y="184" width="120" height="52" rx="8"/>
     </g>
@@ -925,20 +1028,21 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="690" y="340" text-anchor="middle" class="lbl-g">= decode · the drip you watch · driven by answer length</text>
   </svg>
   <p class="takeaway">That drip of words on screen <em>is</em> decode — the wait to the first word is TTFT, the rhythm after it is TPOT.</p>
-  <div class="pageno">M1·12</div>
+  <div class="pageno">M1·13</div>
 </section>
 
-<!-- ============ SLIDE 13 — THE SPLIT FLIPS (measured) ============ -->
+<!-- ============ SLIDE 14 — THE SPLIT FLIPS (measured) ============ -->
 <section>
   <h2 class="t">94/6 or 3/97 — the split flips with the request</h2>
   <p class="s">Same box, opposite shape — measured live on the course model, <code>qwen3:0.6b</code>.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="Left: a big prompt with a one-word answer is about ninety-four percent prefill and six percent decode. Right: a short prompt with a long answer is about three percent prefill and ninety-seven percent decode.">
     <!-- LEFT: prefill-heavy -->
     <text x="290" y="90" text-anchor="middle" class="lbl-b">big prompt · one-word answer</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <!-- prefill share (green), decode share (orange) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="80" y="120" width="395" height="56" rx="6"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#757575" stroke-width="2.4">
       <rect x="475" y="120" width="45" height="56" rx="6"/>
     </g>
     <text x="277" y="156" text-anchor="middle" class="lbl-sm" style="font-weight:700">prefill 94%</text>
@@ -950,10 +1054,11 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <!-- RIGHT: decode-heavy -->
     <text x="810" y="90" text-anchor="middle" class="lbl-b">short prompt · long answer</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+    <!-- prefill share (green), decode share (orange) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2.4">
       <rect x="620" y="120" width="20" height="56" rx="6"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="640" y="120" width="380" height="56" rx="6"/>
     </g>
     <text x="630" y="205" text-anchor="middle" class="lbl-g">3%</text>
@@ -966,10 +1071,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the request shape — not by "the model"</text>
   </svg>
   <p class="takeaway">Measure the split before you blame the model — the request shape, not the model, decides which phase dominates.</p>
-  <div class="pageno">M1·13</div>
+  <div class="pageno">M1·14</div>
 </section>
 
-<!-- ============ SLIDE 14 — CAPACITY MATH ============ -->
+<!-- ============ SLIDE 15 — CAPACITY MATH ============ -->
 <section>
   <h2 class="t">The rough work takes space — that space is capacity</h2>
   <p class="s">Weights take a fixed chunk; whatever is left is your KV budget, and one request's cache eats into it.</p>
@@ -979,14 +1084,14 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="60" y="70" width="440" height="240" rx="12"/>
     </g>
     <text x="280" y="102" text-anchor="middle" class="lbl-b">one box · total memory</text>
-    <!-- weights block (fixed) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <!-- weights block (fixed) — set once, the fixed occupancy (purple) -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="90" y="120" width="380" height="70" rx="8"/>
     </g>
     <text x="280" y="152" text-anchor="middle" class="lbl">model weights</text>
     <text x="280" y="180" text-anchor="middle" class="lbl-g">fixed — set once</text>
-    <!-- KV budget block -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+    <!-- KV budget block — the usable capacity that's left (green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="90" y="205" width="380" height="85" rx="8"/>
     </g>
     <text x="280" y="240" text-anchor="middle" class="lbl-b">KV budget</text>
@@ -1000,18 +1105,18 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M800,192 L800,222" marker-end="url(#ahg)"/>
     </g>
-    <!-- capacity answer band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- capacity answer band — the users-that-fit payoff (green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
       <rect x="560" y="230" width="480" height="80" rx="10"/>
     </g>
     <text x="800" y="265" text-anchor="middle" class="lbl-b">KV budget ÷ one request</text>
     <text x="800" y="296" text-anchor="middle" class="lbl">= users that fit at once</text>
   </svg>
   <p class="takeaway">How many users fit one box is a back-of-envelope sum: the KV budget divided by the KV cost of one request.</p>
-  <div class="pageno">M1·14</div>
+  <div class="pageno">M1·15</div>
 </section>
 
-<!-- ============ SLIDE 15 — READ THE OPS QUESTIONS OFF THE TRIP ============ -->
+<!-- ============ SLIDE 16 — READ THE OPS QUESTIONS OFF THE TRIP ============ -->
 <section>
   <h2 class="t">Read the bill, the latency, the capacity off the trip</h2>
   <p class="s">The three questions from the opening are three stops on the same journey — that is why the runtime stops being a mystery.</p>
@@ -1041,7 +1146,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M340,158 L340,208" marker-end="url(#ahg)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.2">
       <rect x="180" y="212" width="320" height="66" rx="10"/>
     </g>
     <text x="340" y="242" text-anchor="middle" class="lbl-b">the bill</text>
@@ -1050,7 +1155,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M655,158 L655,300" marker-end="url(#ahg)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#757575" stroke-width="2.2">
       <rect x="470" y="304" width="370" height="66" rx="10"/>
     </g>
     <text x="655" y="334" text-anchor="middle" class="lbl-b">the latency</text>
@@ -1059,24 +1164,29 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M970,158 L970,208" marker-end="url(#ahg)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2.2">
       <rect x="800" y="212" width="270" height="66" rx="10"/>
     </g>
     <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
     <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
   </svg>
   <p class="takeaway">Every ops question about this system is read off one trip — bill at tokenize, latency at read-vs-write, capacity at the cache.</p>
-  <div class="pageno">M1·15</div>
+  <div class="pageno">M1·16</div>
 </section>
 
-<!-- ============ SLIDE 16 — CLOSING: THREE NUMBERS ============ -->
+<!-- ============ SLIDE 17 — CLOSING: THREE NUMBERS ============ -->
 <section>
   <p class="kicker">MODULE 1 &nbsp;·&nbsp; TAKEAWAYS</p>
   <h2 class="t" style="font-size:2.0em">Three numbers you carry into the lab</h2>
   <svg viewBox="0 0 1100 320" role="img" aria-label="Three numbered takeaways: tokens are the billing and capacity unit, TTFT versus TPOT is the wait to start versus the rhythm of the answer, and KV cache math is per-token cost times tokens times users.">
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <!-- three carried numbers, each in its deck-consistent pastel: tokens (blue) · TTFT/TPOT (orange) · KV math (green) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
       <circle cx="120" cy="70" r="30"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
       <circle cx="120" cy="160" r="30"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
       <circle cx="120" cy="250" r="30"/>
     </g>
     <g class="num" text-anchor="middle">
@@ -1096,7 +1206,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 1 · Lab</b> — you'll measure the split and print the KV table on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M1·16</div>
+  <div class="pageno">M1·17</div>
 </section>
 
 </div></div>

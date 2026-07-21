@@ -69,6 +69,14 @@ footer, header, hgroup, main, menu, nav, section {
     --ink:#1e1e1e;
     --gray:#757575;
     --paper:#ffffff;
+    /* pastel accent fills (founder directive 2026-07-21): semantic only */
+    --p-green:#d5e8d4;   /* good · healthy · pass */
+    --p-red:#f8cecc;     /* bad · full · fail · warning */
+    --p-blue:#dae8fc;    /* neutral data · the thing being studied */
+    --p-orange:#ffe6cc;  /* caution · attention · in-between */
+    --p-purple:#e1d5e7;  /* special · meta · management/control */
+    --good:#2e7d32;      /* muted payoff annotation — good reading */
+    --bad:#c62828;       /* muted payoff annotation — bad reading */
   }
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
@@ -149,7 +157,7 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="200" y="52" width="720" height="150" rx="14"/>
     </g>
     <text x="560" y="86" text-anchor="middle" class="lbl-b">your namespace</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="238" y="108" width="200" height="64" rx="10"/>
       <rect x="460" y="108" width="200" height="64" rx="10"/>
       <rect x="682" y="108" width="200" height="64" rx="10"/>
@@ -174,7 +182,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels. Left, hall first: a booked hall with a crowd spilling out the door, tagged sign the contract then count — 200 people in a room for 80, an OOM-kill on the third user. Right, count first: a clipboard reading guests times plates times space per table, arrowing to a right-sized hall, tagged count the cost of one request times how many at once, then the box. A band reads the memory limit is the hall you book, the capacity sum is the guest count you do first.">
     <!-- LEFT: hall first (wrong) -->
     <text x="270" y="34" text-anchor="middle" class="lbl-b">HALL FIRST</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="70" y="52" width="400" height="150" rx="12"/>
     </g>
     <!-- overfull crowd dots -->
@@ -201,7 +209,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
       <path d="M828,127 L888,127" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
       <rect x="892" y="78" width="148" height="98" rx="10"/>
     </g>
     <text x="966" y="133" text-anchor="middle" class="lbl-b">right-sized hall</text>
@@ -223,18 +231,18 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The working set is three terms — two fixed, one that grows</h2>
   <p class="s">Weights and runtime buffers don't move with load; the KV cache does, and it's the term that decides your capacity.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three feeder boxes arrow into one sum box. Weights, about 0.65 gibibytes, fixed. Runtime buffers, about 0.3 gibibytes, fixed. KV cache, equal to context times concurrency times 112 kibibytes per token, which grows. They add to the box you need: weights plus runtime plus KV, the pod's working set. A gray note under KV reads 2048 by 1 is about 0.22 gibibytes, 2048 by 8 is about 1.8 gibibytes, 40960 by 1 is about 4.5 gibibytes, so configure the context you need. A band reads turn the sum around and the memory limit, replica count, and context lever all fall out of it.">
-    <!-- three feeder boxes -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <!-- three feeder boxes — two fixed (blue), KV grows (orange caution) -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="40" y="52" width="250" height="72" rx="10"/>
     </g>
     <text x="165" y="82" text-anchor="middle" class="lbl-b">weights ~0.65 GiB</text>
     <text x="165" y="108" text-anchor="middle" class="lbl-g">fixed — same for 1 or 50 users</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#757575" stroke-width="2.4">
       <rect x="40" y="140" width="250" height="72" rx="10"/>
     </g>
     <text x="165" y="170" text-anchor="middle" class="lbl">runtime buffers ~0.3 GiB</text>
     <text x="165" y="196" text-anchor="middle" class="lbl-g">fixed — scratch + compute graph</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="3">
       <rect x="40" y="228" width="250" height="82" rx="10"/>
     </g>
     <text x="165" y="258" text-anchor="middle" class="lbl-b">KV cache</text>
@@ -249,8 +257,8 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M290,176 L448,180" marker-end="url(#ah)"/>
       <path d="M290,268 C360,268 380,208 448,192" marker-end="url(#ah)"/>
     </g>
-    <!-- sum box -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+    <!-- sum box — the derived answer (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
       <rect x="452" y="120" width="608" height="120" rx="13"/>
     </g>
     <text x="756" y="160" text-anchor="middle" class="lbl-b">the box you need</text>
@@ -282,8 +290,8 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- key ring -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><circle cx="115" cy="142" r="26"/></g>
     <text x="115" y="150" text-anchor="middle" class="lbl-g">keys</text>
-    <!-- four doors -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+    <!-- four doors — all reachable by the master key (red) -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.2">
       <rect x="176" y="76" width="128" height="52" rx="8"/>
       <rect x="322" y="76" width="128" height="52" rx="8"/>
       <rect x="176" y="152" width="128" height="52" rx="8"/>
@@ -307,8 +315,8 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
       <path d="M794,142 L850,142" marker-end="url(#ah)"/>
     </g>
-    <!-- one door -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+    <!-- one door — the only cluster the badge reaches (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="856" y="100" width="150" height="86" rx="9"/>
     </g>
     <text x="931" y="138" text-anchor="middle" class="lbl-b">lab cluster</text>
@@ -335,10 +343,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="100" y="40" text-anchor="start" class="lbl">image-baked</text>
     <text x="100" y="64" text-anchor="start" class="lbl-g">startup instant &nbsp;·&nbsp; rollout: rebuild + repush a multi-GB image</text>
     <!-- row 2 (chosen) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><circle cx="66" cy="124" r="19"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><circle cx="66" cy="124" r="19"/></g>
     <text x="66" y="132" text-anchor="middle" class="num">2</text>
     <text x="100" y="118" text-anchor="start" class="lbl-b">initContainer from registry</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="452" y="100" width="118" height="34" rx="9"/>
     </g>
     <text x="511" y="123" text-anchor="middle" class="lbl-sm">CHOSEN</text>
@@ -386,7 +394,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="640" y="72" text-anchor="start" class="lbl-g">an initContainer runs to completion first</text>
     <!-- the chain (fragments) -->
     <g class="fragment" data-fragment-index="1">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="30" y="140" width="210" height="86" rx="11"/></g>
+      <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8"><rect x="30" y="140" width="210" height="86" rx="11"/></g>
       <text x="135" y="172" text-anchor="middle" class="lbl-b">signed kit</text>
       <text x="135" y="196" text-anchor="middle" class="lbl-sm">opsmate/model:1.0.0</text>
       <text x="135" y="218" text-anchor="middle" class="lbl-g">(the M7 registry)</text>
@@ -395,14 +403,14 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M240,183 L300,183" marker-end="url(#ah)"/></g>
       <text x="270" y="172" text-anchor="middle" class="lbl-g">kit unpack</text>
       <text x="270" y="220" text-anchor="middle" class="lbl-g">--filter=model</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="304" y="140" width="196" height="86" rx="11"/></g>
+      <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3"><rect x="304" y="140" width="196" height="86" rx="11"/></g>
       <text x="402" y="172" text-anchor="middle" class="lbl-b">initContainer</text>
       <text x="402" y="196" text-anchor="middle" class="lbl-g">the advance man</text>
     </g>
     <g class="fragment" data-fragment-index="3">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M500,183 L560,183" marker-end="url(#ah)"/></g>
       <text x="530" y="172" text-anchor="middle" class="lbl-g">writes the GGUF</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="564" y="140" width="196" height="86" rx="11"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3"><rect x="564" y="140" width="196" height="86" rx="11"/></g>
       <text x="662" y="172" text-anchor="middle" class="lbl-b">PVC</text>
       <text x="662" y="196" text-anchor="middle" class="lbl-g">the model's home</text>
       <text x="662" y="218" text-anchor="middle" class="lbl-g">in the cluster</text>
@@ -410,7 +418,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="fragment" data-fragment-index="4">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M760,183 L820,183" marker-end="url(#ah)"/></g>
       <text x="790" y="172" text-anchor="middle" class="lbl-g">mounted</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="824" y="140" width="240" height="86" rx="11"/></g>
+      <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="824" y="140" width="240" height="86" rx="11"/></g>
       <text x="944" y="172" text-anchor="middle" class="lbl-b">llama-server</text>
       <text x="944" y="196" text-anchor="middle" class="lbl-g">the artist</text>
       <text x="944" y="218" text-anchor="middle" class="lbl-g">serves /v1</text>
@@ -449,17 +457,17 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="96" y="190" width="340" height="44" rx="9"/></g>
     <text x="266" y="217" text-anchor="middle" class="lbl-sm">initContainer HTTP → localhost:5100</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M436,212 L500,212" marker-end="url(#ahg)"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="506" y="190" width="286" height="44" rx="9"/></g>
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="506" y="190" width="286" height="44" rx="9"/></g>
     <text x="649" y="211" text-anchor="middle" class="lbl-g">✗ nothing here</text>
     <text x="649" y="230" text-anchor="middle" class="lbl-g">localhost = the POD itself</text>
     <!-- row 2: registry.local works -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="96" y="246" width="340" height="44" rx="9"/></g>
     <text x="266" y="273" text-anchor="middle" class="lbl-sm">initContainer HTTP → registry.local:5100</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M436,268 L500,268" marker-end="url(#ah)"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="506" y="246" width="286" height="44" rx="9"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="506" y="246" width="286" height="44" rx="9"/></g>
     <text x="649" y="273" text-anchor="middle" class="lbl-b">host Zot :5100 ✓</text>
-    <!-- host Zot target on the right -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="900" y="120" width="170" height="76" rx="11"/></g>
+    <!-- host Zot target on the right — the reachable endpoint (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8"><rect x="900" y="120" width="170" height="76" rx="11"/></g>
     <text x="985" y="152" text-anchor="middle" class="lbl-b">host Zot</text>
     <text x="985" y="178" text-anchor="middle" class="lbl-g">:5100</text>
     <!-- hostAliases note -->
@@ -483,20 +491,20 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="30" y="60" width="130" height="56" rx="10"/></g>
     <text x="95" y="94" text-anchor="middle" class="lbl">pod starts</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M160,88 L216,88" marker-end="url(#ah)"/></g>
-    <!-- startupProbe -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="220" y="52" width="270" height="72" rx="11"/></g>
+    <!-- startupProbe — the guardian that protects the load (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="220" y="52" width="270" height="72" rx="11"/></g>
     <text x="355" y="82" text-anchor="middle" class="lbl-b">startupProbe</text>
     <text x="355" y="106" text-anchor="middle" class="lbl-g">the sound-check — during load ONLY</text>
     <!-- holds off arrow down -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M355,124 L355,168" marker-end="url(#ahg)"/></g>
     <text x="440" y="152" text-anchor="middle" class="lbl-g">holds off →</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="220" y="176" width="270" height="56" rx="10"/></g>
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="220" y="176" width="270" height="56" rx="10"/></g>
     <text x="355" y="200" text-anchor="middle" class="lbl-g">readiness + liveness</text>
     <text x="355" y="222" text-anchor="middle" class="lbl-g">DO NOT run yet</text>
     <!-- green after 40s -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M490,88 L556,88" marker-end="url(#ah)"/></g>
     <text x="523" y="76" text-anchor="middle" class="lbl-g">/health green ~40 s</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="560" y="52" width="230" height="72" rx="11"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8"><rect x="560" y="52" width="230" height="72" rx="11"/></g>
     <text x="675" y="82" text-anchor="middle" class="lbl-b">model loaded</text>
     <text x="675" y="106" text-anchor="middle" class="lbl-g">serving</text>
     <!-- fork to readiness + liveness -->
@@ -504,10 +512,10 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M790,74 C860,74 880,74 940,66" marker-end="url(#ah)"/>
       <path d="M790,104 C860,104 880,150 940,168" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="944" y="34" width="140" height="66" rx="10"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="944" y="34" width="140" height="66" rx="10"/></g>
     <text x="1014" y="62" text-anchor="middle" class="lbl-b">readiness</text>
     <text x="1014" y="86" text-anchor="middle" class="lbl-g">gates traffic</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="944" y="140" width="140" height="72" rx="10"/></g>
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.6"><rect x="944" y="140" width="140" height="72" rx="10"/></g>
     <text x="1014" y="168" text-anchor="middle" class="lbl-b">liveness</text>
     <text x="1014" y="190" text-anchor="middle" class="lbl-g">restarts a wedged</text>
     <text x="1014" y="208" text-anchor="middle" class="lbl-g">pod — lenient</text>
@@ -528,8 +536,8 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The aggressive-liveness loop — an outage you cause on purpose</h2>
   <p class="s">A tight liveness probe that's perfect for a 200 ms web service becomes a restart loop on a 40-second loader.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A loop. An aggressive liveness probe, every 1 second, 1 failure means dead, fires during the 40-second load while slash health is not up. The container is declared dead. The restart loads the model again from scratch. The probe fails again before it finishes. A curved arrow returns to the start, closing the loop, tagged RESTARTS climbing and CrashLoopBackOff. A gray note reads the engine was never broken — the probe never gave it time. Below, the fix box: a startupProbe covers the load plus a lenient liveness for steady state. A band reads apply the bad probe, watch the loop, revert — a self-inflicted outage seen in a safe place.">
-    <!-- start box -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="44" width="250" height="72" rx="11"/></g>
+    <!-- start box — the culprit probe (red) -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="44" width="250" height="72" rx="11"/></g>
     <text x="165" y="74" text-anchor="middle" class="lbl-b">aggressive liveness</text>
     <text x="165" y="98" text-anchor="middle" class="lbl-g">every 1 s, 1 failure = dead</text>
     <!-- fragment 1: fires during load -->
@@ -548,7 +556,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- fragment 3: restart loads from scratch -->
     <g class="fragment" data-fragment-index="3">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M834,116 L834,168" marker-end="url(#ah)"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="700" y="172" width="268" height="66" rx="10"/></g>
+      <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="2.4"><rect x="700" y="172" width="268" height="66" rx="10"/></g>
       <text x="834" y="200" text-anchor="middle" class="lbl">restart: load AGAIN</text>
       <text x="834" y="224" text-anchor="middle" class="lbl-g">from scratch</text>
     </g>
@@ -562,9 +570,9 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <!-- gray note -->
     <text x="300" y="278" text-anchor="middle" class="lbl-g">the engine was never broken — the probe never gave it time</text>
-    <!-- fragment 5: the fix -->
+    <!-- fragment 5: the fix (green) -->
     <g class="fragment" data-fragment-index="5">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="240" y="294" width="620" height="38" rx="10"/></g>
+      <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="240" y="294" width="620" height="38" rx="10"/></g>
       <text x="550" y="320" text-anchor="middle" class="lbl"><tspan class="lbl-b">fix:</tspan> startupProbe covers the load + a LENIENT liveness for steady state</text>
     </g>
     <!-- band -->
@@ -582,21 +590,21 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">requests is the working set, limits is the OOM ceiling</h2>
   <p class="s">Split the three-term sum into the two numbers Kubernetes actually wants — both derived, neither copied.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels with a struck-through box between them. Left, requests.memory: equal to weights plus runtime plus KV at expected load, tagged the honest working set, what the scheduler places on. Right, limits.memory: the ceiling before the kernel OOM-kills, tagged too low dies under load, too high loses OOM protection. Between them a crossed-out gray box reads a number copied from another service's YAML, tagged a guess, a crash loop. A gray note reads the spike whole footprint was 1.76 gibibytes, in the 8 gigabyte budget because it was derived. A band reads requests is the working set, limits is the OOM ceiling — both derived from the three-term sum.">
-    <!-- LEFT: requests -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="40" y="52" width="330" height="150" rx="12"/></g>
+    <!-- LEFT: requests — the honest derived working set (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8"><rect x="40" y="52" width="330" height="150" rx="12"/></g>
     <text x="205" y="90" text-anchor="middle" class="lbl-b">requests.memory</text>
     <text x="205" y="124" text-anchor="middle" class="lbl-sm">= weights + runtime + KV</text>
     <text x="205" y="150" text-anchor="middle" class="lbl-sm">at expected load</text>
     <text x="205" y="182" text-anchor="middle" class="lbl-g">the honest working set — the scheduler places on it</text>
-    <!-- MIDDLE: crossed-out copy -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="392" y="88" width="316" height="78" rx="10"/></g>
+    <!-- MIDDLE: crossed-out copy — the bad practice (red) -->
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="392" y="88" width="316" height="78" rx="10"/></g>
     <text x="550" y="120" text-anchor="middle" class="lbl-g">a number copied from</text>
     <text x="550" y="144" text-anchor="middle" class="lbl-g">another service's YAML</text>
     <!-- cross-out stroke -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M408,158 L692,96"/></g>
     <text x="550" y="186" text-anchor="middle" class="lbl-g">a guess → a crash loop</text>
-    <!-- RIGHT: limits -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="730" y="52" width="330" height="150" rx="12"/></g>
+    <!-- RIGHT: limits — the OOM guardrail ceiling (orange caution) -->
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="3"><rect x="730" y="52" width="330" height="150" rx="12"/></g>
     <text x="895" y="90" text-anchor="middle" class="lbl-b">limits.memory</text>
     <text x="895" y="124" text-anchor="middle" class="lbl-sm">the ceiling before the</text>
     <text x="895" y="150" text-anchor="middle" class="lbl-sm">kernel OOM-kills</text>
@@ -618,23 +626,23 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The engine fork, stated honestly — same plumbing, two images</h2>
   <p class="s">Swapping the serving engine is an image-and-args change, not a manifest rewrite, because the OpenAI <code>/v1</code> contract holds the client stable.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two engine panels share a spine down the middle. The shared column reads same PVC, same initContainer chain, same probe shape, same slash v1 contract. Left, llama-server for arm64 8 gigabyte, marked chosen, tagged validated: 1 of 1 Running, 1.76 gibibytes, in budget. Right, vLLM, the production engine, tagged GPU is its home, the CPU build crashes on the arm64 VM kernel per M3, so it is taught line by line and validated on x86, cloud, plus a recorded demo. A gray note between them reads differ ONLY in image and args. A band reads swapping the engine is an image-and-args change, not a manifest rewrite — the slash v1 contract holds the client stable.">
-    <!-- shared spine in the middle -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="410" y="52" width="280" height="200" rx="12"/></g>
+    <!-- shared spine in the middle — the common plumbing (blue) -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="410" y="52" width="280" height="200" rx="12"/></g>
     <text x="550" y="84" text-anchor="middle" class="lbl-b">shared</text>
     <text x="550" y="118" text-anchor="middle" class="lbl-sm">same PVC</text>
     <text x="550" y="148" text-anchor="middle" class="lbl-sm">same initContainer chain</text>
     <text x="550" y="178" text-anchor="middle" class="lbl-sm">same probe shape</text>
     <text x="550" y="208" text-anchor="middle" class="lbl-sm">same /v1 contract</text>
     <text x="550" y="238" text-anchor="middle" class="lbl-g">differ ONLY in image + args</text>
-    <!-- LEFT: llama-server -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="72" width="330" height="160" rx="12"/></g>
+    <!-- LEFT: llama-server — the chosen, validated engine (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="72" width="330" height="160" rx="12"/></g>
     <text x="205" y="106" text-anchor="middle" class="lbl-b">llama-server</text>
     <text x="205" y="134" text-anchor="middle" class="lbl-g">arm64 / 8 GB — CHOSEN</text>
     <text x="205" y="172" text-anchor="middle" class="lbl-sm">validated: 1/1 Running</text>
     <text x="205" y="200" text-anchor="middle" class="lbl-sm">1.76 GiB · in budget</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M370,152 L406,152" marker-end="url(#ah)"/></g>
-    <!-- RIGHT: vLLM -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="730" y="72" width="330" height="160" rx="12"/></g>
+    <!-- RIGHT: vLLM — production engine, crashes on the lab's arm64 (orange caution) -->
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="730" y="72" width="330" height="160" rx="12"/></g>
     <text x="895" y="106" text-anchor="middle" class="lbl-b">vLLM</text>
     <text x="895" y="134" text-anchor="middle" class="lbl-g">the production engine</text>
     <text x="895" y="168" text-anchor="middle" class="lbl-sm">GPU is its home · CPU build</text>
@@ -656,8 +664,8 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">On real GPUs the shape holds — the numbers do not</h2>
   <p class="s">The plumbing transfers unchanged; the capacity math moves to VRAM and gains a lever the laptop never needed.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A hub-and-spoke. The centre box reads same shape: artifact chain, PVC, probes, initContainer, tagged transfers unchanged, it's Kubernetes plumbing. Three gray spokes to what changes on a GPU: budget VRAM, not host RAM; vLLM pre-allocates a GPU-memory fraction, not a growing RAM KV; and more than one card means tensor parallelism, a new manifest term. A gray footline reads the three-term sum is still the mental model — weights plus runtime plus KV — but the ceiling and levers change. A band reads the pattern is portable, the numbers are not — derive the box, don't paste the values.">
-    <!-- centre hub -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="380" y="118" width="340" height="94" rx="12"/></g>
+    <!-- centre hub — the portable pattern that transfers unchanged (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="380" y="118" width="340" height="94" rx="12"/></g>
     <text x="550" y="152" text-anchor="middle" class="lbl-b">same shape</text>
     <text x="550" y="180" text-anchor="middle" class="lbl-sm">artifact chain · PVC · probes · initContainer</text>
     <text x="550" y="204" text-anchor="middle" class="lbl-g">transfers unchanged — it's K8s plumbing</text>
@@ -694,17 +702,17 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">You leave with OpsMate served by the cluster — the signed 1.0.0 artifact loaded onto a PVC, behind a Service, with probes shaped for a slow starter and a limit from a worksheet.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One, capacity derived: the three-term sum before the manifest, the limit from a worksheet not a template. Two, artifact chain: the initContainer pulls the signed 1.0.0 kit onto a PVC, the manifest unchanged across versions. Three, probes that protect: a startupProbe covers the 40-second load, a lenient liveness guards the steady state. Below, an arrow to M9: many models, one door — a gateway that routes without the client changing, plus autoscaling and GitOps. A footline reads OpsMate is v2.0, served by the cluster, now open Module 8 Lab.">
     <!-- row 1 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>
     <text x="90" y="51" text-anchor="middle" class="num">1</text>
     <text x="130" y="36" text-anchor="start" class="lbl-b">CAPACITY DERIVED</text>
     <text x="130" y="62" text-anchor="start" class="lbl-g">the three-term sum before the manifest — the limit from a worksheet, not a template</text>
     <!-- row 2 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="108" r="22"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="108" r="22"/></g>
     <text x="90" y="117" text-anchor="middle" class="num">2</text>
     <text x="130" y="102" text-anchor="start" class="lbl-b">ARTIFACT CHAIN</text>
     <text x="130" y="128" text-anchor="start" class="lbl-g">the initContainer pulls the signed 1.0.0 kit onto a PVC — the manifest unchanged across versions</text>
     <!-- row 3 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="174" r="22"/></g>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="174" r="22"/></g>
     <text x="90" y="183" text-anchor="middle" class="num">3</text>
     <text x="130" y="168" text-anchor="start" class="lbl-b">PROBES THAT PROTECT</text>
     <text x="130" y="194" text-anchor="start" class="lbl-g">a startupProbe covers the 40 s load — a lenient liveness guards the steady state</text>

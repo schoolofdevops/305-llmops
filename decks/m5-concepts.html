@@ -69,6 +69,14 @@ footer, header, hgroup, main, menu, nav, section {
     --ink:#1e1e1e;
     --gray:#757575;
     --paper:#ffffff;
+    /* pastel accent fills (founder directive, 2026-07-21) — soft fills only, linework stays ink/gray */
+    --p-green:#d5e8d4;   /* good · healthy · pass                 */
+    --p-red:#f8cecc;     /* bad · full · fail                     */
+    --p-blue:#dae8fc;    /* neutral data · the thing being studied */
+    --p-orange:#ffe6cc;  /* caution · attention · in-between      */
+    --p-purple:#e1d5e7;  /* special · meta · management/control   */
+    --good:#2e7d32;      /* muted payoff annotation — good reading */
+    --bad:#c62828;       /* muted payoff annotation — bad reading  */
   }
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
@@ -109,6 +117,15 @@ footer, header, hgroup, main, menu, nav, section {
   .lbl-g{ fill:var(--gray); font-size:17px; }
   .lbl-b{ fill:var(--ink); font-size:23px; font-weight:700; }
   .num{ fill:var(--ink); font-size:24px; font-weight:700; }
+  /* muted payoff-annotation text (one or two per slide, never body text) */
+  .lbl-good{ fill:var(--good); font-size:19px; font-weight:700; }
+  .lbl-bad{ fill:var(--bad); font-size:19px; font-weight:700; }
+  /* pastel fill helpers for SVG shapes — stroke still supplied by the ink/gray group */
+  .f-green{ fill:var(--p-green); }
+  .f-red{ fill:var(--p-red); }
+  .f-blue{ fill:var(--p-blue); }
+  .f-orange{ fill:var(--p-orange); }
+  .f-purple{ fill:var(--p-purple); }
 </style>
 </head>
 <body>
@@ -158,13 +175,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
       <path d="M486,134 L560,134" marker-end="url(#ahg)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="566" y="80" width="230" height="52" rx="10"/>
-      <rect x="566" y="150" width="230" height="52" rx="10"/>
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
+      <rect x="566" y="80" width="230" height="52" rx="10" class="f-red"/>
+      <rect x="566" y="150" width="230" height="52" rx="10" class="f-red"/>
     </g>
     <text x="681" y="112" text-anchor="middle" class="lbl">Mon: an answer</text>
     <text x="681" y="182" text-anchor="middle" class="lbl">Mon: a different one</text>
-    <text x="852" y="132" text-anchor="middle" class="lbl-b">?</text>
+    <text x="852" y="132" text-anchor="middle" class="lbl-bad">?</text>
     <text x="852" y="160" text-anchor="middle" class="lbl-g">better?</text>
     <text x="852" y="184" text-anchor="middle" class="lbl-g">worse?</text>
     <!-- the fix band -->
@@ -184,17 +201,21 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1100 360" role="img" aria-label="At the top, two candidate cars drive two different routes: a loopy cul-de-sac and a busy motorway merge, each stamped seemed fine in gray, with a gray note that you cannot compare, cannot spot a slip, cannot defend. Below, one fixed route is driven by both cars, inked, tagged same route every candidate, and pass is comparable, defensible, repeatable. A band names the point: an eval set is the fixed route, it looks right improvises.">
     <!-- two improvised routes -->
     <text x="150" y="40" text-anchor="middle" class="lbl-b">"it looks right" — a different route each time</text>
-    <!-- route A cul-de-sac -->
+    <!-- route A cul-de-sac (red = improvised, ungradeable) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
       <path d="M70,110 C120,70 200,70 230,110 C255,145 190,165 150,140 C120,122 130,100 160,100"/>
-      <rect x="60" y="150" width="120" height="34" rx="9" stroke-dasharray="5 5"/>
+    </g>
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
+      <rect x="60" y="150" width="120" height="34" rx="9" stroke-dasharray="5 5" class="f-red"/>
     </g>
     <text x="120" y="173" text-anchor="middle" class="lbl-g">"seemed fine"</text>
     <text x="150" y="98" text-anchor="middle" class="lbl-g">cul-de-sac</text>
-    <!-- route B motorway -->
+    <!-- route B motorway (red = improvised, ungradeable) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
       <path d="M300,120 L470,90 M300,140 L470,110 M300,160 L470,130"/>
-      <rect x="330" y="150" width="150" height="34" rx="9" stroke-dasharray="5 5"/>
+    </g>
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
+      <rect x="330" y="150" width="150" height="34" rx="9" stroke-dasharray="5 5" class="f-red"/>
     </g>
     <text x="405" y="173" text-anchor="middle" class="lbl-g">"seemed fine"</text>
     <text x="385" y="82" text-anchor="middle" class="lbl-g">motorway merge, rain</text>
@@ -205,13 +226,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M600,112 L600,188"/>
     </g>
-    <!-- the fixed route -->
+    <!-- the fixed route (green = comparable, defensible, repeatable) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round">
       <path d="M120,255 L560,255 C620,255 620,300 560,300 L160,300"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="80" y="238" width="46" height="30" rx="7"/>
-      <rect x="150" y="285" width="46" height="30" rx="7"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="80" y="238" width="46" height="30" rx="7" class="f-green"/>
+      <rect x="150" y="285" width="46" height="30" rx="7" class="f-green"/>
     </g>
     <text x="360" y="242" text-anchor="middle" class="lbl-b">the FIXED test route — same route, every candidate, every time</text>
     <text x="720" y="270" text-anchor="start" class="lbl">a pass is <tspan class="lbl-b">comparable</tspan></text>
@@ -226,27 +247,27 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Four ways to grade an answer, cheapest first — climb only when you must</h2>
   <p class="s">A pyramid: cheap, deterministic checks at the wide bottom, expensive human judgement at the narrow top. Push grading down as far as it will go.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Four stacked bands form a pyramid, widest at the bottom. Bottom, widest and inked: assertions, exact or contains or regex or source-in-top-k, free, instant, deterministic. Next: similarity, embedding distance to a reference, tolerates paraphrase. Next: LLM-as-judge, a model grades a rubric, reads nuance but is itself noisy. Top, narrowest and gray: human, gold standard but too slow for every change. A gray arrow on the side reads cheap and deterministic downward, expensive and human upward. A footline reads push grading down as far as it goes.">
-    <!-- band 1 assertions (widest, ink) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <path d="M120,300 L980,300 L900,246 L200,246 Z"/>
+    <!-- band 1 assertions (widest) — green = cheap, deterministic, reliable -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <path class="f-green" d="M120,300 L980,300 L900,246 L200,246 Z"/>
     </g>
     <text x="550" y="270" text-anchor="middle" class="lbl-b">assertions</text>
     <text x="550" y="294" text-anchor="middle" class="lbl-g">exact / contains / regex / source-in-top-k · free, instant, deterministic</text>
-    <!-- band 2 similarity -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <path d="M200,240 L900,240 L826,192 L274,192 Z"/>
+    <!-- band 2 similarity — blue = the data-similarity method -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+      <path class="f-blue" d="M200,240 L900,240 L826,192 L274,192 Z"/>
     </g>
     <text x="550" y="216" text-anchor="middle" class="lbl-b">similarity</text>
     <text x="550" y="234" text-anchor="middle" class="lbl-g">embedding distance to a reference · tolerates paraphrase</text>
-    <!-- band 3 judge -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <path d="M274,186 L826,186 L752,138 L348,138 Z"/>
+    <!-- band 3 judge — orange = caution, itself noisy -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <path class="f-orange" d="M274,186 L826,186 L752,138 L348,138 Z"/>
     </g>
     <text x="550" y="162" text-anchor="middle" class="lbl-b">LLM-as-judge</text>
     <text x="550" y="180" text-anchor="middle" class="lbl-g">a model grades a rubric · reads nuance, itself noisy</text>
-    <!-- band 4 human (narrowest, gray) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <path d="M348,132 L752,132 L640,84 L460,84 Z"/>
+    <!-- band 4 human (narrowest) — purple = the special, gold-standard grader -->
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <path class="f-purple" d="M348,132 L752,132 L640,84 L460,84 Z"/>
     </g>
     <text x="550" y="112" text-anchor="middle" class="lbl-b">human</text>
     <text x="550" y="126" text-anchor="middle" class="lbl-g">gold standard · too slow for every change</text>
@@ -265,18 +286,18 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">A golden set that discriminates — from sources, with honesty probes</h2>
   <p class="s">A set is only as good as its questions. Three principles separate a real one from a checkbox.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Three numbered rows. One: author from a source, each question from a runbook passage with the source recorded, making it answerable, retrieval-checkable, and reusable in Module 6. Two: make it discriminate, so the right answer and a plausible-wrong answer clearly diverge and a broken system fails it. Three: honesty probes, unanswerable-from-corpus questions whose correct answer is no runbook for that, where a confident bluff is a failure. A footline reads a good golden question is one a broken system would get wrong.">
-    <!-- row 1 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="70" r="22"/></g>
+    <!-- row 1 (blue circles = the golden set being designed) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="70" r="22" class="f-blue"/></g>
     <text x="90" y="79" text-anchor="middle" class="num">1</text>
     <text x="130" y="62" text-anchor="start" class="lbl-b">author FROM a source</text>
     <text x="130" y="90" text-anchor="start" class="lbl-g">each Q from a runbook passage, <tspan class="lbl">source:</tspan> recorded → answerable · retrieval-checkable · reusable in M6</text>
     <!-- row 2 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="160" r="22"/></g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="160" r="22" class="f-blue"/></g>
     <text x="90" y="169" text-anchor="middle" class="num">2</text>
     <text x="130" y="152" text-anchor="start" class="lbl-b">make it DISCRIMINATE</text>
     <text x="130" y="180" text-anchor="start" class="lbl-g">right answer vs plausible-wrong clearly diverge — "payments 500s → pool exhaustion", not "what company is this?"</text>
     <!-- row 3 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="250" r="22"/></g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="250" r="22" class="f-blue"/></g>
     <text x="90" y="259" text-anchor="middle" class="num">3</text>
     <text x="130" y="242" text-anchor="start" class="lbl-b">honesty probes</text>
     <text x="130" y="270" text-anchor="start" class="lbl-g">unanswerable-from-corpus Qs · correct = "no runbook for that" · a confident bluff = <tspan class="lbl">FAIL</tspan> (dangerous in an incident)</text>
@@ -295,29 +316,29 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The finding that shaped the design — an exact phrase breaks on a paraphrase</h2>
   <p class="s">The first eval against the real stack: ask "the payments API is throwing 500s" and assert the answer contains "connection pool". It failed — and the failure is the lesson.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, gray dashed: the assert reads contains connection pool. The model's real answer is quoted: check whether connections are being held open. It is stamped FAIL, with a gray note that retrieval was correct, the model just paraphrased. Right, inked: the assert reads contains-any of pool, connection, db_pool_in_use, exhaustion, plus a judge rubric, stamped PASS. A band reads exact-phrase asserts break on small models, go wide and let a judge read the nuance.">
-    <!-- left panel: exact-phrase FAIL -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+    <!-- left panel: exact-phrase FAIL (red) -->
+    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="50" y="60" width="470" height="210" rx="12"/>
     </g>
     <text x="285" y="92" text-anchor="middle" class="lbl-b">assert: contains "connection pool"</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
-      <rect x="80" y="112" width="410" height="76" rx="10"/>
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2">
+      <rect x="80" y="112" width="410" height="76" rx="10" class="f-red"/>
     </g>
     <text x="285" y="140" text-anchor="middle" class="lbl-g">the model's real answer:</text>
     <text x="285" y="166" text-anchor="middle" class="lbl">"…check whether connections are being held open"</text>
-    <text x="285" y="228" text-anchor="middle" class="lbl-b">FAIL</text>
+    <text x="285" y="228" text-anchor="middle" class="lbl-bad">FAIL</text>
     <text x="285" y="256" text-anchor="middle" class="lbl-g">retrieval was correct — the model just paraphrased</text>
-    <!-- right panel: wide net PASS -->
+    <!-- right panel: wide net PASS (green) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="580" y="60" width="470" height="210" rx="12"/>
     </g>
     <text x="815" y="92" text-anchor="middle" class="lbl-b">assert: contains-ANY [ … ]</text>
     <text x="815" y="126" text-anchor="middle" class="lbl">pool · connection · db_pool_in_use · exhaustion</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
-      <rect x="640" y="146" width="350" height="42" rx="10"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="640" y="146" width="350" height="42" rx="10" class="f-green"/>
     </g>
     <text x="815" y="173" text-anchor="middle" class="lbl">+ an LLM-judge rubric for the nuance</text>
-    <text x="815" y="230" text-anchor="middle" class="lbl-b">PASS</text>
+    <text x="815" y="230" text-anchor="middle" class="lbl-good">PASS</text>
     <text x="815" y="256" text-anchor="middle" class="lbl-g">accepts any wording of the same right idea</text>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
@@ -340,10 +361,10 @@ footer, header, hgroup, main, menu, nav, section {
       <line x1="60" y1="120" x2="240" y2="120"/>
       <line x1="60" y1="170" x2="240" y2="170"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="80" y="130" width="46" height="32" rx="5"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="80" y="130" width="46" height="32" rx="5" class="f-green"/>
     </g>
-    <text x="103" y="152" text-anchor="middle" class="lbl-g">✓</text>
+    <text x="103" y="152" text-anchor="middle" class="lbl-good">✓</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><rect x="150" y="82" width="40" height="28" rx="5"/><rect x="150" y="182" width="40" height="28" rx="5"/></g>
     <text x="150" y="248" text-anchor="middle" class="lbl-b">1 · right parcel?</text>
     <text x="150" y="274" text-anchor="middle" class="lbl-g">warehouse problem if wrong</text>
@@ -361,10 +382,10 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
       <path d="M600,220 L680,220 L680,120 L780,120 L780,220 L860,220"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <path d="M700,150 L760,150 L756,196 L708,200 Z"/>
+    <g filter="url(#rough)" stroke="#c62828" stroke-width="2.4" stroke-dasharray="9 7">
+      <path class="f-red" d="M700,150 L760,150 L756,196 L708,200 Z"/>
     </g>
-    <text x="732" y="176" text-anchor="middle" class="lbl-g">crushed?</text>
+    <text x="732" y="176" text-anchor="middle" class="lbl-bad">crushed?</text>
     <text x="732" y="248" text-anchor="middle" class="lbl-b">2 · arrived intact?</text>
     <text x="732" y="274" text-anchor="middle" class="lbl-g">handling problem if wrong</text>
     <!-- unhappy note -->
@@ -397,32 +418,32 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M204,145 C250,120 270,80 320,80" marker-end="url(#ah)"/>
       <path d="M204,175 C250,200 270,240 320,240" marker-end="url(#ah)"/>
     </g>
-    <!-- lane 1 retrieval -->
+    <!-- lane 1 retrieval — blue lane, green pass-gate -->
     <text x="360" y="52" text-anchor="start" class="lbl-b">LAYER 1 · retrieval</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="330" y="62" width="120" height="44" rx="10"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="330" y="62" width="120" height="44" rx="10" class="f-blue"/>
     </g>
     <text x="390" y="90" text-anchor="middle" class="lbl">/retrieve</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
       <path d="M454,84 L520,84" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="524" y="60" width="230" height="48" rx="11"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="524" y="60" width="230" height="48" rx="11" class="f-green"/>
     </g>
     <text x="639" y="90" text-anchor="middle" class="lbl-b">right source in top-k?</text>
     <text x="800" y="78" text-anchor="start" class="lbl-g">deterministic · phrase-independent</text>
     <text x="800" y="104" text-anchor="start" class="lbl-g">regression tripwire · retrieval_check.py</text>
-    <!-- lane 2 generation -->
+    <!-- lane 2 generation — blue lane, green graded-gate -->
     <text x="360" y="222" text-anchor="start" class="lbl-b">LAYER 2 · generation</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="330" y="232" width="120" height="44" rx="10"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="330" y="232" width="120" height="44" rx="10" class="f-blue"/>
     </g>
     <text x="390" y="260" text-anchor="middle" class="lbl">/ask</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
       <path d="M454,254 L520,254" marker-end="url(#ah)"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="524" y="230" width="230" height="48" rx="11"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="524" y="230" width="230" height="48" rx="11" class="f-green"/>
     </g>
     <text x="639" y="260" text-anchor="middle" class="lbl-b">contains-any + judge rubric</text>
     <text x="800" y="248" text-anchor="start" class="lbl-g">graded · paraphrase-tolerant</text>
@@ -463,14 +484,14 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="640" y="70" width="320" height="150" rx="8"/>
     </g>
     <text x="800" y="58" text-anchor="middle" class="lbl-g">cupboard</text>
-    <!-- v2 card behind -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
-      <rect x="700" y="118" width="230" height="70" rx="9"/>
+    <!-- v2 card behind — blue = the variant being A/B'd -->
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2">
+      <rect x="700" y="118" width="230" height="70" rx="9" class="f-blue"/>
     </g>
     <text x="900" y="146" text-anchor="middle" class="lbl-g">v2</text>
-    <!-- system.txt card front -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="680" y="100" width="230" height="70" rx="9"/>
+    <!-- system.txt card front — green = the versioned lever you control -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="680" y="100" width="230" height="70" rx="9" class="f-green"/>
     </g>
     <text x="795" y="132" text-anchor="middle" class="lbl-b">prompts/system.txt</text>
     <text x="795" y="158" text-anchor="middle" class="lbl-g">the recipe card, taped up</text>
@@ -490,11 +511,11 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The local judge is a smoke detector, not a fire examiner</h2>
   <p class="s">OpsMate's judge is the same small model — qwen3:0.6b via Ollama, no cloud key. Be clear-eyed about what a 0.6B judge is, and is not.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, inked: a smoke detector labelled qwen3 0.6b judge, cheap, always-on, catches gross failures, listing ignored the context, confident bluff, empty answer, with a gray note noisy on the margins and two runs can disagree. Right, gray dashed: a fire examiner, calibrated, costs more per grade, equals Module 12. A band reads trust it to catch the obvious, corroborate with the deterministic layers, never treat one grade as ground truth.">
-    <!-- left: smoke detector -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="50" y="60" width="480" height="200" rx="12"/>
-      <circle cx="120" cy="110" r="26"/>
-      <circle cx="120" cy="110" r="6"/>
+    <!-- left: smoke detector — green = the working, always-on grader -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="50" y="60" width="480" height="200" rx="12" class="f-green"/>
+      <circle cx="120" cy="110" r="26" fill="none"/>
+      <circle cx="120" cy="110" r="6" fill="none"/>
     </g>
     <text x="300" y="96" text-anchor="middle" class="lbl-b">smoke detector — qwen3:0.6b judge</text>
     <text x="300" y="124" text-anchor="middle" class="lbl-g">cheap · always-on · no cloud key</text>
@@ -502,9 +523,9 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="110" y="196" text-anchor="start" class="lbl-g">· ignored the context entirely</text>
     <text x="110" y="222" text-anchor="start" class="lbl-g">· a confident bluff on an unanswerable</text>
     <text x="110" y="248" text-anchor="start" class="lbl-g">· an empty answer</text>
-    <!-- right: fire examiner -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="580" y="60" width="470" height="200" rx="12"/>
+    <!-- right: fire examiner — purple = the special/future (M12) upgrade -->
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="580" y="60" width="470" height="200" rx="12" class="f-purple"/>
     </g>
     <text x="815" y="96" text-anchor="middle" class="lbl-b">fire examiner — calibrated</text>
     <text x="815" y="140" text-anchor="middle" class="lbl-g">noisy on the margins · two runs can disagree</text>
@@ -526,26 +547,26 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The baseline ritual — run it twice, no-RAG vs RAG, write both numbers down</h2>
   <p class="s">The payload of the module. Run the golden suite twice and record both scores in a versioned file — the gap between them is the measured value of retrieval.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels with score bars. Left, gray: no-RAG, the base model with no retrieval, answering alone, with a lower score bar. Right, inked: RAG, slash ask with the right pages in front, with a higher score bar. A gray bracket between them labels the gap as the measured value of retrieval from Module 4. A note under the honesty questions reads no-RAG invents, RAG admits the gap. A band reads numbers are modest on a 0.6B CPU model and that is honest, a believable 62 percent beats an invented 95 percent, written to baseline dot md and committed.">
-    <!-- left: no-RAG -->
+    <!-- left: no-RAG — red, the lower score -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="70" y="80" width="360" height="120" rx="12"/>
     </g>
     <text x="250" y="112" text-anchor="middle" class="lbl-b">no-RAG</text>
     <text x="250" y="140" text-anchor="middle" class="lbl-g">base model, no retrieval — the model alone</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <rect x="110" y="158" width="150" height="26" rx="6"/>
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4">
+      <rect x="110" y="158" width="150" height="26" rx="6" class="f-red"/>
     </g>
-    <text x="290" y="178" text-anchor="start" class="lbl-g">lower score</text>
-    <!-- right: RAG -->
+    <text x="290" y="178" text-anchor="start" class="lbl-bad">lower score</text>
+    <!-- right: RAG — green, the higher score -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="620" y="80" width="410" height="120" rx="12"/>
     </g>
     <text x="825" y="112" text-anchor="middle" class="lbl-b">RAG — /ask</text>
     <text x="825" y="140" text-anchor="middle" class="lbl-g">retrieval feeds the right pages in</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="660" y="158" width="300" height="26" rx="6"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="660" y="158" width="300" height="26" rx="6" class="f-green"/>
     </g>
-    <text x="985" y="178" text-anchor="end" class="lbl-g">higher score</text>
+    <text x="985" y="178" text-anchor="end" class="lbl-good">higher score</text>
     <!-- gap bracket -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M440,140 L610,140"/>
@@ -571,9 +592,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The committed file is a contract — M6 beats it, M12 gates on it, M13 replays it</h2>
   <p class="s">A number in a chat window is gone tomorrow. A number in a committed file is a contract the next change has to meet — the yardstick every later stage holds itself to.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A left-to-right staircase. The source, inked: baseline dot md, Module 5, recorded and versioned. An arrow to Module 6, fine-tune, must beat it. An arrow to Module 12, CI gate, promotes only if it holds. An arrow to Module 13, capstone, replays the set. A footline reads a number in a chat is gone tomorrow, a number in a committed file is a contract the next change must meet.">
-    <!-- baseline.md source -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="50" y="120" width="200" height="90" rx="12"/>
+    <!-- baseline.md source — purple = the special/meta contract artifact -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="50" y="120" width="200" height="90" rx="12" class="f-purple"/>
     </g>
     <text x="150" y="158" text-anchor="middle" class="lbl-b">baseline.md</text>
     <text x="150" y="186" text-anchor="middle" class="lbl-g">M5 · recorded, versioned</text>
@@ -581,9 +602,9 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M254,165 L320,165" marker-end="url(#ah)"/>
     </g>
-    <!-- M6 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="324" y="128" width="180" height="74" rx="11"/>
+    <!-- M6 — blue = a downstream stage that holds the contract -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="324" y="128" width="180" height="74" rx="11" class="f-blue"/>
     </g>
     <text x="414" y="160" text-anchor="middle" class="lbl-b">M6 · fine-tune</text>
     <text x="414" y="186" text-anchor="middle" class="lbl-g">must BEAT it</text>
@@ -591,8 +612,8 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M508,165 L560,165" marker-end="url(#ah)"/>
     </g>
     <!-- M12 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="564" y="128" width="200" height="74" rx="11"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="564" y="128" width="200" height="74" rx="11" class="f-blue"/>
     </g>
     <text x="664" y="160" text-anchor="middle" class="lbl-b">M12 · CI gate</text>
     <text x="664" y="186" text-anchor="middle" class="lbl-g">promotes only if it holds</text>
@@ -600,8 +621,8 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M768,165 L820,165" marker-end="url(#ah)"/>
     </g>
     <!-- M13 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="824" y="128" width="200" height="74" rx="11"/>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="824" y="128" width="200" height="74" rx="11" class="f-blue"/>
     </g>
     <text x="924" y="160" text-anchor="middle" class="lbl-b">M13 · capstone</text>
     <text x="924" y="186" text-anchor="middle" class="lbl-g">replays the set</text>
@@ -621,18 +642,18 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t" style="font-size:2.05em">From "the edit felt better" to "v2 scores three points higher — here is the file"</h2>
   <p class="s">This module turns shipping on a feeling into shipping on evidence. Three things go with you into the lab.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One: fixed route, an eval set makes a result comparable, defensible, repeatable, not it looks right. Two: grade apart, retrieval versus generation, two numbers, two teams of fixes. Three: prompt equals config, a versioned file you A/B, not code you edit and hope. A footline reads the baseline you record here is the yardstick for the whole course, now open Module 5 Lab.">
-    <!-- row 1 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="56" r="22"/></g>
+    <!-- row 1 — green = the reliable eval-set discipline -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="56" r="22" class="f-green"/></g>
     <text x="90" y="65" text-anchor="middle" class="num">1</text>
     <text x="130" y="50" text-anchor="start" class="lbl-b">FIXED ROUTE</text>
     <text x="130" y="78" text-anchor="start" class="lbl-g">an eval set makes a result comparable, defensible, repeatable — not "looks right"</text>
     <!-- row 2 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="136" r="22"/></g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="136" r="22" class="f-blue"/></g>
     <text x="90" y="145" text-anchor="middle" class="num">2</text>
     <text x="130" y="130" text-anchor="start" class="lbl-b">GRADE APART</text>
     <text x="130" y="158" text-anchor="start" class="lbl-g">retrieval vs generation — two numbers, two teams of fixes</text>
     <!-- row 3 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="216" r="22"/></g>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="216" r="22" class="f-orange"/></g>
     <text x="90" y="225" text-anchor="middle" class="num">3</text>
     <text x="130" y="210" text-anchor="start" class="lbl-b">PROMPT = CONFIG</text>
     <text x="130" y="238" text-anchor="start" class="lbl-g">a versioned file you A/B, not code you edit and hope</text>

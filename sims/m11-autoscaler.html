@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autoscaler Dynamics — the queue forms before the replica lands</title>
+<style>
+  :root{
+    --bg:#0d1220; --panel:#151c2e; --panel2:#111827; --line:#26324e; --line2:#1c2740;
+    --txt:#dbe4f5; --dim:#8494b3; --faint:#5a6a8c;
+    --accent:#4cc9f0; --accent2:#7b6cf6;
+    --ok:#3ddc97; --warn:#f5b942; --bad:#ff6b6b;
+    --queue:#f5b942; --rep:#4cc9f0; --warm:#7b6cf6;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:clamp(10.5px,0.4vw + 9.1px,16px)}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:1rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  #app{display:flex;flex-direction:column;height:100%;padding:8px 10px;gap:6px}
+
+  /* ---------- header ---------- */
+  header{display:flex;align-items:center;gap:12px;flex:0 0 auto;flex-wrap:wrap}
+  header h1{font-size:1.05rem;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+  header h1 .k8s{color:var(--accent)}
+  #hsub{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--faint);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  .hbtn{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;
+    padding:3px 9px;font-size:.88rem;cursor:pointer;min-height:24px;flex:0 0 auto}
+  .hbtn:hover{color:var(--txt);border-color:var(--faint)}
+  #playBtn{border-color:var(--accent);color:var(--accent)}
+  #playBtn.playing{border-color:var(--ok);color:var(--ok)}
+
+  /* ---------- challenge banner ---------- */
+  #challenge{flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    background:linear-gradient(90deg,rgba(123,108,246,.14),rgba(76,201,240,.07));
+    border:1px solid #3a3f6e;border-radius:8px;padding:4px 11px;min-height:30px}
+  #challenge .tag{font-size:.8rem;font-weight:700;letter-spacing:.8px;color:var(--accent2);
+    text-transform:uppercase;white-space:nowrap}
+  #challenge .steps{display:flex;gap:5px}
+  #challenge .dot{width:1.3rem;height:1.3rem;border-radius:50%;border:1.5px solid var(--faint);
+    font-size:.76rem;display:flex;align-items:center;justify-content:center;color:var(--faint);font-weight:700}
+  #challenge .dot.cur{border-color:var(--accent);color:var(--accent)}
+  #challenge .dot.done{border-color:var(--ok);background:rgba(61,220,151,.15);color:var(--ok)}
+  #challenge .txt{flex:1;color:var(--txt);font-size:.94rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  #challenge .txt code{font-family:var(--mono);font-size:.86rem;color:var(--accent);background:rgba(76,201,240,.08);
+    padding:0 4px;border-radius:4px}
+  #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
+  #challenge.success .tag{color:var(--ok)}
+  #challenge.success .txt{white-space:normal;line-height:1.3}
+
+  /* ---------- main grid ---------- */
+  #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(240px,21.5rem,350px) 1fr;gap:6px;min-height:0}
+  #main>.panel{min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;min-height:0}
+  .panel h2{font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .panel h2 span{text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- controls (left) ---------- */
+  #controls{display:flex;flex-direction:column;gap:8px;overflow-y:auto;scrollbar-width:thin}
+  .ctl .cl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .ctl .cl b{color:var(--txt);font-weight:700}
+  .ctl .cl b.q{color:var(--queue)}
+  .ctl .cl .hint{color:var(--faint);font-size:.68rem;font-weight:400}
+  .ctl input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:1.2rem}
+  .ctl.sat input[type=range]{accent-color:var(--queue)}
+
+  /* segmented selectors */
+  .seg{display:flex;gap:3px;flex-wrap:wrap}
+  .seg button{flex:1 1 auto;min-width:2.4rem;min-height:1.9rem;border-radius:6px;border:1px solid var(--line);
+    background:var(--panel2);color:var(--dim);font-family:var(--mono);font-size:.78rem;font-weight:600;cursor:pointer;
+    transition:border-color .15s,background .15s,color .15s;padding:2px 4px}
+  .seg button:hover{border-color:var(--faint);color:var(--txt)}
+  .seg button.on{border-color:var(--accent);color:var(--accent);background:rgba(76,201,240,.1)}
+
+  /* action buttons */
+  .actions{display:flex;flex-direction:column;gap:6px}
+  .btn{min-height:2rem;border-radius:7px;border:1px solid var(--line);background:var(--panel2);
+    color:var(--txt);font-family:var(--mono);font-size:.82rem;font-weight:700;cursor:pointer;
+    transition:border-color .15s,background .15s,color .15s;padding:5px 8px;display:flex;align-items:center;gap:7px;justify-content:center}
+  .btn:hover{border-color:var(--faint)}
+  .btn small{font-weight:400;color:var(--faint);font-family:var(--mono);font-size:.66rem}
+  .btn.burst{border-color:var(--queue);color:var(--queue)} .btn.burst:hover{background:rgba(245,185,66,.1)}
+  .btn.burst:disabled{opacity:.4;cursor:not-allowed}
+  .btn.burst:disabled:hover{border-color:var(--queue);background:var(--panel2)}
+
+  /* readout */
+  .readout{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line2);border-radius:8px;
+    background:var(--panel2);padding:6px 9px}
+  .readout,.readout *{cursor:default}
+  .rrow{display:flex;justify-content:space-between;align-items:baseline;padding:1px 0}
+  .rrow.head{border-bottom:1px dashed var(--line2);margin-bottom:2px;padding-bottom:3px}
+  .rrow .rl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;align-items:center;gap:5px}
+  .rrow .rl .sw{width:.66rem;height:.66rem;border-radius:2px;flex:0 0 auto}
+  .rrow .rl .sw.q{background:var(--queue)} .rrow .rl .sw.r{background:var(--rep)} .rrow .rl .sw.w{background:var(--warm)}
+  .rrow .rl small{color:var(--faint);font-size:.66rem}
+  .rrow .rv{font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--txt)}
+  .rrow .rv.qv{color:var(--queue)} .rrow .rv.rv2{color:var(--rep)} .rrow .rv.wv{color:var(--warm)}
+  .rrow .rv.qv.calm{color:var(--ok)}
+
+  /* phase pill */
+  #phaseRow{margin-top:3px;border-top:1px dashed var(--line2);padding-top:4px}
+  #phase{font-family:var(--mono);font-size:.82rem;font-weight:800;letter-spacing:.4px;padding:1px 8px;border-radius:8px;
+    border:1px solid var(--faint);color:var(--faint);background:rgba(90,106,140,.1);white-space:nowrap}
+  #phase.warming{border-color:rgba(123,108,246,.5);color:var(--warm);background:rgba(123,108,246,.12)}
+  #phase.growing{border-color:rgba(245,185,66,.5);color:var(--queue);background:rgba(245,185,66,.12)}
+  #phase.calm{border-color:rgba(61,220,151,.5);color:var(--ok);background:rgba(61,220,151,.12)}
+  #phase.cold{border-color:rgba(255,107,107,.5);color:var(--bad);background:rgba(255,107,107,.12)}
+
+  /* ---------- chart (right) ---------- */
+  #chartPanel{display:flex;flex-direction:column;min-height:0;gap:7px}
+  #chartHead{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.8rem;color:var(--dim);flex-wrap:wrap}
+  #chartHead .nn{color:var(--txt);font-weight:700}
+  #chartHead .leg{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
+  #chartHead .leg span{display:flex;align-items:center;gap:4px;font-size:.72rem;color:var(--faint);white-space:nowrap}
+  #chartHead .leg i{width:.8rem;height:.34rem;border-radius:2px;display:inline-block}
+  #chartHead .leg i.q{background:var(--queue)} #chartHead .leg i.r{background:var(--rep)}
+  #chartHead .leg i.w{background:var(--warm);opacity:.6} #chartHead .leg i.t{background:var(--bad);height:.14rem}
+
+  #chartWrap{flex:1 1 auto;position:relative;border:1.5px solid var(--line);border-radius:10px;background:#0a0f1c;
+    overflow:hidden;min-height:0}
+  #chartSvg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #chartCap{position:absolute;left:8px;top:6px;font-family:var(--mono);font-size:.68rem;color:var(--faint);pointer-events:none}
+  #chartCap b{color:var(--dim)}
+  #nowLbl{position:absolute;right:8px;top:6px;font-family:var(--mono);font-size:.68rem;color:var(--faint);pointer-events:none;text-align:right}
+  #nowLbl b{color:var(--txt)}
+
+  /* ---------- event log ---------- */
+  #events{flex:0 0 clamp(84px,7.5rem,132px);display:flex;flex-direction:column;min-height:0}
+  #events,#events *{cursor:default}
+  #evList{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6;scrollbar-width:thin}
+  .ev{display:flex;gap:8px;white-space:nowrap;overflow:hidden}
+  .ev .et{color:var(--faint);flex:0 0 4.2rem}
+  .ev .er{flex:0 0 8.2rem;color:var(--accent2);font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .ev.scaleup .er{color:var(--rep)}
+  .ev.warming .er{color:var(--warm)}
+  .ev.relief .er{color:var(--ok)}
+  .ev.scaledown .er{color:var(--dim)}
+  .ev.growing .er{color:var(--queue)}
+  .ev.cold .er{color:var(--bad)}
+  .ev .em{flex:1;color:var(--txt);opacity:.9;overflow:hidden;text-overflow:ellipsis}
+  .ev.new{animation:evin .4s ease-out}
+  @keyframes evin{0%{background:rgba(76,201,240,.12)}100%{background:transparent}}
+  #note{margin-left:auto;font-size:1rem;color:var(--faint);cursor:help;position:relative;padding:0 4px}
+  #note:hover{color:var(--dim)}
+  #note:hover::after,#note:active::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 7px);
+    z-index:40;width:48ch;max-width:80vw;background:#0a0f1c;border:1px solid var(--line);border-radius:7px;padding:7px 10px;
+    color:var(--txt);text-align:left;white-space:normal;pointer-events:none;
+    font:.82rem/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    box-shadow:0 4px 16px rgba(0,0,0,.55)}
+
+  /* narrow fallback */
+  @media (max-width:620px){
+    body{overflow:auto}
+    #main{grid-template-columns:1fr}
+    #app{height:auto;min-height:100%}
+    #chartWrap{min-height:16rem}
+    #note:hover::after,#note:active::after{right:auto;left:0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <h1><span class="k8s">⎈</span> Autoscaler Dynamics</h1>
+    <span id="hsub">the queue forms before the second replica lands</span>
+    <button id="playBtn" class="hbtn playing" title="Pause or resume the clock. The model advances one simulated second per tick.">⏸ Pause</button>
+    <button id="reset" class="hbtn" title="Reset to the start: 30 req/min, 2 slots/replica, 65s cold start, threshold 2, 60s window, max 2 replicas.">↺ Reset</button>
+  </header>
+
+  <div id="challenge">
+    <span class="tag">Try this</span>
+    <span class="steps">
+      <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span><span class="dot" id="d4">4</span>
+    </span>
+    <span class="txt" id="chTxt"></span>
+  </div>
+
+  <div id="main">
+    <!-- LEFT: controls + readouts -->
+    <div class="panel" id="controls">
+      <h2>The workload <span>· arrival, slots, cold start</span></h2>
+
+      <div class="ctl sat" title="Requests arriving per minute. One replica with 2 slots drains about 24 req/min in this model; push past that and requests defer.">
+        <div class="cl">arrival rate <span><b class="q"><span id="rateVal">30</span></b> req/min</span></div>
+        <input type="range" id="rateRange" min="0" max="90" step="3" value="30">
+        <div class="cl"><span class="hint">below the drain line 1 replica copes · above it the queue builds</span></div>
+      </div>
+
+      <div class="ctl" title="Concurrent decode slots per replica — how many in-flight requests one engine serves before the next one waits (llama.cpp --parallel).">
+        <div class="cl">slots / replica <span class="hint">concurrent decode</span></div>
+        <div class="seg" id="slotSeg">
+          <button data-s="1">1</button>
+          <button data-s="2" class="on">2</button>
+          <button data-s="3">3</button>
+          <button data-s="4">4</button>
+        </div>
+      </div>
+
+      <div class="ctl" title="Cold start = image pull + model load. A model server's cold start is minutes-scale in production; here it is seconds you can watch. The new replica adds ZERO capacity until it finishes warming.">
+        <div class="cl">cold start <span><b><span id="coldVal">65</span></b> s</span></div>
+        <input type="range" id="coldRange" min="10" max="90" step="5" value="65">
+        <div class="cl"><span class="hint">image pull + model load — the lag you cannot skip</span></div>
+      </div>
+
+      <h2 style="margin-top:2px">The ScaledObject <span>· KEDA knobs</span></h2>
+
+      <div class="ctl" title="KEDA threshold: deferred requests per replica that trigger a scale-out. The generated HPA scales when sum(requests_deferred) exceeds threshold × current replicas.">
+        <div class="cl">threshold <span><b><span id="thVal">2</span></b> deferred / replica</span></div>
+        <input type="range" id="thRange" min="1" max="8" step="1" value="2">
+        <div class="cl"><span class="hint">llamacpp:requests_deferred per replica</span></div>
+      </div>
+
+      <div class="ctl" title="Scale-down stabilization window: how long the queue must stay calm before KEDA removes a replica. Too short and it flaps — scaling down into a queue that is about to return.">
+        <div class="cl">stabilization <span><b><span id="stabVal">60</span></b> s</span></div>
+        <input type="range" id="stabRange" min="5" max="120" step="5" value="60">
+        <div class="cl"><span class="hint">calm-for-this-long before scale-down</span></div>
+      </div>
+
+      <div class="ctl" title="Replica bounds. min 1 keeps an engine warm (interactive service). min 0 is scale-to-zero — the first request after idle pays the full cold start.">
+        <div class="cl">replica bounds <span class="hint">min → max</span></div>
+        <div class="seg" id="minSeg">
+          <button data-m="0">min 0</button>
+          <button data-m="1" class="on">min 1</button>
+        </div>
+        <div class="seg" id="maxSeg" style="margin-top:4px">
+          <button data-x="2" class="on">max 2</button>
+          <button data-x="3">max 3</button>
+          <button data-x="4">max 4</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn burst" id="burst" title="Inject a spike: a regional outage sends every on-call engineer to OpsMate at once. Watch the queue form, the scale decision fire, and the replica warm — and measure the lag between the decision and the relief.">⚡ Burst <small>spike the arrival rate</small></button>
+      </div>
+
+      <div class="readout" id="readout">
+        <div class="rrow head"><span class="rl">now <small>sim-clock</small></span><span class="rv" id="clockShow">0:00</span></div>
+        <div class="rrow"><span class="rl"><span class="sw q"></span>deferred <small>queue at the door</small></span><span class="rv qv" id="qShow">0</span></div>
+        <div class="rrow"><span class="rl"><span class="sw r"></span>replicas ready <small>serving</small></span><span class="rv rv2" id="repShow">1</span></div>
+        <div class="rrow"><span class="rl"><span class="sw w"></span>warming <small>not serving yet</small></span><span class="rv wv" id="warmShow">0</span></div>
+        <div class="rrow"><span class="rl">desired <small>KEDA / HPA target</small></span><span class="rv" id="desShow">1</span></div>
+        <div class="rrow" id="phaseRow"><span class="rl">phase <small id="phaseSub">watching the queue</small></span><span id="phase">CALM</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: the scrolling chart -->
+    <div class="panel" id="chartPanel">
+      <div id="chartHead">
+        <span class="nn">queue depth vs replicas</span> <span>· scrolling ~90s window</span>
+        <span class="leg">
+          <span><i class="q"></i>deferred</span>
+          <span><i class="r"></i>replicas ready</span>
+          <span><i class="w"></i>warming band</span>
+          <span><i class="t"></i>threshold</span>
+        </span>
+      </div>
+      <div id="chartWrap">
+        <svg id="chartSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <!-- warming bands (drawn first, behind) -->
+          <g id="warmBands"></g>
+          <!-- threshold line -->
+          <line id="thLine" x1="0" x2="100" stroke="var(--bad)" stroke-width="0.4" stroke-dasharray="1.5 1.5" opacity="0.55"/>
+          <!-- replica step line -->
+          <path id="repPath" fill="none" stroke="var(--rep)" stroke-width="0.7" opacity="0.9"/>
+          <!-- queue depth area + line -->
+          <path id="qArea" fill="var(--queue)" opacity="0.13"/>
+          <path id="qPath" fill="none" stroke="var(--queue)" stroke-width="0.8"/>
+        </svg>
+        <div id="chartCap"><b>queue</b> scaled to peak · <b>replicas</b> on right axis</div>
+        <div id="nowLbl"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="events">
+    <h2>keda <span>— scaler decisions · sum(llamacpp:requests_deferred) · generated HPA</span>
+      <span id="note" data-tip="Teaching model, not the real system. Time is compressed (each tick = one simulated second) and the queue drains on a smooth per-slot rate rather than real token-by-token decode. Cold start here is a few seconds you can watch; a real model server's image-pull-plus-model-load is minutes. KEDA's real loop polls Prometheus on an interval and hands a generated HPA an external metric; the sim collapses that into one deterministic decision each poll. The one thing it keeps exact is the lesson: the scaler reacts AFTER the queue forms, and the new replica helps LATER than the decision — the lag window is real, cold start just makes it visible.">ⓘ</span></h2>
+    <div id="evList"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ================================================================== model
+     Discrete-time autoscaler. One tick = one simulated second.
+
+     WORKLOAD
+       arrivalPerMin  → requests entering per tick = rate/60 (fractional, accumulated)
+       slotsPerReplica → concurrent decode slots per READY replica
+       A ready replica drains up to `slotsPerReplica` requests-worth of work per
+       DRAIN_SECS window; we model per-tick drain capacity = readyReplicas*slots / SERVICE_SECS.
+
+     STATE each tick:
+       arrivals accumulate into `inflightWanted`; capacity = readyReplicas*slots.
+       served = min(offered, capacity); the remainder DEFERS → queue depth.
+       queue also drains when spare capacity exists (capacity > new arrivals).
+
+     KEDA loop (every pollingInterval ticks):
+       read deferred; desired = clamp(ceil(deferred / threshold), min, max) but never
+       below current-need. Scale UP is immediate as a DECISION but the new replica
+       enters `warming` for coldStart secs before it becomes READY (adds capacity).
+       Scale DOWN only after deferred has been <= threshold for the full
+       stabilization window (level-triggered calm timer).
+
+     The whole point: capacity from a scale-up decision arrives coldStart seconds
+     LATE. During that window the queue keeps growing though the autoscaler already
+     "did the right thing". Deterministic given the controls (no Math.random on the
+     assertable path). */
+
+  var SERVICE_SECS = 5;      /* seconds of work one slot clears per request (model constant) */
+  /* → one replica w/ 2 slots drains 2/5 req/s = 24 req/min. That is the drain line. */
+  var POLL = 5;              /* KEDA pollingInterval (ticks/sec) — read the metric every 5s */
+  var WINDOW_SECS = 90;      /* chart window */
+  var BURST_RATE = 78;       /* arrival rate the burst button jumps to */
+  var BURST_HOLD = 40;       /* how long (s) the burst holds before decaying back */
+
+  var DEFAULTS={rate:30, slots:2, cold:65, threshold:2, stab:60, min:1, max:2};
+
+  var S; /* the whole mutable state, (re)built by resetState */
+  function resetState(){
+    S={
+      rate:DEFAULTS.rate, slots:DEFAULTS.slots, cold:DEFAULTS.cold,
+      threshold:DEFAULTS.threshold, stab:DEFAULTS.stab, min:DEFAULTS.min, max:DEFAULTS.max,
+      t:0,                 /* sim seconds elapsed */
+      ready: Math.max(DEFAULTS.min,1),  /* replicas serving; if min 0 we still boot 1 to start warm unless min0 */
+      warming:[],          /* [{remaining:secsLeft}] replicas booting */
+      queue:0,             /* deferred requests (queue depth) */
+      acc:0,               /* fractional arrival accumulator */
+      desired:Math.max(DEFAULTS.min,1),
+      calmTimer:0,         /* secs the queue has stayed <= threshold*ready */
+      lastPoll:0,
+      burstUntil:-1,       /* sim-time the burst decays at, or -1 */
+      history:[],          /* [{t,queue,ready,warming}] for the chart */
+      /* bookkeeping for the challenge / assertions */
+      lastScaleUpAt:-1,    /* t of the most recent scale-up DECISION */
+      lastReliefAt:-1,     /* t the warmed replica first cut the queue after that decision */
+      pendingRelief:false, /* a scale-up is warming; relief not yet measured */
+      flapCount:0,         /* scale-down→up oscillations observed (removed then re-added) */
+      lastScaleDownAt:-1   /* t of the most recent scale-DOWN — for flap detection */
+    };
+    if(DEFAULTS.min===0){ S.ready=0; }
+  }
+
+  /* effective arrival rate this second (burst overrides, then decays) */
+  function currentRate(){
+    if(S.burstUntil>=0 && S.t<=S.burstUntil) return BURST_RATE;
+    if(S.burstUntil>=0 && S.t>S.burstUntil && S.t<=S.burstUntil+15){
+      /* linear decay back to the slider rate over 15s */
+      var k=(S.t-S.burstUntil)/15;
+      return Math.round(BURST_RATE + (S.rate-BURST_RATE)*k);
+    }
+    return S.rate;
+  }
+
+  /* per-second drain capacity (requests fully cleared) from READY replicas */
+  function capacityPerSec(){ return S.ready*S.slots/SERVICE_SECS; }
+  /* the drain line of a SINGLE replica, in req/min — the saturation anchor */
+  function drainOfOne(){ return Math.round(S.slots/SERVICE_SECS*60); }
+
+  /* ================================================================== one tick */
+  function tick(){
+    S.t++;
+
+    /* 1. advance warming replicas */
+    var justReady=0;
+    for(var i=S.warming.length-1;i>=0;i--){
+      S.warming[i].remaining--;
+      if(S.warming[i].remaining<=0){ S.warming.splice(i,1); S.ready++; justReady++; }
+    }
+    if(justReady>0){
+      logEv('warming','replica Ready','model already present on PVC — engine warm, +'+justReady+' serving ('+S.ready+' ready now)');
+    }
+
+    /* 2. arrivals this second */
+    var rate=currentRate();
+    S.acc += rate/60;
+    var arrivals=Math.floor(S.acc); S.acc-=arrivals;
+
+    /* 3. serve + defer. capacity clears work; new arrivals + existing queue compete.
+       Below the drain line spare capacity also chews down any standing queue, so a
+       sub-saturation rate trends the queue to zero rather than parking requests. */
+    var cap=capacityPerSec();
+    var offered=S.queue+arrivals;
+    var served=Math.min(offered, cap);
+    S.queue=Math.max(0, offered-served);
+
+    /* relief detection: a warmed replica landed and the queue is now shrinking */
+    if(S.pendingRelief && S.ready>1 && justReady>0){
+      S.lastReliefAt=S.t; S.pendingRelief=false;
+      var lag=S.lastScaleUpAt>=0 ? (S.t-S.lastScaleUpAt) : S.cold;
+      logEv('relief','queue draining','second engine live — queue peaked while it warmed; relief '+lag+'s after the scale decision');
+    }
+
+    /* 4. KEDA poll every POLL secs */
+    if(S.t-S.lastPoll>=POLL){
+      S.lastPoll=S.t;
+      kedaDecide();
+    }
+
+    /* 5. record history */
+    S.history.push({t:S.t, queue:S.queue, ready:S.ready, warming:S.warming.length, rate:rate});
+    while(S.history.length && S.history[0].t < S.t-WINDOW_SECS) S.history.shift();
+
+    /* narrate a growing queue while warming */
+    if(S.warming.length>0 && S.queue>S.threshold*Math.max(1,S.ready)){
+      /* only log occasionally to avoid spam */
+      if(S.t%6===0){
+        var rem=Math.max.apply(null,S.warming.map(function(w){return w.remaining}));
+        logEv('growing','queue STILL growing','replica warming ~'+rem+'s remaining — deferred '+S.queue+', users waiting despite a correct decision');
+      }
+    }
+  }
+
+  /* KEDA reads the metric and (maybe) changes desired replicas.
+     The trigger is the QUEUE — sum(llamacpp:requests_deferred) — NOT the arrival
+     rate or CPU. That is the whole M11 lesson: scale on the queue at the door.
+     desired = current replicas needed to clear the standing queue, on top of what
+     is already serving. When the queue is empty, desired falls back to min — which
+     is exactly what lets a too-short stabilization window flap: it removes a replica
+     the empty queue said it didn't need, and the queue promptly rebuilds. */
+  function kedaDecide(){
+    var totalNow=S.ready+S.warming.length;
+    /* HPA external-metric math: target is `threshold` deferred per replica.
+       desired = ceil( currentReplicas * (deferred / (threshold*currentReplicas)) )
+               = ceil( deferred / threshold ), floored at min, capped at max.
+       Above target → grow; at/below target with an empty queue → shrink to min. */
+    var want;
+    if(S.queue>S.threshold*Math.max(1,totalNow)){
+      want=Math.ceil(S.queue/S.threshold);        /* the queue exceeds target → grow */
+    } else if(S.queue===0){
+      want=S.min;                                 /* nothing deferred → fall back to min */
+    } else {
+      want=totalNow;                              /* within target band → hold steady */
+    }
+    want=Math.max(S.min, Math.min(S.max, want));
+
+    S.desired=want;
+
+    if(want>totalNow){
+      /* SCALE UP — decision now, capacity later (cold start) */
+      var add=want-totalNow;
+      for(var i=0;i<add;i++) S.warming.push({remaining:S.cold});
+      var coldBoot = (S.ready===0);
+      S.lastScaleUpAt=S.t; S.pendingRelief=true;
+      S.calmTimer=0;
+      /* a FLAP: we scaled UP again shortly after a scale-DOWN — capacity we just
+         removed is immediately needed back. That is the too-short-window pathology.
+         A single up (or a single down after long calm) is NOT a flap. */
+      if(S.lastScaleDownAt>=0 && (S.t-S.lastScaleDownAt)<=(S.stab+2*POLL)) S.flapCount++;
+      if(coldBoot){
+        logEv('cold','scale 0→'+want,'deferred '+S.queue+' > threshold '+S.threshold+' → cold boot from zero, first request waits ~'+S.cold+'s for image pull + model load');
+      }else{
+        logEv('scaleup','scale '+totalNow+'→'+want,'deferred '+S.queue+' > threshold '+S.threshold+'×'+S.ready+' → add '+add+' replica'+(add>1?'s':'')+', warming '+S.cold+'s');
+      }
+    } else if(want<totalNow){
+      /* SCALE DOWN — only after the stabilization window of calm */
+      var calm = S.queue<=S.threshold*Math.max(1,S.ready);
+      if(calm){
+        S.calmTimer+=POLL;
+        if(S.calmTimer>=S.stab){
+          var removeTo=want;
+          var removed=totalNow-removeTo;
+          /* remove warming first, then ready */
+          while(S.warming.length>0 && S.ready+S.warming.length>removeTo) S.warming.pop();
+          S.ready=Math.max(removeTo, S.ready- Math.max(0, (S.ready+S.warming.length)-removeTo));
+          S.ready=Math.max(S.min, removeTo);
+          S.lastScaleDownAt=S.t;
+          logEv('scaledown','scale '+totalNow+'→'+removeTo,'calm '+S.calmTimer+'s ≥ window '+S.stab+'s → remove '+removed+' replica'+(removed>1?'s':''));
+          S.calmTimer=0;
+        }
+      } else {
+        S.calmTimer=0;
+      }
+    } else {
+      /* steady — reset calm timer if the queue is hot */
+      if(S.queue>S.threshold*Math.max(1,S.ready)) S.calmTimer=0;
+    }
+  }
+
+  /* ================================================================== phase label */
+  function phase(){
+    if(S.ready===0 && S.warming.length>0) return {k:'cold', t:'COLD BOOT'};
+    if(S.warming.length>0 && S.queue>S.threshold*Math.max(1,S.ready)) return {k:'warming', t:'WARMING · queue growing'};
+    if(S.warming.length>0) return {k:'warming', t:'WARMING'};
+    if(S.queue>S.threshold*Math.max(1,S.ready)) return {k:'growing', t:'QUEUE GROWING'};
+    return {k:'calm', t:'CALM'};
+  }
+
+  /* ================================================================== events log */
+  var evList=$('evList');
+  function clock(sec){ if(sec==null)sec=S.t; return Math.floor(sec/60)+':'+('0'+sec%60).slice(-2) }
+  function logEv(kind,reason,msg){
+    var d=document.createElement('div');
+    d.className='ev new '+(kind||'');
+    d.innerHTML='<span class="et"></span><span class="er"></span><span class="em"></span>';
+    d.children[0].textContent=clock();
+    d.children[1].textContent=reason; d.children[2].textContent=msg;
+    d.title=reason+'  —  '+msg;
+    evList.appendChild(d);
+    while(evList.children.length>90)evList.removeChild(evList.firstChild);
+    evList.scrollTop=evList.scrollHeight;
+  }
+
+  /* ================================================================== chart render */
+  function renderChart(){
+    var h=S.history;
+    var svg={q:$('qPath'), qa:$('qArea'), rep:$('repPath'), th:$('thLine'), bands:$('warmBands')};
+    if(h.length<2){ svg.q.setAttribute('d',''); svg.qa.setAttribute('d',''); svg.rep.setAttribute('d',''); return; }
+
+    var t0=Math.max(0, S.t-WINDOW_SECS), t1=Math.max(WINDOW_SECS, S.t);
+    function X(t){ return (t-t0)/(t1-t0)*100; }
+    var qmax=1; for(var i=0;i<h.length;i++) qmax=Math.max(qmax,h[i].queue);
+    qmax=Math.max(qmax, S.threshold*2, 6);
+    function Yq(q){ return 100 - (q/qmax*88) - 6; }         /* queue axis (left, inverted) */
+    function Yr(r){ return 100 - (r/S.max*88) - 6; }        /* replica axis (right) */
+
+    /* queue line + area */
+    var dq='', da='';
+    for(var i=0;i<h.length;i++){
+      var x=X(h[i].t), y=Yq(h[i].queue);
+      dq+=(i?'L':'M')+x.toFixed(2)+' '+y.toFixed(2)+' ';
+    }
+    da=dq+'L'+X(h[h.length-1].t).toFixed(2)+' 94 L'+X(h[0].t).toFixed(2)+' 94 Z';
+    svg.q.setAttribute('d',dq); svg.qa.setAttribute('d',da);
+
+    /* replica STEP line */
+    var dr='';
+    for(var i=0;i<h.length;i++){
+      var x=X(h[i].t), y=Yr(h[i].ready);
+      if(i===0) dr+='M'+x.toFixed(2)+' '+y.toFixed(2)+' ';
+      else{ var py=Yr(h[i-1].ready); dr+='L'+x.toFixed(2)+' '+py.toFixed(2)+' L'+x.toFixed(2)+' '+y.toFixed(2)+' '; }
+    }
+    svg.rep.setAttribute('d',dr);
+
+    /* threshold line (in queue units) */
+    var yth=Yq(S.threshold); svg.th.setAttribute('y1',yth.toFixed(2)); svg.th.setAttribute('y2',yth.toFixed(2));
+
+    /* warming bands: shaded x-spans where any replica was warming */
+    var bands=''; var inBand=false, bx0=0;
+    for(var i=0;i<h.length;i++){
+      if(h[i].warming>0 && !inBand){ inBand=true; bx0=X(h[i].t); }
+      else if(h[i].warming===0 && inBand){ inBand=false;
+        bands+='<rect x="'+bx0.toFixed(2)+'" y="6" width="'+(X(h[i].t)-bx0).toFixed(2)+'" height="88" fill="var(--warm)" opacity="0.10"/>';
+      }
+    }
+    if(inBand){ bands+='<rect x="'+bx0.toFixed(2)+'" y="6" width="'+(100-bx0).toFixed(2)+'" height="88" fill="var(--warm)" opacity="0.10"/>'; }
+    svg.bands.innerHTML=bands;
+  }
+
+  /* ================================================================== full render */
+  function render(){
+    /* control mirrors */
+    $('rateVal').textContent=S.rate; $('rateRange').value=S.rate;
+    $('coldVal').textContent=S.cold; $('coldRange').value=S.cold;
+    $('thVal').textContent=S.threshold; $('thRange').value=S.threshold;
+    $('stabVal').textContent=S.stab; $('stabRange').value=S.stab;
+    syncSeg();
+
+    /* readout */
+    $('clockShow').textContent=clock();
+    $('qShow').textContent=Math.round(S.queue);
+    $('qShow').classList.toggle('calm', S.queue<=S.threshold*Math.max(1,S.ready));
+    $('repShow').textContent=S.ready;
+    $('warmShow').textContent=S.warming.length;
+    $('desShow').textContent=S.desired;
+
+    var ph=phase(), pp=$('phase');
+    pp.textContent=ph.t; pp.className=ph.k;
+    $('phaseSub').textContent =
+      ph.k==='calm' ? 'queue below threshold' :
+      ph.k==='growing' ? 'no capacity yet — decision pending' :
+      ph.k==='cold' ? 'zero replicas — first user waits' :
+      'replica booting — capacity is late';
+
+    /* burst button: disabled while a burst is active */
+    $('burst').disabled = (S.burstUntil>=0 && S.t<=S.burstUntil+15);
+
+    $('nowLbl').innerHTML='arrival <b>'+currentRate()+'</b> req/min · drain ~<b>'+Math.round(capacityPerSec()*60)+'</b>';
+
+    renderChart();
+    updateChallenge();
+  }
+
+  /* ================================================================== clock loop */
+  var speed=1;           /* ticks per animation frame budget */
+  var playing=true, timer=null;
+  var TICK_MS=140;       /* wall-time per sim second */
+  function loop(){
+    if(!playing) return;
+    tick();
+    render();
+    timer=setTimeout(loop, TICK_MS);
+  }
+  function play(){ if(playing)return; playing=true; $('playBtn').classList.add('playing'); $('playBtn').textContent='⏸ Pause'; loop(); }
+  function pause(){ playing=false; $('playBtn').classList.remove('playing'); $('playBtn').textContent='▶ Play'; if(timer)clearTimeout(timer); }
+
+  /* ================================================================== burst */
+  function doBurst(){
+    if($('burst').disabled) return;
+    S.burstUntil=S.t+BURST_HOLD;
+    logEv('growing','burst','regional outage — every on-call engineer hits OpsMate at once ('+BURST_RATE+' req/min for '+BURST_HOLD+'s)');
+  }
+
+  /* ================================================================== challenge
+     1 — find the arrival rate where ONE replica saturates (queue starts to build)
+     2 — trigger a burst and let the sim measure the lag between the scale DECISION
+         and the RELIEF when the warmed replica lands
+     3 — shrink the stabilization window and make it FLAP (a down then up inside a burst tail)
+     4 — set min 0 and watch the first request eat the full cold start (COLD BOOT phase) */
+  var CH={step:1, done:[false,false,false,false],
+    saturated:false, measuredLag:0, flapped:false, sawColdBoot:false};
+
+  var CH_TEXT=[
+    'Step 1 — Drag <b>arrival rate</b> up until the <b>deferred</b> queue starts to climb above zero and stays there. That is the point where <b>one replica saturates</b> — its slots are full and the next request waits. Find the drain line.',
+    'Step 2 — Click <b>⚡ Burst</b> and watch. The queue forms, KEDA decides <code>1→2</code> at the threshold, but the second engine is <b>warming</b>. The sim measures the <b>lag</b> between the scale decision and the relief when it lands — that window is where users wait despite a correct autoscaler.',
+    'Step 3 — Shrink the <b>stabilization</b> window to <code>≤15s</code>, then <b>Burst</b> again. With the window that short, KEDA scales down the moment the queue dips — into a queue that is about to return. Catch it <b>flapping</b>: a scale-down then a scale-up close together.',
+    'Step 4 — Set <b>min 0</b> (scale-to-zero), let the replicas drain away, then send load (raise the rate or <b>Burst</b>). The first request hits <b>zero ready replicas</b> and pays the whole <b>cold start</b> — the COLD BOOT phase. That is the scale-to-zero tax on an interactive service.'
+  ];
+  var SUCCESS='Challenge complete — you felt the whole loop. The autoscaler is <b>reactive</b>: the queue forms first, KEDA reads it on the next poll, and only then decides. And the fix it decides on — a second engine — arrives <b>cold-start-late</b>, so there is always a lag window where users wait though the scaler did exactly the right thing. Push the stabilization window too low and it <b>flaps</b>, scaling down into a queue that is about to return; drop to <b>min 0</b> and the first user after idle pays the full cold start. This is why an interactive model server keeps at least one engine warm and scales on the queue at the door — <code>llamacpp:requests_deferred</code> — not the kitchen noise of CPU%.';
+
+  function updateChallenge(){
+    /* Step 1: one replica saturates — arrival above its drain line and the queue
+       has built past a few deferred. (A warming second replica may already be on
+       the way; the point is the learner drove the rate past the saturation line.) */
+    if(!CH.done[0]){
+      if(S.ready===1 && S.queue>=3 && currentRate()>drainOfOne()){
+        CH.saturated=true; CH.done[0]=true; CH.step=Math.max(CH.step,2);
+        logEv('growing','try-this','Step 1 done — arrival '+currentRate()+' > one-replica drain '+drainOfOne()+' req/min: it saturated, queue building.');
+      }
+    }
+    /* Step 2: a burst produced a measured relief lag > 0 */
+    if(CH.done[0] && !CH.done[1]){
+      if(S.lastReliefAt>0 && S.lastScaleUpAt>=0 && S.lastReliefAt>S.lastScaleUpAt){
+        CH.measuredLag=S.lastReliefAt-S.lastScaleUpAt;
+        CH.done[1]=true; CH.step=Math.max(CH.step,3);
+        logEv('relief','try-this','Step 2 done — measured '+CH.measuredLag+'s of lag between the scale decision and the relief. That is the cold-start window users waited through.');
+      }
+    }
+    /* Step 3: flap observed with a short window */
+    if(CH.done[1] && !CH.done[2]){
+      if(S.stab<=15 && S.flapCount>=1){
+        CH.flapped=true; CH.done[2]=true; CH.step=Math.max(CH.step,4);
+        logEv('scaledown','try-this','Step 3 done — window '+S.stab+'s is too short: KEDA scaled down into a returning queue and had to scale back up. That is flapping.');
+      }
+    }
+    /* Step 4: min 0, a real cold boot from zero happened */
+    if(CH.done[2] && !CH.done[3]){
+      if(S.min===0 && CH.sawColdBoot){
+        CH.done[3]=true; CH.step=5;
+        logEv('cold','try-this','Step 4 done — min 0 meant the first request found zero ready replicas and paid the full cold start. The scale-to-zero tax.');
+      }
+    }
+    for(var i=1;i<=4;i++){
+      var d=$('d'+i); d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
+      d.textContent=CH.done[i-1]?'✓':i;
+    }
+    var box=$('challenge'), txt=$('chTxt');
+    if(CH.step>=5){box.classList.add('success');txt.innerHTML=SUCCESS;}
+    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[Math.min(CH.step,4)-1];}
+  }
+
+  /* watch for a cold boot from zero for step 4 (set in kedaDecide via ready===0) */
+  var _kedaDecide=kedaDecide;
+  kedaDecide=function(){
+    var wasZero=(S.ready===0 && S.warming.length===0);
+    _kedaDecide();
+    if(wasZero && S.warming.length>0 && S.min===0) CH.sawColdBoot=true;
+  };
+
+  /* ================================================================== controls */
+  function syncSeg(){
+    Array.prototype.forEach.call($('slotSeg').children,function(b){b.classList.toggle('on',+b.dataset.s===S.slots)});
+    Array.prototype.forEach.call($('minSeg').children,function(b){b.classList.toggle('on',+b.dataset.m===S.min)});
+    Array.prototype.forEach.call($('maxSeg').children,function(b){b.classList.toggle('on',+b.dataset.x===S.max)});
+  }
+
+  $('rateRange').addEventListener('input',function(){ S.rate=+this.value; S.burstUntil=-1; render(); });
+  $('coldRange').addEventListener('input',function(){ S.cold=+this.value; render(); });
+  $('thRange').addEventListener('input',function(){ S.threshold=+this.value; render(); });
+  $('stabRange').addEventListener('input',function(){
+    S.stab=+this.value;
+    logEv('scaledown','stabilizationWindow','scale-down window set to '+S.stab+'s'+(S.stab<=15?' — short: expect flapping under load':''));
+    render();
+  });
+  $('slotSeg').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return;
+    S.slots=+b.dataset.s; syncSeg(); logEv('','slots','--parallel = '+S.slots+' → drain ~'+Math.round(S.ready*S.slots/SERVICE_SECS*60)+' req/min'); render(); });
+  $('minSeg').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return;
+    S.min=+b.dataset.m; DEFAULTS_min_live(S.min); syncSeg();
+    logEv('', 'minReplicaCount', 'min replicas = '+S.min+(S.min===0?' — scale-to-zero: first request after idle pays cold start':' — one engine stays warm'));
+    render(); });
+  $('maxSeg').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return;
+    S.max=+b.dataset.x; syncSeg(); logEv('','maxReplicaCount','max replicas = '+S.max); render(); });
+  /* keep the module's min-affects-cold-path logic honest without a page constant */
+  function DEFAULTS_min_live(m){ DEFAULTS.min=m; if(m===0 && S.queue===0 && currentRate()===0){ /* allow drain to 0 over time */ } }
+
+  $('burst').addEventListener('click',doBurst);
+  $('playBtn').addEventListener('click',function(){ if(playing)pause(); else play(); });
+  $('reset').addEventListener('click',function(){ location.reload(); });
+
+  /* ================================================================== boot */
+  DEFAULTS.min=1;
+  resetState();
+  logEv('','ready','KEDA ScaledObject up · trigger sum(llamacpp:requests_deferred) · threshold '+S.threshold+' · min '+S.min+' / max '+S.max);
+  logEv('','pollingInterval','reading the queue metric every '+POLL+'s — the scaler only sees the queue on a poll, so it reacts after it forms');
+  render();
+  loop();
+  window.addEventListener('resize',render);
+
+  /* ================================================================== test hook */
+  window.__sim={
+    get S(){return S}, get CH(){return CH},
+    consts:{SERVICE_SECS:SERVICE_SECS,POLL:POLL,BURST_RATE:BURST_RATE,BURST_HOLD:BURST_HOLD,DEFAULTS:DEFAULTS,WINDOW_SECS:WINDOW_SECS},
+    pause:pause, play:play, isPlaying:function(){return playing},
+    tick:function(n){ n=n||1; for(var i=0;i<n;i++){ tick(); } render(); },
+    setRate:function(v){ S.rate=v; S.burstUntil=-1; render(); },
+    setSlots:function(v){ S.slots=v; syncSeg(); render(); },
+    setCold:function(v){ S.cold=v; render(); },
+    setThreshold:function(v){ S.threshold=v; render(); },
+    setStab:function(v){ S.stab=v; render(); },
+    setMin:function(v){ S.min=v; DEFAULTS.min=v; syncSeg(); render(); },
+    setMax:function(v){ S.max=v; syncSeg(); render(); },
+    burst:doBurst,
+    capacityPerSec:capacityPerSec, currentRate:currentRate, phase:phase,
+    drainPerMin:function(){ return Math.round(capacityPerSec()*60); }
+  };
+})();
+</script>
+</body>
+</html>

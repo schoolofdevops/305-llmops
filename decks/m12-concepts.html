@@ -466,32 +466,34 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 11 · THE EXIT-CODE GATE ═══════════════ -->
 <section>
-  <h2 class="t">Gate on the exit code, not on a human reading a report</h2>
-  <p class="s">You built the brake test's contents in M5 — the golden set. M12 industrializes it: a version header, changelog discipline, and the runner's exit code becomes the gate. The tool is promptfoo, pointed at the gateway's /v1 with a virtual key — so eval traffic goes through the production door.</p>
+  <h2 class="t">Gate on a floor against the baseline, not raw pass/fail</h2>
+  <p class="s">
+            You built the brake test's contents in M5 — the golden set. M12 industrializes it: gate.sh scores the generation layer deterministically against the assistant's /ask and compares the pass count to the floor committed in baseline.md — the M9 canary-gate pattern, promoted to CI.
+          </p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Promptfoo runs the versioned M5 golden set against the gateway slash v one. A fork follows: exit code zero, all green, means the promotion proceeds, and exit code one hundred, a failed assertion, means the merge is blocked and the candidate goes back.">
     <!-- golden set at /v1: blue = the thing being run -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="60" y="120" width="230" height="110" rx="12"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="120" width="230" height="110" rx="12"/></g>
-    <text x="175" y="154" text-anchor="middle" class="lbl-b">promptfoo</text>
+    <text x="175" y="154" text-anchor="middle" class="lbl-b">gate.sh</text>
     <text x="175" y="182" text-anchor="middle" class="lbl-g" style="font-size:15px">M5 golden set (versioned)</text>
-    <text x="175" y="210" text-anchor="middle" class="lbl-g" style="font-size:15px">→ gateway /v1 · virtual key</text>
+    <text x="175" y="210" text-anchor="middle" class="lbl-g" style="font-size:15px">→ the assistant /ask · deterministic</text>
     <!-- exit-code fork -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="290" y1="175" x2="360" y2="175" marker-end="url(#ah)"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M370,175 L430,135 M370,175 L430,215"/><circle cx="365" cy="175" r="8"/></g>
-    <text x="360" y="130" text-anchor="middle" class="lbl-g" style="font-size:15px">exit code</text>
+    <text x="360" y="130" text-anchor="middle" class="lbl-g" style="font-size:15px">vs baseline floor</text>
     <!-- exit 0 -> proceeds: green -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="440" y="100" width="300" height="72" rx="10"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="440" y="100" width="300" height="72" rx="10"/></g>
-    <text x="590" y="132" text-anchor="middle" class="lbl-b">exit 0 · all green</text>
+    <text x="590" y="132" text-anchor="middle" class="lbl-b">at/above floor · exit 0</text>
     <text x="590" y="158" text-anchor="middle" class="lbl-g" style="font-size:15px">promotion proceeds</text>
     <!-- exit 100 -> blocked: red -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="440" y="188" width="300" height="72" rx="10"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="440" y="188" width="300" height="72" rx="10"/></g>
-    <text x="590" y="220" text-anchor="middle" class="lbl-bad" style="font-size:20px">exit 100 · a fail</text>
+    <text x="590" y="220" text-anchor="middle" class="lbl-bad" style="font-size:20px">below floor · exit 1</text>
     <text x="590" y="246" text-anchor="middle" class="lbl-g" style="font-size:15px">merge blocked · candidate back</text>
-    <text x="900" y="150" text-anchor="middle" class="lbl-g">the exit code<tspan x="900" dy="28">is the whole contract</tspan></text>
+    <text x="900" y="150" text-anchor="middle" class="lbl-g">the floor is the<tspan x="900" dy="28">measured +RAG value</tspan></text>
   </svg>
-  <p class="takeaway">promptfoo exits 100 on any failed assertion, 0 all-green — that is what the CI step keys on.</p>
+  <p class="takeaway">gate.sh counts deterministic passes vs the committed baseline.md floor — healthy holds it, a broken assistant falls through.</p>
   <div class="pageno">M12·11</div>
 </section>
 

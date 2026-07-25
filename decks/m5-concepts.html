@@ -81,7 +81,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
   .reveal .slides{ text-align:center; }
-  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:center; padding:20px 48px 42px; overflow:hidden; }
+  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:flex-start; padding:20px 48px 42px; overflow:hidden; }
   .reveal .slides > section.present{ display:flex; }
 
   .reveal h1,.reveal h2,.reveal h3{
@@ -93,17 +93,12 @@ footer, header, hgroup, main, menu, nav, section {
     margin:0 0 6px 0;
     line-height:1.15;
   }
-  .reveal h2.t{ font-size:1.75em; }
+  .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
-  .reveal p.s{ font-size:0.95em; color:var(--gray); margin:0 0 8px 0; }
-  .reveal p.takeaway{
-    font-size:0.92em; color:var(--gray);
-    margin:10px auto 0; max-width:1050px;
-  }
-  .reveal p.takeaway::before{ content:"\2192  "; color:var(--ink); font-weight:700; }
-  .reveal svg{ width:100%; flex:1 1 0; min-height:0; max-height:58%; display:block; margin:8px auto 0; }
-  .reveal .kicker{ font-size:.8em; color:var(--gray); letter-spacing:2px; }
-  .reveal .credit{ font-size:.85em; color:var(--gray); margin-top:16px; }
+  .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
+  .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
   .reveal .slide-number{ font-family:'Patrick Hand',cursive; }
@@ -238,7 +233,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="720" y="270" text-anchor="start" class="lbl">a pass is <tspan class="lbl-b">comparable</tspan></text>
     <text x="720" y="300" text-anchor="start" class="lbl">· <tspan class="lbl-b">defensible</tspan> · <tspan class="lbl-b">repeatable</tspan></text>
   </svg>
-  <p class="takeaway">An eval set is the fixed test route that makes a result comparable, defensible, and repeatable — "it looks right" improvises a new route every time and grades on vibes.</p>
   <div class="pageno">M5·02</div>
 </section>
 
@@ -273,7 +267,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="160" y="272" width="780" height="42" rx="10"/></g>
     <text x="550" y="299" text-anchor="middle" class="lbl-g">you <tspan class="lbl-b">cannot fine-tune responsibly</tspan> without a number recorded first — this module records it</text>
   </svg>
-  <p class="takeaway">The baseline has to exist before M6 touches the model — a fine-tuned model always feels better, so the only honest comparison is against a number you recorded first and committed.</p>
   <div class="pageno">M5·03</div>
 </section>
 
@@ -320,7 +313,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="1035" y="120" text-anchor="start" class="lbl-g" transform="rotate(90 1035 120)">expensive + human ↑ &nbsp;·&nbsp; cheap + deterministic ↓</text>
   </svg>
-  <p class="takeaway">Grade with the cheapest layer that works — most of a good suite is assertions; you climb to similarity or a judge only where exact checks are too brittle.</p>
   <div class="pageno">M5·04</div>
 </section>
 
@@ -356,7 +348,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="320" text-anchor="middle" class="lbl-g">a good golden question is one a <tspan class="lbl-b">broken system would get wrong</tspan></text>
   </svg>
-  <p class="takeaway">A golden set discriminates only when every question is authored from a source, forces right and wrong apart, and includes unanswerables that catch a confident bluff.</p>
   <div class="pageno">M5·05</div>
 </section>
 
@@ -395,7 +386,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="317" text-anchor="middle" class="lbl-g">exact-phrase asserts break on small models — <tspan class="lbl-b">go wide</tspan>, and let a <tspan class="lbl-b">judge</tspan> read the nuance</text>
   </svg>
-  <p class="takeaway">A correct answer failed an exact-phrase assert because the 0.6B model paraphrased — the fix is wide contains-any nets plus a judge, never a one-phrase gotcha.</p>
   <div class="pageno">M5·06</div>
 </section>
 
@@ -447,7 +437,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="329" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">retrieval</tspan> = right parcel &nbsp;·&nbsp; <tspan class="lbl-b">generation</tspan> = arrived intact &nbsp;·&nbsp; grade them <tspan class="lbl-b">APART</tspan></text>
   </svg>
-  <p class="takeaway">A RAG answer fails in two independent places — wrong parcel (retrieval) or crushed parcel (generation); grade them together and you are back to the shrug.</p>
   <div class="pageno">M5·07</div>
 </section>
 
@@ -503,7 +492,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="324" text-anchor="middle" class="lbl-g">each Q tagged with its layer → a run reports "<tspan class="lbl-b">retrieval 22/24 · generation 14/15</tspan>" = two teams of fixes</text>
   </svg>
-  <p class="takeaway">The two layers are built differently on purpose — retrieval is a deterministic tripwire, generation is graded — so two numbers point at two different fixes.</p>
   <div class="pageno">M5·08</div>
 </section>
 
@@ -551,7 +539,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="323" text-anchor="middle" class="lbl-g">A/B <tspan class="lbl-b">system.txt</tspan> vs <tspan class="lbl-b">system-v2.txt</tspan> on the SAME suite — scores move, code untouched</text>
   </svg>
-  <p class="takeaway">Externalize the prompt to a versioned file and it becomes a lever you can pull, test, and un-pull — a recipe card you swap, not a rule carved into the chef.</p>
   <div class="pageno">M5·09</div>
 </section>
 
@@ -587,7 +574,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="317" text-anchor="middle" class="lbl-g">trust it to catch the obvious · corroborate with the deterministic layers · <tspan class="lbl-b">never one grade as ground truth</tspan></text>
   </svg>
-  <p class="takeaway">A local 0.6B judge is a smoke detector — it reliably catches the gross failures but is noisy on the margins, so corroborate it and never treat one grade as ground truth.</p>
   <div class="pageno">M5·10</div>
 </section>
 
@@ -632,7 +618,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="286" text-anchor="middle" class="lbl-g">modest numbers on a 0.6B CPU model — and that is <tspan class="lbl-b">honest</tspan>: a believable 62% beats an invented 95%</text>
     <text x="550" y="316" text-anchor="middle" class="lbl-b">→ written to baseline.md, committed</text>
   </svg>
-  <p class="takeaway">Run the suite twice — no-RAG vs RAG — and the gap is the measured value of retrieval; record modest, honest numbers, because a believable 62% beats an invented 95%.</p>
   <div class="pageno">M5·11</div>
 </section>
 
@@ -681,7 +666,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="279" text-anchor="middle" class="lbl-g">a number in a chat is gone tomorrow — a number in a <tspan class="lbl-b">committed file is a contract</tspan> the next change must meet</text>
   </svg>
-  <p class="takeaway">The baseline lives in a committed file because that makes it a contract — M6 must beat it, M12 gates on it, M13 replays it; the file outlives every run.</p>
   <div class="pageno">M5·12</div>
 </section>
 
@@ -730,6 +714,7 @@ footer, header, hgroup, main, menu, nav, section {
 </script>
 <script>
   Reveal.initialize({
+    display: 'flex',
     width: 1280,
     height: 720,
     margin: 0.04,

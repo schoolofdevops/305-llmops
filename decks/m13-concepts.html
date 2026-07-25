@@ -80,7 +80,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
   .reveal .slides{ text-align:center; }
-  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:center; padding:20px 48px 42px; overflow:hidden; }
+  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:flex-start; padding:20px 48px 42px; overflow:hidden; }
   .reveal .slides > section.present{ display:flex; }
 
   .reveal h1,.reveal h2,.reveal h3{
@@ -92,17 +92,12 @@ footer, header, hgroup, main, menu, nav, section {
     margin:0 0 6px 0;
     line-height:1.15;
   }
-  .reveal h2.t{ font-size:1.75em; }
+  .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
-  .reveal p.s{ font-size:0.95em; color:var(--gray); margin:0 0 8px 0; }
-  .reveal p.takeaway{
-    font-size:0.92em; color:var(--gray);
-    margin:10px auto 0; max-width:1050px;
-  }
-  .reveal p.takeaway::before{ content:"\2192  "; color:var(--ink); font-weight:700; }
-  .reveal svg{ width:100%; flex:1 1 0; min-height:0; max-height:58%; display:block; margin:8px auto 0; }
-  .reveal .kicker{ font-size:.8em; color:var(--gray); letter-spacing:2px; }
-  .reveal .credit{ font-size:.85em; color:var(--gray); margin-top:16px; }
+  .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
+  .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
   .reveal .slide-number{ font-family:'Patrick Hand',cursive; }
@@ -190,7 +185,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="180" text-anchor="middle" class="lbl-b">the gap</text>
     <text x="550" y="210" text-anchor="middle" class="lbl-b">= reach</text>
   </svg>
-  <p class="takeaway">Read-only is on the phone; call a tool and you are at the terminal — that reach is the whole module.</p>
   <div class="pageno">M13·02</div>
 </section>
 
@@ -220,7 +214,6 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- climb arrow -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><path d="M110,268 C110,235 300,235 300,205" marker-end="url(#ahg)"/><path d="M350,203 C350,170 540,170 540,140" marker-end="url(#ahg)"/><path d="M590,138 C590,105 780,105 780,75" marker-end="url(#ahg)"/></g>
   </svg>
-  <p class="takeaway">Climb one rung at a time — this module is rung three, and rung four is the next course.</p>
   <div class="pageno">M13·03</div>
 </section>
 
@@ -248,7 +241,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="594" y1="100" x2="700" y2="130" marker-end="url(#ahg)"/></g>
     <text x="650" y="92" text-anchor="middle" class="lbl-g" style="font-size:14px">rung up</text>
   </svg>
-  <p class="takeaway">Naive RAG retrieves unconditionally; the first rung up lets the model decide whether to retrieve at all.</p>
   <div class="pageno">M13·04</div>
 </section>
 
@@ -272,7 +264,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="680" y="212" text-anchor="start" class="lbl-g" style="font-size:16px">pod: payments-api</text>
     <text x="680" y="266" text-anchor="start" class="lbl-g" style="font-size:16px">checked: prev logs, deps</text>
   </svg>
-  <p class="takeaway">A form gets you the same actionable fields every time — that is structured output for a model.</p>
   <div class="pageno">M13·05</div>
 </section>
 
@@ -299,7 +290,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="820" y="228" text-anchor="middle" class="lbl-g" style="font-size:15px">call( name, arguments )</text>
     <text x="820" y="264" text-anchor="middle" class="lbl-g" style="font-size:15px">which function · which args</text>
   </svg>
-  <p class="takeaway">Same machinery, two targets: constrain the whole answer, or constrain a call.</p>
   <div class="pageno">M13·06</div>
 </section>
 
@@ -323,7 +313,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.4" stroke-linecap="round"><line x1="300" y1="60" x2="410" y2="112"/></g>
     <text x="300" y="100" text-anchor="middle" class="lbl-bad" style="font-size:15px">fragile parser</text>
   </svg>
-  <p class="takeaway">Every hop parses model output — so get the shape right first; the rest is plumbing.</p>
   <div class="pageno">M13·07</div>
 </section>
 
@@ -354,7 +343,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><path d="M880,150 C960,120 960,70 500,70 C260,70 150,90 130,116" marker-end="url(#ah)"/></g>
     <text x="540" y="60" text-anchor="middle" class="lbl-g" style="font-size:15px">next turn: call again — or answer</text>
   </svg>
-  <p class="takeaway">The model emits a request to run; the orchestrator decides whether and how, then feeds the result back.</p>
   <div class="pageno">M13·08</div>
 </section>
 
@@ -381,7 +369,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><path d="M300,150 C420,150 460,145 558,144" marker-end="url(#ah)"/></g>
     <text x="430" y="130" text-anchor="middle" class="lbl-good" style="font-size:16px">right tool, right args</text>
   </svg>
-  <p class="takeaway">A 0.6B model reliably picks the right tool with the right arguments — off a two-tool menu.</p>
   <div class="pageno">M13·09</div>
 </section>
 
@@ -414,7 +401,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.6"><path d="M760,200 C700,240 700,120 758,150" marker-end="url(#ah)"/></g>
     <text x="880" y="252" text-anchor="middle" class="lbl-bad" style="font-size:15px">same menu again — stuck</text>
   </svg>
-  <p class="takeaway">An agent turn is many round-trips, each billed — and if nothing advances it past the menu, it loops.</p>
   <div class="pageno">M13·10</div>
 </section>
 
@@ -439,7 +425,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.8"><path d="M640,227 C780,227 800,140 700,120 C640,108 660,180 636,215" marker-end="url(#ah)"/></g>
     <text x="830" y="180" text-anchor="middle" class="lbl-bad">keeps choosing it</text>
   </svg>
-  <p class="takeaway">A loop is the tool still on the table — the model keeps choosing what is still a legal move.</p>
   <div class="pageno">M13·11</div>
 </section>
 
@@ -470,7 +455,6 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="820" y="256" text-anchor="middle" class="lbl-good">loop broken — survives translation</text>
     </g>
   </svg>
-  <p class="takeaway">Remove the tools from the answer turn — the fix that survives the gateway, unlike tool_choice:none.</p>
   <div class="pageno">M13·12</div>
 </section>
 
@@ -495,7 +479,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><path d="M366,168 C500,150 520,100 638,90" marker-end="url(#ahg)"/><path d="M366,175 C520,175 520,175 638,175" marker-end="url(#ahg)"/><path d="M366,182 C500,200 520,250 638,260" marker-end="url(#ahg)"/></g>
     <text x="500" y="150" text-anchor="middle" class="lbl-g" style="font-size:15px">any client plugs in</text>
   </svg>
-  <p class="takeaway">Expose a tool through MCP once and any MCP-aware client can use it — one plug, any tool.</p>
   <div class="pageno">M13·13</div>
 </section>
 
@@ -518,7 +501,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="545" y="230" text-anchor="middle" class="lbl">tools/call &nbsp;·&nbsp; run a named tool</text>
     <text x="545" y="290" text-anchor="middle" class="lbl-g" style="font-size:15px">one JSON message per line</text>
   </svg>
-  <p class="takeaway">MCP is JSON-RPC over stdio with three methods: initialize, tools/list, tools/call.</p>
   <div class="pageno">M13·14</div>
 </section>
 
@@ -548,7 +530,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><path d="M380,148 C430,148 440,160 468,164"/><path d="M632,170 C680,178 690,188 718,190" marker-end="url(#ahg)"/></g>
     <text x="550" y="240" text-anchor="middle" class="lbl-good" style="font-size:16px">a rename of three fields</text>
   </svg>
-  <p class="takeaway">The adapter is a three-field rename — that is why any MCP tool becomes callable by any OpenAI model.</p>
   <div class="pageno">M13·15</div>
 </section>
 
@@ -575,7 +556,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="810" y="190" text-anchor="middle" class="lbl-g" style="font-size:15px">isolated</text>
     <text x="940" y="190" text-anchor="middle" class="lbl-g" style="font-size:14px">deployable</text>
   </svg>
-  <p class="takeaway">In production an MCP server is just another service you build, sign, and run as a container.</p>
   <div class="pageno">M13·16</div>
 </section>
 
@@ -607,7 +587,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="975" y="130" text-anchor="middle" class="lbl-g" style="font-size:14px">Spend lens</text>
     <text x="975" y="152" text-anchor="middle" class="lbl-g" style="font-size:13px">turns as rows</text>
   </svg>
-  <p class="takeaway">Every agent turn goes through the door you built in M12 — that is the entire safety story.</p>
   <div class="pageno">M13·17</div>
 </section>
 
@@ -634,7 +613,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="530" y="292" text-anchor="middle" class="lbl-g" style="font-size:14px">no such verb in the server</text>
     <text x="880" y="266" text-anchor="middle" class="lbl-g" style="font-size:16px">absent, not disabled</text>
   </svg>
-  <p class="takeaway">The safest guarantee an agent cannot do harm is to never build the ability — read-only by absence, not config.</p>
   <div class="pageno">M13·18</div>
 </section>
 
@@ -658,7 +636,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.8"><line x1="640" y1="130" x2="1000" y2="130"/><line x1="640" y1="152" x2="1000" y2="152"/><line x1="640" y1="174" x2="1000" y2="174"/><line x1="640" y1="196" x2="1000" y2="196"/><line x1="640" y1="218" x2="1000" y2="218"/><line x1="640" y1="240" x2="1000" y2="240"/></g>
     <text x="820" y="278" text-anchor="middle" class="lbl-bad">15 rows for one question</text>
   </svg>
-  <p class="takeaway">The Spend lens is your agent-cost dashboard — a loop shows up as too many rows for one question.</p>
   <div class="pageno">M13·19</div>
 </section>
 
@@ -690,7 +667,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="420" y="50" width="260" height="52" rx="10"/></g>
     <text x="550" y="82" text-anchor="middle" class="lbl-g" style="font-size:16px">examiner in the passenger seat</text>
   </svg>
-  <p class="takeaway">The capstone is one drive of the whole route — every skill you practiced, chained without stalling.</p>
   <div class="pageno">M13·20</div>
 </section>
 
@@ -719,7 +695,6 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.8"><path d="M280,180 C400,200 440,220 558,225" marker-end="url(#ah)"/></g>
     </g>
   </svg>
-  <p class="takeaway">A working lifecycle refuses a regression — BLOCK is a pass for the process, not a failure of it.</p>
   <div class="pageno">M13·21</div>
 </section>
 
@@ -774,6 +749,7 @@ footer, header, hgroup, main, menu, nav, section {
 </script>
 <script>
   Reveal.initialize({
+    display: 'flex',
     width: 1280,
     height: 720,
     margin: 0.04,

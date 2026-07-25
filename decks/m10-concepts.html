@@ -80,7 +80,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
   .reveal .slides{ text-align:center; }
-  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:center; padding:20px 48px 42px; overflow:hidden; }
+  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:flex-start; padding:20px 48px 42px; overflow:hidden; }
   .reveal .slides > section.present{ display:flex; }
 
   .reveal h1,.reveal h2,.reveal h3{
@@ -92,17 +92,12 @@ footer, header, hgroup, main, menu, nav, section {
     margin:0 0 6px 0;
     line-height:1.15;
   }
-  .reveal h2.t{ font-size:1.75em; }
+  .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
-  .reveal p.s{ font-size:0.95em; color:var(--gray); margin:0 0 8px 0; }
-  .reveal p.takeaway{
-    font-size:0.92em; color:var(--gray);
-    margin:10px auto 0; max-width:1050px;
-  }
-  .reveal p.takeaway::before{ content:"\2192  "; color:var(--ink); font-weight:700; }
-  .reveal svg{ width:100%; flex:1 1 0; min-height:0; max-height:58%; display:block; margin:8px auto 0; }
-  .reveal .kicker{ font-size:.8em; color:var(--gray); letter-spacing:2px; }
-  .reveal .credit{ font-size:.85em; color:var(--gray); margin-top:16px; }
+  .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
+  .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
   .reveal .slide-number{ font-family:'Patrick Hand',cursive; }
@@ -204,7 +199,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="950" y="186" text-anchor="middle" class="lbl-b">= METRICS</text>
     <text x="950" y="212" text-anchor="middle" class="lbl-g" style="font-size:15px">Prometheus + Grafana</text>
   </svg>
-  <p class="takeaway">State over time — the whole ward at once.</p>
   <div class="pageno">M10·02</div>
 </section>
 
@@ -234,7 +228,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="950" y="216" text-anchor="middle" class="lbl-b">= TRACES</text>
     <text x="950" y="242" text-anchor="middle" class="lbl-g" style="font-size:15px">OpenTelemetry + Phoenix</text>
   </svg>
-  <p class="takeaway">One request, every step timestamped.</p>
   <div class="pageno">M10·03</div>
 </section>
 
@@ -261,7 +254,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M150,84 C150,60 1000,60 1000,84"/></g>
     <text x="575" y="52" text-anchor="middle" class="lbl-b" style="font-size:26px">BOTH</text>
   </svg>
-  <p class="takeaway">A chart can't say why one request was slow.</p>
   <div class="pageno">M10·04</div>
 </section>
 
@@ -297,7 +289,6 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- dripping output tokens -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="895" cy="150" r="7"/><circle cx="930" cy="176" r="7"/><circle cx="895" cy="200" r="7"/></g>
   </svg>
-  <p class="takeaway">Slow to start, or slow to finish?</p>
   <div class="pageno">M10·05</div>
 </section>
 
@@ -334,7 +325,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="760" y="270" width="300" height="44" rx="10"/></g>
     <text x="910" y="298" text-anchor="middle" class="lbl-g">not slow — <tspan class="lbl-b">WAITING</tspan></text>
   </svg>
-  <p class="takeaway">Slow vs waiting — the M11 signal.</p>
   <div class="pageno">M10·06</div>
 </section>
 
@@ -364,7 +354,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="326" text-anchor="middle" class="lbl-g">blends both</text>
     <text x="640" y="120" text-anchor="start" class="lbl-bad">distrust this</text>
   </svg>
-  <p class="takeaway">One number hides two problems.</p>
   <div class="pageno">M10·07</div>
 </section>
 
@@ -398,7 +387,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="524" y1="92" x2="576" y2="48"/></g>
     <text x="600" y="76" text-anchor="start" class="lbl-g" style="font-size:15px">set separately</text>
   </svg>
-  <p class="takeaway">Or you're blind on both.</p>
   <div class="pageno">M10·08</div>
 </section>
 
@@ -428,7 +416,6 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- single average line hiding it (drawn last, faint) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="10 8"><line x1="120" y1="235" x2="1000" y2="235"/></g>
   </svg>
-  <p class="takeaway">The median is where slow requests hide.</p>
   <div class="pageno">M10·09</div>
 </section>
 
@@ -461,7 +448,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="790" y="234" text-anchor="middle" class="lbl-b">Prometheus</text>
     <text x="790" y="264" text-anchor="middle" class="lbl-g">one target</text>
   </svg>
-  <p class="takeaway">The pull model you already know.</p>
   <div class="pageno">M10·10</div>
 </section>
 
@@ -488,7 +474,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="770" y="298" text-anchor="middle" class="lbl-b">requests_deferred · tokens/s</text>
     <text x="770" y="82" text-anchor="middle" class="lbl-b">MODEL healthy?</text>
   </svg>
-  <p class="takeaway">Which family, not which tool, is the skill.</p>
   <div class="pageno">M10·11</div>
 </section>
 
@@ -525,7 +510,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="220" y="300" text-anchor="middle" class="lbl-g" style="font-size:14px">on-call</text>
     <text x="710" y="308" text-anchor="middle" class="lbl-g">checked-in</text>
   </svg>
-  <p class="takeaway">A metric no one watches is storage.</p>
   <div class="pageno">M10·12</div>
 </section>
 
@@ -561,7 +545,6 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="520" y="316" text-anchor="middle" class="lbl-g">M1 phases</text>
     </g>
   </svg>
-  <p class="takeaway">The waterfall answers the incident.</p>
   <div class="pageno">M10·13</div>
 </section>
 
@@ -600,7 +583,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#2e7d32" stroke-width="2.8" stroke-linecap="round"><path d="M748,156 C560,300 360,300 200,278" marker-end="url(#ah)"/></g>
     <text x="470" y="322" text-anchor="middle" class="lbl-good">pinned = the trace shape holds steady</text>
   </svg>
-  <p class="takeaway">A moving standard is not a reason to avoid it — it is a reason to pin it.</p>
   <div class="pageno">M10·14</div>
 </section>
 
@@ -631,7 +613,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="930" y="140" text-anchor="start" class="lbl-g" style="font-size:15px">by user</text>
     <text x="930" y="240" text-anchor="start" class="lbl-g" style="font-size:15px">by prompt len</text>
   </svg>
-  <p class="takeaway">Cost becomes a per-request attribute.</p>
   <div class="pageno">M10·15</div>
 </section>
 
@@ -659,7 +640,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="490" y1="150" x2="530" y2="196"/><line x1="530" y1="150" x2="490" y2="196"/></g>
     <text x="510" y="232" text-anchor="middle" class="lbl-b">NOT logged</text>
   </svg>
-  <p class="takeaway">Logging a prompt is a decision.</p>
   <div class="pageno">M10·16</div>
 </section>
 
@@ -694,7 +674,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="970" y="149" text-anchor="middle" class="lbl-sm">PHOENIX_PORT: "6006"</text>
     <text x="970" y="211" text-anchor="middle" class="lbl-sm">enableServiceLinks: false</text>
   </svg>
-  <p class="takeaway">Why is this env a <code>tcp://</code> string?</p>
   <div class="pageno">M10·17</div>
 </section>
 
@@ -725,7 +704,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="900" y="150" text-anchor="start" class="lbl-g" style="font-size:16px">builds → + engine</text>
     <text x="900" y="212" text-anchor="start" class="lbl-g" style="font-size:16px">drains → − engine</text>
   </svg>
-  <p class="takeaway">You can't autoscale what you can't measure.</p>
   <div class="pageno">M10·18</div>
 </section>
 
@@ -767,6 +745,7 @@ footer, header, hgroup, main, menu, nav, section {
 </script>
 <script>
   Reveal.initialize({
+    display: 'flex',
     width: 1280,
     height: 720,
     margin: 0.04,

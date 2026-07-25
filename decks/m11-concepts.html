@@ -80,7 +80,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
   .reveal .slides{ text-align:center; }
-  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:center; padding:20px 48px 42px; overflow:hidden; }
+  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:flex-start; padding:20px 48px 42px; overflow:hidden; }
   .reveal .slides > section.present{ display:flex; }
 
   .reveal h1,.reveal h2,.reveal h3{
@@ -92,17 +92,12 @@ footer, header, hgroup, main, menu, nav, section {
     margin:0 0 6px 0;
     line-height:1.15;
   }
-  .reveal h2.t{ font-size:1.75em; }
+  .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
-  .reveal p.s{ font-size:0.95em; color:var(--gray); margin:0 0 8px 0; }
-  .reveal p.takeaway{
-    font-size:0.92em; color:var(--gray);
-    margin:10px auto 0; max-width:1050px;
-  }
-  .reveal p.takeaway::before{ content:"\2192  "; color:var(--ink); font-weight:700; }
-  .reveal svg{ width:100%; flex:1 1 0; min-height:0; max-height:58%; display:block; margin:8px auto 0; }
-  .reveal .kicker{ font-size:.8em; color:var(--gray); letter-spacing:2px; }
-  .reveal .credit{ font-size:.85em; color:var(--gray); margin-top:16px; }
+  .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
+  .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
   .reveal .slide-number{ font-family:'Patrick Hand',cursive; }
@@ -197,7 +192,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><circle cx="650" cy="180" r="12"/></g>
     <text x="785" y="278" text-anchor="middle" class="lbl-g">half empty</text>
   </svg>
-  <p class="takeaway">Loud kitchen is not a full house — effort is not demand.</p>
   <div class="pageno">M11·02</div>
 </section>
 
@@ -232,7 +226,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5"><path d="M760,60 C800,60 800,258 760,258"/></g>
     <text x="820" y="164" text-anchor="middle" class="lbl-g">one core per<tspan x="820" dy="26">in-flight request</tspan></text>
   </svg>
-  <p class="takeaway">A queued request is parked, not working — it costs almost no CPU.</p>
   <div class="pageno">M11·03</div>
 </section>
 
@@ -257,7 +250,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="915" y="194" text-anchor="middle" class="lbl-g">"nothing to do"</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="800" y1="210" x2="1030" y2="130"/></g>
   </svg>
-  <p class="takeaway">The metric was flat exactly when you most needed it to move.</p>
   <div class="pageno">M11·04</div>
 </section>
 
@@ -283,7 +275,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="910" y="256" text-anchor="middle" class="lbl-b">requests_deferred</text>
     <text x="975" y="130" text-anchor="middle" class="lbl-good">watch this</text>
   </svg>
-  <p class="takeaway">Scale on the queue — <code>requests_deferred</code> — not the kitchen noise of CPU%.</p>
   <div class="pageno">M11·05</div>
 </section>
 
@@ -310,7 +301,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1000" y="150" text-anchor="middle" class="lbl-g" style="font-size:16px">builds ↦<tspan x="1000" dy="24">open</tspan></text>
     <text x="1000" y="222" text-anchor="middle" class="lbl-g" style="font-size:16px">drains ↦<tspan x="1000" dy="24">close</tspan></text>
   </svg>
-  <p class="takeaway">Watch the signal, open the room, close it again — KEDA is the maître d'.</p>
   <div class="pageno">M11·06</div>
 </section>
 
@@ -338,7 +328,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="80" y1="288" x2="740" y2="212"/></g>
     <text x="900" y="256" text-anchor="middle" class="lbl-g">no rule<tspan x="900" dy="26">language</tspan></text>
   </svg>
-  <p class="takeaway">Hand it a query and a threshold; the adapter layer is gone.</p>
   <div class="pageno">M11·07</div>
 </section>
 
@@ -368,7 +357,6 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="975" y="176" text-anchor="middle" class="lbl">Deployment</text>
     </g>
   </svg>
-  <p class="takeaway">One object you author; KEDA builds the HPA and owns it.</p>
   <div class="pageno">M11·08</div>
 </section>
 
@@ -402,7 +390,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="980" y="178" text-anchor="middle" class="lbl-b">1</text>
     <text x="980" y="248" text-anchor="middle" class="lbl-good">back to rest</text>
   </svg>
-  <p class="takeaway">Small numbers, but the real loop: watch the queue, open the room, close it.</p>
   <div class="pageno">M11·09</div>
 </section>
 
@@ -429,7 +416,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="820" y="244" text-anchor="middle" class="lbl-b">model pod</text>
     <text x="770" y="304" text-anchor="middle" class="lbl-bad">back in minutes</text>
   </svg>
-  <p class="takeaway">Cold start here is model-load — minutes the first user won't forgive.</p>
   <div class="pageno">M11·10</div>
 </section>
 
@@ -457,7 +443,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M930,170 C934,160 946,160 950,170 C954,180 940,192 940,200 M940,150 L940,142"/></g>
     <text x="810" y="264" text-anchor="middle" class="lbl-g">keep one warm</text>
   </svg>
-  <p class="takeaway">Interactive keeps one engine lit — <code>min 1</code>, never <code>min 0</code>.</p>
   <div class="pageno">M11·11</div>
 </section>
 
@@ -491,7 +476,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="640" y="210" width="430" height="56" rx="8"/></g>
     <text x="855" y="244" text-anchor="middle" class="lbl-g" style="font-size:16px">"model already present on PVC — skipping unpack"</text>
   </svg>
-  <p class="takeaway">The weights are already on disk — the new engine just opens them.</p>
   <div class="pageno">M11·12</div>
 </section>
 
@@ -517,7 +501,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><path d="M600,300 C520,340 460,320 470,306" marker-end="url(#ah)"/></g>
     <text x="850" y="180" text-anchor="middle" class="lbl-g">paper decides,<tspan x="850" dy="26">building matches</tspan></text>
   </svg>
-  <p class="takeaway">Git is the paper on the door; the cluster is made to follow it.</p>
   <div class="pageno">M11·13</div>
 </section>
 
@@ -555,7 +538,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="820" y="250" width="250" height="56" rx="10"/></g>
     <text x="945" y="284" text-anchor="middle" class="lbl-g" style="font-size:16px">PVC · per-tag dir</text>
   </svg>
-  <p class="takeaway">The serving version is a line in git — watched and reconciled.</p>
   <div class="pageno">M11·14</div>
 </section>
 
@@ -584,7 +566,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="940" y="138" text-anchor="middle" class="lbl-g" style="font-size:16px">ticket: "promoted"</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="850" y1="210" x2="1030" y2="110"/></g>
   </svg>
-  <p class="takeaway">"Promote" is a merged PR, not a sentence on a ticket.</p>
   <div class="pageno">M11·15</div>
 </section>
 
@@ -613,7 +594,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><circle cx="800" cy="255" r="22"/><line x1="816" y1="271" x2="840" y2="295"/></g>
     <text x="900" y="262" text-anchor="middle" class="lbl-good">checkable</text>
   </svg>
-  <p class="takeaway">"What's serving?" is now <code>git log</code>, with an audit trail.</p>
   <div class="pageno">M11·16</div>
 </section>
 
@@ -639,7 +619,6 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- note -->
     <text x="730" y="248" text-anchor="middle" class="lbl-g">poll vs webhook = latency vs plumbing</text>
   </svg>
-  <p class="takeaway">Poke it with the refresh annotation so you're not waiting on the poll.</p>
   <div class="pageno">M11·17</div>
 </section>
 
@@ -668,7 +647,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="905" y="196" text-anchor="middle" class="lbl-g" style="font-size:16px">"saw a GGUF → skip"</text>
     <text x="905" y="226" text-anchor="middle" class="lbl-g" style="font-size:15px">a model ≠ the right model</text>
   </svg>
-  <p class="takeaway">A green deploy is not a promoted model — nobody emptied the jar.</p>
   <div class="pageno">M11·18</div>
 </section>
 
@@ -699,7 +677,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="182" text-anchor="middle" class="lbl-g" style="font-size:16px">guard · unpack</text>
     <text x="935" y="210" text-anchor="middle" class="lbl-g" style="font-size:16px">server -m flag</text>
   </svg>
-  <p class="takeaway">Version the cache's key — one directory per tag — and the check is honest.</p>
   <div class="pageno">M11·19</div>
 </section>
 
@@ -727,7 +704,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="815" y="180" text-anchor="middle" class="lbl-g" style="font-size:15px">Ready</text>
     <text x="1000" y="166" text-anchor="middle" class="lbl-good">seconds</text>
   </svg>
-  <p class="takeaway">Cache the version and both directions win — rollback is nearly free.</p>
   <div class="pageno">M11·20</div>
 </section>
 
@@ -760,7 +736,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="865" y="246" text-anchor="middle" class="lbl-g" style="font-size:16px">+ scale observability → 0</text>
     <text x="865" y="290" text-anchor="middle" class="lbl-g">node clear for training</text>
   </svg>
-  <p class="takeaway">Cap it so it can't starve the apiserver — and drain serving before you train.</p>
   <div class="pageno">M11·21</div>
 </section>
 
@@ -806,6 +781,7 @@ footer, header, hgroup, main, menu, nav, section {
 </script>
 <script>
   Reveal.initialize({
+    display: 'flex',
     width: 1280,
     height: 720,
     margin: 0.04,

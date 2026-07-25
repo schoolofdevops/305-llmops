@@ -81,7 +81,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
   .reveal .slides{ text-align:center; }
-  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:center; padding:20px 48px 42px; overflow:hidden; }
+  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:flex-start; padding:20px 48px 42px; overflow:hidden; }
   .reveal .slides > section.present{ display:flex; }
 
   .reveal h1,.reveal h2,.reveal h3{
@@ -93,17 +93,12 @@ footer, header, hgroup, main, menu, nav, section {
     margin:0 0 6px 0;
     line-height:1.15;
   }
-  .reveal h2.t{ font-size:1.75em; }
+  .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
-  .reveal p.s{ font-size:0.95em; color:var(--gray); margin:0 0 8px 0; }
-  .reveal p.takeaway{
-    font-size:0.92em; color:var(--gray);
-    margin:10px auto 0; max-width:1050px;
-  }
-  .reveal p.takeaway::before{ content:"\2192  "; color:var(--ink); font-weight:700; }
-  .reveal svg{ width:100%; flex:1 1 0; min-height:0; max-height:58%; display:block; margin:8px auto 0; }
-  .reveal .kicker{ font-size:.8em; color:var(--gray); letter-spacing:2px; }
-  .reveal .credit{ font-size:.85em; color:var(--gray); margin-top:16px; }
+  .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
+  .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
   .reveal .slide-number{ font-family:'Patrick Hand',cursive; }
@@ -228,7 +223,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="180" y="306" width="740" height="44" rx="10"/></g>
     <text x="550" y="335" text-anchor="middle" class="lbl-g">a keyword search would miss it — you compared <tspan class="lbl-b">meaning</tspan>, not spelling</text>
   </svg>
-  <p class="takeaway">You already read meaning, not spelling — internet-drops and wifi-disconnects are near, sourdough is far; RAG teaches a computer that same near / near / far.</p>
   <div class="pageno">M4·02</div>
 </section>
 
@@ -272,7 +266,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="180" y="318" width="740" height="38" rx="9"/></g>
     <text x="550" y="343" text-anchor="middle" class="lbl-g">nearby = similar meaning &nbsp;·&nbsp; the only operation you ever need: <tspan class="lbl-b">find the nearest points</tspan></text>
   </svg>
-  <p class="takeaway">An embedding model is a market-map for text — it places each sentence where nearby means similar, so "find the nearest points" is retrieval.</p>
   <div class="pageno">M4·03</div>
 </section>
 
@@ -309,7 +302,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="200" y="266" width="700" height="40" rx="10"/></g>
     <text x="550" y="292" text-anchor="middle" class="lbl-g">you never picture 768 axes — you only ever ask for the <tspan class="lbl-b">nearest points</tspan></text>
   </svg>
-  <p class="takeaway">A vector is just the sentence's coordinates — 768 of them from nomic-embed-text — and every RAG operation is one thing: find the nearest points to a given point.</p>
   <div class="pageno">M4·04</div>
 </section>
 
@@ -341,7 +333,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="180" y="322" width="740" height="34" rx="9"/></g>
     <text x="550" y="345" text-anchor="middle" class="lbl-g">you <tspan class="lbl-b">read</tspan> distances — a clear low winner vs none = a good vs bad retrieval</text>
   </svg>
-  <p class="takeaway">Cosine distance is a number you read, not a threshold you memorise — a clear low winner is a good retrieval; all-high, no-winner is a bad one.</p>
   <div class="pageno">M4·05</div>
 </section>
 
@@ -382,7 +373,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="180" y="330" width="740" height="26" rx="8"/></g>
     <text x="550" y="349" text-anchor="middle" class="lbl-g">when retrieval is bad, chunking is the <tspan class="lbl-b">first knob to revisit</tspan></text>
   </svg>
-  <p class="takeaway">A chunk is a revision card for your docs — one coherent idea, standing on its own; too big blurs, too small fragments, and chunking is the highest-leverage retrieval knob.</p>
   <div class="pageno">M4·06</div>
 </section>
 
@@ -416,7 +406,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="146" y="314" class="lbl-b" text-anchor="start">index type &amp; scale</text>
     <text x="146" y="336" class="lbl-g" text-anchor="start">usually HNSW — how many vectors before it needs sharding, replication, a cluster?</text>
   </svg>
-  <p class="takeaway">A vector DB is the card catalogue for meaning-space — pick it on four ops criteria (footprint, persistence, filtering, index/scale); Chroma-embedded is the course default.</p>
   <div class="pageno">M4·07</div>
 </section>
 
@@ -453,7 +442,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="452" y="322" class="lbl-b" text-anchor="start">Milvus / Weaviate</text>
     <text x="452" y="344" class="lbl-g" text-anchor="start">a distributed cluster · very large corpora, high query volume</text>
   </svg>
-  <p class="takeaway">Same near-k code, four footprints — Chroma-embedded fits the laptop, and pgvector / Qdrant / Milvus are the tiers you climb to on fit, not hype.</p>
   <div class="pageno">M4·08</div>
 </section>
 
@@ -517,7 +505,6 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="1000" y="272" text-anchor="middle" class="lbl-g">answer + sources</text>
     </g>
   </svg>
-  <p class="takeaway">RAG is a librarian mechanised — build the index once, then per question fetch the nearest chunks and answer from them; the model never changed, only what you put in front of it.</p>
   <div class="pageno">M4·09</div>
 </section>
 
@@ -550,7 +537,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="308" width="800" height="42" rx="10"/></g>
     <text x="550" y="336" text-anchor="middle" class="lbl-g">sources returned every time → tells <tspan class="lbl-b">retrieval-wrong</tspan> from <tspan class="lbl-b">generation-wrong</tspan> at a glance</text>
   </svg>
-  <p class="takeaway">Inspecting retrieval is the core RAG skill — a low-distance winner with no shared words is a good semantic hit; all-high, no-winner is a bad retrieval you can see.</p>
   <div class="pageno">M4·10</div>
 </section>
 
@@ -587,7 +573,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="124" y="298" width="936" height="46" rx="10"/></g>
     <text x="592" y="327" text-anchor="middle" class="lbl-g">each a different fix — <tspan class="lbl-b">"retrieval or generation?"</tspan> is always the first question · M5 makes these measurable</text>
   </svg>
-  <p class="takeaway">RAG's three failure modes have three different fixes — hallucination-despite-context is generation, lost-in-the-middle is too many chunks, stale-index is an ops miss; name them to debug fast.</p>
   <div class="pageno">M4·11</div>
 </section>
 
@@ -621,7 +606,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="314" width="800" height="42" rx="10"/></g>
     <text x="550" y="342" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">indirect prompt injection</tspan> — the attack rides in on the DATA, not the user's question</text>
   </svg>
-  <p class="takeaway">A retrieved document is untrusted input — a sentence planted to read like an instruction rides in on the data and lands in the prompt; that is indirect prompt injection.</p>
   <div class="pageno">M4·12</div>
 </section>
 
@@ -654,7 +638,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="180" y="304" width="740" height="46" rx="10"/></g>
     <text x="550" y="333" text-anchor="middle" class="lbl-g">reduces the risk — does <tspan class="lbl-b">not</tspan> eliminate it &nbsp;·&nbsp; real guardrails = <tspan class="lbl-b">M12</tspan></text>
   </svg>
-  <p class="takeaway">Today's hygiene is separation and source-tagging — fence the context, tag its source, tell the model it is reference not commands; it reduces the risk, M12 is the real guardrail.</p>
   <div class="pageno">M4·13</div>
 </section>
 
@@ -698,7 +681,6 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="120" y="308" width="860" height="44" rx="10"/></g>
     <text x="550" y="337" text-anchor="middle" class="lbl-g">one model service · one embedded DB · one backend · one UI = <tspan class="lbl-b">OpsMate v0.5</tspan> &nbsp;·&nbsp; template prefix-stable (M3)</text>
   </svg>
-  <p class="takeaway">OpsMate v0.5 is two new services on the M3 spine — a thin UI, a FastAPI app that owns RAG with Chroma embedded inside it, embeddings from host Ollama, generation through the M3 model.</p>
   <div class="pageno">M4·14</div>
 </section>
 
@@ -733,7 +715,6 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="160" y="322" width="780" height="14" rx="6" opacity="0"/></g>
   </svg>
-  <p class="takeaway">The RAG template puts the byte-identical system prompt first and the varying context and question last, so the engine serves the standing prefix from cache — the M3 prefix-caching lesson, applied.</p>
   <div class="pageno">M4·15</div>
 </section>
 
@@ -780,6 +761,7 @@ footer, header, hgroup, main, menu, nav, section {
 </script>
 <script>
   Reveal.initialize({
+    display: 'flex',
     width: 1280,
     height: 720,
     margin: 0.04,

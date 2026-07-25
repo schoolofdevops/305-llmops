@@ -73,7 +73,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal-viewport{ background:var(--paper); }
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
   .reveal .slides{ text-align:center; }
-  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:center; padding:20px 48px 42px; overflow:hidden; }
+  .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:flex-start; padding:20px 48px 42px; overflow:hidden; }
   .reveal .slides > section.present{ display:flex; }
 
   .reveal h1,.reveal h2,.reveal h3{
@@ -85,17 +85,12 @@ footer, header, hgroup, main, menu, nav, section {
     margin:0 0 6px 0;
     line-height:1.15;
   }
-  .reveal h2.t{ font-size:1.75em; }
+  .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
-  .reveal p.s{ font-size:0.95em; color:var(--gray); margin:0 0 8px 0; }
-  .reveal p.takeaway{
-    font-size:0.92em; color:var(--gray);
-    margin:10px auto 0; max-width:1050px;
-  }
-  .reveal p.takeaway::before{ content:"\2192  "; color:var(--ink); font-weight:700; }
-  .reveal svg{ width:100%; flex:1 1 0; min-height:0; max-height:58%; display:block; margin:8px auto 0; }
-  .reveal .kicker{ font-size:.8em; color:var(--gray); letter-spacing:2px; }
-  .reveal .credit{ font-size:.85em; color:var(--gray); margin-top:16px; }
+  .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
+  .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
   .reveal .slide-number{ font-family:'Patrick Hand',cursive; }
@@ -227,7 +222,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="260" text-anchor="middle" class="lbl-g">every later slide lights up one stop of this strip — so you always know where you are</text>
   </svg>
-  <p class="takeaway">One request is a five-stop trip — the rest of the deck zooms into each stop in turn.</p>
   <div class="pageno">M1·02</div>
 </section>
 
@@ -318,7 +312,6 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="440" y="365" text-anchor="middle" class="lbl-g">this — not the words — is what you pay for and what fills the window</text>
     </g>
   </svg>
-  <p class="takeaway">The model reads word-pieces, not words — <em>disconnecting</em> is two tokens, so a single word can cost more than one.</p>
   <div class="pageno">M1·03</div>
 </section>
 
@@ -389,7 +382,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="900" y="372" text-anchor="start" class="lbl-b" fill="#2e7d32">$</text>
   </svg>
-  <p class="takeaway">The meter counts pieces, not meaning — tighten the prompt and the bill drops with no change to what you asked.</p>
   <div class="pageno">M1·04</div>
 </section>
 
@@ -486,7 +478,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="379" text-anchor="middle" class="lbl-g">a longer prompt costs more <em>and</em> fills the window faster — the same feature, written loose, hits the limit twice as fast</text>
   </svg>
-  <p class="takeaway">Tokens are a bounded budget, not just a meter — every token of prompt and answer spends from a fixed context window.</p>
   <div class="pageno">M1·05</div>
 </section>
 
@@ -537,7 +528,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="925" y="348" text-anchor="middle" class="lbl-b">you are here</text>
   </svg>
-  <p class="takeaway">ChatGPT is decoder-only — built to <em>generate</em>: given all the tokens so far, predict the single next one.</p>
   <div class="pageno">M1·06</div>
 </section>
 
@@ -609,7 +599,6 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="560" y="332" text-anchor="middle" class="lbl-g">append, then loop again — autoregressive, always looking back</text>
     </g>
   </svg>
-  <p class="takeaway">A 200-token answer is 200 trips round this loop, each one re-reading everything before it — that is where the time goes.</p>
   <div class="pageno">M1·07</div>
 </section>
 
@@ -677,7 +666,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="600" y="322" text-anchor="middle" class="lbl-g">re-read the whole line — now including the word just said</text>
   </svg>
-  <p class="takeaway">The model never skips ahead — every new word is a fresh read of everything up to that point.</p>
   <div class="pageno">M1·08</div>
 </section>
 
@@ -760,7 +748,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="820" y="320" text-anchor="middle" class="lbl-g">one, then the next, then the next</text>
   </svg>
-  <p class="takeaway">One request is two kinds of work: a fast whole-prompt read, then a slow word-at-a-time write.</p>
   <div class="pageno">M1·09</div>
 </section>
 
@@ -836,7 +823,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="845" y="358" text-anchor="middle" class="lbl-b">WRITE the answer — line by line</text>
   </svg>
-  <p class="takeaway">Reading the paper is one kind of work; writing the answer, line by line, is a completely different kind.</p>
   <div class="pageno">M1·10</div>
 </section>
 
@@ -893,7 +879,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="830" y="258" text-anchor="middle" class="lbl-g">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
   </svg>
-  <p class="takeaway">Prefill is parallel and compute-bound; decode is serial and bandwidth-bound — two phases, sized and billed apart.</p>
   <div class="pageno">M1·11</div>
 </section>
 
@@ -949,7 +934,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="765" y="252" text-anchor="middle" class="lbl-b">KV cache</text>
     <text x="765" y="284" text-anchor="middle" class="lbl-g">the model's rough work — read, don't redo</text>
   </svg>
-  <p class="takeaway">Compute each token's key and value once, keep them — the cache is what holds decode at a steady rhythm.</p>
   <div class="pageno">M1·12</div>
 </section>
 
@@ -1027,7 +1011,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="690" y="310" text-anchor="middle" class="lbl-b">TPOT</text>
     <text x="690" y="340" text-anchor="middle" class="lbl-g">= decode · the drip you watch · driven by answer length</text>
   </svg>
-  <p class="takeaway">That drip of words on screen <em>is</em> decode — the wait to the first word is TTFT, the rhythm after it is TPOT.</p>
   <div class="pageno">M1·13</div>
 </section>
 
@@ -1070,7 +1053,6 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the request shape — not by "the model"</text>
   </svg>
-  <p class="takeaway">Measure the split before you blame the model — the request shape, not the model, decides which phase dominates.</p>
   <div class="pageno">M1·14</div>
 </section>
 
@@ -1112,7 +1094,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="265" text-anchor="middle" class="lbl-b">KV budget ÷ one request</text>
     <text x="800" y="296" text-anchor="middle" class="lbl">= users that fit at once</text>
   </svg>
-  <p class="takeaway">How many users fit one box is a back-of-envelope sum: the KV budget divided by the KV cost of one request.</p>
   <div class="pageno">M1·15</div>
 </section>
 
@@ -1170,7 +1151,6 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
     <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
   </svg>
-  <p class="takeaway">Every ops question about this system is read off one trip — bill at tokenize, latency at read-vs-write, capacity at the cache.</p>
   <div class="pageno">M1·16</div>
 </section>
 
@@ -1224,6 +1204,7 @@ footer, header, hgroup, main, menu, nav, section {
 </script>
 <script>
   Reveal.initialize({
+    display: 'flex',
     width: 1280,
     height: 720,
     margin: 0.04,

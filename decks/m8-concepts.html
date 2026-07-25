@@ -82,6 +82,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal{ font-family:'Patrick Hand', cursive; font-size:42px; color:var(--ink); }
   .reveal .slides{ text-align:center; }
   .reveal .slides section{ position:absolute; inset:0; box-sizing:border-box; flex-direction:column; justify-content:center; padding:20px 48px 42px; overflow:hidden; }
+  /* Reveal shows .present sections as display:block — force flex so column order applies */
+  .reveal .slides section.present{ display:flex; }
   .reveal .slides > section.present{ display:flex; }
 
   .reveal h1,.reveal h2,.reveal h3{

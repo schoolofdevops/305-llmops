@@ -908,6 +908,8 @@ footer, header, hgroup, main, menu, nav, section {
 </script>
 <script>
   Reveal.initialize({
+    display: 'flex',   // Reveal writes this as INLINE style on visible slides — 'block'
+                       // (the default) would override our flex column + order CSS
     width: 1280,
     height: 720,
     margin: 0.04,

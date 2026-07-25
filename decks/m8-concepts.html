@@ -178,7 +178,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 2 · STACK PHASE CHANGES ═══════════════ -->
 <section>
   <h2 class="t">One heavyweight stack at a time — Compose comes down first</h2>
-  <p class="s">The serving stack moves to Kubernetes now, and your 8&nbsp;GB box must never hold both at once. Bring the Compose model service <em>down</em> before the cluster starts. The one Compose service that stays up is the M7 <code>registry</code> — it is the model source the cluster pulls from.</p>
+  <p class="s">Bring the Compose model down before the cluster starts — never run both.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A left panel labelled Compose phase, drawn red and crossed out, holds the model, app, and ui services being brought down. An arrow crosses to a right panel labelled KIND cluster, drawn green, the serving stack that comes up. Bridging the two, a single blue registry crate stays lit — the only Compose service that keeps running, the model source the cluster pulls from. A band reads one heavyweight stack at a time — the lab opens by asserting Compose is down.">
     <!-- LEFT: Compose phase coming down (red) -->
     <text x="235" y="34" text-anchor="middle" class="lbl-b">COMPOSE PHASE</text>
@@ -205,10 +205,11 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="835" y="120" text-anchor="middle" class="lbl-b">the serving stack</text>
     <text x="835" y="150" text-anchor="middle" class="lbl-g">comes UP on Kubernetes</text>
-    <text x="835" y="252" text-anchor="middle" class="lbl-g">only one heavyweight set runs at a time</text>
+    <text x="835" y="252" text-anchor="middle" class="lbl-g">the 8 GB box never holds both at once</text>
     <!-- the registry bridge (blue, stays lit) -->
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="392" y="270" width="316" height="44" rx="10"/></g>
-    <text x="550" y="298" text-anchor="middle" class="lbl-b">registry (M7) — stays UP</text>
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="360" y="264" width="380" height="52" rx="10"/></g>
+    <text x="550" y="288" text-anchor="middle" class="lbl-b">registry (M7) — stays UP</text>
+    <text x="550" y="309" text-anchor="middle" class="lbl-g">the model source the cluster pulls from</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M550,270 L550,232" marker-end="url(#ahg)"/></g>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
@@ -222,7 +223,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 3 · CAPACITY FIRST (scene) ═══════════════ -->
 <section>
   <h2 class="t">Book the hall after you count the guests</h2>
-  <p class="s">Everything on the manifest is downstream of the capacity sum — so do the sum first, the way you plan a wedding.</p>
+  <p class="s">Everything on the manifest is downstream of the capacity sum — do it first.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels. Left, hall first: a booked hall with a crowd spilling out the door, tagged sign the contract then count — 200 people in a room for 80, an OOM-kill on the third user. Right, count first: a clipboard reading guests times plates times space per table, arrowing to a right-sized hall, tagged count the cost of one request times how many at once, then the box. A band reads the memory limit is the hall you book, the capacity sum is the guest count you do first.">
     <!-- LEFT: hall first (wrong) -->
     <text x="270" y="34" text-anchor="middle" class="lbl-b">HALL FIRST</text>
@@ -273,7 +274,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 4 · THE THREE-TERM SUM ═══════════════ -->
 <section>
   <h2 class="t">The working set is three terms — two fixed, one that grows</h2>
-  <p class="s">The memory a model server pins down is three terms added together. Weights and runtime buffers do not move with load. The KV cache does — and it is the term that decides your capacity. Add the three and you have the pod's working set.</p>
+  <p class="s">Add the three and you have the memory the pod pins down.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three feeder boxes arrow into one sum box. Weights, about 0.65 gibibytes, fixed, the same for one user or fifty. Runtime buffers, about 0.3 gibibytes, fixed, engine scratch and the compute graph. KV cache, equal to context times concurrency times 112 kibibytes per token, which grows with use. They add to the box you need: weights plus runtime plus KV, the pod's working set.">
     <!-- three feeder boxes — two fixed (blue), KV grows (orange caution) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
@@ -316,10 +317,11 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 5 · KV GROWS WITH CONTEXT ═══════════════ -->
 <section>
   <h2 class="t">KV cache is the lever — configure the context you need, not the max</h2>
-  <p class="s">Each token in flight costs about 112&nbsp;KiB, and the cache holds every token of every live request. So KV grows with context length times concurrency — and at the model's maximum context a single request alone would blow the budget. Context length is the lever you pull when the box will not fit.</p>
+  <p class="s">Configure the context you need, not the max the card advertises.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Three KV bars drawn to scale, growing with context and concurrency. 2048 context by 1 request is about 0.22 gibibytes, a short green bar. 2048 context by 8 requests is about 1.8 gibibytes, a longer orange bar. 40960 context by 1 request is about 4.5 gibibytes, a very long red bar that overruns the budget line. A gray note reads configure the context you need, not the maximum the card advertises. A band reads context length is the lever — shorter context shrinks the KV term directly.">
     <!-- formula reminder -->
-    <text x="70" y="46" text-anchor="start" class="lbl-g">KV ≈ 112 KiB/token × context × concurrency</text>
+    <text x="70" y="42" text-anchor="start" class="lbl-g">KV ≈ 112 KiB/token × context × concurrency</text>
+    <text x="70" y="63" text-anchor="start" class="lbl-g">the cache holds every token of every live request</text>
     <!-- bar 1: 2048x1 small (green, comfortable) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="76" width="150" height="46" rx="8"/></g>
     <text x="240" y="105" text-anchor="start" class="lbl">2048 × 1  ≈ 0.22 GiB</text>
@@ -341,7 +343,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 6 · TURN THE SUM AROUND ═══════════════ -->
 <section>
   <h2 class="t">Turn the sum around and it answers all three questions</h2>
-  <p class="s">The three-term sum is not just a number — read it the other way and the platform team's three questions fall out of it directly. The memory limit, the replica count, and the context lever are all downstream of the one worksheet you filled in.</p>
+  <p class="s">Read the one worksheet the other way and all three answers fall out of it.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A central sum box, weights plus runtime plus KV, fans out to three answer boxes. Memory limit equals the sum at your configured context and concurrency, plus headroom — a derived number, not a round one. Replica count equals one until concurrency outgrows one pod's KV budget, then add a replica. Context length is the lever you pull when the box will not fit. A band reads all three answers come from the one worksheet you filled in.">
     <!-- central sum box (green, the derived source) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="118" width="270" height="104" rx="12"/></g>
@@ -367,7 +369,8 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="530" y="264" text-anchor="start" class="lbl-b">context lever</text>
     <text x="530" y="288" text-anchor="start" class="lbl-g">the knob you pull when the box will not fit — shorter ctx, smaller KV</text>
     <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="316" width="800" height="20" rx="8"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="308" width="800" height="30" rx="8"/></g>
+    <text x="550" y="329" text-anchor="middle" class="lbl-g">all three answers come from the <tspan class="lbl-b">one worksheet</tspan> you filled in</text>
   </svg>
   <p class="takeaway">Turn the sum around — memory limit, replica count, and the context lever all fall out of the one worksheet, never a number you copy.</p>
   <div class="pageno">M8·06</div>
@@ -376,7 +379,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 7 · ISOLATED KUBECONFIG ═══════════════ -->
 <section>
   <h2 class="t">An isolated kubeconfig is a visitor badge, not the master key</h2>
-  <p class="s"><code>kubectl</code> talks to whatever your current context points at — so give the lab a credential that reaches only the throwaway cluster.</p>
+  <p class="s">Give the lab a credential that reaches only the throwaway cluster.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, master key: a ring of keys opening four doors labelled dev, shared, prod, and lab, tagged default context — one kubectl apply from the wrong cluster. Right, visitor badge: a badge opening exactly one door labelled lab cluster only, tagged the flag kubeconfig equals k8s slash kubeconfig, can't reach anything else. A band reads an isolated kubeconfig names only the throwaway cluster — your real context is never touched.">
     <!-- LEFT: master key -->
     <text x="270" y="34" text-anchor="middle" class="lbl-b">MASTER KEY</text>
@@ -431,7 +434,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 8 · FOUR LOADING PATTERNS, ONE AXIS ═══════════════ -->
 <section>
   <h2 class="t">Four ways into the pod — one axis, one chosen</h2>
-  <p class="s">The choice decides two things: how long the pod takes to become ready, and what a rollout costs.</p>
+  <p class="s">The choice sets two things: how fast the pod is ready, and what a rollout costs.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Four rows on one axis. One, image-baked: startup instant, rollout rebuild and repush a multi-gigabyte image. Two, initContainer from registry, marked chosen: startup about 40 seconds pull and unpack, rollout change the tag with no rebuild, image stays small. Three, hostPath or pre-pulled: startup fastest, rollout manual node prep, ties the pod to a node. Four, object store: startup network-bound, rollout change the object key, needs credentials and egress. Beneath, a gray axis line reads pay at build time on the left, pay at start time on the right. A band reads a signed, versioned artifact points at the initContainer.">
     <!-- row 1 -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><circle cx="66" cy="46" r="19"/></g>
@@ -476,7 +479,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 9 · THE ARTIFACT CHAIN (scene, fragments) ═══════════════ -->
 <section>
   <h2 class="t">The initContainer is the advance man</h2>
-  <p class="s">You did not sign the M7 kit for its own sake — you signed it so the deploy could pull it by name and trust the bytes. An initContainer runs to completion <em>before</em> the server starts, pulling the signed kit onto the volume so the artist walks on to a ready stage.</p>
+  <p class="s">It runs to completion before the server, so the model is waiting on stage.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A gray advance-man figure sets a stage before an inked artist. Beneath, the chain reveals left to right: the signed kit opsmate slash model 1.0.0 from the M7 registry, then kit unpack filter model, to the initContainer the advance man, which writes the GGUF to a PVC the model's home in the cluster, which is mounted into llama-server the artist serving slash v1.">
     <!-- advance man sets the stage, artist waits (static scene, top) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="120" cy="52" r="20"/></g>
@@ -486,8 +489,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="272" y="59" text-anchor="middle" class="lbl-sm">the stage</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="392" cy="52" r="20"/></g>
     <text x="392" y="94" text-anchor="middle" class="lbl-g">the artist</text>
-    <text x="640" y="46" text-anchor="start" class="lbl-g">prep is done <tspan class="lbl-b">before</tspan> the artist arrives —</text>
-    <text x="640" y="72" text-anchor="start" class="lbl-g">an initContainer runs to completion first</text>
+    <text x="640" y="40" text-anchor="start" class="lbl-g">prep is done <tspan class="lbl-b">before</tspan> the artist arrives —</text>
+    <text x="640" y="64" text-anchor="start" class="lbl-g">an initContainer runs to completion first</text>
+    <text x="640" y="94" text-anchor="start" class="lbl-g">the M7 payoff: signed so the deploy can</text>
+    <text x="640" y="116" text-anchor="start" class="lbl-g">pull it by name and <tspan class="lbl-b">trust the bytes</tspan></text>
     <!-- the chain (fragments) -->
     <g class="fragment" data-fragment-index="1">
       <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8"><rect x="30" y="140" width="210" height="86" rx="11"/></g>
@@ -529,7 +534,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 10 · THE PVC MATTERS ═══════════════ -->
 <section>
   <h2 class="t">The PVC means a restart is not a re-pull — and a version bump is just a tag</h2>
-  <p class="s">The model lives on a PersistentVolumeClaim, not a throwaway <code>emptyDir</code>. If the server restarts — say a liveness probe fires — it does not re-pull 610&nbsp;MB; the model stays, only the process comes back. Change the tag and you have deployed a new version, the manifest itself unchanged.</p>
+  <p class="s">The model lives on a PVC, so it survives a restart and a version is just a tag.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, restart is not a re-pull: a PVC crate holds the model, drawn blue and persistent, while the server process cycles above it; a red crossed-out arrow shows the 610 megabyte re-pull that does NOT happen; the initContainer guards — if the GGUF is already there, it skips the pull. Right, a version bump is a tag: the manifest stays fixed while the image tag flips from 1.0.0 to 1.1.0, arrowing to a fresh green deploy. A band reads the PVC keeps the model across restarts, the tag makes the version a deploy-time choice.">
     <!-- LEFT: restart != re-pull -->
     <text x="270" y="34" text-anchor="middle" class="lbl-b">RESTART ≠ RE-PULL</text>
@@ -567,7 +572,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 11 · ADMISSION POLICY ═══════════════ -->
 <section>
   <h2 class="t">The M7 verify gate becomes the cluster's front door</h2>
-  <p class="s">Because the artifact the pod pulls is the one M7 signed, the verify-before-deploy gate you ran by hand in the preflight moves here to become a Kubernetes admission policy. Same check, new location: the cluster refuses to admit a model whose signature does not verify.</p>
+  <p class="s">The check you ran by hand in M7 is now the cluster's admission policy.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A signed kit approaches the cluster's front door, an admission gate drawn purple. The gate asks: does the signature verify? A green yes-path admits the pod and it serves. A red no-path refuses admission — the cluster will not run an unsigned or altered model. A gray note bridges M7 and M8: you ran this same check by hand in M7's preflight; here it is moved to the cluster's front door. A band reads the seal you applied in M7 is the seal the cluster checks in M8.">
     <!-- signed kit -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="128" width="190" height="72" rx="11"/></g>
@@ -598,7 +603,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 12 · TWO PATHS TO THE REGISTRY ═══════════════ -->
 <section>
   <h2 class="t">Two paths to the registry — inside a pod, localhost is the pod</h2>
-  <p class="s">The containerd mirror covers image pulls; the model pull is ordinary HTTP from inside a pod, and that is a different path entirely.</p>
+  <p class="s">The mirror covers image pulls; the model pull is plain HTTP — a different path.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Inside a kind-node frame. The top path: containerd mirror maps localhost 5100 to host Zot, a dashed gray arrow tagged image pulls only, ending green at host Zot. Below, inside a pod-on-the-node box, two rows. Row one: initContainer HTTP to localhost 5100, an arrow to a crossed-out box reading nothing here, because localhost is the pod itself. Row two: initContainer HTTP to registry.local 5100, an inked arrow to host Zot 5100 marked good, tagged hostAliases pins the name to the node's host IP, 192.168.5.2. A band reads the mirror covers image pulls, not in-pod HTTP — hostAliases fixes the second path.">
     <!-- kind node frame -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="30" y="34" width="820" height="284" rx="13"/></g>
@@ -644,7 +649,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 13 · THREE PROBES, THREE JOBS ═══════════════ -->
 <section>
   <h2 class="t">Three probes, three jobs — separate them by the question each answers</h2>
-  <p class="s">Back to the touring musician. The startupProbe is the sound-check — is the artist ready to go on? The livenessProbe is the show-must-go-on check — has the performer collapsed? The readinessProbe is the quieter question — should we send this performer more of the audience right now?</p>
+  <p class="s">Back to the touring musician — each probe answers a different question.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="Three probe cards, each with its job. The startupProbe, green, is the sound-check that runs during load only. The livenessProbe, orange, is the show-must-go-on check that restarts a wedged pod, kept lenient. The readinessProbe, green, is the traffic gate that adds and removes the pod from the Service endpoints without ever killing it. A band reads three probes, three jobs — name the question each answers and the rest follows.">
     <!-- startupProbe (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="70" width="320" height="170" rx="12"/></g>
@@ -665,7 +670,8 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="900" y="184" text-anchor="middle" class="lbl-g">send this one more audience?</text>
     <text x="900" y="214" text-anchor="middle" class="lbl-g">adds/removes from the Service — never kills</text>
     <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="284" width="800" height="20" rx="8"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="276" width="800" height="30" rx="8"/></g>
+    <text x="550" y="297" text-anchor="middle" class="lbl-g">name the <tspan class="lbl-b">question each answers</tspan> and the job follows</text>
   </svg>
   <p class="takeaway">Three probes, three jobs — the sound-check, the show-must-go-on check, and the traffic gate — and each only makes sense once you name the question it answers.</p>
   <div class="pageno">M8·13</div>
@@ -674,7 +680,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 14 · THE ORDERING PROTECTS THE LOAD ═══════════════ -->
 <section>
   <h2 class="t">Startup holds everything off until the model loads</h2>
-  <p class="s">The ordering is what protects a slow loader. While the startupProbe is still running, liveness and readiness do not fire at all — they only begin after the model is loaded. The startupProbe's failureThreshold × periodSeconds is your load budget: the total grace the model gets before Kubernetes gives up.</p>
+  <p class="s">The ordering is what protects a slow loader.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A flow. Pod starts arrows to the startupProbe, green, which runs during load only. A dashed gray arrow labelled holds off leads to an orange box: readiness and liveness do not run yet. When slash health goes green after about 40 seconds, the flow reaches model loaded and serving, green, which only now unlocks the readiness and liveness probes. A gray note reads the load budget equals failureThreshold times periodSeconds, for example 30 times 5 seconds equals 150 seconds, comfortably more than the 40 second load. A band reads the ordering is what protects a slow starter.">
     <!-- pod starts -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="30" y="70" width="130" height="56" rx="10"/></g>
@@ -697,7 +703,8 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="725" y="92" text-anchor="middle" class="lbl-b">model loaded</text>
     <text x="725" y="116" text-anchor="middle" class="lbl-g">only NOW do the others run</text>
     <!-- load budget note -->
-    <text x="560" y="286" text-anchor="middle" class="lbl-g">load budget = <tspan class="lbl-b">failureThreshold × periodSeconds</tspan> &nbsp;(e.g. 30 × 5 s = 150 s &gt; ~40 s)</text>
+    <text x="560" y="280" text-anchor="middle" class="lbl-g">load budget = <tspan class="lbl-b">failureThreshold × periodSeconds</tspan> &nbsp;(e.g. 30 × 5 s = 150 s &gt; ~40 s)</text>
+    <text x="560" y="304" text-anchor="middle" class="lbl-g">the total grace the model gets before Kubernetes gives up</text>
   </svg>
   <p class="takeaway">While startup runs, liveness and readiness do not fire — and failureThreshold × periodSeconds is the load budget that gives the model time.</p>
   <div class="pageno">M8·14</div>
@@ -706,12 +713,14 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 15 · THE AGGRESSIVE-LIVENESS LOOP (fragments) ═══════════════ -->
 <section>
   <h2 class="t">The aggressive-liveness loop — an outage you cause on purpose</h2>
-  <p class="s">A tight liveness probe that's perfect for a 200 ms web service becomes a restart loop on a 40-second loader.</p>
+  <p class="s">A probe that's fine for a fast web service becomes a restart loop here.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A loop. An aggressive liveness probe, every 1 second, 1 failure means dead, fires during the 40-second load while slash health is not up. The container is declared dead. The restart loads the model again from scratch. The probe fails again before it finishes. A curved arrow returns to the start, closing the loop, tagged RESTARTS climbing and CrashLoopBackOff. A gray note reads the engine was never broken — the probe never gave it time. Below, the fix box: a startupProbe covers the load plus a lenient liveness for steady state. A band reads apply the bad probe, watch the loop, revert — a self-inflicted outage seen in a safe place.">
     <!-- start box — the culprit probe (red) -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="44" width="250" height="72" rx="11"/></g>
     <text x="165" y="74" text-anchor="middle" class="lbl-b">aggressive liveness</text>
     <text x="165" y="98" text-anchor="middle" class="lbl-g">every 1 s, 1 failure = dead</text>
+    <text x="165" y="140" text-anchor="middle" class="lbl-g">reasonable for a 200 ms</text>
+    <text x="165" y="162" text-anchor="middle" class="lbl-g">web service — not this</text>
     <!-- fragment 1: fires during load -->
     <g class="fragment" data-fragment-index="1">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M290,80 L360,80" marker-end="url(#ah)"/></g>
@@ -760,7 +769,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 16 · REQUESTS VS LIMITS ═══════════════ -->
 <section>
   <h2 class="t">requests is the working set, limits is the OOM ceiling</h2>
-  <p class="s">Split the three-term sum into the two numbers Kubernetes actually wants — both derived, neither copied.</p>
+  <p class="s">Split the sum into the two numbers Kubernetes wants — both derived, not copied.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels with a struck-through box between them. Left, requests.memory: equal to weights plus runtime plus KV at expected load, tagged the honest working set, what the scheduler places on. Right, limits.memory: the ceiling before the kernel OOM-kills, tagged too low dies under load, too high loses OOM protection. Between them a crossed-out gray box reads a number copied from another service's YAML, tagged a guess, a crash loop. A gray note reads the spike whole footprint was 1.76 gibibytes, in the 8 gigabyte budget because it was derived. A band reads requests is the working set, limits is the OOM ceiling — both derived from the three-term sum.">
     <!-- LEFT: requests — the honest derived working set (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8"><rect x="40" y="52" width="330" height="150" rx="12"/></g>
@@ -796,7 +805,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 17 · THE ENGINE FORK ═══════════════ -->
 <section>
   <h2 class="t">The engine fork, stated honestly — same plumbing, two images</h2>
-  <p class="s">Swapping the serving engine is an image-and-args change, not a manifest rewrite, because the OpenAI <code>/v1</code> contract holds the client stable.</p>
+  <p class="s">The <code>/v1</code> contract holds the client stable, so the engine is just image and args.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two engine panels share a spine down the middle. The shared column reads same PVC, same initContainer chain, same probe shape, same slash v1 contract. Left, llama-server for arm64 8 gigabyte, marked chosen, tagged validated: 1 of 1 Running, 1.76 gibibytes, in budget. Right, vLLM, the production engine, tagged GPU is its home, the CPU build crashes on the arm64 VM kernel per M3, so it is taught line by line and validated on x86, cloud, plus a recorded demo. A gray note between them reads differ ONLY in image and args. A band reads swapping the engine is an image-and-args change, not a manifest rewrite — the slash v1 contract holds the client stable.">
     <!-- shared spine in the middle — the common plumbing (blue) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="410" y="52" width="280" height="200" rx="12"/></g>
@@ -834,7 +843,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 18 · GPU SURVEY ═══════════════ -->
 <section>
   <h2 class="t">On real GPUs the shape holds — the numbers do not</h2>
-  <p class="s">The plumbing transfers unchanged; the capacity math moves to VRAM and gains a lever the laptop never needed.</p>
+  <p class="s">The plumbing transfers unchanged; only the capacity math moves to VRAM.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A hub-and-spoke. The centre box reads same shape: artifact chain, PVC, probes, initContainer, tagged transfers unchanged, it's Kubernetes plumbing. Three gray spokes to what changes on a GPU: budget VRAM, not host RAM; vLLM pre-allocates a GPU-memory fraction, not a growing RAM KV; and more than one card means tensor parallelism, a new manifest term. A gray footline reads the three-term sum is still the mental model — weights plus runtime plus KV — but the ceiling and levers change. A band reads the pattern is portable, the numbers are not — derive the box, don't paste the values.">
     <!-- centre hub — the portable pattern that transfers unchanged (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="380" y="118" width="340" height="94" rx="12"/></g>
@@ -871,7 +880,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <p class="kicker">MODULE 8 &nbsp;·&nbsp; SERVING ON KUBERNETES — CAPACITY, THE ARTIFACT CHAIN &amp; PROBES</p>
   <h2 class="t" style="font-size:2.05em">OpsMate is v2.0 — M9 opens the door to many models</h2>
-  <p class="s">You leave with OpsMate served by the cluster — the signed 1.0.0 artifact loaded onto a PVC, behind a Service, with probes shaped for a slow starter and a limit from a worksheet.</p>
+  <p class="s">OpsMate v2.0: the signed artifact, served by the cluster you sized for it.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One, capacity derived: the three-term sum before the manifest, the limit from a worksheet not a template. Two, artifact chain: the initContainer pulls the signed 1.0.0 kit onto a PVC, the manifest unchanged across versions. Three, probes that protect: a startupProbe covers the 40-second load, a lenient liveness guards the steady state. Below, an arrow to M9: many models, one door — a gateway that routes without the client changing, plus autoscaling and GitOps. A footline reads OpsMate is v2.0, served by the cluster, now open Module 8 Lab.">
     <!-- row 1 -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>

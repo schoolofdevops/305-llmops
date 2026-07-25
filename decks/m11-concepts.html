@@ -95,6 +95,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -139,7 +140,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 1 · TITLE — two incidents, one week ═══════════════ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 11 &nbsp;·&nbsp; AUTOSCALING &amp; GITOPS — OPERATING THE PLATFORM</p>
-  <h2 class="t" style="font-size:1.95em">Two incidents, one week</h2>
+  <h2 class="t" style="font-size:2.1em">Two incidents, one week</h2>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Two incident cards on a desk: a surge card showing a growing queue over a flat CPU line, and a ticket card asking whether a model was really promoted. A gray dashed divider separates what you could feel from what git could prove.">
     <!-- surge card: orange fill = caution/in-between incident -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><rect x="90" y="70" width="380" height="220" rx="14"/></g>
@@ -171,7 +172,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 2 · DON'T LISTEN TO THE KITCHEN (restaurant, build A) ═══════════════ -->
 <section>
   <h2 class="t">Don't judge the room by the kitchen</h2>
-  <p class="s">Picture judging how busy a restaurant is by standing outside and listening to the kitchen. Pots banging, the fryer going — loud, so it must be busy. But kitchen noise tells you how hard the cooks are working, not how many people are waiting.</p>
+  <p class="s">Kitchen noise tells you how hard the cooks work — not how many people wait.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A cook stands outside a restaurant listening to a loud kitchen — pots and a fryer drawn, an ear icon over the kitchen — while the dining room behind is half empty with two empty tables.">
     <!-- kitchen: orange fill = the misleading signal (caution) -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><rect x="90" y="90" width="330" height="200" rx="14"/></g>
@@ -198,7 +199,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 3 · ONE REQUEST PINS ONE CORE (mechanism, fragments) ═══════════════ -->
 <section>
   <h2 class="t">One request pins one core; the next one just waits</h2>
-  <p class="s">For a llama.cpp server, decode saturates one core per in-flight request. A second request that arrives with no free slot does not raise CPU — it waits. It consumes almost nothing while it sits parked, because it is not doing anything yet.</p>
+  <p class="s">Decode pins one core; a request with no free slot parks and burns nothing.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="One request drives a single CPU core drawn hot in orange. A second request arrives, finds no free slot, and parks in a red waiting box tagged roughly zero percent CPU — it is doing nothing yet.">
     <!-- request 1 -> one hot core (always) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="80" y="60" width="150" height="54" rx="10"/></g>
@@ -232,7 +233,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 4 · CPU FLAT WHILE QUEUE GROWS (the surge) ═══════════════ -->
 <section>
   <h2 class="t">CPU stayed flat exactly when you were in trouble</h2>
-  <p class="s">During the surge, one engine ran its core hot at forty percent node-average CPU while the queue behind it grew. The CPU-based HPA, watching the kitchen, heard nothing worth acting on. The autoscaler did what you told it — you told it the wrong thing.</p>
+  <p class="s">The autoscaler did what you told it — you told it to watch the wrong signal.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A flat CPU line pinned at forty percent, drawn gray and dashed to signal distrust, sits over a growing red queue of waiting requests. A crossed-out HPA chip reads no scale.">
     <!-- axes -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><line x1="120" y1="60" x2="120" y2="270"/><line x1="120" y1="270" x2="720" y2="270"/></g>
@@ -242,7 +243,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="355" y="300" text-anchor="middle" class="lbl-g">queue depth ↑</text>
     <!-- flat CPU line: gray dashed = distrust -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.8" stroke-dasharray="9 7"><line x1="120" y1="200" x2="720" y2="200"/></g>
-    <text x="640" y="190" text-anchor="middle" class="lbl-bad">40%</text>
+    <text x="640" y="190" text-anchor="middle" class="lbl-bad">40% node-avg</text>
     <text x="640" y="168" text-anchor="middle" class="lbl-g" style="font-size:16px">CPU flat</text>
     <!-- crossed-out HPA no-scale chip -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="800" y="130" width="230" height="80" rx="12"/></g>
@@ -256,7 +257,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 5 · SCALE ON THE QUEUE (restaurant, build B — the turn) ═══════════════ -->
 <section>
   <h2 class="t">Look at the queue at the door</h2>
-  <p class="s">The signal that maps to user pain is the queue at the door — queue depth. You already know where it lives: the server exports <code>llamacpp:requests_deferred</code>, the count of requests parked because every slot is busy. That is the gauge that climbed while CPU stayed flat.</p>
+  <p class="s">Queue depth is the signal that maps to user pain — and it climbed all along.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The maitre d' now looks at the queue at the door — a line of waiting people drawn in blue — with a gauge tagged requests deferred whose needle climbs into the red. The kitchen from the earlier scene is grayed out behind.">
     <!-- grayed kitchen behind -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5"><rect x="60" y="70" width="200" height="150" rx="12"/></g>
@@ -281,7 +282,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 6 · KEDA IS THE MAÎTRE D' ═══════════════ -->
 <section>
   <h2 class="t">KEDA is the maître d' who opens the second room</h2>
-  <p class="s">A good maître d' watches the queue at the door, and when it forms, opens the second dining room; when it drains, closes it again. That is the whole control loop, and KEDA is that maître d' for your Deployment.</p>
+  <p class="s">Queue forms, open a room; queue drains, close it — the whole control loop.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A maitre d' figure labelled KEDA in purple stands with a hand on a second dining-room door, watching a queue gauge. A loop arrow reads queue builds opens the room, drains closes it.">
     <!-- maître d' = KEDA: purple fill = control -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="90" y="90" width="200" height="180" rx="14"/></g>
@@ -307,7 +308,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 7 · KEDA READS PROMETHEUS DIRECTLY ═══════════════ -->
 <section>
   <h2 class="t">Hand KEDA the query — no adapter in the middle</h2>
-  <p class="s">You know what an HPA is, so this doesn't re-teach it — the LLM-specific part is where the signal comes from. KEDA reads your M10 Prometheus series directly. You hand it the query <code>sum(llamacpp:requests_deferred)</code> and a threshold, with no prometheus-adapter metric-rule language sitting in between.</p>
+  <p class="s">Hand KEDA the query and a threshold — no adapter rule language in between.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Top path in green: KEDA sends one query, sum of requests deferred, straight to Prometheus. Bottom path, crossed out in red and dashed: the old chain of HPA to prometheus-adapter to metric rules to Prometheus.">
     <!-- green clean path -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="80" y="70" width="150" height="66" rx="12"/></g>
@@ -316,7 +317,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><line x1="230" y1="103" x2="640" y2="103" marker-end="url(#ah)"/></g>
     <text x="435" y="90" text-anchor="middle" class="lbl-g">sum(requests_deferred) + threshold</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="660" y="70" width="200" height="66" rx="12"/></g>
-    <text x="760" y="110" text-anchor="middle" class="lbl-b">Prometheus</text>
+    <text x="760" y="110" text-anchor="middle" class="lbl-b">M10 Prometheus</text>
     <text x="435" y="140" text-anchor="middle" class="lbl-good">direct</text>
     <!-- crossed-out old chain: red, dashed -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="80" y="220" width="130" height="60" rx="10"/><rect x="300" y="220" width="200" height="60" rx="10"/><rect x="580" y="220" width="160" height="60" rx="10"/></g>
@@ -334,7 +335,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 8 · ONE OBJECT YOU WRITE, ONE IT BUILDS (fragments) ═══════════════ -->
 <section>
   <h2 class="t">You write a ScaledObject; KEDA builds the HPA</h2>
-  <p class="s">KEDA does not scale the Deployment itself. It generates an HPA and manages it for you. You write one object — a <code>ScaledObject</code> — and KEDA creates a real <code>keda-hpa-opsmate-model</code> beside it. In the lab you see both objects, side by side.</p>
+  <p class="s">You write one object; KEDA generates and manages a real HPA beside it.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A ScaledObject box in purple that you write. A KEDA-generates arrow reveals a keda-hpa-opsmate-model box in blue, which in turn drives the Deployment. The generated HPA and the deployment appear on reveal.">
     <!-- ScaledObject you write: purple = control object (always) -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="80" y="120" width="230" height="100" rx="14"/></g>
@@ -363,7 +364,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 9 · OPEN THE ROOM, THEN CLOSE IT (1→2→1) ═══════════════ -->
 <section>
   <h2 class="t">Open the room, then close it again — 1 → 2 → 1</h2>
-  <p class="s">On the 8 GB path you scale <code>min 1 / max 2</code> with a threshold of <code>2</code> — more than two parked requests per replica and KEDA adds the second engine. Drive load until the queue climbs, watch 1 → 2; drain the load, watch 2 → 1.</p>
+  <p class="s">More than two parked requests per replica, and KEDA adds the second engine.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A queue gauge with a threshold line at two; when the queue crosses it an up-arrow adds an engine, taking a dial from one to two. When the queue drains, a down-arrow returns the dial to one, drawn green as the healthy resting state.">
     <!-- queue gauge with threshold at 2 -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><line x1="100" y1="80" x2="100" y2="280"/><line x1="100" y1="280" x2="300" y2="280"/></g>
@@ -372,6 +373,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- threshold line at 2 -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-dasharray="8 6"><line x1="100" y1="160" x2="320" y2="160"/></g>
     <text x="330" y="164" text-anchor="start" class="lbl-b">= 2</text>
+    <text x="330" y="188" text-anchor="start" class="lbl-g" style="font-size:15px">per replica</text>
     <text x="200" y="308" text-anchor="middle" class="lbl-g">queue depth</text>
     <!-- up-arrow: queue > 2 add -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><line x1="380" y1="120" x2="500" y2="120" marker-end="url(#ah)"/></g>
@@ -382,6 +384,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="600" y="130" text-anchor="middle" class="lbl-b">1</text>
     <text x="720" y="130" text-anchor="middle" class="lbl-b">2</text>
     <text x="640" y="266" text-anchor="middle" class="lbl-g">engines</text>
+    <text x="640" y="292" text-anchor="middle" class="lbl-g" style="font-size:15px">min 1 · max 2</text>
     <!-- down-arrow: drains remove, return to 1 = green -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><line x1="760" y1="220" x2="880" y2="220" marker-end="url(#ah)"/></g>
     <text x="820" y="206" text-anchor="middle" class="lbl-g" style="font-size:16px">drains → remove</text>
@@ -396,7 +399,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 10 · SCALE-TO-ZERO IS A TRAP HERE ═══════════════ -->
 <section>
   <h2 class="t">Scale-to-zero is a trap for a model server</h2>
-  <p class="s">A stateless web pod comes back in seconds. A model server's cold start is image-pull plus model-load — reading the weights off disk into memory and warming the runtime. That is minutes, not seconds. The first user after an idle window waits, and won't forgive it.</p>
+  <p class="s">A web pod restarts in seconds; a model's cold start is minutes of weight load.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two stopwatches. A stateless web pod comes back in seconds, drawn green. A model pod comes back in minutes, drawn red, because a large weights-into-memory load bar sits behind it. A yawning first user waits.">
     <!-- web pod: seconds, green -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><circle cx="220" cy="130" r="60"/><line x1="220" y1="130" x2="220" y2="88"/><line x1="220" y1="70" x2="220" y2="58"/></g>
@@ -422,7 +425,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 11 · WARM FOR INTERACTIVE, SLEEP FOR BATCH ═══════════════ -->
 <section>
   <h2 class="t">Sleep the batch endpoint; keep interactive warm</h2>
-  <p class="s">The honest rule: scale-to-zero belongs to batch and rare endpoints — a nightly report, an endpoint hit twice a day — where a cold minute is fine. For an interactive service like OpsMate, keep at least one engine warm. That is why the lab runs <code>min 1</code>.</p>
+  <p class="s">Scale-to-zero suits batch; an interactive service keeps at least one warm.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. On the left, a batch or rare endpoint allowed to scale to min zero, drawn green with a sleeping engine and a note that a cold minute is fine. On the right, interactive OpsMate at min one, drawn blue with one engine kept lit.">
     <!-- left panel: batch min 0 = green -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="70" y="70" width="440" height="220" rx="14"/></g>
@@ -449,7 +452,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 12 · THE SECOND ENGINE SKIPS THE UNPACK (presence-cache) ═══════════════ -->
 <section>
   <h2 class="t">The second engine skips the unpack — a feature</h2>
-  <p class="s">The M8 PVC pattern: the first pod's init unpacked the model onto a volume. The second pod's init looks at the PVC, sees the model already there, and skips the whole download-and-unpack — it logs "already present" and goes straight to serving. Call it the presence-cache.</p>
+  <p class="s">Pod two sees the model already on the PVC and skips straight to serving.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The first pod's init unpacks the ModelKit onto a full PVC disk. The second pod's init looks at the PVC, sees it already filled, and a green skip-unpack arrow jumps straight to serving, with a log chip reading model already present on PVC, skipping unpack.">
     <!-- pod 1 unpacks -> PVC -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="70" width="150" height="70" rx="12"/></g>
@@ -482,7 +485,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 13 · THE MANIFEST ON THE DOOR DECIDES (warehouse) ═══════════════ -->
 <section>
   <h2 class="t">The manifest on the door decides what's inside</h2>
-  <p class="s">Think of a bonded warehouse. What is supposed to be inside is not decided by whoever last walked in with a crate; it is decided by the signed manifest pinned to the door. Change the paper properly and the building is made to match. The paper is truth.</p>
+  <p class="s">The signed manifest on the door decides what's inside — not the last crate in.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A bonded warehouse with a signed manifest pinned to its door, drawn purple as the source of truth. A worker carrying a crate is turned away with a note reading not you. An arrow reads the paper decides, the building is made to match.">
     <!-- warehouse -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M300,140 L560,140 L560,300 L300,300 Z"/><path d="M300,140 L430,80 L560,140"/><rect x="400" y="200" width="70" height="100" rx="4"/></g>
@@ -507,7 +510,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 14 · THE MODEL VERSION IS ON THE MANIFEST (GitOps loop) ═══════════════ -->
 <section>
   <h2 class="t">The model version is a line on the manifest</h2>
-  <p class="s">The twist for a model platform is what goes on the manifest. The desired state includes which signed ModelKit tag is serving — not a footnote, a line. You keep it in a git repo, Argo CD watches it, and the cluster is continuously made to match what git says.</p>
+  <p class="s">Which signed ModelKit tag serves is a line in git that Argo keeps true.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A GitOps loop: you open a PR that bumps the kit tag into gitea, the env repo. Argo CD watches, reconciles, and points the cluster at the new tag, whose init unpacks into a per-tag directory on the PVC. The kit-tag line is highlighted blue on the manifest.">
     <!-- you -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="110" r="22"/><line x1="90" y1="132" x2="90" y2="170"/></g>
@@ -544,7 +547,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 15 · PROMOTE IS A PULL REQUEST ═══════════════ -->
 <section>
   <h2 class="t">Promotion becomes a pull request</h2>
-  <p class="s">So "promote" stops being a sentence someone wrote on a change ticket. It becomes a pull request that bumps the kit tag from <code>1.0.0</code> to <code>1.0.0-candidate</code> — a reviewable, mergeable change with an author and a diff.</p>
+  <p class="s">"Promote" stops being a ticket sentence and becomes a reviewable diff.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A diff card showing minus one point zero point zero and plus one point zero point zero dash candidate, the plus line drawn green, merging into the env repo. Beside it, a crossed-out change ticket that merely said promoted, drawn red and dashed.">
     <!-- diff card -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="90" y="70" width="420" height="180" rx="14"/></g>
@@ -572,7 +575,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 16 · ROLL BACK WITH GIT REVERT ═══════════════ -->
 <section>
   <h2 class="t">Roll back with <code>git revert</code>; "what's serving?" is <code>git log</code></h2>
-  <p class="s">Rollback becomes <code>git revert</code> — you undo the commit, Argo reconciles, the cluster goes back. And "what is serving?" stops being a ticket you have to trust; it becomes <code>git log</code> on the env repo, a fact you can check, with an audit trail.</p>
+  <p class="s">Rollback is a revert, and "what's serving?" is a git log you can check.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="The GitOps loop run backward: git revert flows into gitea, Argo reconciles, and the cluster returns to one point zero point zero. A magnifier over git log answers the question what is serving, drawn green as a checkable truth.">
     <!-- git revert -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="70" y="120" width="180" height="70" rx="12"/></g>
@@ -600,7 +603,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 17 · POLL OR POKE ═══════════════ -->
 <section>
   <h2 class="t">Wait for the poll, or poke it</h2>
-  <p class="s">One operational note you'll feel in the lab: Argo's default git poll is around three minutes, so a merged PR doesn't reconcile instantly. You can wait, or force it with the <code>argocd.argoproj.io/refresh</code> annotation — the same job a git webhook would do in a real setup.</p>
+  <p class="s">Argo polls git about every three minutes — wait, or poke it to reconcile now.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A slow three-minute poll clock drawn orange beside a fast refresh-annotation poke drawn blue that triggers reconcile now. A note reads poll versus webhook is latency versus plumbing.">
     <!-- poll clock: orange = caution/in-between -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><circle cx="230" cy="150" r="80"/></g>
@@ -625,7 +628,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 18 · THE PROMOTION LIE (full jar) ═══════════════ -->
 <section>
   <h2 class="t">The promotion lie — a label swapped on a full jar</h2>
-  <p class="s">You merge the PR. Git says <code>candidate</code>. Argo reconciles, the pod rolls, everything goes green — and the server keeps serving the old model. The init's guard, the presence-cache, saw a GGUF already on the PVC and skipped the unpack. The label changed; the contents did not.</p>
+  <p class="s">Everything goes green, but the label changed and the contents did not.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A jar labelled candidate on the outside but still full of the old batch inside, the label merely swapped. A green deploy-check chip lies beside it as the misleading pass. The init guard is drawn seeing a model and skipping the unpack.">
     <!-- jar with swapped label -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M300,90 L420,90 L420,110 L440,130 L440,290 L280,290 L280,130 L300,110 Z"/></g>
@@ -653,7 +656,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 19 · MAKE THE TAG PART OF THE PATH ═══════════════ -->
 <section>
   <h2 class="t">Make the tag part of the path</h2>
-  <p class="s">The fix: instead of one shared model directory, unpack each tag into its own directory — <code>/model/kits/1.0.0/</code>, <code>/model/kits/1.0.0-candidate/</code> — and thread the tag through the guard, the unpack, and the server's <code>-m</code> flag. The guard for candidate finds its directory empty and actually unpacks.</p>
+  <p class="s">Give each tag its own directory, and the candidate's guard finds it empty.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A single shared slash-model directory crossed out in red, replaced by two per-tag directories: one point zero point zero drawn full and green, and one point zero point zero dash candidate drawn empty and now unpacking. The tag is threaded through guard, unpack, and the minus-m flag.">
     <!-- shared dir crossed out: red -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="90" y="130" width="240" height="80" rx="10"/></g>
@@ -683,7 +686,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 20 · VERSIONED CACHE MAKES ROLLBACK FREE ═══════════════ -->
 <section>
   <h2 class="t">The same cache makes rollback nearly free</h2>
-  <p class="s">The quiet payoff: once each version has its own directory, rollback is instant. <code>git revert</code> puts the tag back to <code>1.0.0</code>, Argo reconciles, the pod rolls — and the <code>1.0.0</code> directory is still on the volume, so init skips the unpack and the engine is Ready in seconds.</p>
+  <p class="s">The old directory is still on disk, so a reverted tag is Ready in seconds.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="git revert sets the tag back to one point zero point zero. The one point zero point zero directory is still on disk from before, drawn green and present, so init skips the unpack and the engine is Ready in seconds.">
     <!-- git revert -> 1.0.0 -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="70" y="120" width="200" height="70" rx="12"/></g>
@@ -710,7 +713,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 21 · CAP THE SPACE HEATER, DRAIN FIRST (circuit breaker) ═══════════════ -->
 <section>
   <h2 class="t">Cap the space heater, and drain serving first</h2>
-  <p class="s">A training pod is a space heater on the node's shared circuit — including the control plane — and a fine-tune takes every core it can reach. The circuit breaker is a CPU limit: <code>limits.cpu: "2"</code> caps it so it can never starve the apiserver. And you drain serving first.</p>
+  <p class="s">A CPU limit caps the training pod so it can't starve the shared control plane.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A training pod drawn as a space heater on the node's shared circuit with the control plane. A circuit breaker labelled limits cpu equals two sits between them in green, tripping before a brownout. A paused-replicas zero switch pins the model server to zero and observability is scaled to zero, clearing the node.">
     <!-- shared node circuit -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="90" y1="90" x2="1010" y2="90"/></g>

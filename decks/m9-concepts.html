@@ -96,6 +96,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -138,8 +139,8 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 1 · TITLE ═══════════════ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 9 &nbsp;·&nbsp; SERVING PATTERNS — CANARY A MODEL ON QUALITY, NOT CRASHES</p>
-  <h2 class="t" style="font-size:2.1em">Two versions, one production — ship without betting the house</h2>
-  <p class="s" style="font-size:1.12em">A new OpsMate model came out of M6, passed its staging checks, and someone wants it shipped. In M8 you served exactly one version behind a Service. Now there are two versions and one production — and the obvious move breaks in one expensive way.</p>
+  <h2 class="t" style="font-size:1.55em">Two versions, one production — ship without betting the house</h2>
+  <p class="s" style="font-size:1.12em">Two versions, one production — and the obvious move breaks expensively.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A production frame with one door. Two version tags approach it: base 1.0.0, inked, already inside, and candidate, gray, waiting outside. A gray dashed band beneath names the naive move and its cost: swap the tag and every user is on a model only ever measured in staging.">
     <!-- production frame with one door -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -173,7 +174,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 2 · THE TRAP (scene) ═══════════════ -->
 <section>
   <h2 class="t">The pod is Healthy, the model is wrong</h2>
-  <p class="s">For an ordinary web API, <code>1/1 Running</code> is a fine proxy for "it works." A model server breaks that assumption — and it's the trap this whole module corrects.</p>
+  <p class="s">For a model server, 1/1 Running stops being a proxy for "it works."</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels. Left, the probe sees: a kitchen with an OPEN sign and a green tick, tagged pod 1/1 Running, every probe green, a health check returning 200. Right, the probe cannot see: a plate going out with a gray question mark over it, tagged worse answers, hallucinations, regressed on the exact cases you tuned. A band reads a readiness probe checks the kitchen is open, not that the cooking is any good.">
     <!-- LEFT: the probe sees -->
     <text x="270" y="34" text-anchor="middle" class="lbl-b">THE PROBE SEES</text>
@@ -211,7 +212,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 3 · THE CANARY = ONE TABLE IN TEN ═══════════════ -->
 <section>
   <h2 class="t">The new cook shadows one table in ten — blast radius bounded</h2>
-  <p class="s">A restaurant hires a new cook. No sane kitchen puts them on every order on day one. They shadow — cook for one table in ten while the trusted cook handles the rest. That much is the canary you already know: a thin slice of live traffic to the new thing, so a problem hits few people, not everyone.</p>
+  <p class="s">The new cook takes one table in ten — a problem hits few, not everyone.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A kitchen source, live orders, fans to two paths. One table in ten routes to the new cook, drawn blue as the thing under test, tagged the canary. Nine in ten route to the trusted cook, drawn green as the proven base. A band reads a thin slice to the new cook bounds the blast radius — a problem hits one table, not the whole room.">
     <!-- kitchen source -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="130" width="180" height="90" rx="11"/></g>
@@ -245,7 +246,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 4 · TWO WAYS TO JUDGE (scene) ═══════════════ -->
 <section>
   <h2 class="t">Waiting for complaints misses the food that is merely worse</h2>
-  <p class="s">The split is the easy half; the module is the second half — how does the kitchen decide the cook is <em>good</em>? Waiting for complaints catches disasters but misses the quiet failures a polite customer eats and never returns for. The manager tasting the food catches those — actively, before the plate goes out.</p>
+  <p class="s">Waiting for complaints misses the food that is merely worse.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="From the new cook's plate, two ways to judge. Wait for complaints, drawn red and dashed as the weak way: catches a raw chicken or a crashing pod, but misses food that is edible but worse. The manager tastes, drawn green and heavier as the strong way: compares the dish to the trusted cook's, before it reaches the customer. A band reads a crash signal is not a quality signal — the one that matters is the one a probe cannot see.">
     <!-- the plate under judgement -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><ellipse cx="150" cy="175" rx="90" ry="44"/></g>
@@ -273,7 +274,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 5 · ROUTER + TWO BACKENDS (fragments) ═══════════════ -->
 <section>
   <h2 class="t">Two backends and a router in front — the client dials the router</h2>
-  <p class="s">Running two versions at once needs three things: two backends and something in front that decides, per request, which one answers. M8 had one backend, dialed directly. Now add a second — the canary — and put a router in front of both. Clients dial the router; the router splits.</p>
+  <p class="s">Two versions at once needs a router that decides, per request, who answers.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A client box arrows into a purple router, drawn as the control. The router forks to two backends: opsmate-model, base 1.0.0, drawn green at about 90 percent, and opsmate-canary, 1.0.0-candidate, drawn orange at about 10 percent. A band reads two backends plus a router that splits per request — the third thing you must add to run two versions at once.">
     <!-- client -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="40" y="132" width="200" height="86" rx="11"/></g>
@@ -314,7 +315,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 6 · THE CLIENT NEVER CHANGES ═══════════════ -->
 <section>
   <h2 class="t">The client never changes — both backends speak the same /v1</h2>
-  <p class="s">First design choice, and it is deliberate. Both backends serve the same OpenAI <code>/v1</code> contract under the same model alias, <code>qwen3-0.6b</code>, so the client cannot tell which one answered and does not need to. The endpoint contract that held from laptop to cluster now holds across two versions.</p>
+  <p class="s">Both backends speak the same /v1 — the client can't tell who answered.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A single client box, unchanged since M3, sends the same /v1 request to the router. Two backends return through the router: base and canary, both drawn on the same /v1 contract with the same alias qwen3-0.6b. A gray dashed return arrow to the client is tagged the client can't tell who answered. A band reads the /v1 contract that held from laptop to cluster now holds across two versions — the client is untouched.">
     <!-- client -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="40" y="120" width="220" height="96" rx="11"/></g>
@@ -350,7 +351,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 7 · SPLIT_CLIENTS HASHES INTO BUCKETS ═══════════════ -->
 <section>
   <h2 class="t">split_clients hashes each request into weight buckets</h2>
-  <p class="s">The router is one small nginx pod using <code>split_clients</code> — a built-in that hashes a per-request key across the 0–100% space and assigns each request to an upstream by weight. Two lines of config carry the weights: 10% canary, the rest base. Over many requests the distribution converges to those weights.</p>
+  <p class="s">nginx hashes each request across 0–100% and assigns it by weight.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A split_clients box hashes the request id down into a bar from 0 to 100 percent. A 10 percent slice at the left is drawn orange and marked canary; the remaining 90 percent is drawn green and marked base. A gray note reads two ConfigMap lines carry the weights. A band reads split_clients hashes each request into a weight bucket — over many requests it converges to 90 by 10.">
     <!-- split_clients box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="380" y="52" width="340" height="80" rx="11"/></g>
@@ -375,7 +376,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 8 · X-SERVED-BY — WATCH THE SPLIT ═══════════════ -->
 <section>
   <h2 class="t">X-Served-By names who answered — so you can watch the split</h2>
-  <p class="s">Every response carries an <code>X-Served-By</code> header naming which backend answered. That is the per-request observability hook: it lets you <em>watch</em> the split happen instead of trusting it. Count the headers over a run and you can see the real ratio the router is producing.</p>
+  <p class="s">Every response names its backend — tally the headers to watch the real split.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="The router emits responses, each stamped with a purple X-Served-By header reading either base or canary. A tally below counts them: mostly base, a few canary, summing toward the configured ratio. A band reads X-Served-By is the hook — watch the split, do not trust it.">
     <!-- router -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="120" width="180" height="86" rx="11"/></g>
@@ -404,7 +405,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 9 · MANUAL, VISIBLE WEIGHT EDIT ═══════════════ -->
 <section>
   <h2 class="t">Changing the weight is a manual, visible act — on purpose</h2>
-  <p class="s">Second design choice. You edit the two lines in the ConfigMap, then <code>kubectl rollout restart</code> so nginx re-reads it. Manual on purpose — you feel the promote and rollback in your hands before the module shows you the abstractions that automate it. An abstraction adopted before you feel the mechanic is a black box; after, it is a convenience.</p>
+  <p class="s">Edit two lines, restart nginx — feel the promote in your hands, on purpose.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A three-step flow drawn as a pipeline. First, edit two lines in the ConfigMap, drawn as the change under your hand. Second, kubectl rollout restart, drawn purple as the control step. Third, nginx re-reads the new weights and the split shifts, drawn green. A band reads manual on purpose — you feel the promote and rollback in your hands before an abstraction hides them.">
     <!-- step 1: edit configmap -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="40" y="110" width="290" height="96" rx="11"/></g>
@@ -437,7 +438,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 10 · READING A SPLIT (scene) ═══════════════ -->
 <section>
   <h2 class="t">You cannot judge a coin from three flips</h2>
-  <p class="s">20 requests can show zero canary hits at 10% — and nothing is broken. Read a split at a sample size that can actually show it.</p>
+  <p class="s">20 requests can show zero canary hits at 10% — and nothing is broken.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels. Left, three flips: three coins all showing heads, tagged 20 requests give 0 canary hits, 0.9 to the 20th is about 12 percent or one in eight, it looks broken but isn't. Right, many flips: a row of coins settling near half, tagged n equals 100 gives about 92 to 8, close to the weights, the split is legible. A band reads 20 requests lie the way a three-flip coin lies — read a split at a sample size that can show it.">
     <!-- LEFT: three flips -->
     <text x="270" y="34" text-anchor="middle" class="lbl-b">3 FLIPS</text>
@@ -476,7 +477,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 11 · THE QUALITY GATE — THE M5/M6 RECALL + RUN VS BOTH (climax A) ═══════════════ -->
 <section>
   <h2 class="t">The golden set gets to kill the canary — run it against both</h2>
-  <p class="s">The climax. In M5 the golden set set OpsMate's baseline; in M6 the tune ran that same set and <em>lost</em>, kept as <code>1.0.0-candidate</code> — and that candidate is exactly what the canary serves. The gate is not new: <code>canary_gate.py</code> runs the golden questions against the canary <em>and</em> the base directly, and compares pass-counts.</p>
+  <p class="s">Run the M5 golden set against both the canary and the base, and compare.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="The golden set, the M5 yardstick that rejected this tune in M6, drawn purple, feeds two arrows. One runs against the canary v1 directly, drawn orange as the model under test. One runs against the base v1 directly, drawn green as the reference. Both feed a compare pass-counts box. A band reads the same M5/M6 yardstick, now pointed at production — run it against the canary and the version it would replace.">
     <!-- golden set box -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="128" width="300" height="104" rx="12"/></g>
@@ -510,7 +511,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 12 · THE GATE PRINTS ROLLBACK — DATA VERBS (climax B) ═══════════════ -->
 <section>
   <h2 class="t">"No worse" is the floor — the gate prints ROLLBACK</h2>
-  <p class="s">The candidate must at least <em>tie</em> the base to earn promotion — it is replacing a model that already works, so "no worse" is the floor. Because it is the M6 loser, it does not clear that floor. Promotion and rollback stop being crash verbs and become <em>data</em> verbs: the golden set says worse, roll it back.</p>
+  <p class="s">It must at least tie the model it replaces — the M6 loser doesn't clear that.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A decision diamond asks whether the canary pass-count is greater than or equal to base. The yes edge leads to PROMOTE, drawn green and dashed as the path not taken here. The no edge, labelled it's the M6 loser, leads to ROLLBACK, drawn red and heavy: weight to zero, rollout restart. A band reads the readiness probe said healthy, the golden set said wrong — you act on the second.">
     <!-- decision diamond -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M60,175 L200,110 L340,175 L200,240 Z"/></g>
@@ -545,7 +546,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 13 · STAGED PROMOTION (ladder) ═══════════════ -->
 <section>
   <h2 class="t">The new driver doesn't get the school van on day one</h2>
-  <p class="s">Rollback is one direction — weight to zero. Promotion is the other, and it climbs a gated ladder, never a single jump.</p>
+  <p class="s">Promotion climbs a gated ladder — 10 to 50 to 100 — never a single jump.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Three ascending rungs of a ladder. Ten percent, the delivery van, cargo not children. Fifty percent, a light passenger route. One hundred percent, the school run, drawn heaviest at the top. Each rung is tagged gate on the golden set. A gray dashed down-arrow beside the ladder reads gate red, pull back a rung or to zero. A small new-driver figure climbs. A band reads staged promotion is a ladder, each rung gated on the golden set, each bounding how many users a bad version reaches.">
     <!-- rung 1: 10% — tentative (orange) -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4"><rect x="90" y="248" width="300" height="64" rx="10"/></g>
@@ -578,7 +579,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 14 · KSERVE ═══════════════ -->
 <section>
   <h2 class="t">When the router isn't enough — KServe makes the split a field</h2>
-  <p class="s">The nginx router is the cheapest honest canary, right for a laptop. KServe is a real upgrade — paid for in a dependency stack you keep patched.</p>
+  <p class="s">KServe makes the split one field — paid for in a dependency stack you patch.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels. Left, the nginx router from M9: one 64-mebibyte pod plus a ConfigMap you can read end to end, tagged blind per-request hash, manual re-weight, no scale-to-zero. Right, KServe InferenceService: canaryTrafficPercent set to 10 as one field, arrowing to a controller that runs both revisions and scales to zero. A gray dashed needs box under it reads Knative Serving plus a networking layer plus cert-manager, which you install, run, and patch. A band reads the two weight lines become one field, a real upgrade paid for in a dependency stack you keep patched.">
     <!-- LEFT: nginx router — the cheap honest choice you built (green) -->
     <text x="270" y="34" text-anchor="middle" class="lbl-b">nginx router (M9)</text>
@@ -614,7 +615,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 15 · THE FRONTIER — CACHE-AWARE ROUTING ═══════════════ -->
 <section>
   <h2 class="t">At scale the routing decision itself becomes inference-aware</h2>
-  <p class="s">The frontier — llm-d and the Gateway API Inference Extension. Read it for fluency, not installation. An <code>InferencePool</code> of model-server pods gets an endpoint-picker that routes by KV-cache and prompt-prefix affinity — sending a request to the pod that already holds its prompt's cache, not to a random one.</p>
+  <p class="s">At scale the router sends a request to the pod that already holds its cache.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="An InferencePool box with an endpoint-picker, drawn purple as the smart router, sends a request to one of three pods. Two pods are plain; the chosen pod is drawn green because it already holds this prompt's cache. A gray dashed note reads routes by KV-cache and prompt-prefix affinity, not a random pod. A band reads beyond anything nginx can do — the router sends you where your cache already lives.">
     <!-- InferencePool + endpoint-picker -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="112" width="320" height="96" rx="12"/></g>
@@ -645,7 +646,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 16 · THE FRONTIER — DISAGGREGATION (M1 callback) ═══════════════ -->
 <section>
   <h2 class="t">M1's two phases become two separately-scaled pools</h2>
-  <p class="s">The second frontier idea, and it calls back to M1. Disaggregation splits the two phases you first met as a memory diagram — prefill (read the prompt, build the KV cache, compute-bound) and decode (emit tokens off that cache, bandwidth-bound) — into two separate pools, each sized and scaled for its own bottleneck.</p>
+  <p class="s">Prefill and decode split into two pools, each scaled for its own bottleneck.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="On the left, the M1 memory diagram drawn small and gray, showing prefill and decode side by side. An arrow labelled at scale leads to two blue pools: a prefill pool, compute-bound, and a decode pool, bandwidth-bound, with a cache-aware router between them. A note reads each sized for its own bottleneck. A band reads the phases you met as a memory diagram become, at scale, two fleets with a cache-aware router between them.">
     <!-- M1 memory diagram (gray callback) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="40" y="120" width="240" height="100" rx="11"/></g>
@@ -684,7 +685,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 17 · THE DECISION TREE (ladder) ═══════════════ -->
 <section>
   <h2 class="t">Four patterns, one choice — the decision tree you keep</h2>
-  <p class="s">A ladder of capability against a ladder of dependency cost. Climb only as far as your problem forces you.</p>
+  <p class="s">Capability against dependency cost — climb only as far as forced.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A four-rung ladder ascending left to right against a cost axis. Rung one: Deployment plus Service, M8, one version, no extra dependencies. Rung two: router plus canary, M9, two versions, one nginx. Rung three: KServe, a fleet, scale-to-zero, Knative plus dependencies. Rung four: llm-d or Gateway API, cache-aware at scale, the biggest stack. A gray axis beneath reads less capability and less dependency cost on the left, more and more on the right. A band reads a ladder of capability against a ladder of dependency cost, climb only as far as your problem forces you.">
     <!-- rung 1 — owned, simplest (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#757575" stroke-width="2.4"><rect x="40" y="220" width="230" height="70" rx="10"/></g>
@@ -715,7 +716,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 18 · THE M10 SEAM ═══════════════ -->
 <section>
   <h2 class="t">You cannot canary what you cannot observe</h2>
-  <p class="s">Notice what the gate depended on: you could only kill that canary because you could <em>measure</em> it. That is the hinge into M10.</p>
+  <p class="s">You could only kill that canary because you could measure it — the M10 hinge.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two inked boxes name what M9 leaned on: the quality signal came from evals you ran deliberately, canary_gate.py, and the split came from a header you read, X-Served-By. Both arrow into a gray dashed gap box reading but only when you go looking. An inked arrow leads to M10: traces plus metrics, see the regression the moment it starts. A band reads you cannot canary what you cannot observe — M9's gate ran on signals you fetched by hand, M10 makes them always-on.">
     <!-- what M9 leaned on — the two signals it had (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="66" width="360" height="72" rx="11"/></g>
@@ -746,7 +747,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <p class="kicker">MODULE 9 &nbsp;·&nbsp; SERVING PATTERNS — CANARY A MODEL ON QUALITY, NOT CRASHES</p>
   <h2 class="t" style="font-size:2.05em">OpsMate v2.0 can change what it serves safely</h2>
-  <p class="s">Two versions behind one router, a thin slice of real traffic to the new one, and the M5 golden set deciding its fate in production — you promote or roll back on data, not the absence of a crash.</p>
+  <p class="s">You promote or roll back on data, not the absence of a crash.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One, a probe cannot taste the food: 1/1 Running is a crash signal, not a quality signal. Two, the golden set kills the canary: the M5 and M6 yardstick decides promotion on data, not crashes. Three, climb the ladder only as far as forced: Deployment to router to KServe to llm-d, the decision tree. Below, an arrow to M10: observability, traces and metrics, so you can canary what you can now observe. A footline reads OpsMate is v2.0, a safe way to change what it serves, now open Module 9 Lab.">
     <!-- row 1 -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>

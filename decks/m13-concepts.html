@@ -95,6 +95,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -139,7 +140,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 1 · TITLE — the reach gap, one step short ═══════════════ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 13 &nbsp;·&nbsp; AGENTIC BRIDGE &amp; CAPSTONE — BEYOND CHAT</p>
-  <h2 class="t" style="font-size:1.95em">One step short of what you want</h2>
+  <h2 class="t" style="font-size:2.1em">One step short of what you want</h2>
   <svg viewBox="0 0 1100 360" role="img" aria-label="On the left an assistant reads a crashloop runbook card for payments-api and recites the general procedure; on the right the live crashlooping pod it cannot actually see. A gray label reads it knows the playbook, it cannot see the field.">
     <!-- assistant reading the runbook: neutral outline -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="90" width="300" height="180" rx="14"/></g>
@@ -165,7 +166,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 2 · KNOWLEDGE VS REACH ═══════════════ -->
 <section>
   <h2 class="t">The gap is not knowledge — it is reach</h2>
-  <p class="s">An assistant that can only read runbooks is a colleague on the phone talking you through it. An assistant that can call a read-only inspector is a colleague looking at the same terminal you are. This module closes that gap — carefully.</p>
+  <p class="s">On the phone vs. at your terminal — the gap is reach, not knowledge.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels. Left: a colleague on a phone reading a runbook, describing steps from a distance. Right: a colleague standing at your terminal seeing the live pod state. A center label reads the gap is reach.">
     <!-- left: colleague on the phone (limited reach): neutral/gray -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="60" y="80" width="410" height="220" rx="14"/></g>
@@ -191,7 +192,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 3 · THE LADDER TEAMS ACTUALLY CLIMB ═══════════════ -->
 <section>
   <h2 class="t">"Agentic" is a four-rung ladder</h2>
-  <p class="s">The word means four different things, and they are a ladder you climb one rung at a time: naive RAG, agentic RAG, tool-using agent, multi-agent. This module is rung three. The top rung is a whole course, not a lesson.</p>
+  <p class="s">Four rungs, climbed one at a time — this module lands on rung three.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A four-step ascending staircase. Step one naive RAG from module four, step two agentic RAG, step three the tool-using agent this module highlighted, and a top step multi-agent labelled 303 drawn dashed as the next course.">
     <!-- rung 1 -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="270" width="230" height="60" rx="8"/></g>
@@ -205,7 +206,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="540" y="140" width="230" height="60" rx="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="540" y="140" width="230" height="60" rx="8"/></g>
     <text x="655" y="168" text-anchor="middle" class="lbl-b">tool-using</text>
-    <text x="655" y="190" text-anchor="middle" class="lbl-g" style="font-size:14px">this module</text>
+    <text x="655" y="190" text-anchor="middle" class="lbl-g" style="font-size:14px">rung 3 · this module</text>
     <!-- rung 4: multi-agent 303, purple + dashed = next course -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="780" y="75" width="230" height="60" rx="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7"><rect x="780" y="75" width="230" height="60" rx="8"/></g>
@@ -220,7 +221,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 4 · RUNG ONE — NAIVE RAG ALWAYS RETRIEVES ═══════════════ -->
 <section>
   <h2 class="t">Naive RAG retrieves every single time</h2>
-  <p class="s">Where OpsMate has lived since M4: every question triggers a retrieval, needed or not. Ask "what is 2 plus 2" and it still embeds the query and searches the store. The first rung up makes retrieval a tool the model chooses to call — or not.</p>
+  <p class="s">Even "2 + 2?" fires a retrieval — the rung up lets the model choose.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A question two plus two enters a box that always fires an embed then a vector-store lookup unconditionally, drawn in gray as wasted work. A dashed agentic-RAG branch shows the model deciding whether to retrieve at all.">
     <!-- question -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="120" width="150" height="64" rx="10"/></g>
@@ -247,7 +248,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 5 · STRUCTURED OUTPUT = THE JUNIOR WITH A CHECKLIST ═══════════════ -->
 <section>
   <h2 class="t">Structured output is a junior with a checklist</h2>
-  <p class="s">A junior engineer with a form is far more reliable than one you ask an open question. "Go figure out what is wrong with payments" invites a paragraph of speculation. Hand them a form and you get back exactly the fields you can act on, every time.</p>
+  <p class="s">Ask an open question, get speculation; hand over a form, get fields.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels. Left: an open question about payments produces a rambling paragraph of speculation, unusable. Right: a filled checklist form with namespace, pod, and checked fields, tidy and actionable.">
     <!-- left: open question → rambling prose, gray = unusable -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="60" y="70" width="420" height="240" rx="14"/></g>
@@ -270,7 +271,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 6 · TWO FLAVORS — A FORM, OR A TOOL CALL ═══════════════ -->
 <section>
   <h2 class="t">Two flavors — the same machinery, two targets</h2>
-  <p class="s">You give the model a JSON schema and require the response to conform. Structured outputs proper constrain the whole response to a schema. Tool and function schemas point the same machinery at a call: which function, with which arguments.</p>
+  <p class="s">One JSON schema, two targets: shape the whole reply, or shape a call.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="One JSON-schema source feeds two boxes. Left: a whole-response schema producing an object with namespace, pod, and diagnosis fields. Right: the same machinery producing a tool call with a function name and arguments.">
     <!-- shared source: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="440" y="40" width="220" height="56" rx="10"/></g>
@@ -280,6 +281,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="70" y="150" width="420" height="150" rx="12"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="150" width="420" height="150" rx="12"/></g>
     <text x="280" y="184" text-anchor="middle" class="lbl-b">structured output</text>
+    <text x="280" y="206" text-anchor="middle" class="lbl-g" style="font-size:13px">constrains the whole response</text>
     <text x="280" y="222" text-anchor="middle" class="lbl-g" style="font-size:15px">{"namespace":"shop",</text>
     <text x="280" y="248" text-anchor="middle" class="lbl-g" style="font-size:15px">"pod":"payments-api",</text>
     <text x="280" y="274" text-anchor="middle" class="lbl-g" style="font-size:15px">"diagnosis":"db_unreachable"}</text>
@@ -296,7 +298,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 7 · WHY IT COMES FIRST — EVERY ARROW READS MODEL OUTPUT ═══════════════ -->
 <section>
   <h2 class="t">Every arrow in the loop reads model output</h2>
-  <p class="s">An agent is a loop: model decides, code executes, model reads the result, repeat. Every arrow is code reading the model's output. Free prose makes every arrow a fragile parser; schema-constrained JSON makes every arrow a json.loads. The agent is only as reliable as its least-structured hop.</p>
+  <p class="s">Every arrow is code parsing the model — make each one a json.loads.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A four-node cycle: model decides, code executes, model reads result, repeat. Each arrow is labelled json.loads in green as a reliable hop, with one arrow showing a crossed-out fragile-parser alternative in red.">
     <!-- four nodes in a cycle -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="450" y="30" width="200" height="66" rx="10"/><rect x="820" y="130" width="200" height="66" rx="10"/><rect x="450" y="240" width="200" height="66" rx="10"/><rect x="80" y="130" width="200" height="66" rx="10"/></g>
@@ -312,6 +314,8 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- crossed-out fragile parser on one hop: red -->
     <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.4" stroke-linecap="round"><line x1="300" y1="60" x2="410" y2="112"/></g>
     <text x="300" y="100" text-anchor="middle" class="lbl-bad" style="font-size:15px">fragile parser</text>
+    <text x="550" y="170" text-anchor="middle" class="lbl-g" style="font-size:15px">as reliable as the</text>
+    <text x="550" y="192" text-anchor="middle" class="lbl-g" style="font-size:15px">least-structured hop</text>
   </svg>
   <div class="pageno">M13·07</div>
 </section>
@@ -319,7 +323,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 8 · TOOL CALLING — THE MODEL EMITS A REQUEST, YOU HONOR IT ═══════════════ -->
 <section>
   <h2 class="t">The model asks to run — the orchestrator decides</h2>
-  <p class="s">Tool calling is structured output pointed at actions. The model does not run anything — it emits a request, surfaced as finish_reason "tool_calls". Your code runs the function and appends the result as a role "tool" message; the model reads it next turn and either calls again or answers.</p>
+  <p class="s">The model only asks; your code runs it and hands the result back.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="Model turn emits a tool_calls array in blue, the orchestrator in purple decides whether and how to run the real function, appends a role tool result message, and the model reads it next turn to call again or answer.">
     <!-- model turn -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="120" width="180" height="80" rx="10"/></g>
@@ -349,7 +353,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 9 · A 0.6B MODEL TOOL-CALLS COMPETENTLY ═══════════════ -->
 <section>
   <h2 class="t">Even a 0.6B model tool-calls competently</h2>
-  <p class="s">Tool calling is not a big-model-only capability. In the lab the small OpsMate model picks the right tool with the right arguments off a two-tool menu. The reliability primitive is real at this size — you will watch qwen3:0.6b do it.</p>
+  <p class="s">Not a big-model trick — the 0.6B model picks the right tool and args.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A small model box labelled qwen3 0.6b faces a two-item tool menu, get_pod_status and get_pod_logs. It points at the right one with the right arguments, drawn green as the correct pick.">
     <!-- small model: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="80" y="110" width="220" height="100" rx="12"/></g>
@@ -375,7 +379,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 10 · THREE NEW COSTS — AND THE LOOP IS THE LIVE ONE ═══════════════ -->
 <section>
   <h2 class="t">Three new costs — and the loop is the live one</h2>
-  <p class="s">Tool calling adds three costs chat never had. Latency stacks: model, tool, model, serially. Cost is per turn: a three-tool answer is four billed turns. And loops are a live failure mode — the phone menu: press 1, hear the same menu again, stuck because nothing advances you.</p>
+  <p class="s">Serial latency, per-turn cost, and the live one — the looping menu.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Three panels. Left: stacked serial latency hops in orange. Middle: a tally reading four billed turns. Right: a phone-menu loop where a request cycles back to the same menu, drawn red as the live failure mode.">
     <!-- latency stacks: orange = caution -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><rect x="40" y="70" width="300" height="230" rx="12"/></g>
@@ -407,7 +411,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 11 · WHY THE LOOP HAPPENS — THE TOOL IS STILL ON OFFER ═══════════════ -->
 <section>
   <h2 class="t">A loop is the tool still being a legal move</h2>
-  <p class="s">The mechanism is not a bad prompt. As long as the tool schemas are in the request, calling one is a legal move — and a model that thinks it needs more data keeps making that move. The loop is the tool still living in the model's action space.</p>
+  <p class="s">Not a bad prompt — the tool is still a legal move, so it gets picked.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A model with a set of legal moves. The call-tool move is still present in the action space, drawn blue as still legal, with a red arrow looping back showing the model keeps choosing it.">
     <!-- action space box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="120" y="60" width="500" height="220" rx="14"/></g>
@@ -431,7 +435,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 12 · THE FIX — OMIT THE TOOLS ON THE ANSWER TURN ═══════════════ -->
 <section>
   <h2 class="t">Fix the loop by taking away the option</h2>
-  <p class="s">Terminate the loop by removing the choice: once the data is in hand, the orchestrator omits the tool schemas, so answering is the model's only move. The tempting near-miss, tool_choice "none", is silently dropped on the gateway path — omitting the tools survives translation.</p>
+  <p class="s">Omit the tools so answering is the only move — "none" gets dropped.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="Two panels. Left: a tool_choice none request arriving at the gateway and being silently dropped, drawn red. Right: the answer turn sent with no tools in the request, so the model can only answer, drawn green as the loop broken.">
     <!-- left: tool_choice none dropped, red -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="70" width="440" height="220" rx="14"/></g>
@@ -461,7 +465,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 13 · MCP IS THE USB-C OF TOOLS ═══════════════ -->
 <section>
   <h2 class="t">MCP is the USB-C port for tools</h2>
-  <p class="s">You have a tool — how do you describe it once so any model can use it? MCP is the USB-C port for tools and models. A tool exposes itself through the standard once; any MCP-aware client uses it without knowing the implementation. One plug, any tool.</p>
+  <p class="s">Describe the tool once through the standard — any client plugs in.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="One MCP tool, the Kubernetes inspector, with a single USB-C-style connector at a shared port. Three different clients — OpsMate, the 303 agent, and a third-party client — all plug into the same port.">
     <!-- the one tool + shared port: blue = the shared standard studied -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="60" y="120" width="260" height="110" rx="12"/></g>
@@ -485,7 +489,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 14 · MCP IS MECHANICALLY SMALL — JSON-RPC OVER STDIO ═══════════════ -->
 <section>
   <h2 class="t">MCP is smaller than its reputation</h2>
-  <p class="s">It is JSON-RPC 2.0 over a transport, and here the transport is stdio: the client launches the server as a subprocess and they exchange one JSON message per line. Three methods carry the whole interaction — initialize, tools/list, tools/call.</p>
+  <p class="s">JSON-RPC over stdio, and three methods carry the whole interaction.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A client and an MCP server connected as a stdio subprocess exchanging one JSON message per line. Three labelled hops carry the protocol: initialize the handshake, tools/list which returns name description and inputSchema, and tools/call which runs a named tool.">
     <!-- client + server as stdio subprocess -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="120" width="170" height="80" rx="10"/><rect x="870" y="120" width="170" height="80" rx="10"/></g>
@@ -507,7 +511,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 15 · THE USB-C BEAT — A THREE-FIELD RENAME ═══════════════ -->
 <section>
   <h2 class="t">The USB-C beat is a three-field rename</h2>
-  <p class="s">The one mechanical thing that makes it click: MCP describes a tool one way, the OpenAI API wants another, and converting between them is a rename of three fields. That tiny adapter is the whole "any tool, one plug" trick — any MCP server becomes callable by any OpenAI-compatible model.</p>
+  <p class="s">The whole adapter is renaming three fields — MCP shape to OpenAI shape.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="Left card: the MCP tool shape with name, description, and inputSchema. Right card: the OpenAI shape with type function and function name description parameters. Three mapping arrows connect the matching fields through an adapter box drawn green as the trick that lands.">
     <!-- MCP shape: blue -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="50" y="70" width="330" height="200" rx="12"/></g>
@@ -536,7 +540,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 16 · SERVERS AS CONTAINERS — THE PRODUCTION NOTE ═══════════════ -->
 <section>
   <h2 class="t">In production, MCP servers are containers</h2>
-  <p class="s">File this away: your inspector runs as a stdio subprocess in the lab, which is perfect for learning. In production, MCP servers are packaged and run as containers — the same ship-it-as-an-image discipline this whole course is built on. A tool becomes a versioned, isolated, deployable artifact.</p>
+  <p class="s">A lab subprocess in production becomes a container — ship it as an image.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="Left: a stdio subprocess script on a laptop, fine for learning, drawn neutral. Right: the same server packaged as a signed container image — versioned, isolated, deployable — drawn blue as the artifact shape.">
     <!-- lab: stdio script on a laptop, neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7"><rect x="70" y="80" width="380" height="180" rx="14"/></g>
@@ -562,7 +566,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 17 · EVERY TURN GOES THROUGH THE M12 DOOR ═══════════════ -->
 <section>
   <h2 class="t">Every agent turn goes through the M12 door</h2>
-  <p class="s">Read the path in order: turn 1 the model decides with tools offered, execute the tool call via MCP, then the answer turn with tools omitted — the loop fix. And every model call goes through the M12 gateway. An agent that can act is exactly what you don't want holding a master key.</p>
+  <p class="s">An agent that can act is the last thing you want holding a master key.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="An orchestrator box holds turn one decide with tools, then execute via MCP, then the answer turn with tools omitted. Both model turns route through the M12 gateway drawn purple as control. The MCP execution reaches a live KIND cluster, and spend rows flow to the X-Ray lens.">
     <!-- orchestrator box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="50" y="60" width="500" height="240" rx="14"/></g>
@@ -593,7 +597,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 18 · READ-ONLY IS THE VISITOR BADGE — THE VERB IS ABSENT ═══════════════ -->
 <section>
   <h2 class="t">Read-only is the visitor badge — the verb is absent</h2>
-  <p class="s">The M8 callback: a visitor badge opens the doors you need to see and none you could break. The inspector has exactly two tools, and no mutating verb exists in the server at all. Not disabled by config — absent. The agent cannot delete, patch, or scale because the capability was never built.</p>
+  <p class="s">It can't delete, patch, or scale — that verb was never built at all.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A visitor badge opens two read doors, get_pod_status and get_pod_logs, drawn green as safe to open. The delete, patch, and scale doors are drawn as not present at all — greyed and crossed as absent, not merely locked.">
     <!-- visitor badge -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="130" width="180" height="110" rx="12"/><circle cx="100" cy="170" r="12"/></g>
@@ -619,7 +623,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 19 · SPEND IS AGENT COST — A LOOP IS A ROW COUNT ═══════════════ -->
 <section>
   <h2 class="t">A loop is a row count you can see</h2>
-  <p class="s">Reframe a number you already have. In M12 the spend log answered "who was the runaway job?" For an agent the same log answers "how expensive is this, and is it looping?" A tool that should answer in two turns showing fifteen spend rows is a loop you can see in the ledger.</p>
+  <p class="s">The M12 spend log now answers a new question: is this agent looping?</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The X-Ray Spend lens with per-turn rows. A healthy agent shows two rows in green. A runaway agent shows fifteen rows for one question in red, the loop made visible in the ledger.">
     <!-- healthy agent: green, 2 rows -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="60" y="70" width="440" height="220" rx="14"/></g>
@@ -642,7 +646,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 20 · THE CAPSTONE — THE FULL ROUTE, ONE DRIVE ═══════════════ -->
 <section>
   <h2 class="t">The capstone is the whole route, one drive</h2>
-  <p class="s">The whole course replayed end to end, no new mechanism. A new cache-eviction runbook lands, and OpsMate's model gets v1.2 the honest way: synthesize, fine-tune, convert, pack and sign, gate, promote, serve. The driving test — no new skills, chain the ones you have without stalling.</p>
+  <p class="s">No new skills — chain the ones you have, end to end, without stalling.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A left-to-right lifecycle chain: a new cache-eviction runbook, synthesize Q&amp;A from M6, LoRA fine-tune v1.2, convert to GGUF, kit pack and sign 1.2.0 from M7, gate.sh from M12, a PR bumping the tag from M11, Argo sync, and verify serving. An examiner-in-the-passenger-seat motif sits over it.">
     <!-- lifecycle chain, blue = the run being studied -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="30" y="130" width="120" height="66" rx="9"/><rect x="330" y="130" width="120" height="66" rx="9"/><rect x="630" y="130" width="120" height="66" rx="9"/><rect x="930" y="130" width="140" height="66" rx="9"/></g>
@@ -673,12 +677,14 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 21 · THE GATE MUST HOLD THE FLOOR — OR BLOCK ═══════════════ -->
 <section>
   <h2 class="t">The gate must hold the floor — or BLOCK</h2>
-  <p class="s">The load-bearing beat: it is entirely possible your smoke-profile v1.2 does not beat the baseline — M6's tuned model didn't. If it doesn't, the honest outcome is BLOCK, no promotion. The capstone demonstrates the lifecycle works, which includes refusing a regression, not that every candidate ships.</p>
+  <p class="s">Refusing a regression is the lifecycle working — BLOCK is a pass here.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="gate.sh runs the candidate v1.2 against the committed baseline floor. A fork: holds the floor leads to a PR and promotion in green; below the floor leads to BLOCK with no promotion in red.">
     <!-- gate.sh + baseline floor -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="120" width="220" height="90" rx="12"/></g>
-    <text x="170" y="158" text-anchor="middle" class="lbl-b">gate.sh</text>
-    <text x="170" y="186" text-anchor="middle" class="lbl-g" style="font-size:15px">v1.2 vs baseline floor</text>
+    <text x="170" y="152" text-anchor="middle" class="lbl-b">gate.sh</text>
+    <text x="170" y="178" text-anchor="middle" class="lbl-g" style="font-size:15px">v1.2 vs baseline floor</text>
+    <text x="170" y="248" text-anchor="middle" class="lbl-g" style="font-size:14px">M6's tuned model</text>
+    <text x="170" y="268" text-anchor="middle" class="lbl-g" style="font-size:14px">didn't beat it either</text>
     <!-- fragment: the fork -->
     <g class="fragment" data-fragment-index="1">
       <!-- holds floor → promote: green -->

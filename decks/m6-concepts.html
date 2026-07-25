@@ -96,6 +96,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -146,8 +147,8 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 6 &nbsp;·&nbsp; FINE-TUNING — SYNTHETIC DATA, LoRA &amp; QLoRA</p>
-  <h2 class="t" style="font-size:2.2em">Retrieval got the facts right — this makes the model sound like your team</h2>
-  <p class="s" style="font-size:1.15em">OpsMate has retrieval: ask about the payments runbook and it pulls the right pages and answers from them. But review keeps flagging the same thing — the answers do not <em>sound</em> like your runbooks. Retrieval fixed the knowledge problem; what is left is a behaviour problem — voice, format, defaults — and retrieval cannot touch it, because it feeds the model context, it does not change how the model writes.</p>
+  <h2 class="t" style="font-size:1.55em">Retrieval got the facts right — this makes the model sound like your team</h2>
+  <p class="s" style="font-size:1.15em">RAG fixed what the model knows — not how it writes. That's what we fix now.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A RAG box feeds a model box with the right pages in front. The model emits two answers to the same question: the runbook's own phrasing, check db_pool_in_use and cancel the backend, tagged your voice; and the model's generic phrasing, you may want to investigate whether connections are held open, tagged generic-assistant voice. A gray band names the split: knowledge is fixed by RAG, behaviour is fixed by fine-tuning, this module.">
     <!-- RAG feeds the model -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -193,7 +194,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 2 — DECISION LADDER (scene) ============ -->
 <section>
   <h2 class="t">Climb the decision ladder — tune only when the cheaper rung genuinely can't</h2>
-  <p class="s">Three rungs, cheapest first. Reach for the cheapest tool that solves the problem, and climb only when the rung below truly cannot fix it — tuning is the expensive, easy-to-fool-yourself rung.</p>
+  <p class="s">Reach for the cheapest rung that works — climb only when it can't.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A three-rung staircase, cheapest at the bottom. Bottom rung, widest and inked: prompt edit, minutes, free, reversible, fixes format, tone, refusals, citations. Middle rung: RAG, put the right facts in front, fixes missing knowledge and freshness, M4 and M5. Top rung: fine-tune, hours, data plus compute, fixes voice, format, and behaviour that survives with no prompt and no context. A gray dashed back-arrow runs from the top rung down to the bottom, tagged: most we-need-to-fine-tune requests are prompt problems, so climb only when the rung below truly cannot fix it.">
     <!-- rung 1 prompt edit (bottom, widest) — green = the cheap, reach-first rung (fragment) -->
     <g class="fragment">
@@ -233,7 +234,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 3 — LoRA REMOVABLE FITTINGS (scene) ============ -->
 <section>
   <h2 class="t">LoRA renovates with removable fittings — you train 0.19% of the model</h2>
-  <p class="s">Full fine-tuning updates all 597 million parameters — more memory than a laptop has. LoRA freezes the building and bolts on a thin adapter you train instead. You are a tenant: you can't touch the walls, but you can add removable fittings.</p>
+  <p class="s">You're a tenant: freeze the walls, bolt on a thin adapter you can train.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A large wobbly building box labelled base model, tagged frozen weights, the landlord froze the structure. Bolted onto its side is a small adapter fitting, inked, tagged removable, rank eight, q_proj plus v_proj. A callout box carries the real number: trainable one million one hundred forty-six thousand eight hundred eighty of five hundred ninety-seven million, equals 0.19 percent. Two gray notes read: swappable, many adapters on one base; and tiny to ship, M7 versions it as v1.0. A band reads: train only the fittings, 0.19 percent of the model, the rest stays frozen.">
     <!-- the frozen building (base model) — GRAY, unfilled: frozen = de-emphasized -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7">
@@ -273,7 +274,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 3b — WHERE THE SMALL NUMBER COMES FROM (low-rank intuition) ============ -->
 <section>
   <h2 class="t">The "low-rank" trick — approximate a big update with two thin matrices</h2>
-  <p class="s">Where does 0.19% come from? A full update to a layer is a big dense matrix. LoRA approximates it as the product of two much <em>thinner</em> matrices whose shared inner dimension is the rank <code>r</code>. A small rank (this lab uses <code>r=8</code>) makes both matrices tiny, so the trainable count is tiny — enough to nudge behaviour, not rebuild it.</p>
+  <p class="s">Two thin matrices stand in for one big one — the rank sets how thin.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="On the left, a large gray dense square marked full update, big dense matrix, frozen. An equals sign leads to the product of two thin blue matrices: a tall-skinny one and a short-wide one, their shared narrow edge labelled r equals 8, the rank. A note reads: small r means tiny matrices means few trainable params. On the right, a small card names which layers get an adapter: q_proj plus v_proj, the attention query and value projections, the common minimal choice. A band reads: more rank and more layers buy more capacity to learn — and more room to overfit.">
     <!-- full dense update (gray, frozen) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7"><rect x="60" y="110" width="150" height="150" rx="8"/></g>
@@ -306,7 +307,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 4 — QLoRA ============ -->
 <section>
   <h2 class="t">QLoRA is LoRA one tier up — a 4-bit frozen base so a bigger model fits</h2>
-  <p class="s">One addition to LoRA: store the frozen base quantized — 4-bit instead of 16-bit — while the adapter still trains in higher precision on top. The building is kept in compressed storage while you renovate; the fittings are unaffected.</p>
+  <p class="s">Store the frozen base at 4-bit so a bigger model fits — adapter untouched.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, inked: LoRA — frozen base at 16-bit plus an adapter that trains on top, tagged a 0.6B fits on CPU as-is, the lab's path. Right, inked: QLoRA — frozen base stored 4-bit plus an adapter that trains on top, tagged a quarter of the memory, so a 7B or 13B fits on one small GPU. A gray footline reads: same idea, one tier up — reach for QLoRA only when the base is too big to fit; on a 0.6B it is overkill.">
     <!-- LoRA panel — frozen base unfilled, adapter blue -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -345,7 +346,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 5 — SYNTHETIC DATA PIPELINE ============ -->
 <section>
   <h2 class="t">Build a practice question bank from the corpus — generate, FILTER, split</h2>
-  <p class="s">The bottleneck of fine-tuning is the data, not the training. You don't re-read the textbook to study — you build a practice question bank from it. Walk the corpus, ask a local model for grounded Q&amp;A per section, then filter hard.</p>
+  <p class="s">The bottleneck is the data — build a practice bank from the corpus, filter hard.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A pipeline. The corpus, the textbook, flows into generate — per section, ask a local model for grounded Q&A pairs. Generate flows into filter, the emphasized inked box — length plus format plus dedupe plus grounded-in-the-section. Filter flows into split — train.jsonl plus a small eval slice. A gray dashed drop-off from filter leads down to rejects.jsonl, logged with reasons, inspect the garbage you kept out. A band under filter reads: garbage in, garbage out — the filter is not cleanup, it decides whether the data is worth training on.">
     <!-- corpus — blue = the source data -->
     <g filter="url(#rough)" stroke="#757575" stroke-width="2.4">
@@ -411,7 +412,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 6 — CONTAMINATION BOUNDARY ============ -->
 <section>
   <h2 class="t">The one rule you cannot break — train and golden set must never overlap</h2>
-  <p class="s">The M5 golden set is your test set — the yardstick M6 must beat. If a question you trained on shows up in the eval, the model has seen the answer key, and every number after that is inflated. It is silent: the scores look great and mean nothing.</p>
+  <p class="s">If a trained question lands in the eval, the model saw the answer key.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A shared corpus of runbooks at the top feeds two separated lanes across a dashed boundary wall. The left lane: the synthesizer reads the corpus only, producing train.jsonl, inked. The right lane, walled off and gray-dashed: golden.yaml, the M5 test set, held out, never read by the synthesizer. A gray arrow attempting to carry the corpus across into the golden set is struck through, tagged: overlap equals grading on the answer key, silent, inflated, meaningless. A band reads: same sources, different questions, test set held out.">
     <!-- shared corpus -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -466,8 +467,10 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 7 — READING THE LOSS CURVE ============ -->
 <section>
   <h2 class="t">Read the loss curve — a healthy curve flattens, a diving one is overfitting</h2>
-  <p class="s">The loss is how wrong the model's predictions are, step by step (the M1 vocabulary: it predicts the next token, the loss measures its surprise). There are two shapes to tell apart while it trains.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels, each a sketched loss curve on axes. Left, inked and labelled healthy: a curve falling from about 5.05 and then flattening toward about 3.54, tagged falls then flattens, more steps buy little, stop here, the real spike shape. Right, gray-dashed and labelled suspicious: a curve diving toward zero on a tiny set, tagged keeps dropping to zero equals overfit, memorizing not learning, aces training but fails the real questions. A band reads: train a few epochs and stop — you want it to generalize, not memorize.">
+  <p class="s">Loss is the model's surprise at the next token — two shapes to tell apart.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A gray definition line reads loss equals how surprised the model is at the next token, from the Module 1 vocabulary. Below it, two panels, each a sketched loss curve on axes. Left, inked and labelled healthy: a curve falling from about 5.05 and then flattening toward about 3.54, tagged falls then flattens, more steps buy little, stop here, the real spike shape. Right, gray-dashed and labelled suspicious: a curve diving toward zero on a tiny set, tagged keeps dropping to zero equals overfit, memorizing not learning, aces training but fails the real questions. A band reads: train a few epochs and stop — you want it to generalize, not memorize.">
+    <!-- definition annotation (M1 vocabulary) -->
+    <text x="550" y="28" text-anchor="middle" class="lbl-g">loss = how surprised the model is at the next token (M1)</text>
     <!-- left panel HEALTHY -->
     <text x="280" y="60" text-anchor="middle" class="lbl-good">HEALTHY</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
@@ -498,7 +501,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 8 — MERGE OR SERVE APART ============ -->
 <section>
   <h2 class="t">Merge the adapter in, or serve base + adapter apart — OpsMate merges</h2>
-  <p class="s">Once the adapter is trained you have a choice, and it comes back in M7. Fold the fittings into the walls for one standalone model, or keep them bolted on and swappable.</p>
+  <p class="s">Fold the adapter in for one model, or keep it bolted on and swappable.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels. Left, inked with a thicker frame, marked OpsMate's choice: MERGE — fold the adapter into the base to get one standalone model. Plus, it serves like any other model, the stack is unchanged. Minus, the fittings are built in, you cannot swap without re-merging. Right, gray: base plus adapter kept apart — the runtime loads the adapter at serve time. Plus, the adapter stays swappable, one base, many adapters. Minus, the runtime must support adapter loading, not every engine does. A band reads: merge wins here — the goal is one servable model that drops into the existing stack.">
     <!-- MERGE panel (chosen) — green = OpsMate's choice -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
@@ -527,7 +530,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 9 — CONVERT TO GGUF ============ -->
 <section>
   <h2 class="t">Convert the merged model to a GGUF — same quantization, same convert path</h2>
-  <p class="s">The merged model is just a normal model now, so you convert it the way M3 taught — no new machinery. The merged model becomes a q8_0 GGUF that drops in beside the base.</p>
+  <p class="s">It's a normal model now — convert it the way M3 taught, no new machinery.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A pipeline. The merged model, base plus adapter, flows through convert_hf_to_gguf producing q8_0, inked, tagged same quantization from M2, same convert path from M3, about 14 seconds. It lands on a models slash gguf shelf holding two files side by side: base.gguf, v0, in gray, and opsmate-tuned.gguf, v1.0, inked. A band reads: it's a normal model now — convert it the way M3 taught, and drop it beside the base.">
     <!-- merged model -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -575,7 +578,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 10 — THE SWAP ============ -->
 <section>
   <h2 class="t">The swap is one env var — same stack, same server, a different file</h2>
-  <p class="s">Because every model endpoint here is OpenAI-compatible and the stack is fixed, deploying a model you trained is not a new deployment — it's a filename change. Change one env var, restart the model service, and nothing else moves.</p>
+  <p class="s">Deploying the model you trained is a filename change, not a new deployment.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A fixed compose stack box wraps a model service running llama-server, tagged API, retrieval, and eval harness — all unchanged. A single MODEL_GGUF env var points, via a swappable arrow, away from base.gguf, gray and struck, to opsmate-tuned.gguf, inked. It is tagged: change one env var, restart the model service, nothing else moves. A band reads: the OpenAI-compatible endpoint never changed — that is why a model you trained drops in where the base was.">
     <!-- the fixed stack -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -621,7 +624,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 10b — TWO CONTROLS BEFORE YOU READ THE NUMBER ============ -->
 <section>
   <h2 class="t">Set two controls before you read the number — or you'll misread it</h2>
-  <p class="s">Before beat-tie-lose means anything, two controls make the comparison clean. Retrieval is a control: you tuned the model, not the index, so its score must be unchanged — if it moved, find the bug first. And a no-RAG tuned-direct arm isolates what tuning bought <em>on its own</em>, with retrieval taken out of the picture.</p>
+  <p class="s">Two controls make the comparison clean before you read beat, tie, or lose.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two control panels. Left, a retrieval-as-control panel: retrieval 24 of 24 before, 24 of 24 after, filled green with a note tuning changed the model, not the index — if this moved, find the bug before trusting anything else. Right, a no-RAG arm panel: the tuned model with no context versus the base model with no context, filled blue, with a bracket labelled the gap = the value tuning added on its own, isolated from RAG. A band reads: a control that stays put, and an isolated arm — now the beat-tie-lose reading is clean.">
     <!-- retrieval-as-control (green) -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.8"><rect x="50" y="70" width="470" height="200" rx="12" class="f-green"/></g>
@@ -653,7 +656,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 11 — MEASUREMENT RITUAL (scene) ============ -->
 <section>
   <h2 class="t">Weigh it on the same scale — beat, tie, or lose, every outcome teaches</h2>
-  <p class="s">A tuned model always <em>feels</em> better — you built it, you wanted it to work. Feelings are not evidence. "I lost weight" means nothing unless you weighed before <em>and</em> after on the <em>same scale</em>.</p>
+  <p class="s">A tuned model always feels better — weigh it on the same scale to be sure.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A weighing scene. Two bathroom scales. The BEFORE scale, gray, reads M5 baseline.md, RAG 6 of 15, retrieval 24 of 24, tagged recorded, committed. The AFTER scale, inked, holds the tuned model and is tagged same golden set, same graders. A note recalls the controls set on the previous slide — retrieval held, no-RAG arm isolated — so now you read the number. Below, a three-way fork from the reading: BEAT, voice improvement, measured; TIE, no regression, ship the voice free; LOSE, honest, a knowledge golden set may not measure the voice you fixed. A band reads: same scale, read it honestly — beat, tie, or lose, every outcome teaches.">
     <!-- BEFORE scale — blue = the recorded M5 baseline data -->
     <g filter="url(#rough)" stroke="#757575" stroke-width="2.4">
@@ -700,7 +703,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 12 — HAND OFF TO M7 ============ -->
 <section>
   <h2 class="t">The artifacts become OpsMate v1.0 — what M7 packages and versions</h2>
-  <p class="s">Teardown keeps three things — they are not scratch, they are the material M7 turns into a release. The adapter's few-MB footprint is exactly what makes that packaging practical.</p>
+  <p class="s">Teardown keeps three things — they're the material M7 turns into a release.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A hand-off pipeline. A Teardown KEEPS box holds three items: adapter, a few megabytes; tuned GGUF, q8_0; and training logs, step and loss. An arrow leads to M7, package plus sign, which produces OpsMate v1.0, a versioned, signed model artifact, inked, drawn beside v0 base, gray, on a model registry shelf. A band reads: the artifacts are not scratch — they are v1.0, packaged and signed in M7 alongside the v0 base.">
     <!-- teardown keeps -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -752,7 +755,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <p class="kicker">MODULE 6 &nbsp;·&nbsp; FINE-TUNING — SYNTHETIC DATA, LoRA &amp; QLoRA</p>
   <h2 class="t" style="font-size:2.05em">The whole loop — decide, build the data, tune, and measure honestly</h2>
-  <p class="s">The skill you leave with is the whole loop, and the part most people skip is the last one. Four moves go with you into the lab.</p>
+  <p class="s">The skill is the whole loop — and the part most people skip is the last one.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Four numbered takeaways. One: decide — climb the ladder, tune only for behaviour that survives with no prompt and no context. Two: build the data — a practice question bank from the corpus, filtered hard, golden set held out. Three: run the tune — LoRA, 0.19 percent trainable, minutes on CPU, watch the loss flatten. Four: measure honestly — same committed scale, read beat, tie, or lose straight, not the feeling. A footline reads: the part most people skip is number four — now open Module 6 Lab.">
     <!-- row 1 — orange = the judgment call -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="46" r="22" class="f-orange"/></g>

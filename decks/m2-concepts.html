@@ -88,6 +88,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -130,8 +131,8 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 2 &nbsp;·&nbsp; MODELS, QUANTIZATION &amp; THE API CONTRACT</p>
-  <h2 class="t" style="font-size:2.3em">Two decisions before you serve a model</h2>
-  <p class="s" style="font-size:1.2em">Your team decided to self-host — which model do we run, will it fit our box, and how do we talk to it? That whole judgement is this module.</p>
+  <h2 class="t" style="font-size:2.1em">Two decisions before you serve a model</h2>
+  <p class="s" style="font-size:1.2em">You chose to self-host — now which model, will it fit, how do you talk to it?</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A model-hub page full of cryptic quantization tags sits on a desk; a gray line splits it into two labelled decisions — which brain, meaning the model, quant and format, and which contract, meaning the one API.">
     <!-- model-hub page with cryptic tags -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -172,7 +173,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 2 — MEMORY MATH ============ -->
 <section>
   <h2 class="t">A model is mostly weights, and weights have a size</h2>
-  <p class="s">First decision, first question — will it fit? Weights memory is just the parameter count times the bytes you spend per number.</p>
+  <p class="s">First question — will it fit? Weights memory is just params times bytes each.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="The real course model's 751.63 million parameters feed a three-row table showing FP16 at two bytes per parameter costing about 1.4 gigabytes, Q8 at one byte costing about 0.8 gigabytes, and Q4 at half a byte costing about 0.5 gigabytes, with a formula reading parameters times bytes-per-parameter equals weights memory.">
     <!-- params source -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
@@ -228,7 +229,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 3 — THREE THINGS IN THE BOX (M1 callback) ============ -->
 <section>
   <h2 class="t">Weights are not the whole bill — the box holds three things</h2>
-  <p class="s">Callback to M1: when you actually serve, memory goes three places. Quantization only shrinks the first — the biggest and most fixed.</p>
+  <p class="s">Serving memory goes three places — quantization only shrinks the biggest one.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="An outer box labelled memory of a serving box contains three inner blocks: weights, sized by params times bytes; runtime buffers, the engine's scratch space; and the KV cache, the M1 capacity number. A caption notes this is why the loaded size beats the disk size.">
     <!-- outer box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -266,7 +267,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 4 — QUANTIZATION = PHOTO AT LOWER DPI (scene) ============ -->
 <section>
   <h2 class="t">Quantization is the photo at lower resolution</h2>
-  <p class="s">Store each weight in fewer bits — the same photo, recorded more coarsely. Same picture, less fine detail, far smaller file.</p>
+  <p class="s">Store each weight in fewer bits — the same photo, recorded more coarsely.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="The same portrait printed twice: on the left at 300 DPI, crisp, over a tall stack of ink; on the right at 72 DPI, blocky, over a short stack of ink. A caption reads same picture, less fine detail, far smaller.">
     <!-- 300 DPI: crisp portrait -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -315,7 +316,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 5 — Q4 IS FASTER (measured, M1 callback) ============ -->
 <section>
   <h2 class="t">The 4-bit model decodes <em>faster</em> — because decode is bandwidth-bound</h2>
-  <p class="s">You would expect the smaller model to be slower. It is not. Measured on this course's model: Q4 runs about 30% faster than Q8.</p>
+  <p class="s">You would expect the smaller model to be slower. It is not.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels compare the two quants. Q4 is 522 megabytes and decodes at 178 tokens per second with few bytes moved per token, shown as a wide arrow. Q8 is 832 megabytes and decodes at 136 tokens per second with more bytes per token, shown as a narrow arrow. A band explains decode is bandwidth-bound, so fewer bytes per token means more tokens per second.">
     <!-- Q4 panel (the winner) -->
     <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
@@ -354,7 +355,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 6 — THE HONEST COST (quality) ============ -->
 <section>
   <h2 class="t">The honest cost is quality headroom, not speed</h2>
-  <p class="s">Do not over-learn "Q4 is free". Quality always costs something — subtle on a tiny model, visible on a large one or an aggressive quant.</p>
+  <p class="s">Q4 is not free — quality always costs something, and you verify it on your task.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A staircase descends through precisions FP16, Q8, Q4, then Q3 and Q2. A gray wedge of quality headroom shrinks as it descends. An annotation on the shallow steps reads small model: subtle; an annotation on the steep steps reads large or aggressive: visible.">
     <!-- descending staircase: safe (green) → mid (orange) → risky (red) -->
     <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8">
@@ -398,7 +399,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 7 — MODEL CARD = MEDICINE LABEL (scene) ============ -->
 <section>
   <h2 class="t">A model card is the label on the medicine strip</h2>
-  <p class="s">You read the label before you take the pill. The terminal model card carries the real fields — and two honesty beats.</p>
+  <p class="s">You read the label before you take the pill — the model card is that label.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="On the left, a strip of medicine with a label listing dose, maker, use and expiry. On the right, a terminal model card from ollama show listing parameters 751.63M annotated branding rounds, context length 40960 max versus 4096 configured annotated supports is not configured, quantization Q4_K_M, and licence.">
     <!-- medicine strip + label (the analogy) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -453,7 +454,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 8 — CONTEXT: SUPPORTS ≠ CONFIGURED ============ -->
 <section>
   <h2 class="t">"Supports 40k" is not "running at 40k"</h2>
-  <p class="s">The context-length field is a trap. The card advertises the maximum the model can handle; the memory bill comes from the context you actually configure. Confusing the two is how people run out of memory.</p>
+  <p class="s">The context-length field is a trap — it's the maximum, not what you run.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Two window frames sized to the same model card. The left frame configured at 4096 tokens is small with a modest blue KV-cache block beneath it. The right frame at the full 40960 tokens is ten times wider, its KV-cache block swelling red to roughly 4.5 gigabytes. A caption reads: you pay for the context you configure, not the max the card advertises.">
     <!-- the card's advertised max (the data) -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
@@ -506,7 +507,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 9 — LICENCE CLASSES ============ -->
 <section>
   <h2 class="t">The licence field decides what you may ship</h2>
-  <p class="s">The field engineers skip and lawyers do not. Three classes permit very different things — and Qwen3's is why this course can build on it.</p>
+  <p class="s">The field engineers skip and lawyers don't — three classes, different rights.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Three numbered licence classes: Apache-2.0 or MIT, permissive — use, fine-tune and redistribute, the Qwen3 case that lets this course fine-tune in M6 and redistribute in M7; community or custom licences like Llama, commercial but with conditions; and research-only or non-commercial, experiment but do not ship. A line notes: read it before you build, later costs a rebuild.">
     <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
       <circle cx="90" cy="60" r="28"/>
@@ -543,7 +544,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 10 — FORMAT PICKS THE ENGINE ============ -->
 <section>
   <h2 class="t">Format picks the engine — GGUF for Ollama, safetensors for vLLM</h2>
-  <p class="s">Last question on the brain: what format is it, and what am I serving it on? Those two answers pick your engine.</p>
+  <p class="s">Two questions pick the engine: what format is it, what are you serving on?</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two paired rows. GGUF, a quantized single file, maps to Ollama and llama.cpp for CPU and Apple Silicon serving, used in modules 1 and 2. Safetensors, holding FP16 or AWQ and GPTQ weights, maps to vLLM for GPU serving from module 3 on. A line asks: what format, and what am I serving on.">
     <!-- GGUF row -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8">
@@ -583,7 +584,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 11 — CALL CENTRE WITH NO MEMORY (scene) ============ -->
 <section>
   <h2 class="t">The API is a call centre with no memory</h2>
-  <p class="s">Now the second decision — the contract. The OpenAI-compatible API is stateless: the server remembers nothing, so the client carries the whole story.</p>
+  <p class="s">The API is stateless — the server remembers nothing, so the client re-tells it.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="On the left, a call-centre desk where each call is answered by a different agent holding an empty notepad. On the right, a messages list with roles system, user, assistant, user, where the assistant turn is boxed and captioned fed back in — the model did not remember saying it.">
     <!-- call-centre desk -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -640,7 +641,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 12 — MULTI-TURN RESEND (tokens grow each turn) ============ -->
 <section>
   <h2 class="t">Every turn resends the whole chat — so tokens climb</h2>
-  <p class="s">Because the server keeps no session, each turn carries every turn before it. A ten-turn chat is not ten cheap calls — the tenth call ships all nine turns ahead of it, and tokens are the meter.</p>
+  <p class="s">Each turn resends every turn before it — so tokens climb call after call.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="A staircase of chat turns climbing left to right. Turn one is a single small blue message block; each later turn is a taller stack because it re-sends every message before it, plus the new one. By turn ten the stack is the tallest and shaded red, labelled carries all nine turns before it. A gray band reads: stateless server means the client re-tells the whole story every turn.">
     <!-- climbing staircase of turns -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
@@ -686,7 +687,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 13 — READING A RESPONSE ============ -->
 <section>
   <h2 class="t">Read the response: usage is the billing meter</h2>
-  <p class="s">Three parts earn an operator's attention: what it cost, why it stopped, and how it arrives when you stream.</p>
+  <p class="s">Three fields earn your attention: what it cost, why it stopped, how it streams.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A response body with three blocks. Usage reports prompt, completion and total tokens — the bill and the KV fill. finish_reason is stop, meaning done, versus length, meaning cut off at max_tokens, drawn dashed as a warning. Streaming delivers the same answer as delta chunks over the wire.">
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="60" y="40" width="980" height="230" rx="14"/>
@@ -729,7 +730,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 14 — COMPATIBILITY DRIFT (present) ============ -->
 <section>
   <h2 class="t">"Compatible" is mostly kept, not perfectly</h2>
-  <p class="s">Every engine implements the spec its own way at the edges. In M1 you saw Ollama's stream surface an extra <code>delta.reasoning</code> field the OpenAI spec never defines — minor here, but it grows as engines add features faster than the shared spec settles.</p>
+  <p class="s">Every engine bends the spec at the edges — and the drift grows over time.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A two-panel comparison. On the left, the OpenAI spec's defined streaming chunk lists role, content and finish_reason. On the right, Ollama's actual chunk lists the same fields plus an extra field delta.reasoning boxed in red and captioned not in the spec. A line reads: the same call, an extra field — compatibility drift.">
     <!-- LEFT: the spec (neutral, the agreed shape) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -781,7 +782,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 15 — MOVING TARGET + GATEWAY (future) ============ -->
 <section>
   <h2 class="t">The API is a moving target — a gateway absorbs it</h2>
-  <p class="s">Chat Completions is the stable contract, but not the only one: the newer Responses API and provider-native APIs diverge — tool-call semantics most of all. When many backends differ, one endpoint in front presents a single API and translates.</p>
+  <p class="s">The API keeps moving — a gateway in front gives the client one stable face.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Three backends — Ollama, vLLM and a provider API — each tagged with its own divergence, converge on a single purple gateway box presenting one API, which a single client speaks to. The gateway is tagged M12.">
     <!-- three backends, each with its own divergence (warning) -->
     <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4">

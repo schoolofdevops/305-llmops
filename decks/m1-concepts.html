@@ -88,6 +88,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -129,8 +130,8 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 1 &nbsp;·&nbsp; HOW LLMS WORK</p>
-  <h2 class="t" style="font-size:2.3em">From your key press to the streamed reply</h2>
-  <p class="s" style="font-size:1.2em">What actually happens between typing into ChatGPT and the first word appearing — that whole trip is this module</p>
+  <h2 class="t" style="font-size:1.8em">From your key press to the streamed reply</h2>
+  <p class="s" style="font-size:1.2em">What happens between your key press and the first word back.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A hand types a question at a keyboard, a prompt bubble flows to a reply panel where answer word-chips appear one at a time; underneath, a gray line fans to three ops questions: the bill jumped, why is it slow, and how many users fit.">
     <!-- keyboard + typing hand -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
@@ -187,7 +188,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 2 — THE JOURNEY STRIP (anchor introduced) ============ -->
 <section>
   <h2 class="t">The whole trip, on one strip</h2>
-  <p class="s">You type → it is tokenized → the model reads → the model writes → it streams back. This strip is our map — we zoom into each stop next.</p>
+  <p class="s">Our map for the whole module — every later slide lights up one stop.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="The journey strip laid out whole: five linked stages reading you type, tokenize, model reads, model writes, streams back, each an equal inked box joined by arrows.">
     <!-- five equal inked stages -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -228,7 +229,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 3 — TOKENIZE: word-pieces ============ -->
 <section>
   <h2 class="t">You pay per word-piece, not per idea</h2>
-  <p class="s">Stop one: your text is chopped into dictionary pieces before the model sees anything — and <em>disconnecting</em> is two of them.</p>
+  <p class="s">Your text is chopped into dictionary pieces before the model sees it.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the tokenize stage lit. The question why is my internet disconnecting repeatedly goes into a BPE tokenizer and comes out as eight token chips, with disconnect and ing boxed together to show one word split into two pieces, giving a token count of eight.">
     <!-- journey strip: tokenize lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -318,7 +319,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 4 — TELEGRAM COUNTER (scene) ============ -->
 <section>
   <h2 class="t">A telegram counter bills pieces, not meaning</h2>
-  <p class="s">Still at the tokenize stop: pay per word, so people wrote tight — same idea, very different cost, because the office counts pieces.</p>
+  <p class="s">Same idea, very different cost — because the counter bills pieces.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the tokenize stage lit. At a telegram counter a long wordy message slip costs a tall stack of coins, while a terse message slip reading arriving Monday send car costs a short stack — same idea, less money.">
     <!-- journey strip: tokenize lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -388,7 +389,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 5 — CONTEXT WINDOW IS A HARD BUDGET ============ -->
 <section>
   <h2 class="t">Every token also eats a fixed window</h2>
-  <p class="s">Still the tokenize stop, the other cost of a token: the model can hold only so many at once. That limit is the context window — a hard budget, and every token of prompt and answer spends from it.</p>
+  <p class="s">The context window is a hard budget — not a meter you can overrun.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the tokenize stage lit. A fixed-width context-window bar fills left to right with blue token chips; a shorter prompt leaves room to spare, while a longer prompt fills the bar and spills past a red overflow edge marked context limit, showing tokens are a bounded budget not just a meter.">
     <!-- journey strip: tokenize lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -484,7 +485,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 6 — THREE MODEL SHAPES ============ -->
 <section>
   <h2 class="t">Three shapes of model — you use the writer</h2>
-  <p class="s">Stop two, the model. "Decoder-only" is a choice, not jargon — here is what else exists, and why chat uses this one.</p>
+  <p class="s">Three shapes exist; chat uses the one that just writes the next piece.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. Three stacked rows compare model shapes: encoder-only turns text into numbers for search, encoder-decoder transforms text into other text for translation, and decoder-only generates the next piece over and over for chat, boxed as you are here.">
     <!-- journey strip: model lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -534,7 +535,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 7 — AUTOREGRESSIVE LOOP ============ -->
 <section>
   <h2 class="t">One token, then look back and write the next</h2>
-  <p class="s">Inside the model stop: it predicts one next token, appends it, and re-reads everything so far to get the next.</p>
+  <p class="s">Predict one token, append it, then re-read everything to get the next.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. All tokens so far become embeddings, attention looks back across them, the model predicts the next token and appends it, then a dashed arrow loops back to the start to do it all again.">
     <!-- journey strip: model lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -605,7 +606,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 8 — WORD-AT-A-TIME PLAYER (scene) ============ -->
 <section>
   <h2 class="t">Read the whole line, say one word, read it again</h2>
-  <p class="s">A well-read player never skips ahead — every new word is a fresh read of everything up to that point.</p>
+  <p class="s">Every new word is a fresh read of everything said up to that point.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. A person sits reading a strip of word cards left to right, speaks the next word in a speech bubble, then a curved arrow loops back to the start of the strip to re-read it all including the word just added.">
     <!-- journey strip: model lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -672,7 +673,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 9 — ONE BREATH: TWO PHASES ============ -->
 <section>
   <h2 class="t">Read everything at once, then write one piece at a time</h2>
-  <p class="s">The whole journey in one breath: the model reads all the prompt pieces in one go, then generates the answer one piece at a time, streaming as it goes.</p>
+  <p class="s">Read the whole prompt in one go, then write the answer piece by piece.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with model-reads and model-writes both lit. Two linked panels: phase one reads the prompt, all pieces in one go; phase two writes the answer, one piece at a time, streamed.">
     <!-- journey strip: reads + writes lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -754,7 +755,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 10 — EXAM: READ vs WRITE (scene) ============ -->
 <section>
   <h2 class="t">Reading the paper is one job; writing is another</h2>
-  <p class="s">The two phases as an exam: you read the whole question paper in one quick pass — then write the answer slowly, line by line.</p>
+  <p class="s">Read the question paper in one pass; write the answer slowly, by hand.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with model-reads and model-writes lit. Left: a student reads a whole question paper in one glance, eyes sweeping across all of it at once. Right: the same student writes an answer line by line, the pen partway down the page.">
     <!-- journey strip: reads + writes lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -829,7 +830,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 11 — PREFILL vs DECODE (mechanism) ============ -->
 <section>
   <h2 class="t">Prefill reads together; decode writes one at a time</h2>
-  <p class="s">Now the two phases get their names — one processes the whole prompt in parallel, the other is the serial loop.</p>
+  <p class="s">The two phases now get their names — parallel read, serial write.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="Left panel: prefill processes all prompt tokens together in one parallel block, compute-bound. Right panel: decode emits token after token in a serial chain, memory-bandwidth-bound.">
     <!-- LEFT: prefill -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -885,7 +886,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 12 — KV CACHE = ROUGH WORK (scene) ============ -->
 <section>
   <h2 class="t">The KV cache is rough work — computed once, kept</h2>
-  <p class="s">Why decode stays fast: each token's key and value are worked out once and stored; every later token reads them instead of redoing them.</p>
+  <p class="s">Each token's key and value are worked out once, then read — never redone.</p>
   <svg viewBox="0 0 1100 370" role="img" aria-label="An exam margin holds a hard sum worked out once as rough work; a later question glances back at it instead of re-deriving. Beside it, a row of token cells each writes its key and value once into a KV cache store.">
     <!-- exam sheet with margin rough work -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -940,7 +941,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 13 — WHAT YOU FEEL: TTFT + STREAMING ============ -->
 <section>
   <h2 class="t">What you feel: the wait, then the drip</h2>
-  <p class="s">Back at your screen — the streams-back stop. The wait before the first word is TTFT; the steady drip of words after it is decode = TPOT.</p>
+  <p class="s">Back at your screen: the wait is TTFT, the drip after it is TPOT.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the streams-back stage lit. A stopwatch marks the wait to the first reply chip, labelled TTFT and driven by prefill; then chips appear at a steady beat, labelled TPOT and driven by decode.">
     <!-- journey strip: streams back lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -1059,7 +1060,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 15 — CAPACITY MATH ============ -->
 <section>
   <h2 class="t">The rough work takes space — that space is capacity</h2>
-  <p class="s">Weights take a fixed chunk; whatever is left is your KV budget, and one request's cache eats into it.</p>
+  <p class="s">Weights take a fixed chunk; what's left is the KV budget each request eats.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="A box's total memory is split into a fixed model-weights block and a KV budget block; a formula reads per-token cost times tokens times concurrent equals KV memory, and the KV budget divided by one request equals the number of users that fit.">
     <!-- outer box memory -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -1100,7 +1101,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 16 — READ THE OPS QUESTIONS OFF THE TRIP ============ -->
 <section>
   <h2 class="t">Read the bill, the latency, the capacity off the trip</h2>
-  <p class="s">The three questions from the opening are three stops on the same journey — that is why the runtime stops being a mystery.</p>
+  <p class="s">The three questions from the opening are three stops on one journey.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="The journey strip once more, with three gray callouts hanging off it: tokenize answers the bill, read-versus-write answers the latency as TTFT and TPOT, and the KV cache answers the capacity.">
     <!-- the strip, whole, all inked -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">

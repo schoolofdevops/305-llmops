@@ -96,6 +96,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -146,8 +147,8 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 5 &nbsp;·&nbsp; PROMPTS AS CONFIG &amp; THE BASELINE EVAL</p>
-  <h2 class="t" style="font-size:2.3em">The prompt shipped on a feeling — this turns the shrug into a number</h2>
-  <p class="s" style="font-size:1.2em">A teammate decides the system prompt "could be sharper," rewrites it on Friday, and ships. Monday the on-call engineer asks the same payments question and gets a different answer — maybe better, maybe worse, nobody can say, because nothing was measured. In the incident review, "did that edit help or hurt?" gets a shrug — and a shrug is not something you put in a change record.</p>
+  <h2 class="t" style="font-size:1.55em">The prompt shipped on a feeling — this turns the shrug into a number</h2>
+  <p class="s" style="font-size:1.2em">Ship a prompt edit on a feeling, and "did it help?" gets a shrug.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A system prompt file box carries a gray edit scribble reading could be sharper, Friday. An arrow leads to a ship box, then to two gray dashed answer boxes reading Monday: a different answer, with a question mark between them asking better or worse. A gray band at the bottom names the fix: a golden set plus a recorded baseline turns it looks right into a number.">
     <!-- the prompt file, edited -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -192,7 +193,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 2 — DRIVING EXAMINER (scene) ============ -->
 <section>
   <h2 class="t">"It looks right" is the examiner who improvises the route</h2>
-  <p class="s">Grade every candidate on a different route and call it on vibes, and the pass means nothing. The fix is a fixed test route — same route, every candidate, every time.</p>
+  <p class="s">Grade every candidate on a different route and the pass means nothing.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="At the top, two candidate cars drive two different routes: a loopy cul-de-sac and a busy motorway merge, each stamped seemed fine in gray, with a gray note that you cannot compare, cannot spot a slip, cannot defend. Below, one fixed route is driven by both cars, inked, tagged same route every candidate, and pass is comparable, defensible, repeatable. A band names the point: an eval set is the fixed route, it looks right improvises.">
     <!-- two improvised routes -->
     <text x="150" y="40" text-anchor="middle" class="lbl-b">"it looks right" — a different route each time</text>
@@ -239,7 +240,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 2b — WHY NOW: THE BASELINE BEFORE M6 ============ -->
 <section>
   <h2 class="t">Record the number before you touch the model — or M6 has nothing to beat</h2>
-  <p class="s">There's a second reason this matters right now. M6 fine-tunes the model, and a fine-tuned model always <em>feels</em> better because you wanted it to. Against what do you measure whether it actually improved? A baseline that exists <em>before</em> you touch the model, written to a file — so the comparison is real, not a memory.</p>
+  <p class="s">Record the before-number now, or M6's tuned model has nothing to beat.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A timeline. On the left, a purple baseline.md card recorded now, before any change, tagged the before-number, committed. An arrow crosses a dashed now line into M6, where the model is fine-tuned, and the tuned result is weighed against the same recorded card. A red note warns: no recorded baseline means you compare against a memory — and a tuned model always feels better. A band reads: you cannot fine-tune responsibly without a number recorded first.">
     <!-- baseline recorded now -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="110" width="240" height="110" rx="12" class="f-purple"/></g>
@@ -273,7 +274,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 3 — EVAL PYRAMID ============ -->
 <section>
   <h2 class="t">Four ways to grade an answer, cheapest first — climb only when you must</h2>
-  <p class="s">A pyramid: cheap, deterministic checks at the wide bottom, expensive human judgement at the narrow top. Push grading down as far as it will go.</p>
+  <p class="s">Push every grade as far down the pyramid as it will go.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Four stacked bands form a pyramid, widest at the bottom. Bottom, widest and inked: assertions, exact or contains or regex or source-in-top-k, free, instant, deterministic. Next: similarity, embedding distance to a reference, tolerates paraphrase. Next: LLM-as-judge, a model grades a rubric, reads nuance but is itself noisy. Top, narrowest and gray: human, gold standard but too slow for every change. A gray arrow on the side reads cheap and deterministic downward, expensive and human upward. A footline reads push grading down as far as it goes.">
     <!-- band 1 assertions (widest) — green = cheap, deterministic, reliable (fragment) -->
     <g class="fragment">
@@ -319,7 +320,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 4 — GOLDEN SET DESIGN ============ -->
 <section>
   <h2 class="t">A golden set that discriminates — from sources, with honesty probes</h2>
-  <p class="s">A set is only as good as its questions. Three principles separate a real one from a checkbox.</p>
+  <p class="s">A set is only as good as its questions — here are the three rules.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Three numbered rows. One: author from a source, each question from a runbook passage with the source recorded, making it answerable, retrieval-checkable, and reusable in Module 6. Two: make it discriminate, so the right answer and a plausible-wrong answer clearly diverge and a broken system fails it. Three: honesty probes, unanswerable-from-corpus questions whose correct answer is no runbook for that, where a confident bluff is a failure. A footline reads a good golden question is one a broken system would get wrong.">
     <!-- row 1 (fragment) -->
     <g class="fragment">
@@ -354,7 +355,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 5 — THE SPIKE EXHIBIT ============ -->
 <section>
   <h2 class="t">The finding that shaped the design — an exact phrase breaks on a paraphrase</h2>
-  <p class="s">The first eval against the real stack: ask "the payments API is throwing 500s" and assert the answer contains "connection pool". It failed — and the failure is the lesson.</p>
+  <p class="s">The first real eval failed on an exact-phrase assert — and that's the lesson.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, gray dashed: the assert reads contains connection pool. The model's real answer is quoted: check whether connections are being held open. It is stamped FAIL, with a gray note that retrieval was correct, the model just paraphrased. Right, inked: the assert reads contains-any of pool, connection, db_pool_in_use, exhaustion, plus a judge rubric, stamped PASS. A band reads exact-phrase asserts break on small models, go wide and let a judge read the nuance.">
     <!-- left panel: exact-phrase FAIL (red) -->
     <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.4" stroke-dasharray="9 7">
@@ -392,7 +393,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 6 — COURIER PARCEL (scene) ============ -->
 <section>
   <h2 class="t">Two things must go right — right parcel, and it arrives intact</h2>
-  <p class="s">A RAG answer fails in two completely different places. Graded together, you cannot tell which broke — so grade them apart, like a courier delivery.</p>
+  <p class="s">A RAG answer breaks in two places — grade them apart to tell which.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="On the left, a courier stands at a shelf of parcels; the first check asks did we pick the right parcel off the shelf, with a tick on the chosen box, tagged a warehouse problem if wrong. An arrow leads to a doorstep on the right where the parcel arrives; the second check asks did it arrive in good condition, with a gray dashed crushed outline, tagged a handling problem if wrong. A gray note reads customer unhappy alone cannot tell you which team to call. A band reads retrieval is right parcel, generation is arrived intact, grade them apart.">
     <!-- shelf of parcels -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
@@ -443,7 +444,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 7 — TWO-LAYER ARCHITECTURE ============ -->
 <section>
   <h2 class="t">Two layers, built differently on purpose — a tripwire and a graded lane</h2>
-  <p class="s">The architecture the courier analogy demands: one deterministic layer, one graded, each question tagged with the layer it lives in.</p>
+  <p class="s">One deterministic layer, one graded — each question tagged to its lane.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A golden question splits into two lanes. The top lane, layer one retrieval, goes through slash retrieve to a check: is the right source in top-k, inked, tagged deterministic, phrase-independent, a regression tripwire run by retrieval_check dot py. The bottom lane, layer two generation, goes through slash ask to a check: contains-any net plus judge rubric, inked, tagged graded and paraphrase-tolerant, run by promptfoo. A footline reads each question is tagged with its layer, so a run reports retrieval 22 of 24 and generation 14 of 15, two teams of fixes.">
     <!-- question -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -498,7 +499,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 8 — PROMPTS AS CONFIG (scene) ============ -->
 <section>
   <h2 class="t">The prompt is a recipe card, not a rule carved into the chef</h2>
-  <p class="s">The Friday edit was scary because the prompt was buried in the code. Externalize it into a versioned file and it becomes a lever you can pull, test, and un-pull.</p>
+  <p class="s">Move the prompt out of the code and it becomes a lever you can un-pull.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="On the left, gray dashed and crossed out: a chef with the prompt carved into their training, tagged edit main dot py, rebuild image, hope. On the right, inked: a recipe card taped in a cupboard reading prompts slash system dot txt, with a smaller v2 card behind it, tagged edit the file, restart, versioned in git, roll back is git checkout. A footline reads A/B system dot txt versus system-v2 dot txt on the same suite, scores move, code untouched.">
     <!-- left: carved into the chef (old) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
@@ -545,7 +546,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 9 — THE LOCAL JUDGE ============ -->
 <section>
   <h2 class="t">The local judge is a smoke detector, not a fire examiner</h2>
-  <p class="s">OpsMate's judge is the same small model — qwen3:0.6b via Ollama, no cloud key. Be clear-eyed about what a 0.6B judge is, and is not.</p>
+  <p class="s">Be clear-eyed about what a small local judge is — and what it isn't.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, inked: a smoke detector labelled qwen3 0.6b judge, cheap, always-on, catches gross failures, listing ignored the context, confident bluff, empty answer, with a gray note noisy on the margins and two runs can disagree. Right, gray dashed: a fire examiner, calibrated, costs more per grade, equals Module 12. A band reads trust it to catch the obvious, corroborate with the deterministic layers, never treat one grade as ground truth.">
     <!-- left: smoke detector — green = the working, always-on grader -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
@@ -580,7 +581,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 10 — THE BASELINE RITUAL ============ -->
 <section>
   <h2 class="t">The baseline ritual — run it twice, no-RAG vs RAG, write both numbers down</h2>
-  <p class="s">The payload of the module. Run the golden suite twice and record both scores in a versioned file — the gap between them is the measured value of retrieval.</p>
+  <p class="s">Run the suite twice — the gap between the two scores is what retrieval buys.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels with score bars. Left, gray: no-RAG, the base model with no retrieval, answering alone, with a lower score bar. Right, inked: RAG, slash ask with the right pages in front, with a higher score bar. A gray bracket between them labels the gap as the measured value of retrieval from Module 4. A note under the honesty questions reads no-RAG invents, RAG admits the gap. A band reads numbers are modest on a 0.6B CPU model and that is honest, a believable 62 percent beats an invented 95 percent, written to baseline dot md and committed.">
     <!-- left: no-RAG — red, the lower score -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
@@ -624,7 +625,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 11 — THE FILE IS A CONTRACT ============ -->
 <section>
   <h2 class="t">The committed file is a contract — M6 beats it, M12 gates on it, M13 replays it</h2>
-  <p class="s">A number in a chat window is gone tomorrow. A number in a committed file is a contract the next change has to meet — the yardstick every later stage holds itself to.</p>
+  <p class="s">A number in a committed file is a contract the next change has to meet.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A left-to-right staircase. The source, inked: baseline dot md, Module 5, recorded and versioned. An arrow to Module 6, fine-tune, must beat it. An arrow to Module 12, CI gate, promotes only if it holds. An arrow to Module 13, capstone, replays the set. A footline reads a number in a chat is gone tomorrow, a number in a committed file is a contract the next change must meet.">
     <!-- baseline.md source — purple = the special/meta contract artifact -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
@@ -673,7 +674,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <p class="kicker">MODULE 5 &nbsp;·&nbsp; PROMPTS AS CONFIG &amp; THE BASELINE EVAL</p>
   <h2 class="t" style="font-size:2.05em">From "the edit felt better" to "v2 scores three points higher — here is the file"</h2>
-  <p class="s">This module turns shipping on a feeling into shipping on evidence. Three things go with you into the lab.</p>
+  <p class="s">Shipping on a feeling becomes shipping on evidence — three things go with you.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One: fixed route, an eval set makes a result comparable, defensible, repeatable, not it looks right. Two: grade apart, retrieval versus generation, two numbers, two teams of fixes. Three: prompt equals config, a versioned file you A/B, not code you edit and hope. A footline reads the baseline you record here is the yardstick for the whole course, now open Module 5 Lab.">
     <!-- row 1 — green = the reliable eval-set discipline -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="56" r="22" class="f-green"/></g>

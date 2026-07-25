@@ -96,6 +96,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -138,8 +139,8 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 1 · TITLE ═══════════════ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 7 &nbsp;·&nbsp; SHIP THE MODEL — KITOPS, OCI ARTIFACTS &amp; SIGNING</p>
-  <h2 class="t" style="font-size:2.2em">The model has been a loose file — this makes it an artifact you can prove</h2>
-  <p class="s" style="font-size:1.15em">It is your on-call week, payments is degraded, and OpsMate answers from a model <em>file</em> in a directory. A teammate asks the question you cannot answer: <em>which</em> model is that — the base you started with, or the M6 tune that lost and was never meant to ship? Who put it there? Has it changed since? A loose file cannot answer the three questions that matter when something breaks.</p>
+  <h2 class="t" style="font-size:1.55em">The model has been a loose file — this makes it an artifact you can prove</h2>
+  <p class="s" style="font-size:1.15em">During an incident, a loose model file can't say which model it even is.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A serving box holds one loose file, opsmate-tuned-q8_0.gguf, tagged a filename in a directory. Three unanswered questions float from it: what version, where from, and changed since. A gray dashed band names the fix: file becomes artifact — versioned, addressed, signed.">
     <!-- serving box with the loose file -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -173,7 +174,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 2 · A NAME-ONLY PARCEL IS UNTRUSTWORTHY ═══════════════ -->
 <section>
   <h2 class="t">A name on the side is trustworthy only in your own hands</h2>
-  <p class="s">Picture a parcel with just a name scrawled on it — "Gourav's box." The moment it leaves you, nobody down the line knows what is inside, whether it is the box you meant, or whether someone opened it in transit and swapped the contents. Copying a model file onto a server is shipping exactly that.</p>
+  <p class="s">A name scrawled on a box means nothing the moment it leaves your hands.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A single parcel labelled Gourav's box, drawn red, leaves your hands and passes through a chain of hands: build, registry, deploy, rollback. Question marks hang over every handoff. A band reads a name is for you, holding it — every handoff after that is a place you can no longer say what you are serving.">
     <!-- the parcel, name only -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="2.8">
@@ -222,7 +223,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 3 · THE MANIFEST CARRIES THREE THINGS ═══════════════ -->
 <section>
   <h2 class="t">A proper parcel carries a manifest — label, tracking number, seal</h2>
-  <p class="s">A parcel that travels properly carries three things a bare name cannot. A label of exactly what is inside, a tracking number unique to <em>this</em> parcel and no other, and a tamper-evident seal so the recipient can tell if it was opened. Those three map straight onto where this module is going.</p>
+  <p class="s">A parcel that travels carries a label, a tracking number, and a seal.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A green parcel in the centre carries three attached tags, each pointing to what it becomes for a model. Label of what's inside becomes versioned. Tracking number that names this parcel becomes addressed. Wax seal, opened yes or no, becomes signed. A band reads the name is for humans, the manifest is what a chain of hands can trust.">
     <!-- the parcel with a manifest -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
@@ -274,7 +275,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 4 · A MODEL IS A BUNDLE OF FOUR FILES ═══════════════ -->
 <section>
   <h2 class="t">A model on disk is a bundle, not one thing — a recap from M2</h2>
-  <p class="s">You already know this, so it is a callback. A model on disk is a small bundle of files that only mean something together: the weights, the tokenizer, the config, and the chat template. GGUF packs them into one file; safetensors is a directory. Either way, "the model" is that bundle.</p>
+  <p class="s">A callback from M2: "the model" is four files that only mean something together.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A big outer box labelled the model equals one bundle holds four inner boxes: weights, drawn blue, the bulk of the bytes; tokenizer; config; and chat template. A gray note reads GGUF is one file, safetensors is a directory, same bundle.">
     <!-- outer bundle box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -305,7 +306,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 5 · SHIP THE WHOLE BUNDLE + EVAL SET ═══════════════ -->
 <section>
   <h2 class="t">Ship the whole bundle plus what was true about it</h2>
-  <p class="s">If a model is a bundle, shipping it well means shipping the <em>whole</em> bundle as one versioned unit — not just the weights, but what was true <em>about</em> this model when it was built: the prompts it expects and the eval set it was measured on. A model that carries its own eval set is an audit trail made physical.</p>
+  <p class="s">Ship the whole bundle — plus the prompts and eval set that were true about it.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The bundle box on the left, drawn blue, gains two green crates: plus prompts, and plus the golden eval set. An arrow leads to the payoff: anyone who pulls it can re-run the measurement instead of trusting a number in a report. A band reads carrying its own eval set is an audit trail made physical.">
     <!-- the bundle -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8">
@@ -345,7 +346,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 6 · OCI RIDES YOUR EXISTING RAILS ═══════════════ -->
 <section>
   <h2 class="t">You do not need a new system — OCI already ships anything</h2>
-  <p class="s">The container world already solved package a bundle, address it by a unique ID, push and pull it, verify it did not change — that is a container image, and the standard underneath, OCI, is general enough to package <em>anything</em>. A model packaged as an OCI artifact rides the exact same rails your images do.</p>
+  <p class="s">A model as an OCI artifact rides the exact same rails your images already do.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A standardized shipping container labelled your model, as an OCI artifact, sits on rails that carry it from a truck to a train to a ship to a crane — the same rails your container images already ride. Three shared rails are named: same registries, same push and pull, same digests. A band reads you are not inventing a distribution system, you are putting the model in the container everyone already moves.">
     <!-- the shipping container -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
@@ -380,7 +381,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 7 · INSIDE ARE LAYERS — READ THE SIZES ═══════════════ -->
 <section>
   <h2 class="t">Inside the artifact are layers — and the sizes are the whole point</h2>
-  <p class="s">The goods inside are not one solid mass — they are separately-listed crates OCI calls layers, each with its own content address, named in a manifest. OpsMate's kit has three. Read the sizes: the model layer is hundreds of megabytes, the metadata layers are kilobytes.</p>
+  <p class="s">Inside are separately-addressed layers — read the sizes, they're the point.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A manifest header names each layer by digest, media type, and size, over three horizontal bars drawn to scale: a long blue model layer of about 610 megabytes, the heavy crate; a tiny green dataset layer of about 16 kilobytes, the golden set; and a tiny green code layer of about 5 kilobytes, the prompts. Because each is separately addressed you can take one crate off the ship. A band reads not one opaque blob, a set of digest-addressed layers.">
     <!-- outer container -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -418,7 +419,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 8 · KITFILE = DOCKERFILE, SECTIONS → LAYERS ═══════════════ -->
 <section>
   <h2 class="t">The Kitfile is a Dockerfile for models — each section becomes a layer</h2>
-  <p class="s">KitOps packages the bundle as an OCI artifact it calls a ModelKit, described by a Kitfile — to a ModelKit what a Dockerfile is to an image. Every top-level section becomes a layer: <code>model:</code>, <code>datasets:</code>, <code>code:</code>. Then <code>kit pack</code> builds one artifact and <code>kit push</code> sends it.</p>
+  <p class="s">A Kitfile is a Dockerfile for models — each section becomes a layer.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A Kitfile box, the packing list you write, with three labelled arrows: model colon leads to a blue model layer GGUF, datasets colon leads to a green dataset layer golden.yaml, and code colon leads to a green code layer prompts. The three layers converge into kit pack, one OCI artifact, then kit push to a registry. A band reads a plain-text manifest read by pack, the same shape as a Dockerfile.">
     <!-- Kitfile -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -479,7 +480,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 9 · EVERY PATH RELATIVE ═══════════════ -->
 <section>
   <h2 class="t">Every path in a Kitfile is relative — absolute paths are rejected</h2>
-  <p class="s">One rule the lab makes you feel on purpose. An artifact has to be portable, and a path like <code>/Users/you/models/…</code> only exists on your machine — so <code>kit pack</code> rejects it. The pack context, the directory the Kitfile sits in, is the root everything resolves against, exactly like a Docker build context.</p>
+  <p class="s">An absolute path only exists on your machine — so kit pack rejects it.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two Kitfile paths compared. On the left, drawn red and crossed out, an absolute path slash Users slash you slash models, tagged only exists on your machine, kit pack rejects it. On the right, drawn green, a relative path dot slash models slash model.gguf, tagged resolves against the pack context, travels anywhere. A band reads reading the error once is how you remember the rule.">
     <!-- absolute path, rejected -->
     <text x="270" y="42" text-anchor="middle" class="lbl-b">ABSOLUTE</text>
@@ -513,7 +514,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 10 · KITOPS IS A CURRENT CHOICE, NOT PERMANENT ═══════════════ -->
 <section>
   <h2 class="t">The concept is durable — the tool is a current, reasonable choice</h2>
-  <p class="s">Know what you are adopting. KitOps is a CNCF <em>Sandbox</em> project — real, open, OCI-native, but early-stage, not graduated like Kubernetes or Prometheus. An interchange effort, ModelPack, is standardizing the media types so kits from different tools can be read by any of them. The idea is the bet; the tool is the tool.</p>
+  <p class="s">Adopt the idea firmly; the tool is a current, reasonable choice, not forever.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two layers separated. On top, drawn blue and solid, the durable concept: a model as a layered, versioned OCI artifact, tagged vendor-neutral, the bet. Below it, drawn orange and dashed, the current tooling: KitOps, CNCF Sandbox, early-stage, and ModelPack standardizing the media types, tagged a reasonable choice, not a permanent commitment. A band reads adopt the idea firmly, hold the tool loosely.">
     <!-- the durable concept -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
@@ -544,7 +545,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 11 · SELECTIVE PULL ═══════════════ -->
 <section>
   <h2 class="t">Selective pull — take one crate off the ship, not the whole thing</h2>
-  <p class="s">A ModelKit moves like any OCI artifact: <code>kit push</code> sends it, <code>kit pull</code> brings it back. The move that matters is selective pull. Because the manifest lists each layer by digest, the client fetches exactly the crate you ask for — the prompts without the weights.</p>
+  <p class="s">Layers are digest-addressed — fetch the prompts without the weights.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A registry cylinder holds the three-layer artifact. A kit unpack with filter code arrow pulls down only a small green prompts folder of about 5 kilobytes, while the 610 megabyte weights layer stays on the registry, tagged left behind. A struck-through gray arrow shows the naive download-the-model path moving all 610 megabytes, crossed out and tagged what you did not have to do. A band reads each layer is digest-addressed, fetch exactly the crate you want.">
     <!-- registry cylinder -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -590,7 +591,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 12 · WAX SEAL — AUTHENTICITY + INTEGRITY ═══════════════ -->
 <section>
   <h2 class="t">The wax seal proves origin, not quality — tamper-evidence, not secrecy</h2>
-  <p class="s">Packaging answers what is inside and how to address it, not did anyone tamper with it. For that you sign. A wax seal does not hide the letter — anyone can read it — it proves two things: sealed by whoever holds the ring, and unopened since. Swap the weights after signing and verification fails.</p>
+  <p class="s">A seal doesn't hide the letter — it proves who sealed it and that it's unopened.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A readable letter is pressed with a signet ring, leaving a purple wax seal. Two proof tags float off the seal: authenticity, sealed by the ring holder, and integrity, unopened since. A gray note reads readable — tamper-evidence, not secrecy; a signed model is not encrypted, anyone can pull it; it proves origin, not quality. A band reads break the seal and it cannot re-form without the ring.">
     <!-- letter + ring + seal -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -635,7 +636,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 13 · SIGN THE DIGEST, NOT THE TAG ═══════════════ -->
 <section>
   <h2 class="t">Sign the digest, never the tag — a tag is a label someone can move</h2>
-  <p class="s">The precision that makes signing work: a signature binds to a <em>digest</em>, not a tag. A tag like <code>1.0.0</code> is a human-friendly label someone can move to point at different bytes tomorrow; a digest like <code>sha256:acbf…</code> <em>is</em> the bytes. This module uses Cosign with a local key pair — keep the private key secret, it is your signet ring.</p>
+  <p class="s">A tag is a label someone can move; a digest is the bytes — sign the digest.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two boxes compared. On the left, drawn green, a digest sha256 acbf is the bytes, a cryptographic hash that cannot point anywhere else, tagged sign THIS. On the right, drawn red and dashed, a tag 1.0.0 is a movable label someone can re-point tomorrow, tagged never sign a tag. Below, the Cosign flow: generate-key-pair makes the keys, cosign sign seals by digest, cosign verify checks the seal; keep the private key secret. A band reads always sign and verify by digest.">
     <!-- digest, green, sign this -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
@@ -677,7 +678,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 14 · VERIFY-BEFORE-DEPLOY GATE ═══════════════ -->
 <section>
   <h2 class="t">A seal nobody checks is decoration — verify before you run</h2>
-  <p class="s">Signing is only useful if something downstream verifies before it runs. That bottom branch — no signature means refuse to deploy — is the whole point. <code>cosign verify</code> checks the digest: were the bytes changed, and were they signed by the key holder?</p>
+  <p class="s">A seal is only useful if something downstream verifies before it runs.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A model artifact plus its digest flows into cosign verify with the public key, then into a diamond asking are the bytes unchanged and signed by the key holder. A yes arrow leads to a green deploy. A no or no-signature arrow leads to a red refuse to deploy, tagged the whole point. A gray note under the gate reads wired into OpsMate's preflight now, a Kubernetes admission policy in M8. A band reads a seal nobody checks is decoration, verify before you run.">
     <!-- artifact -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -733,7 +734,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 15 · SEMVER = TEXTBOOK EDITIONS ═══════════════ -->
 <section>
   <h2 class="t">Semver for models reads like textbook editions</h2>
-  <p class="s">A version number should tell you what changed without diffing two artifacts. Semver — MAJOR.MINOR.PATCH — carries over to models with one honest caveat: the field has no universal standard, so you adopt a convention and state it. Reading the number tells a consumer how to treat the new model.</p>
+  <p class="s">The version number should tell you what changed without diffing artifacts.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Three edition rungs. MAJOR, drawn orange, is a new edition where old references break — new base or behaviour shift, an API break, treat as breaking. MINOR, drawn blue, is a revised printing, better within the same edition — a better tune, same interface, re-test. PATCH, drawn green, is a corrected reprint where the words are unchanged — packaging only, drop in blindly. A band reads read the number, know what changed, without diffing the artifacts.">
     <!-- three rungs — MAJOR caution (orange), MINOR re-test (blue), PATCH drop-in (green) -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="3">
@@ -769,7 +770,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 16 · THE -CANDIDATE SUFFIX (HINGE) ═══════════════ -->
 <section>
   <h2 class="t">The -candidate suffix names a build that is real but not promoted</h2>
-  <p class="s">The one addition models borrow from software is the pre-release suffix — <code>1.0.0-candidate</code>. A candidate build exists, is real, is packaged and pushed — but has <em>not</em> been promoted to the plain <code>1.0.0</code> release. It is a version you can point at, measure, and talk about precisely, without it being the thing that ships. That suffix is the hinge of this module.</p>
+  <p class="s">A candidate is real, packaged, and pushed — but not promoted to the release.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A number line from a candidate to a release. On the left, drawn purple, 1.0.0-candidate: real, packaged, pushed, addressable — but NOT promoted. An arrow labelled promote leads right to a green 1.0.0, the release that ships. A gray note reads a candidate is a version you can point at and measure without it being what ships. A band reads the -candidate suffix is the hinge of this module's story.">
     <!-- candidate -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3">
@@ -803,7 +804,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 17 · THE TWO TAGS (SPINE) ═══════════════ -->
 <section>
   <h2 class="t">The two tags — the registry records history, not just winners</h2>
-  <p class="s">Straight out of M6: you tuned a model, measured it honestly, and it lost — so it did not ship. Packaging forces the question, what happens to it now? Not delete it (lose the record), not leave it lying around (served by accident) — push both, as two tags of one repository.</p>
+  <p class="s">The M6 tune lost — so push both, as two tags of one repository.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Inside one frame labelled opsmate/model, one repository, two tags. On the left, drawn green, 1.0.0, the base Qwen, the baseline holder that serves, signed, carrying its golden set and prompts, leading to gate deploys. On the right, drawn red and dashed, 1.0.0-candidate, the M6 tuned model, measured, lost, recorded, not signed on purpose, carrying the same golden set it was weighed on, leading to gate blocked. A gray note bridges them: same golden set on both, so the comparison is reproducible from the artifacts. A band reads the registry records history, not just winners — kit list, not a Slack search.">
     <!-- repo frame -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 6">
@@ -846,7 +847,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 18 · REGISTRY LANDSCAPE ═══════════════ -->
 <section>
   <h2 class="t">Zot here, Harbor and ECR and HF in production — address changes, not format</h2>
-  <p class="s">The registry is where artifacts live, and you have choices. This lab runs Zot because it starts in seconds and needs no cloud. In production you would meet one of the others — and the point is that your artifact does not change, only where it is stored does.</p>
+  <p class="s">Swap the registry and your artifact is unchanged — only its address moves.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A hub-and-spoke. At the center, drawn blue, your OCI artifact, unchanged. Four spokes lead to registries: Zot, drawn green, the lab choice, seconds, no cloud, CNCF, tagged here; Harbor, self-hosted enterprise with RBAC, scanning, and signing policy; Artifactory, ECR, and GHCR, managed registries where your images already live; and Hugging Face Hub, git-LFS-based, the odd one out, where base models start. A band reads packaged as OCI, so moving registries is a change of address, not format.">
     <!-- center hub — the artifact under study (blue) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
@@ -902,7 +903,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <p class="kicker">MODULE 7 &nbsp;·&nbsp; SHIP THE MODEL — KITOPS, OCI ARTIFACTS &amp; SIGNING</p>
   <h2 class="t" style="font-size:2.05em">The loose file is gone — M8's cluster pulls this signed, versioned kit</h2>
-  <p class="s">You leave with the model turned from a file into an artifact with three properties you can prove — and the reason it had to happen now is the module after this one.</p>
+  <p class="s">The file is now an artifact with three properties you can prove.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One: versioned — semver plus the candidate suffix, read what changed without diffing. Two: addressed — an OCI artifact of layers, digest-addressed, on rails your images already ride. Three: signed — a wax seal verified before deploy, base signed, candidate blocked. Below, an arrow to M8: the cluster pulls opsmate/model 1.0.0, verifies the signature, and serves it. A footline reads the loose file is gone, now open Module 7 Lab.">
     <!-- row 1 -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>

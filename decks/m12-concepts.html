@@ -95,6 +95,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -139,7 +140,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 1 · TITLE — three weeks, no front door ═══════════════ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 12 &nbsp;·&nbsp; GATEWAY, EVALS &amp; GUARDRAILS — TRUST</p>
-  <h2 class="t" style="font-size:1.95em">Three weeks on call, no front door</h2>
+  <h2 class="t" style="font-size:2.1em">Three weeks on call, no front door</h2>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three incident cards on a desk: a nightly job looping over a weekend, a promotion that shipped a worse model with no test, and a support transcript with a name and phone leaking into a log. A gray label reads the model was fine, the door was missing.">
     <!-- looping nightly-job card: orange = caution/in-between incident -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><rect x="60" y="66" width="300" height="196" rx="14"/></g>
@@ -170,7 +171,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 2 · THE HOTEL FRONT DESK (organizing picture) ═══════════════ -->
 <section>
   <h2 class="t">The gateway is a hotel front desk</h2>
-  <p class="s">Picture a hotel with one front desk. Guests do not hold a master key — they check in and get a keycard, with a minibar limit. One door, the desk knows each guest, every charge lands on that guest's tab, and the house rules are enforced right there.</p>
+  <p class="s">One door. Every guest gets a keycard, not the master key.</p>
   <svg viewBox="0 0 1100 366" role="img" aria-label="A hotel front desk labelled LiteLLM: three guests — on-call, nightly job, eval runner — check in at one door and each receive a keycard. A ledger book (Postgres) sits on the desk, and a house-rules sign lists cache, fallback, mask, and injection.">
     <!-- the desk: purple = the control point -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="380" y="120" width="340" height="150" rx="14"/></g>
@@ -202,7 +203,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 3 · READ THE BOXES IN REQUEST ORDER ═══════════════ -->
 <section>
   <h2 class="t">Read the boxes in request order</h2>
-  <p class="s">The order is the lesson. A request is authenticated to a key, then the pre-call guardrails run before the model sees anything, then it is routed with cache and fallback, and only then does spend land on the key's tab. Mask-then-model, not model-then-mask.</p>
+  <p class="s">Mask-then-model: guardrails run before the model ever sees the request.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="A left-to-right chain inside the gateway: key check, then pre-call guardrails highlighted in blue and labelled before the model, then route plus cache plus fallback, then spend accounting, then the model call. Guardrails run before the model.">
     <!-- key check: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="30" y="110" width="150" height="70" rx="10"/></g>
@@ -236,7 +237,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 4 · VIRTUAL KEYS ARE ROOM KEYCARDS ═══════════════ -->
 <section>
   <h2 class="t">Virtual keys are room keycards</h2>
-  <p class="s">Stop handing out the master key. Mint one key per consumer, each with an alias so spend is attributable and a max budget so a runaway trips its own limit. Each key is a row in Postgres — alias, budget, running spend. That row is the tab.</p>
+  <p class="s">One key per consumer — each row in Postgres is that consumer's tab.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A master key crossed out in red. Three room keycards are minted — on-call, nightly-summarizer, eval-runner — and each becomes a row in the Postgres ledger holding an alias, a budget, and a running spend.">
     <!-- master key crossed out: red = the thing you stop doing -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="70" y="70" width="220" height="70" rx="10"/></g>
@@ -273,7 +274,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 5 · THE $0-COST LIE ═══════════════ -->
 <section>
   <h2 class="t">The $0-cost lie — an open bar nobody prices</h2>
-  <p class="s">Mint a key with a tight budget, send three requests, read the tab. It reads 0.0 — not small, zero. A self-hosted model is free by default: LiteLLM has no price for your Ollama model, so every call costs nothing. The budget is real; the bill it checks is empty.</p>
+  <p class="s">A self-hosted model has no price — the tab reads zero, the gate never fires.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A guest drinks at a bar where the drinks on the shelf have blank price tags. A tab slip reads zero point zero. A tiny budget gate is drawn wide open and never fires.">
     <!-- guest at the bar: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="130" cy="120" r="26"/><path d="M104,160 C104,210 156,210 156,160"/></g>
@@ -303,7 +304,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 6 · PRICE YOUR OWN INFRA (fragment: the trip) ═══════════════ -->
 <section>
   <h2 class="t">Price your own infra so the gate fires</h2>
-  <p class="s">The fix is to price your own infrastructure. Add input and output cost-per-token — illustrative rates for the CPU-seconds and memory each call burns. Now every request has a non-zero cost, the tab accrues, and a tiny-budget key trips on the second call.</p>
+  <p class="s">Add input/output cost-per-token — now the tab accrues and the gate fires.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Price tags are now written on the drinks and the tab ticks up call by call. On the second call the budget gate slams shut with the message budget has been exceeded.">
     <!-- priced drinks: blue = the data now present -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="60" y="90" width="150" height="46" rx="6"/></g>
@@ -337,7 +338,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 7 · THE TOKENS YOU NEVER SEE ═══════════════ -->
 <section>
   <h2 class="t">The tokens you're billed for but never see</h2>
-  <p class="s">A second bite, straight from M2. Qwen3 is a thinking model: it generates hidden reasoning tokens before the visible answer, and the usage meter counts them. In the spike, "GATEWAY OK" — three visible words — billed 123 tokens. Cap max_tokens low and you can get no text at all.</p>
+  <p class="s">Qwen3 thinks before it answers, and you're billed for the hidden tokens too.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="An iceberg. Above the waterline, the three visible words GATEWAY OK. Below the waterline, a large hidden block of reasoning tokens, and a usage meter reading one hundred twenty-three.">
     <!-- waterline -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><line x1="60" y1="130" x2="720" y2="130"/></g>
@@ -358,6 +359,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="820" y="222" text-anchor="middle" class="lbl-bad" style="font-size:30px">123</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="560" y1="216" x2="716" y2="200" marker-end="url(#ahg)"/></g>
     <text x="1000" y="196" text-anchor="middle" class="lbl-g" style="font-size:15px">counted<tspan x="1000" dy="26">on the tab</tspan></text>
+    <text x="290" y="322" text-anchor="middle" class="lbl-g" style="font-size:15px">cap max_tokens too low → reasoning eats the budget, no visible text at all</text>
   </svg>
   <div class="pageno">M12·07</div>
 </section>
@@ -365,7 +367,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 8 · CACHING IS THE BARISTA ═══════════════ -->
 <section>
   <h2 class="t">Caching is the barista remembering the last order</h2>
-  <p class="s">Not every request should reach the model. When someone re-orders the drink they had two minutes ago, a good barista does not re-derive the recipe — they remember and pour. On an exact repeat the gateway returns the same response: ~0.08 s versus a ~4 s cold call, logged cache_hit.</p>
+  <p class="s">On an exact repeat, the gateway pours from memory — no model call.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A barista pours the same drink from memory. Two clocks compare a cold call at about four seconds against a cached repeat at about zero point zero eight seconds, tagged cache hit. A dashed semantic branch embeds the request and is noted as more powerful and more dangerous.">
     <!-- barista pouring from memory: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="130" cy="110" r="26"/><path d="M104,150 C104,210 156,210 156,150"/></g>
@@ -395,7 +397,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 9 · FALLBACK IS A SECOND BARISTA ═══════════════ -->
 <section>
   <h2 class="t">Fallback is a second barista</h2>
-  <p class="s">A single backend is a single point of failure. Name a fallback route, and when the primary fails to answer, the request retries against the substitute. The honest tell is in the response: the model field names the substitute, not the model you asked for.</p>
+  <p class="s">When the primary fails, the request retries a substitute that names itself.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="The first barista walks off at a dead address where nothing is listening, drawn in red. A second barista picks up the ticket and serves, and the returned cup carries a label naming the substitute model.">
     <!-- dead primary: red = the failure -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="70" y="90" width="230" height="120" rx="12"/></g>
@@ -424,7 +426,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 10 · EVALS ARE THE BRAKE TEST ═══════════════ -->
 <section>
   <h2 class="t">Evals are the brake test before the truck leaves</h2>
-  <p class="s">In M11 you made promotion a pull request. Right mechanism, incomplete — a PR can merge a worse model as easily as a better one. A freight depot does not let a truck out on faith: someone runs a brake test, and it does not roll until it passes.</p>
+  <p class="s">An M11 PR can merge a worse model — the truck rolls only once brakes pass.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A truck at a depot gate. An inspector runs a brake test with a pass/fail lever, and the gate stays shut until PASS. The M11 promotion pull request is drawn arriving at the gate — a merge that on its own is not enough.">
     <!-- the M11 PR arriving: neutral outline -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="60" y="130" width="170" height="80" rx="10"/></g>
@@ -453,9 +455,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 11 · THE EXIT-CODE GATE ═══════════════ -->
 <section>
   <h2 class="t">Gate on a floor against the baseline, not raw pass/fail</h2>
-  <p class="s">
-            You built the brake test's contents in M5 — the golden set. M12 industrializes it: gate.sh scores the generation layer deterministically against the assistant's /ask and compares the pass count to the floor committed in baseline.md — the M9 canary-gate pattern, promoted to CI.
-          </p>
+  <p class="s">gate.sh compares the pass count to the floor in baseline.md, not raw pass/fail.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Promptfoo runs the versioned M5 golden set against the gateway slash v one. A fork follows: exit code zero, all green, means the promotion proceeds, and exit code one hundred, a failed assertion, means the merge is blocked and the candidate goes back.">
     <!-- golden set at /v1: blue = the thing being run -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="60" y="120" width="230" height="110" rx="12"/></g>
@@ -466,17 +466,17 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- exit-code fork -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="290" y1="175" x2="360" y2="175" marker-end="url(#ah)"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M370,175 L430,135 M370,175 L430,215"/><circle cx="365" cy="175" r="8"/></g>
-    <text x="360" y="130" text-anchor="middle" class="lbl-g" style="font-size:15px">vs baseline floor</text>
+    <text x="360" y="130" text-anchor="middle" class="lbl-g" style="font-size:15px">vs baseline floor = 8</text>
     <!-- exit 0 -> proceeds: green -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="440" y="100" width="300" height="72" rx="10"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="440" y="100" width="300" height="72" rx="10"/></g>
-    <text x="590" y="132" text-anchor="middle" class="lbl-b">at/above floor · exit 0</text>
-    <text x="590" y="158" text-anchor="middle" class="lbl-g" style="font-size:15px">promotion proceeds</text>
-    <!-- exit 100 -> blocked: red -->
+    <text x="590" y="132" text-anchor="middle" class="lbl-b">11 ≥ 8 · exit 0</text>
+    <text x="590" y="158" text-anchor="middle" class="lbl-g" style="font-size:15px">at/above floor · promotion proceeds</text>
+    <!-- exit 1 -> blocked: red -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="440" y="188" width="300" height="72" rx="10"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="440" y="188" width="300" height="72" rx="10"/></g>
-    <text x="590" y="220" text-anchor="middle" class="lbl-bad" style="font-size:20px">below floor · exit 1</text>
-    <text x="590" y="246" text-anchor="middle" class="lbl-g" style="font-size:15px">merge blocked · candidate back</text>
+    <text x="590" y="220" text-anchor="middle" class="lbl-bad" style="font-size:20px">6 &lt; 8 · exit 1</text>
+    <text x="590" y="246" text-anchor="middle" class="lbl-g" style="font-size:15px">below floor · merge blocked · candidate back</text>
     <text x="900" y="150" text-anchor="middle" class="lbl-g">the floor is the<tspan x="900" dy="28">measured +RAG value</tspan></text>
   </svg>
   <div class="pageno">M12·11</div>
@@ -485,7 +485,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 12 · THREE PLACES IT CAN RUN ═══════════════ -->
 <section>
   <h2 class="t">Same golden set, three places it can run</h2>
-  <p class="s">The wiring has two real forms, both authored here. A GitHub Actions workflow blocks the tag-bump PR until the eval is green; an Argo Workflows step puts the same check inside the M11 pipeline. On 8 GB you run it locally; the in-cluster replay is the 16 GB note.</p>
+  <p class="s">One golden set, one exit code — read on the PR, in the pipeline, or locally.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="One golden set feeds three lanes — GitHub Actions on the pull request, an Argo Workflows step in the pipeline, and a local dry-run on the 8 gigabyte path — and all three read the same exit-code contract into one gate.">
     <!-- one golden set: blue = the shared thing -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="60" y="130" width="170" height="90" rx="12"/></g>
@@ -511,7 +511,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 13 · GUARDRAILS ARE AIRPORT SECURITY ═══════════════ -->
 <section>
   <h2 class="t">Guardrails are airport security — misses AND false alarms</h2>
-  <p class="s">The honest framing this module is built to teach: a guardrail is a classifier, and classifiers have error rates in both directions. Security sometimes misses a real threat, and sometimes stops the wrong person — flags a grandmother's knitting needles. Both happen, every day, at every checkpoint.</p>
+  <p class="s">A guardrail is a classifier — it misses real threats and flags harmless ones.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A scanner belt at a checkpoint with two failures drawn: a real threat sailing through unflagged in red — a false negative — and a harmless bag pulled aside in orange — a false positive. A label reads not infallible either way.">
     <!-- the scanner belt: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="360" y="130" width="200" height="120" rx="10"/></g>
@@ -540,7 +540,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 14 · PII MASKING RUNS PRE-CALL ═══════════════ -->
 <section>
   <h2 class="t">Mask on the way in — the model never sees the raw value</h2>
-  <p class="s">PII masking runs pre-call. Presidio scans the request, and the anonymizer rewrites detected entities to placeholders before the model — or any log — sees the raw value. A name becomes &lt;PERSON&gt;, a number &lt;PHONE_NUMBER&gt;, an address &lt;EMAIL_ADDRESS&gt;. Mask on the way in, not after.</p>
+  <p class="s">Presidio rewrites entities to placeholders before the model or a log sees them.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A raw request carrying a name and phone enters the pre-call stage. Presidio's analyzer and anonymizer rewrite it to placeholders, and the masked text — not the raw value — reaches both the model and the log.">
     <!-- raw request: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="50" y="120" width="200" height="90" rx="10"/></g>
@@ -570,7 +570,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 15 · THE MISS (false negative) ═══════════════ -->
 <section>
   <h2 class="t">The miss — a .example email sails through</h2>
-  <p class="s">One honest error direction, live in the lab. An email at a .example TLD passes through unmasked — the recognizer's pattern doesn't catch it — while a real @gmail.com address on the same request gets masked. You only find the blind spot by testing the edges.</p>
+  <p class="s">The gmail address is masked; the .example one sails through — a pattern gap.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="The same request carries two emails. The gmail address is rewritten to a placeholder and masked in green. The dot-example address passes through unchanged and unmasked in red — the miss.">
     <!-- same request: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="120" width="200" height="90" rx="10"/></g>
@@ -598,7 +598,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 16 · THE FALSE ALARM (false positive) ═══════════════ -->
 <section>
   <h2 class="t">The false alarm — a ticket number redacted as a date</h2>
-  <p class="s">The other direction, and the operational sting. An ops ticket number, 4491, gets redacted as &lt;DATE_TIME&gt;. The guardrail over-fires and corrupts operational data — the model now can't see the ticket number it needs, because security decided a ticket number looked like a date.</p>
+  <p class="s">The guardrail over-fires: ticket 4491 is redacted, and the model goes blind.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A request reading check ticket 4491. The guardrail rewrites 4491 to a date-time placeholder, and the model is now blind to the identifier on-call work runs on — the ticket number crossed out in red.">
     <!-- request: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="120" width="230" height="80" rx="10"/></g>
@@ -624,7 +624,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 17 · INJECTION CALLBACK (fragment: the rejection) ═══════════════ -->
 <section>
   <h2 class="t">The injection callback rejects the attack</h2>
-  <p class="s">The second guardrail is a callback — detect_prompt_injection — that inspects each request and rejects a recognized attack before the model sees it. In the spike, a verbatim "ignore previous instructions" attempt was rejected as a prompt-injection attack. A clean request passes straight through.</p>
+  <p class="s">The callback rejects "ignore previous instructions"; a clean request passes.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="An incoming request reading ignore previous instructions approaches the detect prompt injection checkpoint, which rejects it so it never reaches the model. A clean request passes through the checkpoint to the model.">
     <!-- attack request approaching: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="50" y="80" width="230" height="70" rx="10"/></g>
@@ -658,7 +658,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 18 · THE SILENT NO-OP ═══════════════ -->
 <section>
   <h2 class="t">The silent no-op — a scanner unplugged</h2>
-  <p class="s">The sharp config trap. LiteLLM also has a prompt_injection_params block, and if you set that without registering the callback, the config looks armed and does nothing — a silent no-op. It is a checkpoint with the scanner unplugged: the sign is up, the lane roped off, every bag unscanned.</p>
+  <p class="s">Set prompt_injection_params without the callback: armed, but does nothing.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A checkpoint with its sign up and lane roped off, but the scanner's power cord dangles unplugged. Bags sail through unscanned. The whole thing is drawn in red — it looks armed and does nothing.">
     <!-- sign up, lane roped off: red = looks armed, does nothing -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="360" y="110" width="230" height="130" rx="12"/></g>
@@ -683,7 +683,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 19 · RED-TEAM THE SCANNER ═══════════════ -->
 <section>
   <h2 class="t">Red-team the scanner — including the M4 indirect injection</h2>
-  <p class="s">"We installed guardrails" is a hypothesis, not a result. Run a scripted attack set through the guarded path and record what gets through. The one that matters most: the M4 indirect injection — a poisoned runbook whose instruction rides in through retrieval, not the user's prompt.</p>
+  <p class="s">Replay a scripted attack set and record what gets through — M4 injection first.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A scripted attack set fires at the guarded path, producing a results ledger of blocked versus got-through. The M4 poisoned-runbook exhibit arrives as retrieved content rather than the user's message, and is often not fully caught — that row in red.">
     <!-- scripted attack set: blue = the guarded path being probed -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="50" y="120" width="180" height="90" rx="12"/></g>
@@ -714,7 +714,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 20 · THE SPEND LENS ═══════════════ -->
 <section>
   <h2 class="t">Read spend as an operational surface — the Spend lens</h2>
-  <p class="s">This closes the loop back to "who was that runaway job?" With every consumer keyed and every call priced, /spend/logs becomes a real surface: per-key spend, token totals, which model served, cache hits. The X-Ray Spend lens reads it through a server-side proxy — the key never leaves the server.</p>
+  <p class="s">"Who was the runaway job?" is now a row in /spend/logs you can point at.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The last X-Ray lens renders slash spend slash logs: a per-key spend table, a cache-hit ratio, and a token sparkline, read through a server-side proxy so the master key stays out of the browser. Who was that is now a row you can point at.">
     <!-- /spend/logs endpoint: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="50" y="130" width="150" height="70" rx="10"/></g>
@@ -750,7 +750,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 21 · CLOSING — OpsMate v3.0, a governed product ═══════════════ -->
 <section>
   <h2 class="t" style="font-size:1.85em">OpsMate v3.0 — a governed product, not just a running model</h2>
-  <p class="s">One front door. Every consumer holds its own keycard and its own tab — counting the tokens the model thinks. Repeats serve from cache; a dead backend fails over to a substitute that names itself. Promotion must pass a brake test. And the airport scanner is operated with clear eyes.</p>
+  <p class="s">One front door: keyed, priced, cached, eval-gated, and guardrailed.</p>
   <svg viewBox="0 0 1100 300" role="img" aria-label="Six carried ideas as sketched icons — a keycard, a priced tab, a barista cup, a brake-test lever, an airport scanner, and a spend row — with a bridge arrow to a small M13 agentic OpsMate.">
     <!-- six icons in a row -->
     <!-- keycard: blue -->

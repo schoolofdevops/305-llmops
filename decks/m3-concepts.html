@@ -88,6 +88,7 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal h2.t{ order:1; font-size:1.75em; }
   .reveal p{ margin:0; line-height:1.3; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
+  .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
@@ -130,8 +131,8 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 3 &nbsp;·&nbsp; SERVING ENGINES — OLLAMA, LLAMA.CPP &amp; VLLM</p>
-  <h2 class="t" style="font-size:2.3em">One model, many riders</h2>
-  <p class="s" style="font-size:1.2em">Until now you ran the model for one person — you, at a terminal. Now one copy has to answer many people at once, and which engine turns your model file into that shared service is a real decision.</p>
+  <h2 class="t" style="font-size:2.1em">One model, many riders</h2>
+  <p class="s" style="font-size:1.2em">One copy now has to answer many people — which engine makes it a shared service?</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="One model box on the left fans out through a serving engine to many little user figures on the right. A gray footline names the three things the engine choice decides: cost per answer, latency under load, and whether it runs everywhere.">
     <!-- the model (studied artefact = blue) -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
@@ -173,7 +174,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 2 — VEHICLE ANALOGY (scene) ============ -->
 <section>
   <h2 class="t">A scooter for one, a bus for a full load — ask what the trip is</h2>
-  <p class="s">Choosing a serving engine is like choosing a vehicle. You never ask which is "better" — you ask what the trip is.</p>
+  <p class="s">Like choosing a vehicle — you never ask which is "better", you ask the trip.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="On the left, a scooter with one rider over a small dollar mark, labelled one rider, cheap, instant. On the right, a bus full of little figures over a dollar-divided-by-many note, labelled a full load, cost per rider is tiny. A gray band reads: you don't ask which is better, you ask what the trip is.">
     <!-- scooter: one rider -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -218,7 +219,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 3 — THREE AXES ============ -->
 <section>
   <h2 class="t">Three axes decide the engine — a fit question, not a best one</h2>
-  <p class="s">Answer these three before you pick. None has a "best" answer; each has a fit that changes with the trip.</p>
+  <p class="s">Answer these three before you pick — each is a fit, none has a "best".</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three numbered rows name the three axes. One: dev box or production. Two: CPU only or GPU, the hardware axis where the wrong architecture may not run at all. Three: one user or many at once, where multi-tenant needs two mechanisms a single-user engine never does. A gray band reads: no best, a fit that changes with the trip.">
     <!-- row 1 (decision markers = purple) -->
     <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="66" r="26"/></g>
@@ -245,7 +246,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 4 — DECISION TREE ============ -->
 <section>
   <h2 class="t">Walk the tree — three questions in order pick the engine</h2>
-  <p class="s">The same three axes as the path an engineer actually walks: dev or prod, then CPU or GPU.</p>
+  <p class="s">Walk the axes in order — dev or prod first, then CPU or GPU.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A decision tree. A model to serve leads to the question dev or prod. The dev branch reaches Ollama. The prod branch reaches the question CPU or GPU, which splits to CPU reaching llama-server and GPU reaching vLLM.">
     <!-- start (the model being routed = blue data) -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="150" width="180" height="70" rx="11"/></g>
@@ -282,7 +283,6 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 5 — THREE ENGINES PLACED ============ -->
 <section>
   <h2 class="t">Three engines, placed on the axes</h2>
-  <p class="s">Each engine is a choice, not a name — here is where each sits, and what it is built for.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three stacked rows place the engines. Ollama is the dev-box engine: pull-and-run, native, reaches Metal on a Mac, wraps llama.cpp. llama-server is the portable CPU engine: containerized, speaks slash-v-one, exposes slash-metrics, runs identically everywhere. vLLM is the production engine: GPU, high concurrency, where continuous batching and PagedAttention were popularised.">
     <!-- Ollama (blue) -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="30" width="980" height="86" rx="12"/></g>
@@ -309,7 +309,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 6 — ONE CONTRACT (hub-and-spoke) ============ -->
 <section>
   <h2 class="t">One contract — swap the engine under a client that never changes</h2>
-  <p class="s">All three speak the same OpenAI-compatible /v1 API. That M2 contract is why you can move between them without touching your code.</p>
+  <p class="s">All three speak /v1 — so you swap engines without touching the client code.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three engine boxes — Ollama, llama-server, and vLLM — each tagged with slash-v-one, converge on a single OpenAI-compatible slash-v-one API box, which a single unchanged client speaks to. A gray line notes: change one env var, same code, two engines.">
     <!-- three engines (blue / orange / purple — same identity as slides 4-5) -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.4">
@@ -357,7 +357,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 7 — WHY A MAC CONTAINER IS CPU-ONLY (scene) ============ -->
 <section>
   <h2 class="t">On a Mac, a container can't see the GPU</h2>
-  <p class="s">Think of the GPU as a workshop with one door that opens only from inside the building. A native program is inside — it walks straight in. A container is the building next door, with no corridor to the workshop — it works, but only with the CPU tools it brought.</p>
+  <p class="s">The GPU workshop opens only from inside — a container is the building next door.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Two buildings on a Mac. The left building holds a native program and connects by an open door to a GPU workshop labelled Metal, marked with a green tick and fast. The right building holds a containerized program; a dashed crossed-out corridor shows it has no path to the workshop, so it falls back to CPU tools only.">
     <!-- the GPU workshop (the resource behind one door) -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8"><rect x="430" y="34" width="240" height="90" rx="12"/></g>
@@ -391,7 +391,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 8 — THE THREE PLACEMENTS (the rule) ============ -->
 <section>
   <h2 class="t">Native for Metal, container-CPU for portability, Linux-GPU for prod</h2>
-  <p class="s">That one fact sets a placement rule for the whole course stack. It has three settings, and picking the wrong one is the "works on my machine, dies in the cluster" bug in one decision.</p>
+  <p class="s">One placement rule, three settings — get it wrong and it dies in the cluster.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three placements. On your Mac, Ollama native reaches Metal and is fast. On any machine, a CPU-in-a-container runs identically on Mac, Linux and WSL2 — the portable middle. On a Linux node with NVIDIA, a container gets GPU passthrough, which is how vLLM runs in production.">
     <!-- placement 1: native / Metal (green, fast) -->
     <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8"><rect x="40" y="70" width="320" height="200" rx="13"/></g>
@@ -424,7 +424,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 9 — CONTINUOUS BATCHING (scene, 2 fragments) ============ -->
 <section>
   <h2 class="t">Static batching waits for the whole lift; continuous picks up every floor</h2>
-  <p class="s">The biggest reason a production engine beats a naive one. An old lift won't move until full and won't stop until everyone's dropped; a modern lift picks up and drops off at every floor.</p>
+  <p class="s">An old lift waits till full; a modern one picks up and drops off every floor.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Two lift panels. The static lift is full with three riders waiting to fill and a queued rider stuck outside, who waits for the whole trip. The continuous lift is mid-shaft with one rider stepping out and another stepping in at the same floor — join and leave every step. A gray band explains this keeps the engine busy and full with no boundary to wait for.">
     <!-- STATIC panel (fragment 1) -->
     <g class="fragment">
@@ -472,7 +472,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 10 — PAGEDATTENTION (scene) ============ -->
 <section>
   <h2 class="t">PagedAttention — numbered cubbies on demand, not one long plank each</h2>
-  <p class="s">Many requests each grow a KV cache (M1) of unpredictable length in shared memory. The old way hands each one long shelf; the fix hands out small numbered blocks as needed.</p>
+  <p class="s">The old way hands each request one long shelf; paging hands out small blocks.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="On the left, contiguous KV: a reader holds one long shelf mostly empty, reserved to its maximum and wasted, with a too-small gap beside it labelled fragmentation. On the right, PagedAttention: the same reader has scattered numbered cubbies three, seven, and twelve, plus an index card labelled block table, and free cubbies reusable by anyone. A gray band reads: stop over-reserving, stop fragmenting, so far more requests fit per box.">
     <!-- OLD: contiguous plank -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="50" y="40" width="470" height="230" rx="12"/></g>
@@ -517,7 +517,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 11 — PREFIX CACHING (2 fragments) ============ -->
 <section>
   <h2 class="t">Prefix caching — don't re-read the same opening every request</h2>
-  <p class="s">Real apps start every request with the same opening — a long system prompt, a runbook preamble — and only the last line differs. Prefill that opening once, then reuse it.</p>
+  <p class="s">Every request opens the same way — prefill that opening once, then reuse it.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="Request one is a long system prompt followed by a new line; the engine prefills all of it and keeps the KV of the prefix. Request two is the same system prompt followed by a different new line; the prefix arrow is dashed and gray, served from cache, and only the new line is inked as real prefill. A gray callout notes the response reports cached_tokens — prefill you did not pay for.">
     <!-- request 1 (fragment 1) -->
     <g class="fragment">
@@ -556,7 +556,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 12 — THE COMPOSE SPINE ============ -->
 <section>
   <h2 class="t">The stack stops being a command and becomes a file</h2>
-  <p class="s">From this module OpsMate is a stack brought up and torn down as a unit. Today it holds exactly one service — small on purpose.</p>
+  <p class="s">OpsMate is now a stack you bring up as a unit — one service today, on purpose.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="An outer box labelled labs slash opsmate slash compose dot yaml contains one inner block: service model, listing llama-server in a container, the Qwen3 0.6B GGUF on port 8080 with the slash-v-one API, and a 2 gigabyte memory limit with a slash-health check and metrics on. A gray footline notes: one service now, grows one per module, to the full system in M13, and make up slash make down carry the whole way.">
     <!-- outer file box (the config/spec = meta = purple) -->
     <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="40" width="860" height="200" rx="14"/></g>
@@ -578,7 +578,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 13 — READING /metrics ============ -->
 <section>
   <h2 class="t">Read the engine's /metrics — queueing made visible</h2>
-  <p class="s">An engine exposes a Prometheus /metrics surface. Two families carry the story: the token meter, and the in-flight gauges that show the queue live.</p>
+  <p class="s">Two metric families carry the story — the token meter and the live queue gauges.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A slash-metrics box lists three rows. First, tokens predicted total and prompt tokens total — the meter. Second, requests processing — working now. Third, requests deferred — waiting, which is the queue live, drawn as a dashed watch line. A gray tag notes eleven llamacpp-star families were measured.">
     <!-- metrics box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="34" width="860" height="230" rx="14"/></g>
@@ -604,7 +604,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 14 — HONEST CROSS-ARCH VERDICT ============ -->
 <section>
   <h2 class="t">The honest cross-arch verdict — one measured table</h2>
-  <p class="s">Engineering honesty is a feature. Here is what the M3 spike actually found, on this course's Apple-Silicon host.</p>
+  <p class="s">What the M3 spike actually found on this course's Apple-Silicon host.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two verdict panels. On the left, llama-server: boots to health in seconds, gives a real slash-v-one answer, exposes slash-metrics, and uses 1.5 gigabytes under a 2 gigabyte cap — so it runs everywhere. On the right, vLLM-CPU on arm64: the images are real and boot and the slash-v-one surface comes up, but inference crashes across five tested configs — so hands-on is x86 with AVX or cloud. A gray band reads: a CPU image being present for your architecture does not mean it works on your host.">
     <!-- llama-server verdict (pass = green) -->
     <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3"><rect x="50" y="40" width="470" height="212" rx="13"/></g>
@@ -638,7 +638,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 15 — CLOSING: THREE DECISIONS ============ -->
 <section>
   <h2 class="t">The engine decision you can now defend</h2>
-  <p class="s">Three things you carry into the lab — where you prove the one-model, two-engines swap on your own machine.</p>
+  <p class="s">Three things you carry into the lab and prove on your own machine.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="Three numbered takeaways. One: choose on three axes — a fit, not a best. Two: the two mechanisms — continuous batching keeps the engine busy, PagedAttention keeps memory dense, together fitting many users per box. Three: the one contract — a single slash-v-one API lets you swap engines under an unchanged client.">
     <!-- row 1 (decision markers = purple, as slide 3) -->
     <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><circle cx="110" cy="66" r="26"/></g>

@@ -423,95 +423,115 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ============ SLIDE 9 — CONTINUOUS BATCHING (scene, 2 fragments) ============ -->
 <section>
-  <h2 class="t">Static batching waits for the whole lift; continuous picks up every floor</h2>
-  <p class="s">An old lift waits till full; a modern one picks up and drops off every floor.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Two lift panels. The static lift is full with three riders waiting to fill and a queued rider stuck outside, who waits for the whole trip. The continuous lift is mid-shaft with one rider stepping out and another stepping in at the same floor — join and leave every step. A gray band explains this keeps the engine busy and full with no boundary to wait for.">
-    <!-- STATIC panel (fragment 1) -->
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="60" y="40" width="440" height="250" rx="12"/></g>
-      <text x="280" y="74" text-anchor="middle" class="lbl-b">STATIC batching</text>
-      <!-- lift car full (rigid batch = red waste) -->
-      <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8"><rect x="120" y="100" width="150" height="150" rx="8"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
-        <circle cx="160" cy="150" r="16"/><circle cx="230" cy="150" r="16"/><circle cx="195" cy="205" r="16"/>
-      </g>
-      <text x="195" y="278" text-anchor="middle" class="lbl-g">won't move till full · won't stop till done</text>
-      <!-- queued rider stuck outside (waiting = red) -->
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="360" cy="150" r="16"/></g>
-      <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="315" y="180" width="150" height="50" rx="9"/></g>
-      <text x="390" y="211" text-anchor="middle" class="lbl-g">waits for the whole trip</text>
+  <h2 class="t">Static batching makes everyone wait for the fullest, slowest trip</h2>
+  <p class="s">The old lift won't move till full, and won't stop till everyone's done.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="A static-batching lift, drawn large. The lift car is full with three riders, tagged won't move till full and won't stop till done. A queued rider is stuck outside in a dashed box tagged waits for the whole trip. A gray band reads: the engine runs one batch to completion before it starts the next — a late or short request waits for the whole thing.">
+    <!-- lift car full (rigid batch = red waste) -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="120" y="46" width="500" height="256" rx="12"/></g>
+    <text x="370" y="84" text-anchor="middle" class="lbl-b">STATIC batching — one full trip, start to finish</text>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8"><rect x="180" y="116" width="220" height="150" rx="8"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+      <circle cx="240" cy="166" r="18"/><circle cx="340" cy="166" r="18"/><circle cx="290" cy="226" r="18"/>
     </g>
-
-    <text x="550" y="165" text-anchor="middle" class="lbl-b">vs</text>
-
-    <!-- CONTINUOUS panel (fragment 2) -->
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="600" y="40" width="440" height="250" rx="12"/></g>
-      <text x="820" y="74" text-anchor="middle" class="lbl-b">CONTINUOUS batching</text>
-      <!-- lift car mid-shaft (busy & efficient = green) -->
-      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8"><rect x="720" y="100" width="150" height="150" rx="8"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="795" cy="175" r="16"/></g>
-      <!-- one leaves -->
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M868,140 L930,140" marker-end="url(#ah)"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="955" cy="140" r="15"/></g>
-      <text x="960" y="118" text-anchor="middle" class="lbl-g">leaves</text>
-      <!-- one joins -->
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M930,215 L872,215" marker-end="url(#ah)"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="955" cy="215" r="15"/></g>
-      <text x="958" y="245" text-anchor="middle" class="lbl-g">joins</text>
-      <text x="795" y="278" text-anchor="middle" class="lbl-g">join &amp; leave every step</text>
-    </g>
-
+    <text x="290" y="292" text-anchor="middle" class="lbl-g">won't move till full · won't stop till done</text>
+    <!-- queued rider stuck outside (waiting = red) -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="500" cy="160" r="18"/></g>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="440" y="196" width="150" height="52" rx="9"/></g>
+    <text x="515" y="228" text-anchor="middle" class="lbl-g">waits for the whole trip</text>
     <!-- reason band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="200" y="312" width="700" height="44" rx="10"/></g>
-    <text x="550" y="341" text-anchor="middle" class="lbl-g">keeps the engine busy &amp; full — no batch boundary for anyone to wait behind</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="690" y="130" width="360" height="110" rx="12"/></g>
+    <text x="870" y="170" text-anchor="middle" class="lbl-b">the trap</text>
+    <text x="870" y="202" text-anchor="middle" class="lbl-g">a late arrival, or a short</text>
+    <text x="870" y="226" text-anchor="middle" class="lbl-g">request behind a long one —</text>
+    <text x="870" y="250" text-anchor="middle" class="lbl-g" fill="#c62828">both wait for the whole batch</text>
   </svg>
   <div class="pageno">M3·09</div>
 </section>
 
-<!-- ============ SLIDE 10 — PAGEDATTENTION (scene) ============ -->
+<!-- ============ SLIDE 9b — CONTINUOUS BATCHING (scene, split from 9) ============ -->
 <section>
-  <h2 class="t">PagedAttention — numbered cubbies on demand, not one long plank each</h2>
-  <p class="s">The old way hands each request one long shelf; paging hands out small blocks.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="On the left, contiguous KV: a reader holds one long shelf mostly empty, reserved to its maximum and wasted, with a too-small gap beside it labelled fragmentation. On the right, PagedAttention: the same reader has scattered numbered cubbies three, seven, and twelve, plus an index card labelled block table, and free cubbies reusable by anyone. A gray band reads: stop over-reserving, stop fragmenting, so far more requests fit per box.">
-    <!-- OLD: contiguous plank -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="50" y="40" width="470" height="230" rx="12"/></g>
-    <text x="285" y="72" text-anchor="middle" class="lbl-b">contiguous KV — one long plank</text>
-    <!-- long shelf mostly empty (reserved-to-MAX waste = red; used slice = blue KV data) -->
-    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.6"><rect x="80" y="100" width="360" height="46" rx="6"/></g>
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2"><rect x="86" y="106" width="70" height="34" rx="4"/></g>
-    <text x="285" y="130" text-anchor="middle" class="lbl-g">reserved to MAX — mostly wasted</text>
-    <!-- fragmentation gap (unusable = red) -->
-    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="80" y="176" width="120" height="44" rx="6"/></g>
-    <text x="330" y="204" text-anchor="middle" class="lbl-g">gaps too small for anyone = fragmentation</text>
-
-    <text x="550" y="160" text-anchor="middle" class="lbl-b">vs</text>
-
-    <!-- NEW: paged cubbies -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="580" y="40" width="470" height="230" rx="12"/></g>
-    <text x="815" y="72" text-anchor="middle" class="lbl-b">PagedAttention — small blocks on demand</text>
-    <!-- scattered numbered cubbies (in-use blocks = blue KV data) -->
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="610" y="100" width="54" height="54" rx="6"/>
-      <rect x="742" y="100" width="54" height="54" rx="6"/>
-      <rect x="874" y="100" width="54" height="54" rx="6"/>
-    </g>
-    <g class="lbl-sm" text-anchor="middle"><text x="637" y="133">3</text><text x="769" y="133">7</text><text x="901" y="133">12</text></g>
-    <!-- block table index card (the control structure = purple) -->
-    <g filter="url(#rough)" fill="#e1d5e7" stroke="#757575" stroke-width="2.2"><rect x="960" y="100" width="70" height="54" rx="6"/></g>
-    <text x="995" y="176" text-anchor="middle" class="lbl-g">block<tspan x="995" dy="22">table</tspan></text>
-    <!-- free cubbies (reusable by anyone = green) -->
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2" stroke-dasharray="5 5">
-      <rect x="676" y="100" width="54" height="54" rx="6"/>
-      <rect x="808" y="100" width="54" height="54" rx="6"/>
-    </g>
-    <text x="800" y="210" text-anchor="middle" class="lbl-g">free blocks — reusable by anyone</text>
-
+  <h2 class="t">Continuous batching lets riders join and leave at every floor</h2>
+  <p class="s">A modern lift takes whoever's ready and drops whoever's arrived — always.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="A continuous-batching lift, drawn large. The car is mid-shaft with one rider, an arrow out to a rider who leaves and an arrow in from a rider who joins, tagged join and leave every step. A gray band reads: it keeps the engine busy and full with no batch boundary for anyone to wait behind — higher throughput and lower latency at once.">
+    <!-- lift car mid-shaft (busy & efficient = green) -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="46" width="620" height="230" rx="12"/></g>
+    <text x="430" y="84" text-anchor="middle" class="lbl-b">CONTINUOUS batching — join &amp; leave mid-flight</text>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8"><rect x="330" y="116" width="200" height="130" rx="8"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="430" cy="181" r="20"/></g>
+    <!-- one leaves -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M534,146 L620,146" marker-end="url(#ah)"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="655" cy="146" r="17"/></g>
+    <text x="660" y="120" text-anchor="middle" class="lbl-g">leaves</text>
+    <!-- one joins -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M620,220 L536,220" marker-end="url(#ah)"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="655" cy="220" r="17"/></g>
+    <text x="658" y="252" text-anchor="middle" class="lbl-g">joins</text>
+    <text x="430" y="270" text-anchor="middle" class="lbl-g">works one token-step across all active requests</text>
+    <!-- payoff card (green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6"><rect x="790" y="120" width="270" height="120" rx="12"/></g>
+    <text x="925" y="160" text-anchor="middle" class="lbl-b">why it wins</text>
+    <text x="925" y="192" text-anchor="middle" class="lbl-g" fill="#2e7d32">throughput UP</text>
+    <text x="925" y="220" text-anchor="middle" class="lbl-g" fill="#2e7d32">latency DOWN — at once</text>
     <!-- reason band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="230" y="298" width="640" height="46" rx="10"/></g>
-    <text x="550" y="327" text-anchor="middle" class="lbl-g">stop over-reserving · stop fragmenting = far more concurrent requests per box</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="200" y="312" width="700" height="44" rx="10"/></g>
+    <text x="550" y="341" text-anchor="middle" class="lbl-g">keeps the engine busy &amp; full — no batch boundary for anyone to wait behind</text>
   </svg>
   <div class="pageno">M3·10</div>
+</section>
+
+<!-- ============ SLIDE 10 — PAGEDATTENTION (scene) ============ -->
+<section>
+  <h2 class="t">One long shelf per reader wastes memory two ways at once</h2>
+  <p class="s">Guess your max up front: reserve too much, and leave gaps no one can use.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Contiguous KV cache, drawn large. A reader holds one long shelf, mostly empty: a small blue used slice at the start, the rest a red band reserved to the maximum and wasted. Below it a dashed red box shows a gap too small for anyone, labelled fragmentation. A gray band reads: each request reserves one continuous block sized to its maximum possible length — over-reserving and fragmentation both cap how many fit.">
+    <!-- long shelf mostly empty (reserved-to-MAX waste = red; used slice = blue KV data) -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="120" y="46" width="860" height="150" rx="12"/></g>
+    <text x="550" y="84" text-anchor="middle" class="lbl-b">contiguous KV — one long plank, sized to the MAX</text>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.6"><rect x="160" y="112" width="760" height="60" rx="6"/></g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2"><rect x="168" y="120" width="150" height="44" rx="4"/></g>
+    <text x="243" y="148" text-anchor="middle" class="lbl-sm">in use</text>
+    <text x="640" y="148" text-anchor="middle" class="lbl-g" fill="#c62828">reserved to MAX — mostly wasted</text>
+    <!-- fragmentation gap (unusable = red) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="160" y="234" width="200" height="60" rx="6"/></g>
+    <text x="260" y="270" text-anchor="middle" class="lbl-g">unusable gap</text>
+    <text x="600" y="270" text-anchor="middle" class="lbl-g">gaps too small for anyone = <tspan fill="#c62828">fragmentation</tspan></text>
+    <!-- reason band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="230" y="316" width="640" height="40" rx="10"/></g>
+    <text x="550" y="343" text-anchor="middle" class="lbl-g">over-reserve + fragment = far fewer concurrent requests per box</text>
+  </svg>
+  <div class="pageno">M3·11</div>
+</section>
+
+<!-- ============ SLIDE 10b — PAGEDATTENTION FIX (scene, split from 10) ============ -->
+<section>
+  <h2 class="t">PagedAttention hands out numbered cubbies on demand</h2>
+  <p class="s">Small blocks taken as you grow, a block table to find them, no guessing.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="PagedAttention, drawn large. A reader has scattered numbered cubbies three, seven and twelve holding blue KV blocks, with free green cubbies between them reusable by anyone, and a purple index card labelled block table listing which cubbies hold the tokens in order. A gray band reads: the cache is broken into small fixed-size blocks handed out on demand — like OS virtual-memory paging — so far more requests fit per box.">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="46" width="860" height="200" rx="12"/></g>
+    <text x="550" y="84" text-anchor="middle" class="lbl-b">PagedAttention — small blocks on demand</text>
+    <!-- scattered numbered cubbies (in-use blocks = blue KV data) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="180" y="120" width="70" height="70" rx="6"/>
+      <rect x="420" y="120" width="70" height="70" rx="6"/>
+      <rect x="660" y="120" width="70" height="70" rx="6"/>
+    </g>
+    <g class="lbl-b" text-anchor="middle"><text x="215" y="163">3</text><text x="455" y="163">7</text><text x="695" y="163">12</text></g>
+    <!-- free cubbies (reusable by anyone = green) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2" stroke-dasharray="5 5">
+      <rect x="300" y="120" width="70" height="70" rx="6"/>
+      <rect x="540" y="120" width="70" height="70" rx="6"/>
+    </g>
+    <text x="455" y="222" text-anchor="middle" class="lbl-g">free blocks — reusable by anyone</text>
+    <!-- block table index card (the control structure = purple) -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><rect x="790" y="112" width="150" height="86" rx="8"/></g>
+    <text x="865" y="146" text-anchor="middle" class="lbl-b">block table</text>
+    <text x="865" y="176" text-anchor="middle" class="lbl-g">3 · 7 · 12 …in order</text>
+    <!-- reason band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="200" y="292" width="700" height="52" rx="10"/></g>
+    <text x="550" y="316" text-anchor="middle" class="lbl-g">it's OS virtual-memory paging, applied to the cache —</text>
+    <text x="550" y="338" text-anchor="middle" class="lbl-g" fill="#2e7d32">stop over-reserving · stop fragmenting = far more requests per box</text>
+  </svg>
+  <div class="pageno">M3·12</div>
 </section>
 
 <!-- ============ SLIDE 11 — PREFIX CACHING (2 fragments) ============ -->
@@ -550,7 +570,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="230" y="318" width="640" height="48" rx="10"/></g>
     <text x="550" y="348" text-anchor="middle" class="lbl-g">the response reports <tspan class="lbl-b">cached_tokens</tspan> — prefill you did not pay for</text>
   </svg>
-  <div class="pageno">M3·11</div>
+  <div class="pageno">M3·13</div>
 </section>
 
 <!-- ============ SLIDE 12 — THE COMPOSE SPINE ============ -->
@@ -572,7 +592,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="120" y="278" width="860" height="46" rx="10"/></g>
     <text x="550" y="307" text-anchor="middle" class="lbl-g">one service now → grows one per module → full system (M13) · make up / make down carry the whole way</text>
   </svg>
-  <div class="pageno">M3·12</div>
+  <div class="pageno">M3·14</div>
 </section>
 
 <!-- ============ SLIDE 13 — READING /metrics ============ -->
@@ -598,7 +618,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- tag -->
     <text x="550" y="298" text-anchor="middle" class="lbl-g">11 llamacpp:* families exposed (measured on the real llama-server)</text>
   </svg>
-  <div class="pageno">M3·13</div>
+  <div class="pageno">M3·15</div>
 </section>
 
 <!-- ============ SLIDE 14 — HONEST CROSS-ARCH VERDICT ============ -->
@@ -632,7 +652,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="210" y="290" width="680" height="44" rx="10"/></g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">a CPU image being present for your arch ≠ it works on your host</text>
   </svg>
-  <div class="pageno">M3·14</div>
+  <div class="pageno">M3·16</div>
 </section>
 
 <!-- ============ SLIDE 15 — CLOSING: THREE DECISIONS ============ -->
@@ -660,7 +680,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="560" y="272" class="lbl-g" text-anchor="start">one /v1 API — swap engines under an unchanged client</text>
   </svg>
   <p class="credit">Now open <b>Module 3 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M3·15</div>
+  <div class="pageno">M3·17</div>
 </section>
 
 </div></div>

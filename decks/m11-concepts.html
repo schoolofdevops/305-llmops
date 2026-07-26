@@ -710,39 +710,58 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M11·20</div>
 </section>
 
-<!-- ═══════════════ SLIDE 21 · CAP THE SPACE HEATER, DRAIN FIRST (circuit breaker) ═══════════════ -->
+<!-- ═══════════════ SLIDE 21 · CAP THE SPACE HEATER (circuit breaker = control-plane protection) ═══════════════ -->
 <section>
-  <h2 class="t">Cap the space heater, and drain serving first</h2>
+  <h2 class="t">Cap the space heater — a CPU limit is control-plane protection</h2>
   <p class="s">A CPU limit caps the training pod so it can't starve the shared control plane.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="A training pod drawn as a space heater on the node's shared circuit with the control plane. A circuit breaker labelled limits cpu equals two sits between them in green, tripping before a brownout. A paused-replicas zero switch pins the model server to zero and observability is scaled to zero, clearing the node.">
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A training pod drawn as a space heater on the node's shared circuit with the control plane. A circuit breaker labelled limits cpu equals two sits between them in green, tripping before a brownout so the training pod is slow but can never starve the control plane.">
     <!-- shared node circuit -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="90" y1="90" x2="1010" y2="90"/></g>
     <text x="120" y="76" text-anchor="start" class="lbl-g">node · one shared supply</text>
     <!-- space heater = training pod: red -->
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="120" y="180" width="200" height="90" rx="12"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="180" width="200" height="90" rx="12"/><line x1="150" y1="205" x2="150" y2="250"/><line x1="180" y1="205" x2="180" y2="250"/><line x1="210" y1="205" x2="210" y2="250"/><line x1="240" y1="205" x2="240" y2="250"/></g>
-    <text x="220" y="300" text-anchor="middle" class="lbl-b">training pod</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="220" y1="180" x2="220" y2="90"/></g>
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="150" y="180" width="230" height="90" rx="12"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="150" y="180" width="230" height="90" rx="12"/><line x1="185" y1="205" x2="185" y2="250"/><line x1="220" y1="205" x2="220" y2="250"/><line x1="255" y1="205" x2="255" y2="250"/><line x1="290" y1="205" x2="290" y2="250"/><line x1="325" y1="205" x2="325" y2="250"/></g>
+    <text x="265" y="300" text-anchor="middle" class="lbl-b">training pod — grabs every core</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="265" y1="180" x2="265" y2="90"/></g>
     <!-- breaker: green, trips before brownout -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="150" y="118" width="150" height="46" rx="8"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="150" y="118" width="150" height="46" rx="8"/></g>
-    <text x="225" y="147" text-anchor="middle" class="lbl-b" style="font-size:18px">limits.cpu: "2"</text>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="190" y="118" width="150" height="46" rx="8"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="190" y="118" width="150" height="46" rx="8"/></g>
+    <text x="265" y="147" text-anchor="middle" class="lbl-b" style="font-size:18px">limits.cpu: "2"</text>
     <!-- control plane on same circuit -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="430" y="180" width="200" height="90" rx="12"/><line x1="530" y1="180" x2="530" y2="90"/></g>
-    <text x="530" y="230" text-anchor="middle" class="lbl">control plane</text>
-    <text x="530" y="300" text-anchor="middle" class="lbl-g">must not starve</text>
-    <!-- drain: paused-replicas switch (purple) + obs to zero -->
-    <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="720" y="140" width="290" height="60" rx="10"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="720" y="140" width="290" height="60" rx="10"/></g>
-    <text x="865" y="176" text-anchor="middle" class="lbl-b" style="font-size:17px">paused-replicas: "0"</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="720" y="215" width="290" height="50" rx="8"/></g>
-    <text x="865" y="246" text-anchor="middle" class="lbl-g" style="font-size:16px">+ scale observability → 0</text>
-    <text x="865" y="290" text-anchor="middle" class="lbl-g">node clear for training</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="640" y="180" width="260" height="90" rx="12"/><line x1="770" y1="180" x2="770" y2="90"/></g>
+    <text x="770" y="222" text-anchor="middle" class="lbl-b">API server (fuse box)</text>
+    <text x="770" y="250" text-anchor="middle" class="lbl-g">must not starve</text>
+    <text x="770" y="300" text-anchor="middle" class="lbl-g">kubectl needs it alive</text>
   </svg>
   <div class="pageno">M11·21</div>
 </section>
 
-<!-- ═══════════════ SLIDE 22 · CLOSING — OpsMate v2.5, operated ═══════════════ -->
+<!-- ═══════════════ SLIDE 22 · DRAIN SERVING FIRST (paused-replicas → 0) ═══════════════ -->
+<section>
+  <h2 class="t">Drain serving first — the pause lever, turned all the way to zero</h2>
+  <p class="s">KEDA's pause annotation, set to 0, becomes your get-out-of-the-way lever.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A paused-replicas zero switch pins the model server down to zero replicas, and observability is scaled to zero as well, leaving the node clear for the training pod, which sits under its green CPU breaker from the previous slide.">
+    <!-- model server pinned to zero (purple switch) -->
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="120" y="110" width="340" height="70" rx="10"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="120" y="110" width="340" height="70" rx="10"/></g>
+    <text x="290" y="140" text-anchor="middle" class="lbl-b" style="font-size:18px">paused-replicas: "0"</text>
+    <text x="290" y="166" text-anchor="middle" class="lbl-g" style="font-size:15px">model server → 0 replicas</text>
+    <!-- observability to zero -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="120" y="200" width="340" height="60" rx="9"/></g>
+    <text x="290" y="236" text-anchor="middle" class="lbl-g" style="font-size:16px">+ scale observability → 0</text>
+    <!-- arrow to node clear -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><line x1="470" y1="185" x2="590" y2="185" marker-end="url(#ah)"/></g>
+    <!-- node clear = green -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="600" y="120" width="400" height="130" rx="12"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="600" y="120" width="400" height="130" rx="12"/></g>
+    <text x="800" y="170" text-anchor="middle" class="lbl-b">node clear for the trainer</text>
+    <text x="800" y="205" text-anchor="middle" class="lbl-g">nothing but the training pod,</text>
+    <text x="800" y="232" text-anchor="middle" class="lbl-g">running under its CPU cap</text>
+  </svg>
+  <div class="pageno">M11·22</div>
+</section>
+
+<!-- ═══════════════ SLIDE 23 · CLOSING — OpsMate v2.5, operated ═══════════════ -->
 <section>
   <p class="kicker">MODULE 11 &nbsp;·&nbsp; AUTOSCALING &amp; GITOPS — OPERATING THE PLATFORM</p>
   <h2 class="t" style="font-size:1.9em">OpsMate v2.5 — operated like a platform</h2>
@@ -768,7 +787,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1050" y="256" text-anchor="middle" class="lbl-g">M12</text>
   </svg>
   <p class="credit">Now open <b>Module 11 · Lab</b>. &nbsp;·&nbsp; next: M12 puts a governed gateway on the door &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M11·22</div>
+  <div class="pageno">M11·23</div>
 </section>
 </div></div>
 <script>/* reveal.js 5.x (inlined) */

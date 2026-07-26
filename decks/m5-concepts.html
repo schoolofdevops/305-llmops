@@ -545,37 +545,60 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ============ SLIDE 9 — THE LOCAL JUDGE ============ -->
 <section>
-  <h2 class="t">The local judge is a smoke detector, not a fire examiner</h2>
-  <p class="s">Be clear-eyed about what a small local judge is — and what it isn't.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, inked: a smoke detector labelled qwen3 0.6b judge, cheap, always-on, catches gross failures, listing ignored the context, confident bluff, empty answer, with a gray note noisy on the margins and two runs can disagree. Right, gray dashed: a fire examiner, calibrated, costs more per grade, equals Module 12. A band reads trust it to catch the obvious, corroborate with the deterministic layers, never treat one grade as ground truth.">
-    <!-- left: smoke detector — green = the working, always-on grader -->
+  <h2 class="t">The local judge is a smoke detector — trust it to catch the obvious</h2>
+  <p class="s">Same 0.6B model, no cloud key — cheap, always-on, catches the gross failures.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A large green smoke-detector panel labelled qwen3 0.6b judge: cheap, always-on, no cloud key, catches the gross failures — it ignored the context entirely, a confident bluff on an unanswerable, an empty answer. A green annotation reads: exactly the failures you most need caught automatically, on every change.">
+    <!-- smoke detector — green = the working, always-on grader -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="50" y="60" width="480" height="200" rx="12" class="f-green"/>
-      <circle cx="120" cy="110" r="26" fill="none"/>
-      <circle cx="120" cy="110" r="6" fill="none"/>
+      <rect x="120" y="52" width="620" height="236" rx="12" class="f-green"/>
+      <circle cx="200" cy="108" r="30" fill="none"/>
+      <circle cx="200" cy="108" r="7" fill="none"/>
     </g>
-    <text x="300" y="96" text-anchor="middle" class="lbl-b">smoke detector — qwen3:0.6b judge</text>
-    <text x="300" y="124" text-anchor="middle" class="lbl-g">cheap · always-on · no cloud key</text>
-    <text x="90" y="168" text-anchor="start" class="lbl">catches the GROSS failures:</text>
-    <text x="110" y="196" text-anchor="start" class="lbl-g">· ignored the context entirely</text>
-    <text x="110" y="222" text-anchor="start" class="lbl-g">· a confident bluff on an unanswerable</text>
-    <text x="110" y="248" text-anchor="start" class="lbl-g">· an empty answer</text>
-    <!-- right: fire examiner — purple = the special/future (M12) upgrade -->
-    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="580" y="60" width="470" height="200" rx="12" class="f-purple"/>
-    </g>
-    <text x="815" y="96" text-anchor="middle" class="lbl-b">fire examiner — calibrated</text>
-    <text x="815" y="140" text-anchor="middle" class="lbl-g">noisy on the margins · two runs can disagree</text>
-    <text x="815" y="176" text-anchor="middle" class="lbl-g">a bigger / frontier model as judge</text>
-    <text x="815" y="212" text-anchor="middle" class="lbl">costs more per grade</text>
-    <text x="815" y="242" text-anchor="middle" class="lbl-b">= M12 upgrades the judging</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="100" y="292" width="900" height="40" rx="10"/>
-    </g>
-    <text x="550" y="317" text-anchor="middle" class="lbl-g">trust it to catch the obvious · corroborate with the deterministic layers · <tspan class="lbl-b">never one grade as ground truth</tspan></text>
+    <text x="440" y="96" text-anchor="middle" class="lbl-b">smoke detector — qwen3:0.6b judge</text>
+    <text x="440" y="126" text-anchor="middle" class="lbl-g">cheap · always-on · no cloud key</text>
+    <text x="170" y="176" text-anchor="start" class="lbl">catches the GROSS failures:</text>
+    <text x="190" y="210" text-anchor="start" class="lbl-g">· ignored the context entirely</text>
+    <text x="190" y="240" text-anchor="start" class="lbl-g">· a confident bluff on an unanswerable</text>
+    <text x="190" y="270" text-anchor="start" class="lbl-g">· an empty answer</text>
+    <!-- payoff card -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="780" y="90" width="280" height="160" rx="12"/></g>
+    <text x="920" y="132" text-anchor="middle" class="lbl-b">why it earns its place</text>
+    <text x="920" y="170" text-anchor="middle" class="lbl-g">the failures you most need</text>
+    <text x="920" y="196" text-anchor="middle" class="lbl-g">caught <tspan class="lbl-b">automatically</tspan>,</text>
+    <text x="920" y="222" text-anchor="middle" class="lbl-g" fill="#2e7d32">on every change</text>
   </svg>
   <div class="pageno">M5·10</div>
+</section>
+
+<!-- ============ SLIDE 10b — THE JUDGE IS NOISY, NEVER GROUND TRUTH (split from 10) ============ -->
+<section>
+  <h2 class="t">A 0.6B judge is noisy on the margins — never one grade as ground truth</h2>
+  <p class="s">It graded a correct refusal as FAIL while quoting the rule that says refuse.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="Left, a purple fire-examiner panel: calibrated, noisy on the margins, two runs can disagree, a bigger frontier model that costs more per grade — that is the M12 upgrade. Right, a red exhibit of the real backwards grade: the unanswerable Kafka-partitions question, the model correctly refused, the wide net agreed and passed, but the judge returned FAIL while quoting the very rubric that says a refusal is correct. A band reads: trust it to catch the obvious, corroborate with the deterministic layers, never treat one grade as ground truth.">
+    <!-- left: fire examiner — purple = the special/future (M12) upgrade -->
+    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="50" y="52" width="440" height="196" rx="12" class="f-purple"/>
+    </g>
+    <text x="270" y="90" text-anchor="middle" class="lbl-b">fire examiner — calibrated</text>
+    <text x="270" y="128" text-anchor="middle" class="lbl-g">noisy on the margins</text>
+    <text x="270" y="156" text-anchor="middle" class="lbl-g">two runs can disagree</text>
+    <text x="270" y="192" text-anchor="middle" class="lbl">a bigger / frontier judge · costs more</text>
+    <text x="270" y="228" text-anchor="middle" class="lbl-b">= M12 upgrades the judging</text>
+    <!-- right: the backwards-grade exhibit — red -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.8"><rect x="560" y="52" width="490" height="196" rx="12" class="f-red"/></g>
+    <text x="805" y="88" text-anchor="middle" class="lbl-b">the exhibit — a backwards grade</text>
+    <text x="805" y="120" text-anchor="middle" class="lbl-g">unanswerable: "optimal Kafka partitions?"</text>
+    <text x="805" y="148" text-anchor="middle" class="lbl-g" fill="#2e7d32">model correctly REFUSED · wide net PASSED</text>
+    <text x="805" y="182" text-anchor="middle" class="lbl-b" fill="#c62828">judge returned FAIL —</text>
+    <text x="805" y="210" text-anchor="middle" class="lbl-g">quoting the very rubric that says</text>
+    <text x="805" y="234" text-anchor="middle" class="lbl-g">a refusal is correct</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="100" y="286" width="900" height="42" rx="10"/>
+    </g>
+    <text x="550" y="312" text-anchor="middle" class="lbl-g">trust it to catch the obvious · corroborate with the deterministic layers · <tspan class="lbl-b">never one grade as ground truth</tspan></text>
+  </svg>
+  <div class="pageno">M5·11</div>
 </section>
 
 <!-- ============ SLIDE 10 — THE BASELINE RITUAL ============ -->
@@ -619,7 +642,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="286" text-anchor="middle" class="lbl-g">modest numbers on a 0.6B CPU model — and that is <tspan class="lbl-b">honest</tspan>: a believable 62% beats an invented 95%</text>
     <text x="550" y="316" text-anchor="middle" class="lbl-b">→ written to baseline.md, committed</text>
   </svg>
-  <div class="pageno">M5·11</div>
+  <div class="pageno">M5·12</div>
 </section>
 
 <!-- ============ SLIDE 11 — THE FILE IS A CONTRACT ============ -->
@@ -667,7 +690,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="279" text-anchor="middle" class="lbl-g">a number in a chat is gone tomorrow — a number in a <tspan class="lbl-b">committed file is a contract</tspan> the next change must meet</text>
   </svg>
-  <div class="pageno">M5·12</div>
+  <div class="pageno">M5·13</div>
 </section>
 
 <!-- ============ SLIDE 12 — CLOSING ============ -->
@@ -698,7 +721,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="285" text-anchor="middle" class="lbl-g">the baseline you record here is the <tspan class="lbl-b">yardstick for the whole course</tspan> — now open Module 5 · Lab</text>
   </svg>
   <p class="credit">Now open <b>Module 5 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M5·13</div>
+  <div class="pageno">M5·14</div>
 </section>
 </div></div>
 

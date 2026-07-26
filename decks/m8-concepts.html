@@ -596,49 +596,67 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M8·11</div>
 </section>
 
-<!-- ═══════════════ SLIDE 12 · TWO PATHS TO THE REGISTRY ═══════════════ -->
+<!-- ═══════════════ SLIDE 12 · THE WALL — WHY LOCALHOST FAILS IN A POD ═══════════════ -->
 <section>
   <h2 class="t">Two paths to the registry — inside a pod, localhost is the pod</h2>
   <p class="s">The mirror covers image pulls; the model pull is plain HTTP — a different path.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Inside a kind-node frame. The top path: containerd mirror maps localhost 5100 to host Zot, a dashed gray arrow tagged image pulls only, ending green at host Zot. Below, inside a pod-on-the-node box, two rows. Row one: initContainer HTTP to localhost 5100, an arrow to a crossed-out box reading nothing here, because localhost is the pod itself. Row two: initContainer HTTP to registry.local 5100, an inked arrow to host Zot 5100 marked good, tagged hostAliases pins the name to the node's host IP, 192.168.5.2. A band reads the mirror covers image pulls, not in-pod HTTP — hostAliases fixes the second path.">
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Inside a kind-node frame. The top path: containerd mirror maps localhost 5100 to host Zot, a dashed gray arrow tagged image pulls only. Below, inside a pod-on-the-node box, the failing row: initContainer HTTP to localhost 5100, an arrow to a red crossed-out box reading nothing here, because localhost is the pod itself. A band reads the mirror covers image pulls, not in-pod HTTP — so localhost inside a pod finds nothing.">
     <!-- kind node frame -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="30" y="34" width="820" height="284" rx="13"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="30" y="34" width="1020" height="248" rx="13"/></g>
     <text x="90" y="58" text-anchor="start" class="lbl-b">kind node</text>
     <!-- top path: containerd mirror -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="70" y="72" width="330" height="56" rx="10"/></g>
     <text x="235" y="96" text-anchor="middle" class="lbl">containerd mirror</text>
     <text x="235" y="118" text-anchor="middle" class="lbl-g">localhost:5100 → host Zot</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M400,100 L960,100" marker-end="url(#ahg)"/></g>
-    <text x="680" y="90" text-anchor="middle" class="lbl-g">IMAGE pulls only ✓</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M400,100 L1000,100" marker-end="url(#ahg)"/></g>
+    <text x="700" y="90" text-anchor="middle" class="lbl-g">IMAGE pulls only ✓</text>
     <!-- pod on the node -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="150" width="740" height="150" rx="11"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="150" width="910" height="112" rx="11"/></g>
     <text x="128" y="174" text-anchor="start" class="lbl-b">a pod on the node</text>
-    <!-- row 1: localhost fails -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="96" y="190" width="340" height="44" rx="9"/></g>
-    <text x="266" y="217" text-anchor="middle" class="lbl-sm">initContainer HTTP → localhost:5100</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M436,212 L500,212" marker-end="url(#ahg)"/></g>
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="506" y="190" width="286" height="44" rx="9"/></g>
-    <text x="649" y="211" text-anchor="middle" class="lbl-g">✗ nothing here</text>
-    <text x="649" y="230" text-anchor="middle" class="lbl-g">localhost = the POD itself</text>
-    <!-- row 2: registry.local works -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="96" y="246" width="340" height="44" rx="9"/></g>
-    <text x="266" y="273" text-anchor="middle" class="lbl-sm">initContainer HTTP → registry.local:5100</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M436,268 L500,268" marker-end="url(#ah)"/></g>
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="506" y="246" width="286" height="44" rx="9"/></g>
-    <text x="649" y="273" text-anchor="middle" class="lbl-b">host Zot :5100 ✓</text>
-    <!-- host Zot target on the right — the reachable endpoint (green) -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8"><rect x="900" y="120" width="170" height="76" rx="11"/></g>
-    <text x="985" y="152" text-anchor="middle" class="lbl-b">host Zot</text>
-    <text x="985" y="178" text-anchor="middle" class="lbl-g">:5100</text>
-    <!-- hostAliases note -->
-    <text x="649" y="316" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">hostAliases</tspan> pins registry.local → the node's host IP (192.168.5.2)</text>
+    <!-- the failing row: localhost fails -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="120" y="196" width="360" height="48" rx="9"/></g>
+    <text x="300" y="225" text-anchor="middle" class="lbl-sm">initContainer HTTP → localhost:5100</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M480,220 L560,220" marker-end="url(#ahg)"/></g>
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="566" y="192" width="360" height="56" rx="9"/></g>
+    <text x="746" y="216" text-anchor="middle" class="lbl-g">✗ nothing here</text>
+    <text x="746" y="238" text-anchor="middle" class="lbl-g">localhost = the POD itself</text>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="130" y="332" width="840" height="26" rx="8"/>
+      <rect x="130" y="306" width="840" height="26" rx="8"/>
     </g>
-    <text x="550" y="351" text-anchor="middle" class="lbl-g">the mirror covers <tspan class="lbl-b">image pulls</tspan>, not in-pod HTTP — <tspan class="lbl-b">hostAliases</tspan> fixes the second path</text>
+    <text x="550" y="325" text-anchor="middle" class="lbl-g">the mirror covers <tspan class="lbl-b">image pulls</tspan>, not in-pod HTTP — so <tspan class="lbl-b">localhost</tspan> inside a pod finds nothing</text>
   </svg>
   <div class="pageno">M8·12</div>
+</section>
+
+<!-- ═══════════════ SLIDE 13 · THE FIX — HOSTALIASES PINS THE NAME ═══════════════ -->
+<section>
+  <h2 class="t">hostAliases pins the name to the node's host IP — the fix</h2>
+  <p class="s">A name you pin, an IP the node resolves — now the model pull reaches host Zot.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Inside a pod-on-the-node frame, the working row: initContainer HTTP to registry.local 5100, an inked arrow to a green host Zot 5100 box marked good, tagged hostAliases pins registry.local to the node's host IP, 192.168.5.2. A gray note reads discover it once with getent hosts host.docker.internal inside the node, it varies by runtime. A band reads hostAliases fixes the second path — a name you pin, an IP the node resolves.">
+    <!-- pod on the node frame -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="30" y="52" width="740" height="150" rx="11"/></g>
+    <text x="88" y="80" text-anchor="start" class="lbl-b">a pod on the node</text>
+    <!-- working row: registry.local works -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="56" y="104" width="360" height="48" rx="9"/></g>
+    <text x="236" y="133" text-anchor="middle" class="lbl-sm">initContainer HTTP → registry.local:5100</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M416,128 L500,128" marker-end="url(#ah)"/></g>
+    <text x="620" y="120" text-anchor="middle" class="lbl-g">hostAliases resolves →</text>
+    <!-- host Zot target (green) -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="820" y="90" width="230" height="76" rx="11"/></g>
+    <text x="935" y="122" text-anchor="middle" class="lbl-b">host Zot :5100 ✓</text>
+    <text x="935" y="148" text-anchor="middle" class="lbl-g">the model comes down</text>
+    <!-- hostAliases pin note -->
+    <text x="420" y="182" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">hostAliases</tspan> pins registry.local → the node's host IP (192.168.5.2)</text>
+    <!-- discover-it-once note -->
+    <text x="550" y="248" text-anchor="middle" class="lbl-g">discover it once: <tspan class="lbl-b">getent hosts host.docker.internal</tspan> inside the node — varies by runtime</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="130" y="306" width="840" height="26" rx="8"/>
+    </g>
+    <text x="550" y="325" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">hostAliases</tspan> fixes the second path — a name you pin, an IP the node resolves</text>
+  </svg>
+  <div class="pageno">M8·13</div>
 </section>
 
 <!-- ═══════════════ SLIDE 13 · THREE PROBES, THREE JOBS ═══════════════ -->
@@ -668,7 +686,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="276" width="800" height="30" rx="8"/></g>
     <text x="550" y="297" text-anchor="middle" class="lbl-g">name the <tspan class="lbl-b">question each answers</tspan> and the job follows</text>
   </svg>
-  <div class="pageno">M8·13</div>
+  <div class="pageno">M8·14</div>
 </section>
 
 <!-- ═══════════════ SLIDE 14 · THE ORDERING PROTECTS THE LOAD ═══════════════ -->
@@ -700,7 +718,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="560" y="280" text-anchor="middle" class="lbl-g">load budget = <tspan class="lbl-b">failureThreshold × periodSeconds</tspan> &nbsp;(e.g. 30 × 5 s = 150 s &gt; ~40 s)</text>
     <text x="560" y="304" text-anchor="middle" class="lbl-g">the total grace the model gets before Kubernetes gives up</text>
   </svg>
-  <div class="pageno">M8·14</div>
+  <div class="pageno">M8·15</div>
 </section>
 
 <!-- ═══════════════ SLIDE 15 · THE AGGRESSIVE-LIVENESS LOOP (fragments) ═══════════════ -->
@@ -755,7 +773,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="354" text-anchor="middle" class="lbl-g">apply the bad probe, watch the loop, revert — a self-inflicted outage seen in a safe place</text>
   </svg>
-  <div class="pageno">M8·15</div>
+  <div class="pageno">M8·16</div>
 </section>
 
 <!-- ═══════════════ SLIDE 16 · REQUESTS VS LIMITS ═══════════════ -->
@@ -790,7 +808,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="315" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">requests</tspan> is the working set, <tspan class="lbl-b">limits</tspan> is the OOM ceiling — both derived from the three-term sum</text>
   </svg>
-  <div class="pageno">M8·16</div>
+  <div class="pageno">M8·17</div>
 </section>
 
 <!-- ═══════════════ SLIDE 17 · THE ENGINE FORK ═══════════════ -->
@@ -827,7 +845,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="323" text-anchor="middle" class="lbl-g">swapping the engine is an <tspan class="lbl-b">image-and-args change</tspan>, not a manifest rewrite — the <tspan class="lbl-b">/v1 contract</tspan> holds the client stable</text>
   </svg>
-  <div class="pageno">M8·17</div>
+  <div class="pageno">M8·18</div>
 </section>
 
 <!-- ═══════════════ SLIDE 18 · GPU SURVEY ═══════════════ -->
@@ -862,7 +880,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="313" text-anchor="middle" class="lbl-g">the pattern is portable, the numbers are not — <tspan class="lbl-b">derive the box, don't paste the values</tspan></text>
   </svg>
-  <div class="pageno">M8·18</div>
+  <div class="pageno">M8·19</div>
 </section>
 
 <!-- ═══════════════ SLIDE 19 · CLOSING ═══════════════ -->
@@ -893,7 +911,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="600" y="242" text-anchor="middle" class="lbl">→ <tspan class="lbl-b">M9</tspan>: many models, one door — a gateway that routes without the client changing, + autoscaling + GitOps</text>
   </svg>
   <p class="credit">OpsMate is <b>v2.0</b> — served by the cluster &nbsp;·&nbsp; now open <b>Module 8 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M8·19</div>
+  <div class="pageno">M8·20</div>
 </section>
 </div></div>
 <script>/* reveal.js 5.x (inlined) */

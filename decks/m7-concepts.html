@@ -803,45 +803,66 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 17 · THE TWO TAGS (SPINE) ═══════════════ -->
 <section>
-  <h2 class="t">The two tags — the registry records history, not just winners</h2>
-  <p class="s">The M6 tune lost — so push both, as two tags of one repository.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="Inside one frame labelled opsmate/model, one repository, two tags. On the left, drawn green, 1.0.0, the base Qwen, the baseline holder that serves, signed, carrying its golden set and prompts, leading to gate deploys. On the right, drawn red and dashed, 1.0.0-candidate, the M6 tuned model, measured, lost, recorded, not signed on purpose, carrying the same golden set it was weighed on, leading to gate blocked. A gray note bridges them: same golden set on both, so the comparison is reproducible from the artifacts. A band reads the registry records history, not just winners — kit list, not a Slack search.">
+  <h2 class="t">The M6 tune lost — so push both, as two tags of one repository</h2>
+  <p class="s">Delete it and lose the record, or leave it lying about and risk serving it.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="Inside one frame labelled opsmate/model, one repository, two tags. On the left, drawn green, 1.0.0, the base Qwen, the baseline holder that serves, signed, leading to gate deploys. On the right, drawn red and dashed, 1.0.0-candidate, the M6 tuned model, measured, lost, recorded, not signed on purpose, leading to gate blocked so it cannot be served by accident.">
     <!-- repo frame -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 6">
-      <rect x="36" y="52" width="1028" height="212" rx="12"/>
+      <rect x="36" y="52" width="1028" height="230" rx="12"/>
     </g>
-    <text x="550" y="80" text-anchor="middle" class="lbl-b">opsmate/model — one repository, two tags</text>
+    <text x="550" y="82" text-anchor="middle" class="lbl-b">opsmate/model — one repository, two tags</text>
     <!-- LEFT: 1.0.0 base — signed, serves, passes the gate (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="70" y="100" width="440" height="140" rx="11"/>
+      <rect x="70" y="104" width="440" height="150" rx="11"/>
     </g>
-    <text x="290" y="130" text-anchor="middle" class="lbl-b">1.0.0</text>
-    <text x="290" y="156" text-anchor="middle" class="lbl">base Qwen — the baseline holder, SERVES</text>
-    <text x="290" y="182" text-anchor="middle" class="lbl-g">SIGNED ✓ · carries its golden set + prompts</text>
+    <text x="290" y="138" text-anchor="middle" class="lbl-b">1.0.0</text>
+    <text x="290" y="166" text-anchor="middle" class="lbl">base Qwen — the baseline holder, SERVES</text>
+    <text x="290" y="194" text-anchor="middle" class="lbl-g">SIGNED ✓</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="150" y="198" width="280" height="34" rx="8"/>
+      <rect x="150" y="212" width="280" height="34" rx="8"/>
     </g>
-    <text x="290" y="222" text-anchor="middle" class="lbl-sm">gate: DEPLOYS</text>
+    <text x="290" y="236" text-anchor="middle" class="lbl-sm">gate: DEPLOYS</text>
     <!-- RIGHT: candidate — the M6 loser, unsigned, blocked (red) -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="590" y="100" width="440" height="140" rx="11"/>
+      <rect x="590" y="104" width="440" height="150" rx="11"/>
     </g>
-    <text x="810" y="130" text-anchor="middle" class="lbl-b">1.0.0-candidate</text>
-    <text x="810" y="156" text-anchor="middle" class="lbl-g">M6 tuned model — measured, LOST, recorded</text>
-    <text x="810" y="182" text-anchor="middle" class="lbl-g">NOT signed (on purpose) · same golden set</text>
+    <text x="810" y="138" text-anchor="middle" class="lbl-b">1.0.0-candidate</text>
+    <text x="810" y="166" text-anchor="middle" class="lbl-g">M6 tuned model — measured, LOST, recorded</text>
+    <text x="810" y="194" text-anchor="middle" class="lbl-g">NOT signed (on purpose)</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="670" y="198" width="280" height="34" rx="8"/>
+      <rect x="670" y="212" width="280" height="34" rx="8"/>
     </g>
-    <text x="810" y="222" text-anchor="middle" class="lbl-g">gate: BLOCKED</text>
-    <!-- bridge note -->
-    <text x="550" y="288" text-anchor="middle" class="lbl-g">same golden set on both → the comparison is reproducible from the artifacts</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="150" y="306" width="800" height="40" rx="10"/>
-    </g>
-    <text x="550" y="332" text-anchor="middle" class="lbl-g">the registry records <tspan class="lbl-b">history, not just winners</tspan> — kit list, not a Slack search</text>
+    <text x="810" y="236" text-anchor="middle" class="lbl-g">gate: BLOCKED — can't serve by accident</text>
   </svg>
   <div class="pageno">M7·17</div>
+</section>
+
+<!-- ═══════════════ SLIDE 17b · THE AUDIT TRAIL (split from 17) ═══════════════ -->
+<section>
+  <h2 class="t">The registry records history, not just winners</h2>
+  <p class="s">"Did we ever try tuning this?" is a kit list, not a Slack search.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="Both tags carry the same golden set, so the comparison is reproducible from the artifacts, not a claim in a document. A month later, the question did-we-ever-try-tuning-this is answered by kit list, which shows the candidate with the eval set it was weighed on and the fact it was never signed — an audit trail made of artifacts instead of memory. The winner and the honest loss, both on the shelf.">
+    <!-- same golden set bridges both -->
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="60" width="380" height="70" rx="11"/></g>
+    <text x="260" y="92" text-anchor="middle" class="lbl-b">1.0.0 — signed, serves</text>
+    <text x="260" y="118" text-anchor="middle" class="lbl-g">golden set + prompts</text>
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="650" y="60" width="380" height="70" rx="11"/></g>
+    <text x="840" y="92" text-anchor="middle" class="lbl-b">1.0.0-candidate — lost</text>
+    <text x="840" y="118" text-anchor="middle" class="lbl-g">the SAME golden set</text>
+    <!-- bridge -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round"><path d="M450,95 L650,95"/></g>
+    <text x="550" y="86" text-anchor="middle" class="lbl-g">same set</text>
+    <text x="550" y="160" text-anchor="middle" class="lbl-g">both carry the set they were weighed on → the comparison is <tspan class="lbl-b">reproducible from the artifacts</tspan></text>
+    <!-- kit list terminal -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6"><rect x="230" y="190" width="640" height="96" rx="11"/></g>
+    <text x="260" y="222" text-anchor="start" class="lbl-sm">$ kit list opsmate/model</text>
+    <text x="260" y="250" text-anchor="start" class="lbl-g">1.0.0            signed ✓   → deploys</text>
+    <text x="260" y="274" text-anchor="start" class="lbl-g">1.0.0-candidate  unsigned   → the honest loss, on the shelf</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="306" width="800" height="40" rx="10"/></g>
+    <text x="550" y="332" text-anchor="middle" class="lbl-g">an audit trail made of <tspan class="lbl-b">artifacts, not memory</tspan> — the winner and the honest loss, both on the shelf</text>
+  </svg>
+  <div class="pageno">M7·18</div>
 </section>
 
 <!-- ═══════════════ SLIDE 18 · REGISTRY LANDSCAPE ═══════════════ -->
@@ -896,7 +917,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="333" text-anchor="middle" class="lbl-g">packaged as OCI → moving registries is a change of <tspan class="lbl-b">address, not format</tspan></text>
   </svg>
-  <div class="pageno">M7·18</div>
+  <div class="pageno">M7·19</div>
 </section>
 
 <!-- ═══════════════ SLIDE 19 · CLOSING + M8 HAND-OFF ═══════════════ -->
@@ -927,7 +948,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="600" y="242" text-anchor="middle" class="lbl">→ <tspan class="lbl-b">M8</tspan>: the cluster pulls opsmate/model:1.0.0, verifies the signature, serves it</text>
   </svg>
   <p class="credit">the loose file is gone &nbsp;·&nbsp; now open <b>Module 7 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M7·19</div>
+  <div class="pageno">M7·20</div>
 </section>
 
 </div></div>

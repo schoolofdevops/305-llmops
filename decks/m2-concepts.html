@@ -401,22 +401,24 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">A model card is the label on the medicine strip</h2>
   <p class="s">You read the label before you take the pill — the model card is that label.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="On the left, a strip of medicine with a label listing dose, maker, use and expiry. On the right, a terminal model card from ollama show listing parameters 751.63M annotated branding rounds, context length 40960 max versus 4096 configured annotated supports is not configured, quantization Q4_K_M, and licence.">
-    <!-- medicine strip + label (the analogy) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="60" y="60" width="150" height="230" rx="12"/>
-      <circle cx="135" cy="110" r="18"/>
-      <circle cx="135" cy="160" r="18"/>
-      <circle cx="135" cy="210" r="18"/>
-    </g>
-    <g filter="url(#rough)" fill="#e1d5e7" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="40" y="300" width="240" height="76" rx="9"/>
-    </g>
-    <text x="160" y="328" text-anchor="middle" class="lbl-b">the label</text>
-    <text x="160" y="356" text-anchor="middle" class="lbl-g">dose · maker · use · expiry</text>
-    <text x="135" y="46" text-anchor="middle" class="lbl-g">don't take an unlabelled pill</text>
+    <!-- medicine strip + label (the analogy) — fragment 1 -->
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+        <rect x="60" y="60" width="150" height="230" rx="12"/>
+        <circle cx="135" cy="110" r="18"/>
+        <circle cx="135" cy="160" r="18"/>
+        <circle cx="135" cy="210" r="18"/>
+      </g>
+      <g filter="url(#rough)" fill="#e1d5e7" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
+        <rect x="40" y="300" width="240" height="76" rx="9"/>
+      </g>
+      <text x="160" y="328" text-anchor="middle" class="lbl-b">the label</text>
+      <text x="160" y="356" text-anchor="middle" class="lbl-g">dose · maker · use · expiry</text>
+      <text x="135" y="46" text-anchor="middle" class="lbl-g">don't take an unlabelled pill</text>
 
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
-      <path d="M290,180 L360,180" marker-end="url(#ahg)"/>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
+        <path d="M290,180 L360,180" marker-end="url(#ahg)"/>
+      </g>
     </g>
 
     <g class="fragment">

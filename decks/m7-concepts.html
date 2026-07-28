@@ -171,7 +171,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·01</div>
 </section>
 
-<!-- ═══════════════ SLIDE 2 · A NAME-ONLY PARCEL IS UNTRUSTWORTHY ═══════════════ -->
 <section>
   <h2 class="t">A name on the side is trustworthy only in your own hands</h2>
   <p class="s">A name scrawled on a box means nothing the moment it leaves your hands.</p>
@@ -220,7 +219,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·02</div>
 </section>
 
-<!-- ═══════════════ SLIDE 3 · THE MANIFEST CARRIES THREE THINGS ═══════════════ -->
 <section>
   <h2 class="t">A proper parcel carries a manifest — label, tracking number, seal</h2>
   <p class="s">A parcel that travels carries a label, a tracking number, and a seal.</p>
@@ -272,7 +270,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·03</div>
 </section>
 
-<!-- ═══════════════ SLIDE 4 · A MODEL IS A BUNDLE OF FOUR FILES ═══════════════ -->
 <section>
   <h2 class="t">A model on disk is a bundle, not one thing — a recap from M2</h2>
   <p class="s">A callback from M2: "the model" is four files that only mean something together.</p>
@@ -303,7 +300,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·04</div>
 </section>
 
-<!-- ═══════════════ SLIDE 5 · SHIP THE WHOLE BUNDLE + EVAL SET ═══════════════ -->
 <section>
   <h2 class="t">Ship the whole bundle plus what was true about it</h2>
   <p class="s">Ship the whole bundle — plus the prompts and eval set that were true about it.</p>
@@ -343,7 +339,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·05</div>
 </section>
 
-<!-- ═══════════════ SLIDE 6 · OCI RIDES YOUR EXISTING RAILS ═══════════════ -->
 <section>
   <h2 class="t">You do not need a new system — OCI already ships anything</h2>
   <p class="s">A model as an OCI artifact rides the exact same rails your images already do.</p>
@@ -378,7 +373,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·06</div>
 </section>
 
-<!-- ═══════════════ SLIDE 7 · INSIDE ARE LAYERS — READ THE SIZES ═══════════════ -->
 <section>
   <h2 class="t">Inside the artifact are layers — and the sizes are the whole point</h2>
   <p class="s">Inside are separately-addressed layers — read the sizes, they're the point.</p>
@@ -416,7 +410,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·07</div>
 </section>
 
-<!-- ═══════════════ SLIDE 8 · KITFILE = DOCKERFILE, SECTIONS → LAYERS ═══════════════ -->
 <section>
   <h2 class="t">The Kitfile is a Dockerfile for models — each section becomes a layer</h2>
   <p class="s">A Kitfile is a Dockerfile for models — each section becomes a layer.</p>
@@ -477,7 +470,36 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·08</div>
 </section>
 
-<!-- ═══════════════ SLIDE 9 · EVERY PATH RELATIVE ═══════════════ -->
+<section>
+  <h2 class="t">The concept is durable — the tool is a current, reasonable choice</h2>
+  <p class="s">Adopt the idea firmly; the tool is a current, reasonable choice, not forever.</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="Two layers separated. On top, drawn blue and solid, the durable concept: a model as a layered, versioned OCI artifact, tagged vendor-neutral, the bet. Below it, drawn orange and dashed, the current tooling: KitOps, CNCF Sandbox, early-stage, and ModelPack standardizing the media types, tagged a reasonable choice, not a permanent commitment. A band reads adopt the idea firmly, hold the tool loosely.">
+    <!-- the durable concept -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
+      <rect x="150" y="60" width="800" height="86" rx="13"/>
+    </g>
+    <text x="550" y="96" text-anchor="middle" class="lbl-b">the concept — a model as a layered, versioned OCI artifact</text>
+    <text x="550" y="126" text-anchor="middle" class="lbl-g">vendor-neutral · durable · the bet</text>
+    <!-- separator -->
+    <text x="550" y="172" text-anchor="middle" class="lbl-g">rests on ↓ but is not the same as</text>
+    <!-- the current tooling -->
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="150" y="188" width="390" height="86" rx="12"/>
+      <rect x="560" y="188" width="390" height="86" rx="12"/>
+    </g>
+    <text x="345" y="222" text-anchor="middle" class="lbl-b">KitOps</text>
+    <text x="345" y="250" text-anchor="middle" class="lbl-g">CNCF Sandbox · early-stage</text>
+    <text x="755" y="222" text-anchor="middle" class="lbl-b">ModelPack</text>
+    <text x="755" y="250" text-anchor="middle" class="lbl-g">standardizes the media types</text>
+    <!-- band -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="200" y="290" width="700" height="42" rx="10"/>
+    </g>
+    <text x="550" y="317" text-anchor="middle" class="lbl-g">adopt the <tspan class="lbl-b">idea</tspan> firmly, hold the <tspan class="lbl-b">tool</tspan> loosely</text>
+  </svg>
+  <div class="pageno">M7·09</div>
+</section>
+
 <section>
   <h2 class="t">Every path in a Kitfile is relative — absolute paths are rejected</h2>
   <p class="s">An absolute path only exists on your machine — so kit pack rejects it.</p>
@@ -508,41 +530,9 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="306" text-anchor="middle" class="lbl-g">you hit the error on purpose — <tspan class="lbl-b">reading it once is how you remember the rule</tspan></text>
   </svg>
-  <div class="pageno">M7·09</div>
-</section>
-
-<!-- ═══════════════ SLIDE 10 · KITOPS IS A CURRENT CHOICE, NOT PERMANENT ═══════════════ -->
-<section>
-  <h2 class="t">The concept is durable — the tool is a current, reasonable choice</h2>
-  <p class="s">Adopt the idea firmly; the tool is a current, reasonable choice, not forever.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="Two layers separated. On top, drawn blue and solid, the durable concept: a model as a layered, versioned OCI artifact, tagged vendor-neutral, the bet. Below it, drawn orange and dashed, the current tooling: KitOps, CNCF Sandbox, early-stage, and ModelPack standardizing the media types, tagged a reasonable choice, not a permanent commitment. A band reads adopt the idea firmly, hold the tool loosely.">
-    <!-- the durable concept -->
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="150" y="60" width="800" height="86" rx="13"/>
-    </g>
-    <text x="550" y="96" text-anchor="middle" class="lbl-b">the concept — a model as a layered, versioned OCI artifact</text>
-    <text x="550" y="126" text-anchor="middle" class="lbl-g">vendor-neutral · durable · the bet</text>
-    <!-- separator -->
-    <text x="550" y="172" text-anchor="middle" class="lbl-g">rests on ↓ but is not the same as</text>
-    <!-- the current tooling -->
-    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="150" y="188" width="390" height="86" rx="12"/>
-      <rect x="560" y="188" width="390" height="86" rx="12"/>
-    </g>
-    <text x="345" y="222" text-anchor="middle" class="lbl-b">KitOps</text>
-    <text x="345" y="250" text-anchor="middle" class="lbl-g">CNCF Sandbox · early-stage</text>
-    <text x="755" y="222" text-anchor="middle" class="lbl-b">ModelPack</text>
-    <text x="755" y="250" text-anchor="middle" class="lbl-g">standardizes the media types</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="200" y="290" width="700" height="42" rx="10"/>
-    </g>
-    <text x="550" y="317" text-anchor="middle" class="lbl-g">adopt the <tspan class="lbl-b">idea</tspan> firmly, hold the <tspan class="lbl-b">tool</tspan> loosely</text>
-  </svg>
   <div class="pageno">M7·10</div>
 </section>
 
-<!-- ═══════════════ SLIDE 11 · SELECTIVE PULL ═══════════════ -->
 <section>
   <h2 class="t">Selective pull — take one crate off the ship, not the whole thing</h2>
   <p class="s">Layers are digest-addressed — fetch the prompts without the weights.</p>
@@ -588,7 +578,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·11</div>
 </section>
 
-<!-- ═══════════════ SLIDE 12 · WAX SEAL — AUTHENTICITY + INTEGRITY ═══════════════ -->
 <section>
   <h2 class="t">The wax seal proves origin, not quality — tamper-evidence, not secrecy</h2>
   <p class="s">A seal doesn't hide the letter — it proves who sealed it and that it's unopened.</p>
@@ -633,7 +622,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·12</div>
 </section>
 
-<!-- ═══════════════ SLIDE 13 · SIGN THE DIGEST, NOT THE TAG ═══════════════ -->
 <section>
   <h2 class="t">Sign the digest, never the tag — a tag is a label someone can move</h2>
   <p class="s">A tag is a label someone can move; a digest is the bytes — sign the digest.</p>
@@ -675,7 +663,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·13</div>
 </section>
 
-<!-- ═══════════════ SLIDE 14 · VERIFY-BEFORE-DEPLOY GATE ═══════════════ -->
 <section>
   <h2 class="t">A seal nobody checks is decoration — verify before you run</h2>
   <p class="s">A seal is only useful if something downstream verifies before it runs.</p>
@@ -731,7 +718,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·14</div>
 </section>
 
-<!-- ═══════════════ SLIDE 15 · SEMVER = TEXTBOOK EDITIONS ═══════════════ -->
 <section>
   <h2 class="t">Semver for models reads like textbook editions</h2>
   <p class="s">The version number should tell you what changed without diffing artifacts.</p>
@@ -767,7 +753,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·15</div>
 </section>
 
-<!-- ═══════════════ SLIDE 16 · THE -CANDIDATE SUFFIX (HINGE) ═══════════════ -->
 <section>
   <h2 class="t">The -candidate suffix names a build that is real but not promoted</h2>
   <p class="s">A candidate is real, packaged, and pushed — but not promoted to the release.</p>
@@ -801,7 +786,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·16</div>
 </section>
 
-<!-- ═══════════════ SLIDE 17 · THE TWO TAGS (SPINE) ═══════════════ -->
 <section>
   <h2 class="t">The M6 tune lost — so push both, as two tags of one repository</h2>
   <p class="s">Delete it and lose the record, or leave it lying about and risk serving it.</p>
@@ -837,7 +821,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·17</div>
 </section>
 
-<!-- ═══════════════ SLIDE 17b · THE AUDIT TRAIL (split from 17) ═══════════════ -->
 <section>
   <h2 class="t">The registry records history, not just winners</h2>
   <p class="s">"Did we ever try tuning this?" is a kit list, not a Slack search.</p>
@@ -865,7 +848,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·18</div>
 </section>
 
-<!-- ═══════════════ SLIDE 18 · REGISTRY LANDSCAPE ═══════════════ -->
 <section>
   <h2 class="t">Zot here, Harbor and ECR and HF in production — address changes, not format</h2>
   <p class="s">Swap the registry and your artifact is unchanged — only its address moves.</p>
@@ -920,7 +902,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M7·19</div>
 </section>
 
-<!-- ═══════════════ SLIDE 19 · CLOSING + M8 HAND-OFF ═══════════════ -->
 <section>
   <p class="kicker">MODULE 7 &nbsp;·&nbsp; SHIP THE MODEL — KITOPS, OCI ARTIFACTS &amp; SIGNING</p>
   <h2 class="t" style="font-size:2.05em">The loose file is gone — M8's cluster pulls this signed, versioned kit</h2>

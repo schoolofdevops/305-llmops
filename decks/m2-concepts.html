@@ -170,10 +170,45 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M2·01</div>
 </section>
 
-<!-- ============ SLIDE 2 — MEMORY MATH ============ -->
 <section>
-  <h2 class="t">A model is mostly weights, and weights have a size</h2>
-  <p class="s">First question — will it fit? Weights memory is just params times bytes each.</p>
+  <h2 class="t">A model is mostly weights — the B is billions of numbers</h2>
+  <p class="s">Will it fit? The count is fixed — bytes per number is your choice.</p>
+  <svg viewBox="0 0 1100 380" role="img" aria-label="A blue box holds 751.63 million numbers, labelled parameter count, fixed by the model. An arrow points to three chips showing the precision choice: FP16 spends two bytes per number, Q8 one byte, Q4 half a byte. A dashed band reads: same numbers, fewer bytes each.">
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
+      <rect x="60" y="110" width="330" height="150" rx="14"/>
+    </g>
+    <text x="225" y="170" text-anchor="middle" class="lbl-b">751.63M</text>
+    <text x="225" y="204" text-anchor="middle" class="lbl-g">numbers the model learned</text>
+    <text x="225" y="300" text-anchor="middle" class="lbl-b">parameter count — fixed</text>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+        <path d="M395,185 L470,185" marker-end="url(#ah)"/>
+      </g>
+      <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8">
+        <rect x="490" y="70" width="540" height="66" rx="10"/>
+      </g>
+      <g class="lbl-b" text-anchor="start"><text x="514" y="112">FP16</text></g>
+      <g class="lbl-g" text-anchor="start"><text x="640" y="112">2 bytes per number — full detail</text></g>
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="490" y="154" width="540" height="66" rx="10"/>
+      </g>
+      <g class="lbl-b" text-anchor="start"><text x="514" y="196">Q8</text></g>
+      <g class="lbl-g" text-anchor="start"><text x="640" y="196">1 byte per number</text></g>
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="490" y="238" width="540" height="66" rx="10"/>
+      </g>
+      <g class="lbl-b" text-anchor="start"><text x="514" y="280">Q4</text></g>
+      <g class="lbl-g" text-anchor="start"><text x="640" y="280">&#189; byte per number</text></g>
+      <text x="760" y="340" text-anchor="middle" class="lbl-b">precision — bytes you spend per number</text>
+    </g>
+  </svg>
+  <div class="pageno">M2·02</div>
+</section>
+
+<section>
+  <h2 class="t">Let&#39;s do the sum — 752M parameters at three precisions</h2>
+  <p class="s">751.63M params &#215; bytes per param — the same model at 1.4, 0.8, 0.5 GB.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="The real course model's 751.63 million parameters feed a three-row table showing FP16 at two bytes per parameter costing about 1.4 gigabytes, Q8 at one byte costing about 0.8 gigabytes, and Q4 at half a byte costing about 0.5 gigabytes, with a formula reading parameters times bytes-per-parameter equals weights memory.">
     <!-- params source -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
@@ -223,10 +258,9 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="550" y="372" text-anchor="middle" class="lbl-b">params × bytes-per-param = weights memory</text>
     </g>
   </svg>
-  <div class="pageno">M2·02</div>
+  <div class="pageno">M2·03</div>
 </section>
 
-<!-- ============ SLIDE 3 — THREE THINGS IN THE BOX (M1 callback) ============ -->
 <section>
   <h2 class="t">Weights are not the whole bill — the box holds three things</h2>
   <p class="s">Serving memory goes three places — quantization only shrinks the biggest one.</p>
@@ -261,10 +295,9 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="288" text-anchor="middle" class="lbl-g">this is why loaded size &gt; disk size — you budget all three, not just the weights</text>
   </svg>
-  <div class="pageno">M2·03</div>
+  <div class="pageno">M2·04</div>
 </section>
 
-<!-- ============ SLIDE 4 — QUANTIZATION = PHOTO AT LOWER DPI (scene) ============ -->
 <section>
   <h2 class="t">Quantization is the photo at lower resolution</h2>
   <p class="s">Store each weight in fewer bits — the same photo, recorded more coarsely.</p>
@@ -310,10 +343,9 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="340" text-anchor="middle" class="lbl-g">same picture · less fine detail · far smaller — that is quantization on a model's weights</text>
   </svg>
-  <div class="pageno">M2·04</div>
+  <div class="pageno">M2·05</div>
 </section>
 
-<!-- ============ SLIDE 5 — Q4 IS FASTER (measured, M1 callback) ============ -->
 <section>
   <h2 class="t">The 4-bit model decodes <em>faster</em> — because decode is bandwidth-bound</h2>
   <p class="s">You would expect the smaller model to be slower. It is not.</p>
@@ -349,10 +381,9 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="322" text-anchor="middle" class="lbl-g">decode is memory-bandwidth-bound (M1) — fewer bytes / token = more tokens / sec</text>
   </svg>
-  <div class="pageno">M2·05</div>
+  <div class="pageno">M2·06</div>
 </section>
 
-<!-- ============ SLIDE 6 — THE HONEST COST (quality) ============ -->
 <section>
   <h2 class="t">The honest cost is quality headroom, not speed</h2>
   <p class="s">Q4 is not free — quality always costs something, and you verify it on your task.</p>
@@ -393,10 +424,9 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="965" y="340">visible</text>
     </g>
   </svg>
-  <div class="pageno">M2·06</div>
+  <div class="pageno">M2·07</div>
 </section>
 
-<!-- ============ SLIDE 7 — MODEL CARD = MEDICINE LABEL (scene) ============ -->
 <section>
   <h2 class="t">A model card is the label on the medicine strip</h2>
   <p class="s">You read the label before you take the pill — the model card is that label.</p>
@@ -450,10 +480,9 @@ footer, header, hgroup, main, menu, nav, section {
       </g>
     </g>
   </svg>
-  <div class="pageno">M2·07</div>
+  <div class="pageno">M2·08</div>
 </section>
 
-<!-- ============ SLIDE 8 — CONTEXT: SUPPORTS ≠ CONFIGURED ============ -->
 <section>
   <h2 class="t">"Supports 40k" is not "running at 40k"</h2>
   <p class="s">The context-length field is a trap — it's the maximum, not what you run.</p>
@@ -503,10 +532,9 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="379" text-anchor="middle" class="lbl-g">you pay for the context you <em>configure</em>, not the maximum the card advertises</text>
   </svg>
-  <div class="pageno">M2·08</div>
+  <div class="pageno">M2·09</div>
 </section>
 
-<!-- ============ SLIDE 9 — LICENCE CLASSES ============ -->
 <section>
   <h2 class="t">The licence field decides what you may ship</h2>
   <p class="s">The field engineers skip and lawyers don't — three classes, different rights.</p>
@@ -540,10 +568,9 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="320" text-anchor="middle" class="lbl-g">read the licence BEFORE you build — finding out after you ship is a rebuild, not a config change</text>
   </svg>
-  <div class="pageno">M2·09</div>
+  <div class="pageno">M2·10</div>
 </section>
 
-<!-- ============ SLIDE 10 — FORMAT PICKS THE ENGINE ============ -->
 <section>
   <h2 class="t">Format picks the engine — GGUF for Ollama, safetensors for vLLM</h2>
   <p class="s">Two questions pick the engine: what format is it, what are you serving on?</p>
@@ -580,14 +607,13 @@ footer, header, hgroup, main, menu, nav, section {
 
     <text x="550" y="316" text-anchor="middle" class="lbl-g">handed a model, ask two things: what format? · what am I serving on?</text>
   </svg>
-  <div class="pageno">M2·10</div>
+  <div class="pageno">M2·11</div>
 </section>
 
-<!-- ============ SLIDE 11 — CALL CENTRE WITH NO MEMORY (scene) ============ -->
 <section>
   <h2 class="t">The API is a call centre with no memory</h2>
   <p class="s">The API is stateless — the server remembers nothing, so the client re-tells it.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="On the left, a call-centre desk where each call is answered by a different agent holding an empty notepad. On the right, a messages list with roles system, user, assistant, user, where the assistant turn is boxed and captioned fed back in — the model did not remember saying it.">
+  <svg viewBox="0 0 1100 380" role="img" aria-label="A call-centre desk where each call is answered by a different agent holding an empty notepad; a speech bubble shows the caller repeating the whole story, captioned the caller carries the context.">
     <!-- call-centre desk -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
       <rect x="60" y="60" width="360" height="150" rx="12"/>
@@ -602,45 +628,62 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="305" y="158" text-anchor="middle" class="lbl-g">notepad</text>
     <text x="240" y="242" text-anchor="middle" class="lbl-b">a new agent every call</text>
     <text x="240" y="272" text-anchor="middle" class="lbl-g">keeps no notes — remembers nothing</text>
-
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
       <path d="M430,135 L520,135" marker-end="url(#ahg)"/>
     </g>
     <text x="475" y="118" text-anchor="middle" class="lbl-g">so you</text>
     <text x="475" y="164" text-anchor="middle" class="lbl-g">re-tell it</text>
 
-    <!-- messages list -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="540" y="40" width="520" height="290" rx="12"/>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8">
+        <rect x="540" y="60" width="500" height="150" rx="12"/>
+      </g>
+      <text x="790" y="118" text-anchor="middle" class="lbl-b">&quot;Yesterday I reported my connection</text>
+      <text x="790" y="150" text-anchor="middle" class="lbl-b">dropping, you asked me to restart&#8230;&quot;</text>
+      <text x="790" y="242" text-anchor="middle" class="lbl-b">the caller carries the context</text>
+      <text x="790" y="272" text-anchor="middle" class="lbl-g">the whole story, every single call</text>
     </g>
-    <text x="800" y="76" text-anchor="middle" class="lbl-b">messages[] — the whole history, every turn</text>
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.2">
-      <rect x="566" y="98" width="470" height="46" rx="8"/>
-      <rect x="566" y="152" width="470" height="46" rx="8"/>
-      <rect x="566" y="260" width="470" height="46" rx="8"/>
-    </g>
-    <!-- boxed assistant turn (fed back in) -->
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" stroke-dasharray="4 5">
-      <rect x="566" y="206" width="470" height="46" rx="8"/>
-    </g>
-    <g class="lbl-b" text-anchor="start">
-      <text x="586" y="128">system</text>
-      <text x="586" y="182">user</text>
-      <text x="586" y="236">assistant</text>
-      <text x="586" y="290">user</text>
-    </g>
-    <g class="lbl-g" text-anchor="start" style="font-size:16px">
-      <text x="720" y="128">the standing instruction</text>
-      <text x="720" y="182">"capital of France?"</text>
-      <text x="720" y="236">"Paris" — fed back in</text>
-      <text x="720" y="290">"and its population?"</text>
-    </g>
-    <text x="800" y="356" text-anchor="middle" class="lbl-g">the model didn't remember saying "Paris" — the client reminded it</text>
   </svg>
-  <div class="pageno">M2·11</div>
+  <div class="pageno">M2·12</div>
 </section>
 
-<!-- ============ SLIDE 12 — MULTI-TURN RESEND (tokens grow each turn) ============ -->
+<section>
+  <h2 class="t">A chat request is a list of messages — the client carries the context</h2>
+  <p class="s">system, user, assistant, user — the whole history, resent every turn.</p>
+  <svg viewBox="0 0 1100 380" role="img" aria-label="A messages list with roles system, user, assistant, user. The system row is the standing instruction; the assistant row is boxed and captioned fed back in — the model did not remember saying it, the client reminded it.">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="270" y="40" width="560" height="290" rx="12"/>
+    </g>
+    <text x="550" y="76" text-anchor="middle" class="lbl-b">messages[] — the whole history, every turn</text>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.2">
+      <rect x="296" y="98" width="510" height="46" rx="8"/>
+      <rect x="296" y="152" width="510" height="46" rx="8"/>
+      <rect x="296" y="260" width="510" height="46" rx="8"/>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" stroke-dasharray="4 5">
+        <rect x="296" y="206" width="510" height="46" rx="8"/>
+      </g>
+    </g>
+    <g class="lbl-b" text-anchor="start">
+      <text x="316" y="128">system</text>
+      <text x="316" y="182">user</text>
+      <text x="316" y="236">assistant</text>
+      <text x="316" y="290">user</text>
+    </g>
+    <g class="lbl-g" text-anchor="start" style="font-size:16px">
+      <text x="470" y="128">the standing instruction</text>
+      <text x="470" y="182">&quot;capital of France?&quot;</text>
+      <text x="470" y="236">&quot;Paris&quot; — fed back in</text>
+      <text x="470" y="290">&quot;and its population?&quot;</text>
+    </g>
+    <g class="fragment">
+      <text x="550" y="360" text-anchor="middle" class="lbl-g">the model didn&#39;t remember saying &quot;Paris&quot; — the client reminded it</text>
+    </g>
+  </svg>
+  <div class="pageno">M2·13</div>
+</section>
+
 <section>
   <h2 class="t">Every turn resends the whole chat — so tokens climb</h2>
   <p class="s">Each turn resends every turn before it — so tokens climb call after call.</p>
@@ -683,10 +726,9 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="371" text-anchor="middle" class="lbl-g" style="font-size:15px">stateless server → the client re-tells the whole story every turn</text>
   </svg>
-  <div class="pageno">M2·12</div>
+  <div class="pageno">M2·14</div>
 </section>
 
-<!-- ============ SLIDE 13 — READING A RESPONSE ============ -->
 <section>
   <h2 class="t">Read the response: usage is the billing meter</h2>
   <p class="s">Three fields earn your attention: what it cost, why it stopped, how it streams.</p>
@@ -726,10 +768,9 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="865" y="232">first token fast (M1 decode)</text>
     </g>
   </svg>
-  <div class="pageno">M2·13</div>
+  <div class="pageno">M2·15</div>
 </section>
 
-<!-- ============ SLIDE 14 — COMPATIBILITY DRIFT (present) ============ -->
 <section>
   <h2 class="t">"Compatible" is mostly kept, not perfectly</h2>
   <p class="s">Every engine bends the spec at the edges — and the drift grows over time.</p>
@@ -778,10 +819,9 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1010" y="302" text-anchor="end" class="lbl-g" fill="#c62828" style="font-size:15px">not in the spec</text>
     <text x="550" y="348" text-anchor="middle" class="lbl-g">same call, an extra field — this is compatibility drift, and it grows with every new feature</text>
   </svg>
-  <div class="pageno">M2·14</div>
+  <div class="pageno">M2·16</div>
 </section>
 
-<!-- ============ SLIDE 15 — MOVING TARGET + GATEWAY (future) ============ -->
 <section>
   <h2 class="t">The API is a moving target — a gateway absorbs it</h2>
   <p class="s">The API keeps moving — a gateway in front gives the client one stable face.</p>
@@ -824,10 +864,9 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1000" y="178" text-anchor="middle" class="lbl-b">client</text>
     <text x="550" y="322" text-anchor="middle" class="lbl-g">the client speaks one API — the gateway translates each backend's drift and shape behind it</text>
   </svg>
-  <div class="pageno">M2·15</div>
+  <div class="pageno">M2·17</div>
 </section>
 
-<!-- ============ SLIDE 16 — CLOSING: THREE DECISIONS ============ -->
 <section>
   <p class="kicker">MODULE 2 &nbsp;·&nbsp; TAKEAWAYS</p>
   <h2 class="t" style="font-size:2.0em">Three decisions you can now defend</h2>
@@ -858,7 +897,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 2 · Lab</b> — you'll size the two quants, read the card, and tour the API on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M2·16</div>
+  <div class="pageno">M2·18</div>
 </section>
 
 </div></div>

@@ -185,7 +185,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·01</div>
 </section>
 
-<!-- ============ SLIDE 2 — THE JOURNEY STRIP (anchor introduced) ============ -->
 <section>
   <h2 class="t">The whole trip, on one strip</h2>
   <p class="s">Our map for the whole module — every later slide lights up one stop.</p>
@@ -226,7 +225,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·02</div>
 </section>
 
-<!-- ============ SLIDE 3 — TOKENIZE: word-pieces ============ -->
 <section>
   <h2 class="t">You pay per word-piece, not per idea</h2>
   <p class="s">Your text is chopped into dictionary pieces before the model sees it.</p>
@@ -316,7 +314,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·03</div>
 </section>
 
-<!-- ============ SLIDE 4 — TELEGRAM COUNTER (scene) ============ -->
 <section>
   <h2 class="t">A telegram counter bills pieces, not meaning</h2>
   <p class="s">Same idea, very different cost — because the counter bills pieces.</p>
@@ -386,7 +383,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·04</div>
 </section>
 
-<!-- ============ SLIDE 5 — CONTEXT WINDOW IS A HARD BUDGET ============ -->
 <section>
   <h2 class="t">Every token also eats a fixed window</h2>
   <p class="s">The context window is a hard budget — not a meter you can overrun.</p>
@@ -482,11 +478,10 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·05</div>
 </section>
 
-<!-- ============ SLIDE 6 — THREE MODEL SHAPES ============ -->
 <section>
-  <h2 class="t">Three shapes of model — you use the writer</h2>
-  <p class="s">Three shapes exist; chat uses the one that just writes the next piece.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. Three stacked rows compare model shapes: encoder-only turns text into numbers for search, encoder-decoder transforms text into other text for translation, and decoder-only generates the next piece over and over for chat, boxed as you are here.">
+  <h2 class="t">Three kinds of model — you use the writer</h2>
+  <p class="s">Three kinds exist; chat uses the one that just writes the next piece.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. Three stacked rows compare model kinds: encoder-only turns text into numbers for search, encoder-decoder transforms text into other text for translation, and decoder-only generates the next piece over and over for chat, boxed as you are here.">
     <!-- journey strip: model lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
       <rect x="30"  y="16" width="150" height="48" rx="9"/>
@@ -532,7 +527,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·06</div>
 </section>
 
-<!-- ============ SLIDE 7 — AUTOREGRESSIVE LOOP ============ -->
 <section>
   <h2 class="t">One token, then look back and write the next</h2>
   <p class="s">Predict one token, append it, then re-read everything to get the next.</p>
@@ -603,7 +597,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·07</div>
 </section>
 
-<!-- ============ SLIDE 8 — WORD-AT-A-TIME PLAYER (scene) ============ -->
 <section>
   <h2 class="t">Read the whole line, say one word, read it again</h2>
   <p class="s">Every new word is a fresh read of everything said up to that point.</p>
@@ -670,7 +663,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·08</div>
 </section>
 
-<!-- ============ SLIDE 9 — ONE BREATH: TWO PHASES ============ -->
 <section>
   <h2 class="t">Read everything at once, then write one piece at a time</h2>
   <p class="s">Read the whole prompt in one go, then write the answer piece by piece.</p>
@@ -752,7 +744,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·09</div>
 </section>
 
-<!-- ============ SLIDE 10 — EXAM: READ vs WRITE (scene) ============ -->
 <section>
   <h2 class="t">Reading the paper is one job; writing is another</h2>
   <p class="s">Read the question paper in one pass; write the answer slowly, by hand.</p>
@@ -827,7 +818,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·10</div>
 </section>
 
-<!-- ============ SLIDE 11 — PREFILL vs DECODE (mechanism) ============ -->
 <section>
   <h2 class="t">Prefill reads together; decode writes one at a time</h2>
   <p class="s">The two phases now get their names — parallel read, serial write.</p>
@@ -883,62 +873,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·11</div>
 </section>
 
-<!-- ============ SLIDE 12 — KV CACHE = ROUGH WORK (scene) ============ -->
-<section>
-  <h2 class="t">The KV cache is rough work — computed once, kept</h2>
-  <p class="s">Each token's key and value are worked out once, then read — never redone.</p>
-  <svg viewBox="0 0 1100 370" role="img" aria-label="An exam margin holds a hard sum worked out once as rough work; a later question glances back at it instead of re-deriving. Beside it, a row of token cells each writes its key and value once into a KV cache store.">
-    <!-- exam sheet with margin rough work -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="70" y="60" width="360" height="250" rx="8"/>
-      <line x1="150" y1="60" x2="150" y2="310"/>
-    </g>
-    <text x="110" y="100" text-anchor="middle" class="lbl-g">margin</text>
-    <text x="110" y="150" text-anchor="middle" class="lbl-b">17×</text>
-    <text x="110" y="182" text-anchor="middle" class="lbl-b">23</text>
-    <text x="110" y="214" text-anchor="middle" class="lbl">=391</text>
-    <text x="112" y="252" text-anchor="middle" class="lbl-g">(done</text>
-    <text x="112" y="280" text-anchor="middle" class="lbl-g">once)</text>
-    <g class="lbl" text-anchor="start">
-      <text x="180" y="120">Q4 uses 391</text>
-      <text x="180" y="180">Q7 uses 391</text>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M300,172 C240,172 200,168 150,164" marker-end="url(#ahg)"/>
-    </g>
-    <text x="300" y="230" text-anchor="middle" class="lbl-g">glance back — never re-derive</text>
-    <!-- divider -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
-      <line x1="510" y1="55" x2="510" y2="315"/>
-    </g>
-    <!-- token cells writing K,V once into a store — tokens (blue) -->
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="560" y="80" width="90" height="60" rx="8"/>
-      <rect x="680" y="80" width="90" height="60" rx="8"/>
-      <rect x="800" y="80" width="90" height="60" rx="8"/>
-    </g>
-    <g class="lbl-sm" text-anchor="middle">
-      <text x="605" y="116">tok</text>
-      <text x="725" y="116">tok</text>
-      <text x="845" y="116">tok</text>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
-      <path d="M605,142 L605,200" marker-end="url(#ah)"/>
-      <path d="M725,142 L725,200" marker-end="url(#ah)"/>
-      <path d="M845,142 L845,200" marker-end="url(#ah)"/>
-    </g>
-    <text x="940" y="176" text-anchor="middle" class="lbl-g">write K,V once</text>
-    <!-- KV cache store — the kept rough work, the data being studied (blue) -->
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
-      <rect x="545" y="210" width="440" height="90" rx="12"/>
-    </g>
-    <text x="765" y="252" text-anchor="middle" class="lbl-b">KV cache</text>
-    <text x="765" y="284" text-anchor="middle" class="lbl-g">the model's rough work — read, don't redo</text>
-  </svg>
-  <div class="pageno">M1·12</div>
-</section>
-
-<!-- ============ SLIDE 13 — WHAT YOU FEEL: TTFT + STREAMING ============ -->
 <section>
   <h2 class="t">What you feel: the wait, then the drip</h2>
   <p class="s">Back at your screen: the wait is TTFT, the drip after it is TPOT.</p>
@@ -1012,52 +946,63 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="690" y="310" text-anchor="middle" class="lbl-b">TPOT</text>
     <text x="690" y="340" text-anchor="middle" class="lbl-g">= decode · the drip you watch · driven by answer length</text>
   </svg>
+  <div class="pageno">M1·12</div>
+</section>
+
+<section>
+  <h2 class="t">The KV cache is rough work — computed once, kept</h2>
+  <p class="s">Each token's key and value are worked out once, then read — never redone.</p>
+  <svg viewBox="0 0 1100 370" role="img" aria-label="An exam margin holds a hard sum worked out once as rough work; a later question glances back at it instead of re-deriving. Beside it, a row of token cells each writes its key and value once into a KV cache store.">
+    <!-- exam sheet with margin rough work -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="70" y="60" width="360" height="250" rx="8"/>
+      <line x1="150" y1="60" x2="150" y2="310"/>
+    </g>
+    <text x="110" y="100" text-anchor="middle" class="lbl-g">margin</text>
+    <text x="110" y="150" text-anchor="middle" class="lbl-b">17×</text>
+    <text x="110" y="182" text-anchor="middle" class="lbl-b">23</text>
+    <text x="110" y="214" text-anchor="middle" class="lbl">=391</text>
+    <text x="112" y="252" text-anchor="middle" class="lbl-g">(done</text>
+    <text x="112" y="280" text-anchor="middle" class="lbl-g">once)</text>
+    <g class="lbl" text-anchor="start">
+      <text x="180" y="120">Q4 uses 391</text>
+      <text x="180" y="180">Q7 uses 391</text>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M300,172 C240,172 200,168 150,164" marker-end="url(#ahg)"/>
+    </g>
+    <text x="300" y="230" text-anchor="middle" class="lbl-g">glance back — never re-derive</text>
+    <!-- divider -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
+      <line x1="510" y1="55" x2="510" y2="315"/>
+    </g>
+    <!-- token cells writing K,V once into a store — tokens (blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="560" y="80" width="90" height="60" rx="8"/>
+      <rect x="680" y="80" width="90" height="60" rx="8"/>
+      <rect x="800" y="80" width="90" height="60" rx="8"/>
+    </g>
+    <g class="lbl-sm" text-anchor="middle">
+      <text x="605" y="116">tok</text>
+      <text x="725" y="116">tok</text>
+      <text x="845" y="116">tok</text>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M605,142 L605,200" marker-end="url(#ah)"/>
+      <path d="M725,142 L725,200" marker-end="url(#ah)"/>
+      <path d="M845,142 L845,200" marker-end="url(#ah)"/>
+    </g>
+    <text x="940" y="176" text-anchor="middle" class="lbl-g">write K,V once</text>
+    <!-- KV cache store — the kept rough work, the data being studied (blue) -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
+      <rect x="545" y="210" width="440" height="90" rx="12"/>
+    </g>
+    <text x="765" y="252" text-anchor="middle" class="lbl-b">KV cache</text>
+    <text x="765" y="284" text-anchor="middle" class="lbl-g">the model's rough work — read, don't redo</text>
+  </svg>
   <div class="pageno">M1·13</div>
 </section>
 
-<!-- ============ SLIDE 14 — THE SPLIT FLIPS (measured) ============ -->
-<section>
-  <h2 class="t">94/6 or 3/97 — the split flips with the request</h2>
-  <p class="s">Same box, opposite shape — measured live on the course model, <code>qwen3:0.6b</code>.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="Left: a big prompt with a one-word answer is about ninety-four percent prefill and six percent decode. Right: a short prompt with a long answer is about three percent prefill and ninety-seven percent decode.">
-    <!-- LEFT: prefill-heavy -->
-    <text x="290" y="90" text-anchor="middle" class="lbl-b">big prompt · one-word answer</text>
-    <!-- prefill share (green), decode share (orange) -->
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="80" y="120" width="395" height="56" rx="6"/>
-    </g>
-    <g filter="url(#rough)" fill="#ffe6cc" stroke="#757575" stroke-width="2.4">
-      <rect x="475" y="120" width="45" height="56" rx="6"/>
-    </g>
-    <text x="277" y="156" text-anchor="middle" class="lbl-sm" style="font-weight:700">prefill 94%</text>
-    <text x="498" y="205" text-anchor="middle" class="lbl-g">6%</text>
-    <text x="300" y="234" text-anchor="middle" class="lbl-g">almost all the work is reading</text>
-    <!-- divider -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
-      <line x1="550" y1="70" x2="550" y2="300"/>
-    </g>
-    <!-- RIGHT: decode-heavy -->
-    <text x="810" y="90" text-anchor="middle" class="lbl-b">short prompt · long answer</text>
-    <!-- prefill share (green), decode share (orange) -->
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2.4">
-      <rect x="620" y="120" width="20" height="56" rx="6"/>
-    </g>
-    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="640" y="120" width="380" height="56" rx="6"/>
-    </g>
-    <text x="630" y="205" text-anchor="middle" class="lbl-g">3%</text>
-    <text x="830" y="156" text-anchor="middle" class="lbl-sm" style="font-weight:700">decode 97%</text>
-    <text x="820" y="234" text-anchor="middle" class="lbl-g">almost all the work is writing</text>
-    <!-- caption -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
-      <rect x="230" y="280" width="640" height="60" rx="10"/>
-    </g>
-    <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the request shape — not by "the model"</text>
-  </svg>
-  <div class="pageno">M1·14</div>
-</section>
-
-<!-- ============ SLIDE 15 — CAPACITY MATH ============ -->
 <section>
   <h2 class="t">The rough work takes space — that space is capacity</h2>
   <p class="s">Weights take a fixed chunk; what's left is the KV budget each request eats.</p>
@@ -1095,10 +1040,9 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="265" text-anchor="middle" class="lbl-b">KV budget ÷ one request</text>
     <text x="800" y="296" text-anchor="middle" class="lbl">= users that fit at once</text>
   </svg>
-  <div class="pageno">M1·15</div>
+  <div class="pageno">M1·14</div>
 </section>
 
-<!-- ============ SLIDE 16 — READ THE OPS QUESTIONS OFF THE TRIP ============ -->
 <section>
   <h2 class="t">Read the bill, the latency, the capacity off the trip</h2>
   <p class="s">The three questions from the opening are three stops on one journey.</p>
@@ -1152,10 +1096,50 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
     <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
   </svg>
+  <div class="pageno">M1·15</div>
+</section>
+
+<section>
+  <h2 class="t">94/6 or 3/97 — the split flips with the request</h2>
+  <p class="s">Same box, opposite split — measured live on the course model, <code>qwen3:0.6b</code>.</p>
+  <svg viewBox="0 0 1100 380" role="img" aria-label="Left: a big prompt with a one-word answer is about ninety-four percent prefill and six percent decode. Right: a short prompt with a long answer is about three percent prefill and ninety-seven percent decode.">
+    <!-- LEFT: prefill-heavy -->
+    <text x="290" y="90" text-anchor="middle" class="lbl-b">big prompt · one-word answer</text>
+    <!-- prefill share (green), decode share (orange) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="80" y="120" width="395" height="56" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#757575" stroke-width="2.4">
+      <rect x="475" y="120" width="45" height="56" rx="6"/>
+    </g>
+    <text x="277" y="156" text-anchor="middle" class="lbl-sm" style="font-weight:700">prefill 94%</text>
+    <text x="498" y="205" text-anchor="middle" class="lbl-g">6%</text>
+    <text x="300" y="234" text-anchor="middle" class="lbl-g">almost all the work is reading</text>
+    <!-- divider -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
+      <line x1="550" y1="70" x2="550" y2="300"/>
+    </g>
+    <!-- RIGHT: decode-heavy -->
+    <text x="810" y="90" text-anchor="middle" class="lbl-b">short prompt · long answer</text>
+    <!-- prefill share (green), decode share (orange) -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2.4">
+      <rect x="620" y="120" width="20" height="56" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="640" y="120" width="380" height="56" rx="6"/>
+    </g>
+    <text x="630" y="205" text-anchor="middle" class="lbl-g">3%</text>
+    <text x="830" y="156" text-anchor="middle" class="lbl-sm" style="font-weight:700">decode 97%</text>
+    <text x="820" y="234" text-anchor="middle" class="lbl-g">almost all the work is writing</text>
+    <!-- caption -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
+      <rect x="230" y="280" width="640" height="60" rx="10"/>
+    </g>
+    <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the kind of request — not by "the model"</text>
+  </svg>
   <div class="pageno">M1·16</div>
 </section>
 
-<!-- ============ SLIDE 17 — CLOSING: THREE NUMBERS ============ -->
 <section>
   <p class="kicker">MODULE 1 &nbsp;·&nbsp; TAKEAWAYS</p>
   <h2 class="t" style="font-size:2.0em">Three numbers you carry into the lab</h2>

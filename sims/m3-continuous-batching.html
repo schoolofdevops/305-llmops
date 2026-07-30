@@ -49,6 +49,12 @@
   #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
   #challenge.success .tag{color:var(--ok)}
   #challenge.success .txt{white-space:normal;line-height:1.3}
+  #challenge{flex-wrap:wrap}
+  #challenge .predict{flex:1 1 100%;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:1px 0 5px}
+  #challenge .chip{cursor:pointer;border:1px solid #3a3f6e;border-radius:999px;padding:2px 11px;
+    font-size:.85rem;color:var(--txt);background:rgba(76,201,240,.06);user-select:none}
+  #challenge .chip:hover{border-color:var(--accent);background:rgba(76,201,240,.16)}
+  #challenge .txt .pv{font-size:.8rem;color:var(--faint);margin-left:6px}
 
   /* ---------- main grid ---------- */
   #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(232px,20rem,330px) 1fr;gap:6px;min-height:0}
@@ -202,6 +208,7 @@
       <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
     </span>
     <span class="txt" id="chTxt"></span>
+    <div class="predict" id="chPredict"></div>
   </div>
 
   <div id="main">
@@ -625,7 +632,36 @@
   var CH={step:1, done:[false,false,false],
           staticP50:null,     /* p50 wait captured while in static mode under load */
           contBeat:false,     /* did continuous later beat it at same-or-higher load? */
-          runawayDepth:0};    /* peak queue depth seen while saturated */
+          runawayDepth:0,     /* peak queue depth seen while saturated */
+          pred:[null,null,null]};
+  /* predict-first (Brilliant-style): commit to a guess, then run the step and see whether
+     the engine agrees. Formative only — never blocks the challenge. Each question aims at
+     the counter-intuition of its step. */
+  var CH_PREDICT=[
+    {q:'In <b>static</b> batching, a short request shares a batch with a much longer one. When does the short request free its slot for the next waiting request?',
+     opts:['the instant it finishes its own tokens','not until every request in the batch finishes'], ok:1,
+     explain:'Static holds the whole batch together — a finished short request is trapped until its slowest batch-mate is done, so its slot cannot admit anyone.'},
+    {q:'You push <b>arrival rate</b> past what the slots can drain. What happens to <code>throughput</code> (completed/s)?',
+     opts:['it keeps climbing with the arrivals','it plateaus at slot capacity — only the queue grows','it drops toward zero as the queue fills'], ok:1,
+     explain:'Throughput is capped by how fast the slots drain work; extra arrivals past that cap cannot be served, so they pile into the queue instead.'},
+    {q:'The queue is already deep. You <b>add a slot</b>. What happens to the requests already waiting?',
+     opts:['the extra slot pulls waiting requests off the queue each step, draining the backlog','only new arrivals benefit — the existing backlog stays put'], ok:0,
+     explain:'A free slot admits the head of the queue every step, so more slots means the standing backlog is drained faster, not just future arrivals served.'}
+  ];
+  function pickPredict(idx){
+    if(CH.step>=4)return;
+    var i=CH.step-1;
+    if(!CH_PREDICT[i] || CH.pred[i]!=null)return;
+    CH.pred[i]=idx;
+    logEv('','predict','step '+CH.step+' — you predicted: “'+CH_PREDICT[i].opts[idx].replace(/<[^>]*>/g,'')+'”');
+    updateChallenge();
+  }
+  function predictVerdict(i){
+    var p=CH_PREDICT[i];
+    if(!p||CH.pred[i]==null)return;
+    var right=CH.pred[i]===p.ok;
+    logEv(right?'admit':'over','predict',(right?'Prediction right. ':'Not what you predicted — you said “'+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+'”. ')+p.explain.replace(/<[^>]*>/g,''));
+  }
   var CH_TEXT=[
     'Step 1 — Run the clock in <b>Static</b> for a few seconds, then flip to <b>Continuous</b> at the same load. Watch <code>p50 wait</code> drop — same traffic, less waiting.',
     'Step 2 — Push <code>arrival rate</code> above what the slots can drain and let it run. The <b>queue grows without bound</b> — arrivals outrun capacity (this is <code>requests_deferred</code> climbing in your lab).',
@@ -647,7 +683,7 @@
         if(m.done>=4 && m.p50WaitSteps>0){ CH.staticP50=Math.max(CH.staticP50||0, m.p50WaitSteps); CH.staticRate=S.arrivalRate; }
       } else if(S.mode==='continuous'){
         if(CH.staticP50!=null && m.done>=4 && S.arrivalRate>=(CH.staticRate||0) && m.p50WaitSteps < CH.staticP50){
-          CH.done[0]=true; CH.step=2;
+          CH.done[0]=true; CH.step=2; predictVerdict(0);
           logEv('','try-this','Step 1 done — continuous p50 wait ('+m.p50WaitSteps+' steps) beat static ('+CH.staticP50+' steps) at the same load.');
         }
       }
@@ -655,7 +691,7 @@
       /* runaway queue: depth must climb past a clear saturation threshold */
       if(m.queueDepth>CH.runawayDepth)CH.runawayDepth=m.queueDepth;
       if(m.queueDepth>=Math.max(12, S.slots*6)){
-        CH.done[1]=true; CH.step=3;
+        CH.done[1]=true; CH.step=3; predictVerdict(1);
         logEv('queue','try-this','Step 2 done — queue reached '+m.queueDepth+' and is still climbing. Arrivals outrun the slots.');
       }
     } else if(CH.step===3){
@@ -665,7 +701,7 @@
       if(m.queueDepth>CH.runawayDepth)CH.runawayDepth=m.queueDepth;
       var target=Math.max(2, Math.floor(CH.runawayDepth*0.5));
       if(CH.runawayDepth>=8 && m.queueDepth<=target){
-        CH.done[2]=true; CH.step=4;
+        CH.done[2]=true; CH.step=4; predictVerdict(2);
         logEv('admit','try-this','Step 3 done — queue drained from a peak of '+CH.runawayDepth+' down to '+m.queueDepth+'. Adding a slot cleared the backlog.');
       }
     }
@@ -676,9 +712,27 @@
       var d=$('d'+i);d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
       d.textContent=CH.done[i-1]?'✓':i;
     }
-    var box=$('challenge'),txt=$('chTxt');
-    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;}
-    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[CH.step-1];}
+    var box=$('challenge'),txt=$('chTxt'),pr=$('chPredict');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;pr.innerHTML='';}
+    else{
+      box.classList.remove('success');
+      var i=CH.step-1, p=CH_PREDICT[i];
+      if(p && CH.pred[i]==null){
+        txt.innerHTML='Step '+CH.step+' — <b>Predict first:</b> '+p.q;
+        pr.innerHTML='';
+        for(var k=0;k<p.opts.length;k++){
+          var c=document.createElement('span');
+          c.className='chip'; c.innerHTML=p.opts[k];
+          c.title='Lock in this prediction, then run the step';
+          (function(kk){c.addEventListener('click',function(){pickPredict(kk)})})(k);
+          pr.appendChild(c);
+        }
+      }else{
+        var tail=p?' <span class="pv">(you predicted: '+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+')</span>':'';
+        txt.innerHTML=CH_TEXT[i]+tail;
+        pr.innerHTML='';
+      }
+    }
   }
 
   /* ------------------------------------------------------------------ boot */
@@ -690,7 +744,7 @@
      Virtual-time driver: the harness calls stepN() to advance the clock deterministically,
      never wall-clock sleeps. */
   window.__sim={
-    S:function(){return S}, CH:CH,
+    S:function(){return S}, CH:CH, predict:pickPredict,
     setArrival:function(v){S.arrivalRate=v;syncLabels();updateChallenge();},
     setSlots:function(v){$('slotRange').value=v;$('slotRange').dispatchEvent(new Event('input'));},
     setMode:setMode,

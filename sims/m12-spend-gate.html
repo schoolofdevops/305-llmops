@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Spend Gate — keys, budgets, and the $0 lie</title>
+<style>
+  :root{
+    --bg:#0d1220; --panel:#151c2e; --panel2:#111827; --line:#26324e; --line2:#1c2740;
+    --txt:#dbe4f5; --dim:#8494b3; --faint:#5a6a8c;
+    --accent:#4cc9f0; --accent2:#7b6cf6;
+    --ok:#3ddc97; --warn:#f5b942; --bad:#ff6b6b;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:clamp(10.5px,0.4vw + 9.1px,16px)}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:1rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  #app{display:flex;flex-direction:column;height:100%;padding:8px 10px;gap:6px}
+
+  /* ---------- header ---------- */
+  header{display:flex;align-items:center;gap:12px;flex:0 0 auto;flex-wrap:wrap}
+  header h1{font-size:1.05rem;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+  header h1 .gw{color:var(--accent)}
+  #hsub{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--faint);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #reset{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;
+    padding:3px 9px;font-size:.88rem;cursor:pointer;min-height:24px;flex:0 0 auto}
+  #reset:hover{color:var(--txt);border-color:var(--faint)}
+
+  /* ---------- challenge banner ---------- */
+  #challenge{flex:0 0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    background:linear-gradient(90deg,rgba(123,108,246,.14),rgba(76,201,240,.07));
+    border:1px solid #3a3f6e;border-radius:8px;padding:4px 11px;min-height:30px}
+  #challenge .tag{font-size:.8rem;font-weight:700;letter-spacing:.8px;color:var(--accent2);
+    text-transform:uppercase;white-space:nowrap}
+  #challenge .steps{display:flex;gap:5px}
+  #challenge .dot{width:1.3rem;height:1.3rem;border-radius:50%;border:1.5px solid var(--faint);
+    font-size:.76rem;display:flex;align-items:center;justify-content:center;color:var(--faint);font-weight:700}
+  #challenge .dot.cur{border-color:var(--accent);color:var(--accent)}
+  #challenge .dot.done{border-color:var(--ok);background:rgba(61,220,151,.15);color:var(--ok)}
+  #challenge .txt{flex:1;color:var(--txt);font-size:.94rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  #challenge .txt code{font-family:var(--mono);font-size:.86rem;color:var(--accent);background:rgba(76,201,240,.08);
+    padding:0 4px;border-radius:4px}
+  #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
+  #challenge.success .tag{color:var(--ok)}
+  #challenge.success .txt{white-space:normal;line-height:1.3}
+  #challenge .predict{flex:1 1 100%;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:1px 0 5px}
+  #challenge .chip{cursor:pointer;border:1px solid #3a3f6e;border-radius:999px;padding:2px 11px;
+    font-size:.85rem;color:var(--txt);background:rgba(76,201,240,.06);user-select:none}
+  #challenge .chip:hover{border-color:var(--accent);background:rgba(76,201,240,.16)}
+  #challenge .txt .pv{font-size:.8rem;color:var(--faint);margin-left:6px}
+
+  /* ---------- main grid ---------- */
+  #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(232px,20rem,330px) 1fr;gap:6px;min-height:0}
+  #main>.panel{min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;min-height:0}
+  .panel h2{font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .panel h2 span{text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- controls (left) ---------- */
+  #controls{display:flex;flex-direction:column;gap:9px;overflow-y:auto;scrollbar-width:thin}
+  .ctl .cl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .ctl .cl b{color:var(--txt);font-weight:700}
+  .ctl .cl .hint{color:var(--faint);font-size:.68rem;font-weight:400}
+  .ctl input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:1.2rem}
+  .ctl.price input[type=range]{accent-color:var(--warn)}
+  #priceChips{display:flex;gap:5px;margin-top:4px}
+  #priceChips .pc{cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:2px 8px;
+    font-family:var(--mono);font-size:.74rem;color:var(--dim);background:var(--panel2)}
+  #priceChips .pc:hover{border-color:var(--warn);color:var(--txt)}
+  #priceChips .pc.on{border-color:var(--warn);color:var(--warn);background:rgba(245,185,66,.1)}
+
+  #runBtn{width:100%;min-height:2.1rem;border-radius:8px;border:1px solid var(--accent);
+    background:color-mix(in srgb,var(--accent) 12%,var(--panel2));
+    color:var(--accent);font-weight:700;font-size:.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+    transition:background .15s;margin-top:2px}
+  #runBtn:hover:not(:disabled){background:color-mix(in srgb,var(--accent) 22%,var(--panel2))}
+  #runBtn:disabled{opacity:.5;cursor:default}
+
+  .readout{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line2);border-radius:8px;
+    background:var(--panel2);padding:6px 9px}
+  .readout,.readout *{cursor:default}
+  .rrow{display:flex;justify-content:space-between;align-items:baseline;padding:1px 0}
+  .rrow .rl{font-family:var(--mono);font-size:.76rem;color:var(--dim)}
+  .rrow .rl small{color:var(--faint);font-size:.66rem}
+  .rrow .rv{font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--txt)}
+  .rrow .rv.warnv{color:var(--warn)} .rrow .rv.badv{color:var(--bad)} .rrow .rv.okv{color:var(--ok)}
+
+  /* ---------- stage (right) ---------- */
+  #stage{display:flex;flex-direction:column;min-height:0;gap:7px;overflow-y:auto;scrollbar-width:thin}
+
+  /* per-key spend cards */
+  .key{display:flex;flex-direction:column;gap:3px;border:1px solid var(--line2);border-radius:8px;
+    background:var(--panel2);padding:6px 9px}
+  .key,.key *{cursor:default}
+  .key .khead{display:flex;align-items:baseline;gap:8px;font-family:var(--mono)}
+  .key .kname{font-size:.84rem;font-weight:700;letter-spacing:.3px;color:var(--accent)}
+  .key.batch .kname{color:var(--warn)} .key.expt .kname{color:var(--accent2)}
+  .key .ktag{font-size:.68rem;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .key .kstate{margin-left:auto;font-family:var(--mono);font-size:.72rem;font-weight:700;
+    padding:1px 7px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
+  .key .kstate.blocked{color:var(--bad);border-color:var(--bad);background:rgba(255,107,107,.1)}
+  .key.isblocked{border-color:rgba(255,107,107,.5)}
+  .kbar{height:1.15rem;border-radius:6px;background:#0a0f1c;border:1px solid var(--line2);overflow:hidden;position:relative}
+  .kfill{position:absolute;left:0;top:0;bottom:0;width:0%;background:linear-gradient(90deg,#2e9ec4,var(--accent));
+    transition:width .25s linear}
+  .key.batch .kfill{background:linear-gradient(90deg,#c48a2e,var(--warn))}
+  .key.expt .kfill{background:linear-gradient(90deg,#5a4fd0,var(--accent2))}
+  .kfill.over{background:repeating-linear-gradient(45deg,rgba(255,107,107,.7) 0 6px,rgba(255,107,107,.28) 6px 12px)}
+  .kmark{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--warn);z-index:3}
+  .kmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.72rem;color:var(--faint)}
+  .kmeta .spend{color:var(--txt)}
+  .kbudget{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.72rem;color:var(--dim);margin-top:1px}
+  .kbudget input[type=range]{flex:1;accent-color:currentColor;cursor:pointer;height:1rem}
+  .key .kbudget{color:var(--accent)} .key.batch .kbudget{color:var(--warn)} .key.expt .kbudget{color:var(--accent2)}
+
+  /* chat-turn cost mini-panel */
+  #chatPanel{border:1px solid var(--line2);border-radius:8px;background:var(--panel2);padding:6px 9px;
+    display:flex;flex-direction:column;gap:5px}
+  #chatPanel,#chatPanel .cp-head,#chatPanel .cp-note{cursor:default}
+  #chatPanel .cp-head{display:flex;align-items:baseline;gap:8px;font-family:var(--mono)}
+  #chatPanel .cp-name{font-size:.82rem;font-weight:700;color:var(--ok)}
+  #chatPanel .cp-tag{font-size:.68rem;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #chatBtn{margin-left:auto;font-family:var(--mono);font-size:.72rem;cursor:pointer;color:var(--ok);
+    border:1px solid var(--line);border-radius:6px;padding:1px 8px;background:var(--panel)}
+  #chatBtn:hover{border-color:var(--ok)}
+  #turnBars{display:flex;align-items:flex-end;gap:3px;height:3.6rem}
+  #turnBars .tb{flex:1;min-width:0;position:relative;background:#0a0f1c;border:1px solid var(--line2);border-radius:3px 3px 0 0;
+    display:flex;align-items:flex-end}
+  #turnBars .tb i{display:block;width:100%;background:linear-gradient(180deg,var(--ok),#28a06f);border-radius:3px 3px 0 0;
+    height:0%;transition:height .3s}
+  #turnBars .tb.lin i{background:repeating-linear-gradient(90deg,var(--faint) 0 3px,transparent 3px 6px);opacity:.6}
+  #chatPanel .cp-note{font-family:var(--mono);font-size:.7rem;color:var(--faint);line-height:1.4}
+  #chatPanel .cp-note b{color:var(--ok)}
+
+  /* ---------- event log ---------- */
+  #events{flex:0 0 clamp(84px,7.5rem,132px);display:flex;flex-direction:column;min-height:0}
+  #events,#events *{cursor:default}
+  #evList{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6;scrollbar-width:thin}
+  .ev{display:flex;gap:8px;white-space:nowrap;overflow:hidden}
+  .ev .et{color:var(--faint);flex:0 0 3.6rem}
+  .ev .er{flex:0 0 8.6rem;color:var(--accent);font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .ev.batch .er{color:var(--warn)} .ev.expt .er{color:var(--accent2)}
+  .ev.blocked .er{color:var(--bad)}
+  .ev .em{flex:1;color:var(--txt);opacity:.9;overflow:hidden;text-overflow:ellipsis}
+  .ev.new{animation:evin .4s ease-out}
+  @keyframes evin{0%{background:rgba(76,201,240,.12)}100%{background:transparent}}
+  #note{margin-left:auto;font-size:1rem;color:var(--faint);cursor:help;position:relative;padding:0 4px}
+  #note:hover{color:var(--dim)}
+  #note:hover::after,#note:active::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 7px);
+    z-index:40;width:44ch;max-width:80vw;background:#0a0f1c;border:1px solid var(--line);border-radius:7px;padding:7px 10px;
+    color:var(--txt);text-align:left;white-space:normal;pointer-events:none;
+    font:.82rem/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    box-shadow:0 4px 16px rgba(0,0,0,.55)}
+
+  /* narrow fallback */
+  @media (max-width:620px){
+    body{overflow:auto}
+    #main{grid-template-columns:1fr}
+    #app{height:auto;min-height:100%}
+    #stage{overflow:visible}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <h1><span class="gw">◇</span> The Spend Gate</h1>
+    <span id="hsub">three virtual keys · per-key budgets · the $0-cost lie</span>
+    <button id="reset" title="Reset the simulator to its starting state">↺ Reset</button>
+  </header>
+
+  <div id="challenge">
+    <span class="tag">Try this</span>
+    <span class="steps">
+      <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
+    </span>
+    <span class="txt" id="chTxt"></span>
+    <div class="predict" id="chPredict"></div>
+  </div>
+
+  <div id="main">
+    <!-- LEFT: price + replay + readouts -->
+    <div class="panel" id="controls">
+      <h2>Model price <span>· $ per 1M tokens</span></h2>
+
+      <div class="ctl price" title="What you charge the gateway to price your own infrastructure. A self-hosted model defaults to $0 — until you set this, every call is billed at nothing and no budget can ever trip.">
+        <div class="cl">price <span><b>$<span id="priceVal">0.60</span></b> /1M tok</span></div>
+        <input type="range" id="priceRange" min="0" max="200" step="1" value="60" title="Price you set for your own infrastructure, in $ per 1M tokens. At $0 every self-hosted call costs nothing and no budget can ever trip — that is the $0-cost lie.">
+        <div class="cl"><span class="hint">$0 = self-hosted default — the tab stays empty and budgets are decoration</span></div>
+        <div id="priceChips">
+          <span class="pc" data-p="0" title="Self-hosted default: no price set">$0</span>
+          <span class="pc on" data-p="60" title="A realistic stand-in for CPU-seconds + memory">$0.60</span>
+          <span class="pc" data-p="120" title="A heavier infra rate">$1.20</span>
+        </div>
+      </div>
+
+      <button id="runBtn" title="Replay one scripted week of gateway traffic across all three keys — including the batch job's retry-loop burst day.">▶ Replay the week</button>
+
+      <div class="readout" id="readout">
+        <div class="rrow"><span class="rl">week spend <small>all keys</small></span><span class="rv" id="totalV">—</span></div>
+        <div class="rrow"><span class="rl">calls served</span><span class="rv" id="servedV">—</span></div>
+        <div class="rrow"><span class="rl">calls blocked <small>at the door</small></span><span class="rv" id="blockedV">—</span></div>
+        <div class="rrow"><span class="rl">tokens metered</span><span class="rv" id="tokV">—</span></div>
+      </div>
+      <div class="readout" id="readout2" style="margin-top:2px">
+        <div class="rrow"><span class="rl">interactive-assistant</span><span class="rv" id="s1V">—</span></div>
+        <div class="rrow"><span class="rl">nightly-batch-job</span><span class="rv" id="s2V">—</span></div>
+        <div class="rrow"><span class="rl">experiment</span><span class="rv" id="s3V">—</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: keys + chat panel -->
+    <div class="panel" id="stage">
+
+      <div class="key ok" id="k1">
+        <div class="khead">
+          <span class="kname">interactive-assistant</span>
+          <span class="ktag">on-call humans · steady low volume</span>
+          <span class="kstate" id="st1">active</span>
+        </div>
+        <div class="kbar"><div class="kfill" id="fill1"></div><div class="kmark" id="mark1"></div></div>
+        <div class="kmeta"><span class="spend" id="sp1">$0.00</span><span id="bl1">budget $—</span></div>
+        <div class="kbudget">budget
+          <input type="range" id="bud1" min="1" max="50" step="1" value="15" title="Monthly budget for this key. When spend crosses it, the key flips to BLOCKED and later calls bounce at the door.">
+          <b>$<span id="budv1">15</span></b>
+        </div>
+      </div>
+
+      <div class="key batch" id="k2">
+        <div class="khead">
+          <span class="kname">nightly-batch-job</span>
+          <span class="ktag">re-summarizes tickets · one day it hits a retry loop</span>
+          <span class="kstate" id="st2">active</span>
+        </div>
+        <div class="kbar"><div class="kfill" id="fill2"></div><div class="kmark" id="mark2"></div></div>
+        <div class="kmeta"><span class="spend" id="sp2">$0.00</span><span id="bl2">budget $—</span></div>
+        <div class="kbudget">budget
+          <input type="range" id="bud2" min="1" max="50" step="1" value="10" title="Monthly budget for the batch job. The retry-loop burst day is what pushes this key over.">
+          <b>$<span id="budv2">10</span></b>
+        </div>
+      </div>
+
+      <div class="key expt" id="k3">
+        <div class="khead">
+          <span class="kname">experiment</span>
+          <span class="ktag">a developer trying things · bursty but small</span>
+          <span class="kstate" id="st3">active</span>
+        </div>
+        <div class="kbar"><div class="kfill" id="fill3"></div><div class="kmark" id="mark3"></div></div>
+        <div class="kmeta"><span class="spend" id="sp3">$0.00</span><span id="bl3">budget $—</span></div>
+        <div class="kbudget">budget
+          <input type="range" id="bud3" min="1" max="50" step="1" value="8" title="Monthly budget for the experiment key.">
+          <b>$<span id="budv3">8</span></b>
+        </div>
+      </div>
+
+      <div id="chatPanel">
+        <div class="cp-head">
+          <span class="cp-name">history resend</span>
+          <span class="cp-tag">a 10-turn chat · each turn resends the whole conversation</span>
+          <button id="chatBtn" title="Send a 10-turn conversation. Each turn resends every prior message, so the tokens billed per turn climb far faster than the turn count.">▶ send 10 turns</button>
+        </div>
+        <div id="turnBars"></div>
+        <div class="cp-note" id="chatNote">Each turn resends the whole conversation so far. The dashed line is a flat 10× turn one; the solid bars are what you actually pay — <b>turn 10 costs far more than 10× turn 1.</b></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="panel" id="events">
+    <h2>Spend log <span>— GET /spend/logs, what the gateway would tell you</span>
+      <span id="note" data-tip="Teaching model, not the real system. This is a scripted synthetic week with simplified pricing — one flat $/1M rate, no cache discounts, no prompt/completion split, no per-model rates. Token counts and the retry burst are illustrative and deterministic, not a capture of your box. A real gateway meters more dimensions (input vs output, cache hits, hidden thinking tokens) and enforces budgets per its own accounting path.">ⓘ</span></h2>
+    <div id="evList"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ------------------------------------------------------------------ model
+     Three virtual keys each with a monthly budget. A scripted week of calls
+     streams across them; each call meters TOKENS, and cost = tokens/1e6 * price.
+     Spend accrues against each key's tab; when tab >= budget the key flips to
+     BLOCKED and its remaining calls bounce at the door (counted, never served).
+     Blast-radius isolation: one key blocking never touches another.
+
+     THE $0 LIE: price defaults can be 0 -> every call costs $0 -> no key ever
+     blocks, no matter how big the burst. Set a real price and the same week
+     trips the batch key on its retry-loop burst day.
+
+     HISTORY RESEND: a separate 10-turn chat where turn t resends turns 1..t-1,
+     so per-turn tokens grow ~ t, cumulative ~ t^2 — turn 10 costs >> 10x turn 1. */
+
+  /* deterministic scripted week: [key, day, tokens, label]
+     key 0=interactive, 1=batch, 2=experiment. day 0..6 (Mon..Sun).
+     The batch job runs a small nightly pass most days, then a RETRY-LOOP
+     BURST on day 3 (the M12 incident) that dwarfs everything else. */
+  function buildWeek(){
+    var w=[];
+    var DAYN=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    // Token volumes are in real-model magnitude (hundreds of k to millions),
+    // so that at the default $0.60/1M price the retry burst trips a $10 budget
+    // while the interactive assistant's whole week stays well under $15.
+    // interactive: steady human traffic each weekday (whole week ~0.7M tok → ~$0.42)
+    var inter=[128000,112000,136000,120000,144000,36000,28000];
+    for(var d=0;d<7;d++) w.push({key:0,day:d,tok:inter[d],label:'chat completion'});
+    // nightly batch: a modest nightly pass most days (~0.6M tok → ~$0.38) …
+    var batch=[104000,108000,100000,0,104000,96000,100000];
+    for(var d2=0;d2<7;d2++) if(batch[d2]>0) w.push({key:1,day:d2,tok:batch[d2],label:'nightly summarize'});
+    // … EXCEPT day 3: a retry loop resends the same job 12× at 1.6M tok each
+    // (19.2M tok → ~$11.52) — that burst is what crosses the $10 batch budget.
+    for(var b=0;b<12;b++) w.push({key:1,day:3,tok:1600000,label:'RETRY resend (loop)'});
+    // experiment: bursty small dev traffic (~0.35M tok → ~$0.21)
+    var expt=[72000,0,96000,0,120000,0,48000];
+    for(var d3=0;d3<7;d3++) if(expt[d3]>0) w.push({key:2,day:d3,tok:expt[d3],label:'experiment call'});
+    // stable order: by day, then key, so the burst lands on day 3 in sequence
+    w.sort(function(a,b){return a.day-b.day || a.key-b.key});
+    w.DAYN=DAYN;
+    return w;
+  }
+
+  var KEYS=[
+    {id:0,name:'interactive-assistant',cls:'ok'},
+    {id:1,name:'nightly-batch-job',cls:'batch'},
+    {id:2,name:'experiment',cls:'expt'}
+  ];
+  var DEFAULTS={price:60/*=$0.60 per 1M, stored as cents-per-1M? no: value = $*100*/, budgets:[15,10,8]};
+  /* priceRange value is $ * 100 (so 60 -> $0.60, 200 -> $2.00). */
+
+  var S={
+    priceRaw:DEFAULTS.price,            /* slider units: $ per 1M * 100 */
+    budgets:DEFAULTS.budgets.slice(),   /* $ per key */
+    ran:false,
+    result:null,                        /* last replay summary */
+    t0:Date.now()
+  };
+  function pricePerM(){return S.priceRaw/100;}         /* $ per 1M tokens */
+  function costOf(tok){return tok/1e6*pricePerM();}    /* $ for tok tokens */
+
+  var CH={step:1, done:[false,false,false], pred:[null,null,null]};
+  var CH_PREDICT=[
+    {q:'price is <b>$0 / 1M</b> and you replay the week. Which key trips its budget?',
+     opts:['nightly-batch-job','experiment','none of them'], ok:2,
+     explain:'At $0 every call costs nothing, so the tab stays empty for every key. The burst is invisible — no budget can ever trip until you price your own infra.'},
+    {q:'now set a <b>real price</b> and replay. Which key blocks during the week?',
+     opts:['the interactive assistant','the nightly batch job','all three at once'], ok:1,
+     explain:'The retry-loop burst on day 3 pushes the batch key over its budget. Per-key budgets isolate the blast radius — the interactive assistant finishes the week untouched.'},
+    {q:'a 10-turn chat resends its history each turn. Turn 10 costs about…',
+     opts:['the same as turn 1','~10× turn 1','far more than 10× turn 1'], ok:2,
+     explain:'Each turn resends every prior message, so per-turn tokens grow with the turn number and the cumulative bill grows super-linearly. Turn 10 alone bills far more than 10× turn 1.'}
+  ];
+  function pickPredict(idx){
+    if(CH.step>=4)return;
+    var i=CH.step-1;
+    if(CH.pred[i]!=null)return;
+    CH.pred[i]=idx;
+    logEv('','predict','step '+CH.step+' — you predicted: “'+CH_PREDICT[i].opts[idx].replace(/<[^>]*>/g,'')+'”');
+    updateChallenge();
+  }
+  function predictVerdict(i){
+    var p=CH_PREDICT[i];
+    if(!p||CH.pred[i]==null)return;
+    var right=CH.pred[i]===p.ok;
+    logEv(right?'':'blocked','predict',(right?'Prediction right. ':'Not what you predicted — you said “'+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+'”. ')+p.explain.replace(/<[^>]*>/g,''));
+  }
+
+  /* ---- pure math the harness can call without animation ----
+     replay(price, budgets) -> deterministic summary of the scripted week. */
+  function replay(priceOverride, budgetsOverride){
+    var pM = priceOverride==null ? pricePerM() : priceOverride;
+    var buds = budgetsOverride==null ? S.budgets : budgetsOverride;
+    var week=buildWeek();
+    var spend=[0,0,0], tokMetered=[0,0,0], blocked=[false,false,false];
+    var served=0, bounced=0, totalTok=0;
+    var blockDay=[null,null,null];        /* first day each key blocked on */
+    for(var i=0;i<week.length;i++){
+      var c=week[i], k=c.key;
+      if(blocked[k]){ bounced++; continue; }         /* bounces at the door */
+      /* meter this call, accrue cost at the (possibly overridden) price */
+      spend[k]+=c.tok/1e6*pM;
+      tokMetered[k]+=c.tok; totalTok+=c.tok; served++;
+      if(spend[k]>=buds[k]){                          /* crossed budget -> block */
+        blocked[k]=true;
+        if(blockDay[k]==null) blockDay[k]=c.day;
+      }
+    }
+    return {
+      spend:spend, tokMetered:tokMetered, blocked:blocked, blockDay:blockDay,
+      served:served, bounced:bounced, totalTok:totalTok,
+      total: spend[0]+spend[1]+spend[2],
+      price:pM
+    };
+  }
+
+  /* chat-turn model: turn t resends prior turns.
+     per-turn tokens = BASE * t (history grows linearly with turn index).
+     cumulative through turn t ~ BASE * t(t+1)/2  (super-linear). */
+  var CHAT_BASE=380;               /* tokens added per turn's own message+reply */
+  function turnTokens(t){ return CHAT_BASE*t; }             /* t = 1..N, ressend cost */
+  function chatCumulative(t){ var s=0; for(var i=1;i<=t;i++) s+=turnTokens(i); return s; }
+
+  /* ------------------------------------------------------------------ events log */
+  var evList=$('evList');
+  function clock(){var s=Math.floor((Date.now()-S.t0)/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  function logEv(kind,reason,msg){
+    var d=document.createElement('div');
+    d.className='ev new '+(kind||'');
+    d.innerHTML='<span class="et"></span><span class="er"></span><span class="em"></span>';
+    d.children[0].textContent=clock();
+    d.children[1].textContent=reason; d.children[2].textContent=msg;
+    d.title=reason+'  —  '+msg;
+    evList.appendChild(d);
+    while(evList.children.length>120)evList.removeChild(evList.firstChild);
+    evList.scrollTop=evList.scrollHeight;
+  }
+  var KEYCLS=['','batch','expt'];
+
+  /* ------------------------------------------------------------------ rendering */
+  function fmt$(v){ return '$'+v.toFixed(2); }
+  function fmtTok(v){
+    if(v>=1e6) return (v/1e6).toFixed(v>=1e7?0:1)+'M';
+    if(v>=1000) return (v/1000).toFixed(v>=100000?0:1)+'k';
+    return ''+v;
+  }
+
+  function renderBudgets(){
+    for(var k=0;k<3;k++){
+      $('budv'+(k+1)).textContent=S.budgets[k];
+      $('bud'+(k+1)).value=S.budgets[k];
+      $('bl'+(k+1)).textContent='budget '+fmt$(S.budgets[k]);
+      // budget marker sits at 100% of the bar (bar scale IS the budget)
+      $('mark'+(k+1)).style.left='100%';
+    }
+  }
+  function renderPrice(){
+    $('priceVal').textContent=pricePerM().toFixed(2);
+    $('priceRange').value=S.priceRaw;
+    // light the matching chip if it lands exactly
+    var chips=document.querySelectorAll('#priceChips .pc');
+    chips.forEach(function(c){ c.classList.toggle('on', +c.getAttribute('data-p')===S.priceRaw); });
+  }
+
+  function resetStage(){
+    for(var k=0;k<3;k++){
+      $('fill'+(k+1)).style.width='0%';
+      $('fill'+(k+1)).classList.remove('over');
+      $('sp'+(k+1)).textContent='$0.00';
+      $('st'+(k+1)).textContent='active'; $('st'+(k+1)).classList.remove('blocked');
+      $('k'+(k+1)).classList.remove('isblocked');
+    }
+    ['totalV','servedV','blockedV','tokV','s1V','s2V','s3V'].forEach(function(id){
+      $(id).textContent='—'; $(id).classList.remove('warnv','badv','okv');
+    });
+  }
+
+  /* paint a key's spend bar/state from a partial-spend value */
+  function paintKey(k, spend, blocked){
+    var pct=Math.min(100, S.budgets[k]>0 ? spend/S.budgets[k]*100 : 0);
+    var f=$('fill'+(k+1));
+    f.style.width=pct+'%';
+    f.classList.toggle('over', blocked);
+    $('sp'+(k+1)).textContent=fmt$(spend);
+    var st=$('st'+(k+1));
+    if(blocked){ st.textContent='BLOCKED'; st.classList.add('blocked'); $('k'+(k+1)).classList.add('isblocked'); }
+    else { st.textContent='active'; st.classList.remove('blocked'); $('k'+(k+1)).classList.remove('isblocked'); }
+  }
+
+  /* ------------------------------------------------------------------ replay animation */
+  var running=false, timers=[];
+  function clearTimers(){timers.forEach(clearTimeout);timers=[]}
+  function later(fn,ms){var t=setTimeout(fn,ms);timers.push(t);return t}
+  function REDUCED(){return window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches}
+
+  function runReplay(fast){
+    if(running)return;
+    running=true; clearTimers(); resetStage();
+    var week=buildWeek();
+    var spend=[0,0,0], tokM=[0,0,0], blocked=[false,false,false], blockDay=[null,null,null];
+    var served=0, bounced=0, totalTok=0;
+    $('runBtn').disabled=true; $('runBtn').textContent='⏳ replaying week…';
+    logEv('','week/replay','price '+fmt$(pricePerM())+'/1M · budgets '+S.budgets.map(fmt$).join(' / ')+' — streaming a scripted week');
+
+    var instant=fast||REDUCED();
+    var i=0, lastDay=-1;
+    function stepOne(){
+      if(i>=week.length){ finishReplay(); return; }
+      var c=week[i++], k=c.key, name=KEYS[k].name;
+      if(c.day!==lastDay){ lastDay=c.day; if(!instant) logEv('','— day','—— '+week.DAYN[c.day]+' ——'); }
+      if(blocked[k]){
+        bounced++;
+        logEv('blocked',name,'BLOCKED: budget exceeded — call rejected 429 (bounced at the door)');
+      } else {
+        var cost=costOf(c.tok);
+        spend[k]+=cost; tokM[k]+=c.tok; totalTok+=c.tok; served++;
+        var pctBud=S.budgets[k]>0?Math.round(spend[k]/S.budgets[k]*100):0;
+        paintKey(k, spend[k], false);
+        var tag=(c.label==='RETRY resend (loop)')?' [retry loop]':'';
+        logEv(KEYCLS[k],name,'+'+fmtTok(c.tok)+' tok → '+fmt$(cost)+' · '+c.label+tag+' · budget '+pctBud+'%');
+        if(spend[k]>=S.budgets[k]){
+          blocked[k]=true; if(blockDay[k]==null)blockDay[k]=c.day;
+          paintKey(k, spend[k], true);
+          logEv('blocked',name,'BLOCKED: '+fmt$(spend[k])+' ≥ budget '+fmt$(S.budgets[k])+' — later calls will bounce');
+        }
+      }
+      // live readouts
+      $('totalV').textContent=fmt$(spend[0]+spend[1]+spend[2]);
+      $('servedV').textContent=served;
+      $('blockedV').textContent=bounced; $('blockedV').classList.toggle('badv',bounced>0);
+      $('tokV').textContent=fmtTok(totalTok);
+      $('s1V').textContent=fmt$(spend[0]); $('s2V').textContent=fmt$(spend[1]); $('s3V').textContent=fmt$(spend[2]);
+      $('s2V').classList.toggle('badv',blocked[1]); $('s1V').classList.toggle('okv',!blocked[0]&&served>0);
+      later(stepOne, instant?0:70);
+    }
+    function finishReplay(){
+      S.result={spend:spend,tokMetered:tokM,blocked:blocked,blockDay:blockDay,
+        served:served,bounced:bounced,totalTok:totalTok,total:spend[0]+spend[1]+spend[2],price:pricePerM()};
+      S.ran=true;
+      var anyBlock=blocked.some(function(b){return b;});
+      if(!anyBlock){
+        logEv('','week/done','week over · total '+fmt$(S.result.total)+' · '+served+' served · 0 blocked — at this price the burst is invisible');
+      } else {
+        var who=KEYS.filter(function(x){return blocked[x.id];}).map(function(x){return x.name;}).join(', ');
+        logEv('','week/done','week over · total '+fmt$(S.result.total)+' · '+served+' served · '+bounced+' bounced — blocked: '+who);
+      }
+      running=false; $('runBtn').disabled=false; $('runBtn').textContent='▶ Replay the week';
+      evalChallenge();
+    }
+    later(stepOne, instant?0:70);
+  }
+
+  /* ------------------------------------------------------------------ chat resend */
+  var CHAT_N=10;
+  function renderTurnBars(uptoT){
+    var wrap=$('turnBars'); wrap.innerHTML='';
+    var maxTok=turnTokens(CHAT_N);
+    var flat=turnTokens(1)*10;               /* the "flat 10x turn 1" reference height basis */
+    for(var t=1;t<=CHAT_N;t++){
+      var col=document.createElement('div'); col.className='tb';
+      var bar=document.createElement('i');
+      var h=(t<=uptoT)?Math.round(turnTokens(t)/maxTok*100):0;
+      bar.style.height=h+'%';
+      bar.title='turn '+t+': '+fmtTok(turnTokens(t))+' tok billed ('+ (turnTokens(t)/turnTokens(1)).toFixed(0) +'× turn 1)';
+      col.title=bar.title;
+      col.appendChild(bar);
+      wrap.appendChild(col);
+    }
+  }
+  function runChat(fast){
+    var instant=fast||REDUCED();
+    logEv('','chat/turns','sending a '+CHAT_N+'-turn chat · each turn resends the whole history so far');
+    var t=0;
+    function nextTurn(){
+      t++;
+      if(t>CHAT_N){
+        var c10=turnTokens(CHAT_N), c1=turnTokens(1);
+        logEv('','chat/done','turn 10 billed '+fmtTok(c10)+' tok = '+(c10/c1).toFixed(0)+'× turn 1 · cumulative '+fmtTok(chatCumulative(CHAT_N))+' tok — history resend makes turns cost more as they go');
+        S.chatRan=true;
+        evalChallenge();
+        return;
+      }
+      renderTurnBars(t);
+      if(t===1||t===CHAT_N){
+        logEv('','chat/turn','turn '+t+' → '+fmtTok(turnTokens(t))+' tok billed ('+(turnTokens(t)/turnTokens(1)).toFixed(0)+'× turn 1)');
+      }
+      later(nextTurn, instant?0:90);
+    }
+    nextTurn();
+  }
+
+  /* ------------------------------------------------------------------ challenge */
+  var CH_TEXT=[
+    'Step 1 — Set price to <code>$0</code> and press <code>Replay the week</code>. Watch every tab stay at <b>$0.00</b> — the batch job\'s retry burst is completely invisible. <b>A budget without a price is decoration.</b>',
+    'Step 2 — Set a real price (try <code>$0.60</code> or drag it up) and replay. The <b>nightly-batch-job</b> trips its budget on the burst day and its later calls bounce — while <b>interactive-assistant finishes the week active</b>. Per-key budgets isolate the blast radius.',
+    'Step 3 — Press <code>send 10 turns</code>. The bars climb faster than the turn count: <b>turn 10 bills far more than 10× turn 1</b>, because each turn resends the whole conversation.'
+  ];
+  var SUCCESS='Challenge complete! You just felt the three things the gateway makes real. <b>A budget without a price is decoration</b> — at $0/1M the retry burst was invisible; pricing your own infra is what armed the gate. <b>Per-key budgets isolate the blast radius</b> — the runaway batch job tripped its own limit and bounced at the door while the on-call assistant never noticed. And <b>history resend makes turn cost climb</b> — size budgets for the conversation the client resends, not just its newest message. Spend per key is an operational surface: "who was that runaway job?" is now a row you can point at.';
+
+  function evalChallenge(){
+    var r=S.result;
+    if(CH.step===1){
+      // done when a replay ran at price 0 and NOTHING blocked (all tabs zero)
+      if(r && r.price===0 && r.total===0 && r.bounced===0 && !r.blocked.some(function(b){return b;})){
+        CH.done[0]=true; CH.step=2; predictVerdict(0);
+        logEv('','try-this','Step 1 done — priced at $0, the whole week cost $0.00 and nothing blocked. The burst was invisible.');
+      }
+    } else if(CH.step===2){
+      // done when a real-priced replay blocks the BATCH key and leaves the INTERACTIVE key active
+      if(r && r.price>0 && r.blocked[1]===true && r.blocked[0]===false){
+        CH.done[1]=true; CH.step=3; predictVerdict(1);
+        logEv('batch','try-this','Step 2 done — the batch key blocked on day '+(r.blockDay[1]+1)+' and bounced '+r.bounced+' calls, while the interactive assistant stayed active. Blast radius isolated.');
+      }
+    } else if(CH.step===3){
+      if(S.chatRan===true){
+        var ratio=turnTokens(CHAT_N)/turnTokens(1);
+        if(ratio>5){
+          CH.done[2]=true; CH.step=4; predictVerdict(2);
+          logEv('','try-this','Step 3 done — turn 10 billed '+ratio.toFixed(0)+'× turn 1. History resend is why a long chat costs far more than its turn count.');
+        }
+      }
+    }
+    updateChallenge();
+  }
+  function updateChallenge(){
+    for(var i=1;i<=3;i++){
+      var d=$('d'+i);d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
+      d.textContent=CH.done[i-1]?'✓':i;
+    }
+    var box=$('challenge'),txt=$('chTxt'),pr=$('chPredict');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;pr.innerHTML='';}
+    else{
+      box.classList.remove('success');
+      var i=CH.step-1, p=CH_PREDICT[i];
+      if(p && CH.pred[i]==null){
+        txt.innerHTML='Step '+CH.step+' — <b>Predict first:</b> '+p.q;
+        pr.innerHTML='';
+        for(var k=0;k<p.opts.length;k++){
+          var c=document.createElement('span');
+          c.className='chip'; c.innerHTML=p.opts[k];
+          c.title='Lock in this prediction, then try it';
+          (function(kk){c.addEventListener('click',function(){pickPredict(kk)})})(k);
+          pr.appendChild(c);
+        }
+      }else{
+        var tail=p?' <span class="pv">(you predicted: '+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+')</span>':'';
+        txt.innerHTML=CH_TEXT[i]+tail;
+        pr.innerHTML='';
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------ controls */
+  $('priceRange').addEventListener('input',function(){if(running)return;S.priceRaw=+this.value;renderPrice();updateChallenge();});
+  document.querySelectorAll('#priceChips .pc').forEach(function(c){
+    c.addEventListener('click',function(){ if(running)return; S.priceRaw=+c.getAttribute('data-p'); renderPrice(); updateChallenge(); });
+  });
+  for(var k=0;k<3;k++){
+    (function(kk){
+      $('bud'+(kk+1)).addEventListener('input',function(){ if(running)return; S.budgets[kk]=+this.value; renderBudgets(); updateChallenge(); });
+    })(k);
+  }
+  $('runBtn').addEventListener('click',function(){runReplay(false)});
+  $('chatBtn').addEventListener('click',function(){runChat(false)});
+  $('reset').addEventListener('click',function(){location.reload()});
+
+  /* ------------------------------------------------------------------ boot */
+  renderPrice();
+  renderBudgets();
+  renderTurnBars(0);
+  updateChallenge();
+  logEv('','ready','gateway up · three keys minted · set a price and replay the week');
+
+  /* test hook (harmless in production) */
+  window.__sim={S:S,CH:CH,predict:pickPredict,
+    setPrice:function(dollars){S.priceRaw=Math.round(dollars*100);renderPrice();updateChallenge();},
+    setBudget:function(k,v){S.budgets[k]=v;renderBudgets();updateChallenge();},
+    replay:function(){runReplay(true)},         /* instant path for tests */
+    chat:function(){runChat(true)},             /* instant path for tests */
+    computeReplay:replay,                        /* pure math */
+    turnTokens:turnTokens, chatCumulative:chatCumulative, CHAT_N:CHAT_N,
+    pricePerM:pricePerM,
+    isRunning:function(){return running},
+    consts:{DEFAULTS:DEFAULTS,CHAT_BASE:CHAT_BASE}
+  };
+})();
+</script>
+</body>
+</html>

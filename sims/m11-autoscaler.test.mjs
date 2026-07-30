@@ -431,6 +431,66 @@ async function main() {
     step4.step >= 5 && step4.done === true && step4.cold === true, JSON.stringify(step4));
   ok('CHALLENGE completes: success banner shown', step4.success === true, JSON.stringify(step4));
 
+  // ---------- 13b. PREDICT-FIRST mode (Brilliant-style) ----------
+  await reload();
+  // At boot, step 1 shows the prediction question with chips, not the instruction.
+  const pBoot = await ev(`(function(){return {
+    chips: document.querySelectorAll('#chPredict .chip').length,
+    txt: document.getElementById('chTxt').textContent };})()`);
+  ok('PREDICT: step 1 opens with a prediction question + chips', pBoot.chips >= 2 && /Predict first/.test(pBoot.txt),
+    JSON.stringify(pBoot));
+  ok('PREDICT: instruction hidden until a prediction is made', !/Drag/.test(pBoot.txt), pBoot.txt);
+  // Chips carry the affordance contract (cursor:pointer + title).
+  const pAff = await ev(`(function(){var c=document.querySelector('#chPredict .chip');
+    return {cur:getComputedStyle(c).cursor, tip:!!c.title};})()`);
+  ok('PREDICT: chips are affordant (cursor:pointer + title)', pAff.cur === 'pointer' && pAff.tip, JSON.stringify(pAff));
+  // Tap a WRONG chip (index 0 = "node CPU%") — instruction appears, prediction logged.
+  await ev(`document.querySelectorAll('#chPredict .chip')[0].click()`);
+  const pAfter = await ev(`(function(){return {
+    chips: document.querySelectorAll('#chPredict .chip').length,
+    txt: document.getElementById('chTxt').textContent,
+    logged: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /predicted/.test(e.textContent)}) };})()`);
+  ok('PREDICT: tapping a chip reveals the instruction + shows your pick', pAfter.chips === 0
+    && /Drag/.test(pAfter.txt) && /you predicted/.test(pAfter.txt), JSON.stringify(pAfter));
+  ok('PREDICT: the pick is logged in the event stream', pAfter.logged === true);
+  // Complete step 1 — a WRONG prediction must NOT block, and the verdict must teach.
+  const pVerdict = await ev(`(function(){
+    window.__sim.setRate(42);   // > 24 drain, one replica saturates
+    for(var i=0;i<12 && !window.__sim.CH.done[0];i++) window.__sim.tick(1);
+    return {step: window.__sim.CH.step,
+      verdict: [].slice.call(document.querySelectorAll('#evList .ev')).map(function(e){return e.textContent}).join(' | ') };})()`);
+  ok('PREDICT: wrong prediction never blocks step completion', pVerdict.step >= 2, 'step=' + pVerdict.step);
+  ok('PREDICT: verdict names your pick and explains the model', /Not what you predicted/.test(pVerdict.verdict)
+    && /CPU/.test(pVerdict.verdict), pVerdict.verdict.slice(-260));
+  // Step 2 now shows its own prediction question; predict RIGHT via the hook, complete, expect a right verdict.
+  const p2 = await ev(`document.getElementById('chTxt').textContent`);
+  ok('PREDICT: step 2 opens with its own question', /Predict first/.test(p2), p2);
+  await ev('window.__sim.predict(1)');   // "only once the new engine finishes warming" — correct
+  const p2v = await ev(`(function(){
+    window.__sim.setRate(30); window.__sim.setCold(45); window.__sim.burst();
+    for(var i=0;i<90 && !window.__sim.CH.done[1];i++) window.__sim.tick(1);
+    return {step: window.__sim.CH.step,
+      right: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /Prediction right/.test(e.textContent)}) };})()`);
+  ok('PREDICT: right prediction confirmed in the log', p2v.step >= 3 && p2v.right === true, JSON.stringify(p2v));
+  // Step 3 carries NO prediction — the instruction must show directly, with no chips.
+  const p3 = await ev(`(function(){return {
+    chips: document.querySelectorAll('#chPredict .chip').length,
+    txt: document.getElementById('chTxt').textContent };})()`);
+  ok('PREDICT: step 3 (flap) has no prediction — instruction shows directly, no chips',
+    p3.chips === 0 && /stabilization/i.test(p3.txt) && !/Predict first/.test(p3.txt), JSON.stringify(p3));
+  // Drive step 3 to completion (flap), then step 4 by SKIPPING its prediction entirely (formative, not a gate).
+  const p4 = await ev(`(function(){
+    window.__sim.setRate(30); window.__sim.setMax(2); window.__sim.setStab(10); window.__sim.setCold(20); window.__sim.burst();
+    for(var i=0;i<400 && !window.__sim.CH.done[2];i++) window.__sim.tick(1);
+    // step 4 without predicting: min 0, drain to zero, then load
+    window.__sim.setMin(0); window.__sim.setRate(0);
+    for(var i=0;i<220 && window.__sim.S.ready>0;i++) window.__sim.tick(1);
+    window.__sim.setRate(40);
+    for(var i=0;i<10 && !window.__sim.CH.done[3];i++) window.__sim.tick(1);
+    return {step:window.__sim.CH.step,
+      success:document.getElementById('challenge').classList.contains('success')};})()`);
+  ok('PREDICT: skipping a prediction never blocks the challenge', p4.step >= 5 && p4.success === true, JSON.stringify(p4));
+
   // ---------- 14. Reset returns to initial state ----------
   await ev('window.__sim.setRate(60); window.__sim.setMin(0); window.__sim.setStab(10); window.__sim.setCold(20); window.__sim.burst()');
   await reload();

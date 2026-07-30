@@ -50,6 +50,12 @@
   #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
   #challenge.success .tag{color:var(--ok)}
   #challenge.success .txt{white-space:normal;line-height:1.3}
+  #challenge{flex-wrap:wrap}
+  #challenge .predict{flex:1 1 100%;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:1px 0 5px}
+  #challenge .chip{cursor:pointer;border:1px solid #3a3f6e;border-radius:999px;padding:2px 11px;
+    font-size:.85rem;color:var(--txt);background:rgba(76,201,240,.06);user-select:none}
+  #challenge .chip:hover{border-color:var(--accent);background:rgba(76,201,240,.16)}
+  #challenge .txt .pv{font-size:.8rem;color:var(--faint);margin-left:6px}
 
   /* ---------- main grid ---------- */
   #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(240px,21.5rem,350px) 1fr;gap:6px;min-height:0}
@@ -215,6 +221,7 @@
       <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
     </span>
     <span class="txt" id="chTxt"></span>
+    <div class="predict" id="chPredict"></div>
   </div>
 
   <div id="main">
@@ -350,7 +357,37 @@
   var CH={step:1, done:[false,false,false],
     sawJitter:false,          /* step 1 */
     rolledBadCanary:false,    /* step 2 */
-    promoteRungs:{10:false,50:false,100:false}};  /* step 3 — each rung eval-passed */
+    promoteRungs:{10:false,50:false,100:false},  /* step 3 — each rung eval-passed */
+    pred:[null,null,null]};   /* predict-first: the learner's guess per step */
+
+  /* predict-first (Brilliant-style): commit to a guess, then produce the condition and
+     see whether the model agrees. Formative only — never blocks the challenge. Each
+     question is aimed at the step's counter-intuition. */
+  var CH_PREDICT=[
+    {q:'you send <b>20 requests</b> at a 10% canary weight and count <b>zero</b> canary hits. What does that read tell you?',
+     opts:['the split is broken — 10% should never be 0','the canary pod must be down','almost nothing — 20 requests cannot read a 10% split'], ok:2,
+     explain:'Zero canary hits in 20 requests happens ~12% of the time by chance (0.9^20). Twenty samples cannot read a split — you need many more before the observed share means anything.'},
+    {q:'candidate <b>A</b> shows <code>1/1 Running</code> on both lanes. What does that green health tell you about its <b>answer quality</b>?',
+     opts:['nothing — a probe checks the pod is up, not that answers are good','it is good enough to promote — the pod passed its checks','it is at least as good as base — health tracks quality'], ok:0,
+     explain:'A readiness probe only proves the process is up and serving. It cannot taste the answers — only the golden set separates a healthy pod from a good model.'},
+    {q:'candidate <b>B</b> scores <b>21/24</b> on the golden set. Base scores <b>19/24</b>. Is B cleared to promote?',
+     opts:['no — 21/24 still misses 3 questions, not good enough','yes — it beats the base score, which is the floor it must clear','only if it scores a perfect 24/24'], ok:1,
+     explain:'The gate compares against the baseline it would replace, not an absolute bar. The candidate must at least tie base to promote — "no worse than the model already in production" is the floor.'}
+  ];
+  function pickPredict(idx){
+    if(CH.step>=4)return;
+    var i=CH.step-1;
+    if(CH.pred[i]!=null)return;
+    CH.pred[i]=idx;
+    logEv('','predict','step '+CH.step+' — you predicted: “'+CH_PREDICT[i].opts[idx].replace(/<[^>]*>/g,'')+'”');
+    updateChallenge();
+  }
+  function predictVerdict(i){
+    var p=CH_PREDICT[i];
+    if(!p||CH.pred[i]==null)return;
+    var right=CH.pred[i]===p.ok;
+    logEv(right?'':'rollback','predict',(right?'Prediction right. ':'Not what you predicted — you said “'+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+'”. ')+p.explain.replace(/<[^>]*>/g,''));
+  }
 
   /* ---- deterministic-but-jittery sampler --------------------------------
      Draw `n` requests at probability p=weight/100 to the canary. We use a
@@ -600,20 +637,20 @@
     if(CH.step===1 && !CH.done[0]){
       if(S.n===20 && S.weight>0 && S.weight<100){
         var jr=jitterRatio();
-        if(isFinite(jr) && (jr>=2 || jr<=0.5)){ CH.sawJitter=true; CH.done[0]=true; CH.step=2;
+        if(isFinite(jr) && (jr>=2 || jr<=0.5)){ CH.sawJitter=true; CH.done[0]=true; CH.step=2; predictVerdict(0);
           logEv('canary','try-this','Step 1 done — observed '+obsPct().toFixed(0)+'% at n=20 vs '+S.weight+'% set ('+jr.toFixed(1)+'×). Twenty requests cannot read a split.');
         }
       }
     }else if(CH.step===2 && !CH.done[1]){
       /* rolled a KNOWN-bad canary (scenario A, evals showed ROLLBACK) to weight 0 */
-      if(CH.rolledBadCanary && S.weight===0){ CH.done[1]=true; CH.step=3;
+      if(CH.rolledBadCanary && S.weight===0){ CH.done[1]=true; CH.step=3; predictVerdict(1);
         logEv('rollback','try-this','Step 2 done — the golden set killed a canary that never left 1/1 Running. Quality signal, not crash signal.');
       }
     }else if(CH.step===3 && !CH.done[2]){
       /* staged promote to 100 on scenario B, with an eval pass recorded at each rung */
       if(S.scenario==='B' && S.weight===100 &&
          CH.promoteRungs[10] && CH.promoteRungs[50] && CH.promoteRungs[100]){
-        CH.done[2]=true; CH.step=4;
+        CH.done[2]=true; CH.step=4; predictVerdict(2);
         logEv('promote','try-this','Step 3 done — 10→50→100, an eval pass at every rung. That is a staged, gated promotion.');
       }
     }
@@ -621,9 +658,27 @@
       var d=$('d'+i); d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
       d.textContent=CH.done[i-1]?'✓':i;
     }
-    var box=$('challenge'), txt=$('chTxt');
-    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;}
-    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[CH.step-1];}
+    var box=$('challenge'), txt=$('chTxt'), pr=$('chPredict');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;pr.innerHTML='';}
+    else{
+      box.classList.remove('success');
+      var i=CH.step-1, p=CH_PREDICT[i];
+      if(p && CH.pred[i]==null){
+        txt.innerHTML='Step '+CH.step+' — <b>Predict first:</b> '+p.q;
+        pr.innerHTML='';
+        for(var k=0;k<p.opts.length;k++){
+          var c=document.createElement('span');
+          c.className='chip'; c.innerHTML=p.opts[k];
+          c.title='Lock in this prediction, then try it';
+          (function(kk){c.addEventListener('click',function(){pickPredict(kk)})})(k);
+          pr.appendChild(c);
+        }
+      }else{
+        var tail=p?' <span class="pv">(you predicted: '+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+')</span>':'';
+        txt.innerHTML=CH_TEXT[i]+tail;
+        pr.innerHTML='';
+      }
+    }
   }
 
   /* ================================================================== controls wiring */
@@ -677,7 +732,7 @@
       if(seed!=null){ var r=sample(S.weight,S.n,seed>>>0); S.obsBase=r.base; S.obsCanary=r.canary; render(); return r; }
       resample(); render(); return {base:S.obsBase,canary:S.obsCanary};
     },
-    runEvals:runEvals, rollback:rollback, promoteStage:promoteStage,
+    runEvals:runEvals, rollback:rollback, promoteStage:promoteStage, predict:pickPredict,
     verdict:verdict, obsPct:obsPct, jitterRatio:jitterRatio, sample:sample,
     consts:{GOLDEN_TOTAL:GOLDEN_TOTAL,BASE_SCORE:BASE_SCORE,SCEN:SCEN,NS:NS,DEFAULTS:DEFAULTS,PROMOTE_STAGES:PROMOTE_STAGES}
   };

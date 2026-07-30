@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Latency Lie — two humps, one average</title>
+<style>
+  :root{
+    --bg:#0d1220; --panel:#151c2e; --panel2:#111827; --line:#26324e; --line2:#1c2740;
+    --txt:#dbe4f5; --dim:#8494b3; --faint:#5a6a8c;
+    --accent:#4cc9f0; --accent2:#7b6cf6;
+    --short:#4cc9f0; --long:#f5b942;
+    --ok:#3ddc97; --warn:#f5b942; --bad:#ff6b6b;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:clamp(10.5px,0.4vw + 9.1px,16px)}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:1rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  #app{display:flex;flex-direction:column;height:100%;padding:8px 10px;gap:6px}
+
+  /* ---------- header ---------- */
+  header{display:flex;align-items:center;gap:12px;flex:0 0 auto;flex-wrap:wrap}
+  header h1{font-size:1.05rem;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+  header h1 .llm{color:var(--accent)}
+  #hsub{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--faint);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #reset{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;
+    padding:3px 9px;font-size:.88rem;cursor:pointer;min-height:24px;flex:0 0 auto}
+  #reset:hover{color:var(--txt);border-color:var(--faint)}
+
+  /* ---------- challenge banner ---------- */
+  #challenge{flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    background:linear-gradient(90deg,rgba(123,108,246,.14),rgba(76,201,240,.07));
+    border:1px solid #3a3f6e;border-radius:8px;padding:4px 11px;min-height:30px;flex-wrap:wrap}
+  #challenge .tag{font-size:.8rem;font-weight:700;letter-spacing:.8px;color:var(--accent2);
+    text-transform:uppercase;white-space:nowrap}
+  #challenge .steps{display:flex;gap:5px}
+  #challenge .dot{width:1.3rem;height:1.3rem;border-radius:50%;border:1.5px solid var(--faint);
+    font-size:.76rem;display:flex;align-items:center;justify-content:center;color:var(--faint);font-weight:700}
+  #challenge .dot.cur{border-color:var(--accent);color:var(--accent)}
+  #challenge .dot.done{border-color:var(--ok);background:rgba(61,220,151,.15);color:var(--ok)}
+  #challenge .txt{flex:1;color:var(--txt);font-size:.94rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  #challenge .txt code{font-family:var(--mono);font-size:.86rem;color:var(--accent);background:rgba(76,201,240,.08);
+    padding:0 4px;border-radius:4px}
+  #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
+  #challenge.success .tag{color:var(--ok)}
+  #challenge.success .txt{white-space:normal;line-height:1.3}
+  #challenge .predict{flex:1 1 100%;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:1px 0 5px}
+  #challenge .chip{cursor:pointer;border:1px solid #3a3f6e;border-radius:999px;padding:2px 11px;
+    font-size:.85rem;color:var(--txt);background:rgba(76,201,240,.06);user-select:none}
+  #challenge .chip:hover{border-color:var(--accent);background:rgba(76,201,240,.16)}
+  #challenge .txt .pv{font-size:.8rem;color:var(--faint);margin-left:6px}
+
+  /* ---------- main grid ---------- */
+  #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(232px,20rem,330px) 1fr;gap:6px;min-height:0}
+  #main>.panel{min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;min-height:0}
+  .panel h2{font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .panel h2 span{text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- controls (left) ---------- */
+  #controls{display:flex;flex-direction:column;gap:9px;overflow-y:auto;scrollbar-width:thin}
+  .ctl .cl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .ctl .cl b{color:var(--txt);font-weight:700}
+  .ctl .cl b.short{color:var(--short)} .ctl .cl b.long{color:var(--long)}
+  .ctl .cl .hint{color:var(--faint);font-size:.68rem;font-weight:400}
+  .ctl input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:1.2rem}
+  #mixRange{accent-color:var(--short)}
+
+  .segwrap{display:flex;flex-direction:column;gap:3px}
+  .seg{display:flex;gap:4px}
+  .seg button{flex:1;min-height:1.9rem;border-radius:7px;border:1px solid var(--line);
+    background:var(--panel2);color:var(--dim);font-family:var(--mono);font-size:.82rem;font-weight:700;
+    cursor:pointer;transition:background .12s,color .12s,border-color .12s}
+  .seg button:hover{color:var(--txt);border-color:var(--faint)}
+  .seg button.on{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel2))}
+
+  .readout{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line2);border-radius:8px;
+    background:var(--panel2);padding:6px 9px}
+  .readout,.readout *{cursor:default}
+  .rrow{display:flex;justify-content:space-between;align-items:baseline;padding:1px 0}
+  .rrow .rl{font-family:var(--mono);font-size:.76rem;color:var(--dim)}
+  .rrow .rl small{color:var(--faint);font-size:.66rem}
+  .rrow .rl .sw{display:inline-block;width:.6rem;height:.6rem;border-radius:2px;margin-right:5px;vertical-align:baseline}
+  .rrow .rl .sw.short{background:var(--short)} .rrow .rl .sw.long{background:var(--long)}
+  .rrow .rv{font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--txt)}
+  .rrow .rv.sel{color:var(--accent)}
+
+  /* the big reported-metric readout */
+  #bigmetric{border:1px solid var(--line2);border-radius:9px;background:var(--panel2);padding:8px 10px;
+    display:flex;flex-direction:column;gap:2px}
+  #bigmetric,#bigmetric *{cursor:default}
+  #bigmetric .bl{font-family:var(--mono);font-size:.72rem;color:var(--faint);letter-spacing:.5px;text-transform:uppercase}
+  #bigmetric .bv{font-family:var(--mono);font-size:1.9rem;font-weight:800;line-height:1.1;color:var(--accent)}
+  #bigmetric .bv small{font-size:.9rem;font-weight:600;color:var(--dim)}
+  #bigmetric .verdict{font-size:.82rem;line-height:1.35;color:var(--txt);margin-top:2px}
+  #bigmetric .verdict.valley{color:var(--warn)}
+  #bigmetric .verdict.valley b{color:var(--warn)}
+  #bigmetric .verdict b{color:var(--txt)}
+
+  /* ---------- stage (right): histogram ---------- */
+  #stage{display:flex;flex-direction:column;min-height:0;gap:8px}
+  #histWrap{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;gap:4px}
+  #histHead{display:flex;align-items:baseline;gap:10px;font-family:var(--mono);font-size:.72rem;color:var(--faint);flex-wrap:wrap}
+  #histHead .n{color:var(--dim)}
+  #histHead .lg{display:flex;gap:12px;margin-left:auto}
+  #histHead .lg span .sw{display:inline-block;width:.6rem;height:.6rem;border-radius:2px;margin-right:4px;vertical-align:baseline}
+  #histHead .lg .short .sw{background:var(--short)} #histHead .lg .long .sw{background:var(--long)}
+
+  #hist{flex:1 1 auto;position:relative;border:1px solid var(--line2);border-radius:8px;background:#0a0f1c;
+    overflow:hidden;min-height:0}
+  #hist svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .bar{transition:height .18s ease,y .18s ease}
+  .bar.short{fill:var(--short);opacity:.85}
+  .bar.long{fill:var(--long);opacity:.85}
+  .marker line{stroke-width:2}
+  .marker.mean line{stroke:var(--txt);stroke-dasharray:2 3}
+  .marker.p50 line{stroke:var(--accent)}
+  .marker.p95 line{stroke:var(--long)}
+  .marker.p99 line{stroke:var(--bad)}
+  .marker text{font-family:var(--mono);font-size:.7rem;fill:var(--txt);paint-order:stroke;
+    stroke:#0a0f1c;stroke-width:3px}
+  .marker.mean text{fill:var(--txt)} .marker.p50 text{fill:var(--accent)}
+  .marker.p95 text{fill:var(--long)} .marker.p99 text{fill:var(--bad)}
+  #histAxis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.68rem;color:var(--faint);padding:0 2px}
+
+  /* ---------- event log ---------- */
+  #events{flex:0 0 clamp(84px,7.5rem,132px);display:flex;flex-direction:column;min-height:0}
+  #events,#events *{cursor:default}
+  #evList{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6;scrollbar-width:thin}
+  .ev{display:flex;gap:8px;white-space:nowrap;overflow:hidden}
+  .ev .et{color:var(--faint);flex:0 0 4.2rem}
+  .ev .er{flex:0 0 5.4rem;color:var(--accent2);font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .ev.alert .er{color:var(--warn)}
+  .ev.bad .er{color:var(--bad)}
+  .ev .em{flex:1;color:var(--txt);opacity:.9;overflow:hidden;text-overflow:ellipsis}
+  .ev.new{animation:evin .4s ease-out}
+  @keyframes evin{0%{background:rgba(76,201,240,.12)}100%{background:transparent}}
+  #note{margin-left:auto;font-size:1rem;color:var(--faint);cursor:help;position:relative;padding:0 4px}
+  #note:hover{color:var(--dim)}
+  #note:hover::after,#note:active::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 7px);
+    z-index:40;width:44ch;max-width:80vw;background:#0a0f1c;border:1px solid var(--line);border-radius:7px;padding:7px 10px;
+    color:var(--txt);text-align:left;white-space:normal;pointer-events:none;
+    font:.82rem/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    box-shadow:0 4px 16px rgba(0,0,0,.55)}
+
+  /* narrow fallback */
+  @media (max-width:620px){
+    body{overflow:auto}
+    #main{grid-template-columns:1fr}
+    #app{height:auto;min-height:100%}
+    #hist{min-height:12rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <h1><span class="llm">◇</span> The Latency Lie</h1>
+    <span id="hsub">two request populations · one histogram · one summary number that hides both</span>
+    <button id="reset" title="Reset the simulator to its starting state">↺ Reset</button>
+  </header>
+
+  <div id="challenge">
+    <span class="tag">Try this</span>
+    <span class="steps">
+      <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
+    </span>
+    <span class="txt" id="chTxt"></span>
+    <div class="predict" id="chPredict"></div>
+  </div>
+
+  <div id="main">
+    <!-- LEFT: controls + readouts -->
+    <div class="panel" id="controls">
+      <h2>Traffic <span>· mix, rate, reported metric</span></h2>
+
+      <div class="ctl" title="What fraction of requests are SHORT-answer (big prompt read in one prefill pass, one-word answer — fast total). The rest are LONG-answer (small prompt, long decode — slow total). This slider moves traffic between the two humps.">
+        <div class="cl">traffic mix
+          <span><b class="short"><span id="shortVal">50</span>%</b> short · <b class="long"><span id="longVal">50</span>%</b> long</span></div>
+        <input type="range" id="mixRange" min="0" max="100" step="5" value="50">
+        <div class="cl"><span class="hint">← more long-answer traffic · more short-answer traffic →</span></div>
+      </div>
+
+      <div class="ctl" title="How many requests per second arrive. More requests = a smoother histogram, but the two humps come from the mix, not the rate.">
+        <div class="cl">request rate <span><b><span id="rateVal">200</span></b> req/s</span></div>
+        <input type="range" id="rateRange" min="20" max="500" step="20" value="200">
+        <div class="cl"><span class="hint">more samples = smoother humps · same two centers</span></div>
+      </div>
+
+      <div class="segwrap" title="Which single number the dashboard reports. Watch where it lands on the histogram — mean and P50 can sit in the empty valley between the humps.">
+        <div class="cl" style="font-family:var(--mono);font-size:.76rem;color:var(--dim)">reported metric <span class="hint">what the dashboard shows</span></div>
+        <div class="seg" id="metricSeg">
+          <button data-m="mean">mean</button>
+          <button data-m="p50" class="on">P50</button>
+          <button data-m="p95">P95</button>
+          <button data-m="p99">P99</button>
+        </div>
+      </div>
+
+      <div id="bigmetric">
+        <div class="bl">reported <span id="bigLbl">P50</span></div>
+        <div class="bv"><span id="bigVal">—</span> <small>s</small></div>
+        <div class="verdict" id="bigVerdict">Set a mix and read where the number sits.</div>
+      </div>
+
+      <div class="readout" id="readout">
+        <div class="rrow"><span class="rl"><span class="sw short"></span>short hump<small> its own median</small></span><span class="rv" id="shortMedV">—</span></div>
+        <div class="rrow"><span class="rl"><span class="sw long"></span>long hump<small> its own median</small></span><span class="rv" id="longMedV">—</span></div>
+        <div class="rrow"><span class="rl">mean</span><span class="rv" id="meanV">—</span></div>
+        <div class="rrow"><span class="rl">P50 <small>median</small></span><span class="rv" id="p50V">—</span></div>
+        <div class="rrow"><span class="rl">P95</span><span class="rv" id="p95V">—</span></div>
+        <div class="rrow"><span class="rl">P99</span><span class="rv" id="p99V">—</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: the histogram -->
+    <div class="panel" id="stage">
+      <div id="histWrap">
+        <div id="histHead">
+          <span>latency histogram <span class="n">· <span id="sampleN">0</span> samples</span></span>
+          <span class="lg">
+            <span class="short"><span class="sw"></span>short-answer</span>
+            <span class="long"><span class="sw"></span>long-answer</span>
+          </span>
+        </div>
+        <div id="hist"><svg id="histSvg" preserveAspectRatio="none" viewBox="0 0 1000 400"></svg></div>
+        <div id="histAxis"><span>0 s</span><span id="axMid">—</span><span id="axMax">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="events">
+    <h2>Dashboard alerts <span>— what the on-call channel would post</span>
+      <span id="note" data-tip="Teaching model, not the real system. Latency is drawn from a synthetic TWO-population model (short-answer and long-answer requests) with a fixed seed so the histogram is reproducible. Real latency distributions have longer, heavier tails and often more than two populations (retries, cold starts, cache misses). Percentiles here are exact over the drawn sample; treat the pattern as the lesson, not the milliseconds.">ⓘ</span></h2>
+    <div id="evList"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ------------------------------------------------------------------ model
+     Two request populations, each ~log-normal in total latency:
+       SHORT-answer: big prompt read in one prefill pass, one-word answer.
+                     fast total — hump centered at SHORT_CENTER seconds.
+       LONG-answer:  small prompt, long decode (many tokens, one at a time).
+                     slow total — hump centered at LONG_CENTER seconds.
+     The learner sets the MIX (% short vs % long). A single reported metric
+     (mean / P50 / P95 / P99) is computed over the blended sample. The point:
+       - each population's OWN median is fixed by its center, independent of mix;
+       - the blended mean/P50 slides as the mix changes — it can sit in the
+         empty VALLEY between the humps, where almost no real request lives;
+       - P95/P99 track the slow (long-answer) hump.
+     Deterministic seeded RNG so the histogram is reproducible for the harness. */
+  var SHORT_CENTER=1.2, SHORT_SIGMA=0.28;   /* seconds, log-space spread */
+  var LONG_CENTER=8.5,  LONG_SIGMA=0.30;
+  var SEED0=0x2f6e10c3;
+
+  var DEFAULTS={shortPct:50, rate:200, metric:'p50'};
+  var S={
+    shortPct:DEFAULTS.shortPct, rate:DEFAULTS.rate, metric:DEFAULTS.metric,
+    samples:[], stat:null, t0:Date.now()
+  };
+  var lastAlertKey='';
+
+  /* --- deterministic RNG (mulberry32) + Box-Muller for a normal draw --- */
+  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;
+    var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;
+    return((t^t>>>14)>>>0)/4294967296;};}
+  function makeSamples(shortPct,rate){
+    /* number of samples scales gently with rate so more traffic = smoother humps */
+    var n=Math.max(40, Math.round(rate*1.5));
+    var rnd=mulberry32(SEED0 ^ (shortPct*2654435761) ^ (rate*40503));
+    var out=[];
+    var pShort=shortPct/100;
+    for(var i=0;i<n;i++){
+      var isShort=rnd()<pShort;
+      /* Box-Muller standard normal from two uniforms */
+      var u1=Math.max(1e-9,rnd()), u2=rnd();
+      var z=Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);
+      var center=isShort?SHORT_CENTER:LONG_CENTER;
+      var sigma=isShort?SHORT_SIGMA:LONG_SIGMA;
+      /* log-normal: exp(ln(center) + sigma*z) keeps latency positive + right-skewed */
+      var v=Math.exp(Math.log(center)+sigma*z);
+      out.push({v:v, short:isShort});
+    }
+    out.sort(function(a,b){return a.v-b.v});
+    return out;
+  }
+  function percentile(sortedVals,p){
+    if(!sortedVals.length)return 0;
+    var idx=(p/100)*(sortedVals.length-1);
+    var lo=Math.floor(idx), hi=Math.ceil(idx);
+    if(lo===hi)return sortedVals[lo];
+    return sortedVals[lo]+(sortedVals[hi]-sortedVals[lo])*(idx-lo);
+  }
+  /* pure stats the harness can call */
+  function computeStats(shortPct,rate){
+    shortPct=(shortPct==null?S.shortPct:shortPct);
+    rate=(rate==null?S.rate:rate);
+    var samples=makeSamples(shortPct,rate);
+    var vals=samples.map(function(s){return s.v});
+    var shortVals=samples.filter(function(s){return s.short}).map(function(s){return s.v}).sort(function(a,b){return a-b});
+    var longVals=samples.filter(function(s){return !s.short}).map(function(s){return s.v}).sort(function(a,b){return a-b});
+    var mean=vals.reduce(function(a,b){return a+b},0)/(vals.length||1);
+    var p50=percentile(vals,50), p95=percentile(vals,95), p99=percentile(vals,99);
+    /* valley check: a summary number is "in the valley" when it lands in the empty gap
+       BETWEEN the two humps — above the fast hump's spread, below the slow hump's.
+       humpHalfWidth is ~2 sigma of the fast hump, in seconds. */
+    var humpHalfWidth=SHORT_CENTER*SHORT_SIGMA*2.2;
+    function valleyOf(v){return (v>SHORT_CENTER+humpHalfWidth) && (v<LONG_CENTER-humpHalfWidth);}
+    function nearestOf(v){return Math.min(Math.abs(v-SHORT_CENTER),Math.abs(v-LONG_CENTER));}
+    function nearFracOf(v){return vals.filter(function(x){return Math.abs(x-v)<=0.20*v;}).length/(vals.length||1);}
+    /* the MEAN valley is the teaching invariant — always reported off the mean itself,
+       independent of which metric the dashboard happens to be showing. */
+    var meanInValley=valleyOf(mean), meanNearest=nearestOf(mean), meanNearFrac=nearFracOf(mean);
+    /* the SELECTED metric drives the UI verdict + big readout. */
+    var selVal=({mean:mean,p50:p50,p95:p95,p99:p99})[S.metric];
+    return {
+      shortPct:shortPct, longPct:100-shortPct, rate:rate,
+      n:samples.length, samples:samples, vals:vals,
+      mean:mean, p50:p50, p95:p95, p99:p99,
+      shortMed: shortVals.length?percentile(shortVals,50):0,
+      longMed:  longVals.length?percentile(longVals,50):0,
+      shortCount:shortVals.length, longCount:longVals.length,
+      selVal:selVal,
+      /* selected-metric view (UI) */
+      inValley:valleyOf(selVal), nearestHumpDist:nearestOf(selVal), nearFrac:nearFracOf(selVal),
+      humpHalfWidth:humpHalfWidth,
+      /* mean-specific view (teaching invariant) */
+      meanInValley:meanInValley, meanNearest:meanNearest, meanNearFrac:meanNearFrac
+    };
+  }
+
+  /* ------------------------------------------------------------------ events log */
+  var evList=$('evList');
+  function clock(){var s=Math.floor((Date.now()-S.t0)/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  function logEv(kind,reason,msg){
+    var d=document.createElement('div');
+    d.className='ev new '+(kind||'');
+    d.innerHTML='<span class="et"></span><span class="er"></span><span class="em"></span>';
+    d.children[0].textContent=clock();
+    d.children[1].textContent=reason; d.children[2].textContent=msg;
+    d.title=reason+'  —  '+msg;
+    evList.appendChild(d);
+    while(evList.children.length>90)evList.removeChild(evList.firstChild);
+    evList.scrollTop=evList.scrollHeight;
+  }
+  function fmt(v){return v>=10?v.toFixed(1):v.toFixed(2)}
+
+  /* ------------------------------------------------------------------ render */
+  var NBINS=48;
+  var AXMAX=LONG_CENTER*1.9;     /* fixed x-range in seconds so humps don't jump around */
+  function render(){
+    var r=computeStats();
+    S.stat=r;
+
+    /* build histogram bins, split short vs long so both colors stack per bin */
+    var binW=AXMAX/NBINS;
+    var shortBins=new Array(NBINS).fill(0), longBins=new Array(NBINS).fill(0);
+    r.samples.forEach(function(s){
+      var b=Math.min(NBINS-1, Math.floor(s.v/binW));
+      if(s.short)shortBins[b]++; else longBins[b]++;
+    });
+    var maxBin=1;
+    for(var i=0;i<NBINS;i++)maxBin=Math.max(maxBin, shortBins[i]+longBins[i]);
+
+    var W=1000,H=400, floor=H-2;
+    var svg=$('histSvg'); var parts=[];
+    var bw=W/NBINS;
+    for(var j=0;j<NBINS;j++){
+      var sh=shortBins[j]/maxBin*(H-24), lo=longBins[j]/maxBin*(H-24);
+      var x=(j*bw+1).toFixed(1), w=(bw-2).toFixed(1);
+      if(lo>0){
+        parts.push('<rect class="bar long" x="'+x+'" y="'+(floor-lo).toFixed(1)+'" width="'+w+'" height="'+lo.toFixed(1)+'" rx="1"></rect>');
+      }
+      if(sh>0){
+        parts.push('<rect class="bar short" x="'+x+'" y="'+(floor-lo-sh).toFixed(1)+'" width="'+w+'" height="'+sh.toFixed(1)+'" rx="1"></rect>');
+      }
+    }
+    /* percentile + mean markers */
+    function marker(cls,label,val){
+      if(val<=0||val>AXMAX)return '';
+      var px=(val/AXMAX*W).toFixed(1);
+      var tx=Math.min(W-4, +px+4);
+      return '<g class="marker '+cls+'"><line x1="'+px+'" y1="6" x2="'+px+'" y2="'+floor+'"></line>'+
+        '<text x="'+tx+'" y="18" text-anchor="start">'+label+'</text></g>';
+    }
+    var sel=S.metric;
+    parts.push(marker('p50'+(sel==='p50'?' selm':''),'P50 '+fmt(r.p50)+'s', r.p50));
+    parts.push(marker('p95'+(sel==='p95'?' selm':''),'P95 '+fmt(r.p95)+'s', r.p95));
+    parts.push(marker('p99'+(sel==='p99'?' selm':''),'P99 '+fmt(r.p99)+'s', r.p99));
+    parts.push(marker('mean'+(sel==='mean'?' selm':''),'mean '+fmt(r.mean)+'s', r.mean));
+    svg.innerHTML=parts.join('');
+
+    /* axis labels */
+    $('sampleN').textContent=r.n;
+    $('axMid').textContent=fmt(AXMAX/2)+' s';
+    $('axMax').textContent=fmt(AXMAX)+' s';
+
+    /* readouts */
+    $('shortVal').textContent=r.shortPct;
+    $('longVal').textContent=r.longPct;
+    $('rateVal').textContent=r.rate;
+    $('shortMedV').textContent=fmt(r.shortMed)+' s';
+    $('longMedV').textContent=fmt(r.longMed)+' s';
+    $('meanV').textContent=fmt(r.mean)+' s';
+    $('p50V').textContent=fmt(r.p50)+' s';
+    $('p95V').textContent=fmt(r.p95)+' s';
+    $('p99V').textContent=fmt(r.p99)+' s';
+    ['meanV','p50V','p95V','p99V'].forEach(function(id){$(id).classList.remove('sel')});
+    $(({mean:'meanV',p50:'p50V',p95:'p95V',p99:'p99V'})[sel]).classList.add('sel');
+
+    /* big readout + verdict */
+    $('bigLbl').textContent=({mean:'mean',p50:'P50',p95:'P95',p99:'P99'})[sel];
+    $('bigVal').textContent=fmt(r.selVal);
+    var bv=$('bigVerdict');
+    var pctNear=Math.round(r.nearFrac*100);
+    if(r.inValley){
+      bv.className='verdict valley';
+      bv.innerHTML='<b>The number is in the valley.</b> '+({mean:'mean',p50:'P50',p95:'P95',p99:'P99'})[sel]+
+        ' = '+fmt(r.selVal)+'s sits between the two humps — only <b>'+pctNear+'%</b> of real requests are within ±20% of it. Almost no request actually behaves like this.';
+    }else if(sel==='p95'||sel==='p99'){
+      bv.className='verdict';
+      bv.innerHTML=({mean:'mean',p50:'P50',p95:'P95',p99:'P99'})[sel]+' = '+fmt(r.selVal)+'s tracks the <b>slow (long-answer) hump</b> — this is the number your slowest, most important users feel.';
+    }else{
+      bv.className='verdict';
+      bv.innerHTML=({mean:'mean',p50:'P50',p95:'P95',p99:'P99'})[sel]+' = '+fmt(r.selVal)+'s sits inside a hump — right now the mix is lopsided enough that this number sits on real traffic.';
+    }
+  }
+
+  /* an alert-voice log line, debounced so dragging doesn't spam */
+  function logMix(){
+    var r=S.stat||computeStats();
+    var key=r.shortPct+'/'+r.longPct+':'+S.metric;
+    if(key===lastAlertKey)return;
+    lastAlertKey=key;
+    var pctNear=Math.round(r.nearFrac*100);
+    var tail;
+    if(r.inValley){
+      tail='mean sits in the valley: '+pctNear+'% of requests are within ±20% of it';
+    }else if(S.metric==='p95'||S.metric==='p99'){
+      tail=S.metric.toUpperCase()+' tracks the long-answer tail';
+    }else{
+      tail='reported '+S.metric.toUpperCase()+' '+fmt(r.selVal)+'s';
+    }
+    logEv(r.inValley?'alert':'', 'metrics',
+      'mix '+r.shortPct+'/'+r.longPct+' · mean '+fmt(r.mean)+'s · P50 '+fmt(r.p50)+'s · P95 '+fmt(r.p95)+'s — '+tail);
+  }
+
+  /* ------------------------------------------------------------------ challenge */
+  var CH={step:1, done:[false,false,false], pred:[null,null,null], baseMean:null};
+  var CH_PREDICT=[
+    {q:'you shift traffic from <b>50/50</b> toward <b>80% short</b>. What happens to the <b>mean</b>?',
+     opts:['it rises','it drops','it stays put'], ok:1,
+     explain:'More weight on the fast (short-answer) hump pulls the blended mean down. The mean moved — but no single request got faster; the two humps sit exactly where they were.'},
+    {q:'at that new 80/20 mix, did any <b>real request</b> get faster than before?',
+     opts:['yes, requests sped up','no, only the metric moved'], ok:1,
+     explain:'Each population’s own median is fixed by its phase profile. Shifting the mix reweights the average; it does not change what any individual request experiences.'},
+    {q:'which metric best exposes the slow long-answer requests hiding in the tail?',
+     opts:['the mean','P50 (median)','P95 / P99'], ok:2,
+     explain:'P95/P99 track the slow hump — they are where the long-answer requests live. The mean and P50 average them away or sit in the empty valley.'}
+  ];
+  function pickPredict(idx){
+    if(CH.step>=4)return;
+    var i=CH.step-1;
+    if(CH.pred[i]!=null)return;
+    CH.pred[i]=idx;
+    logEv('','predict','step '+CH.step+' — you predicted: “'+CH_PREDICT[i].opts[idx].replace(/<[^>]*>/g,'')+'”');
+    updateChallenge();
+  }
+  function predictVerdict(i){
+    var p=CH_PREDICT[i];
+    if(!p||CH.pred[i]==null)return;
+    var right=CH.pred[i]===p.ok;
+    logEv(right?'':'alert','predict',(right?'Prediction right. ':'Not what you predicted — you said “'+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+'”. ')+p.explain.replace(/<[^>]*>/g,''));
+  }
+
+  var CH_TEXT=[
+    'Step 1 — Set the <code>reported metric</code> to <code>mean</code> (or P50) and drag the <code>traffic mix</code> to a balanced blend so the number sits <b>in the valley</b> between the two humps — where almost no real request lives.',
+    'Step 2 — Keep the metric on <code>mean</code> and shift the <code>mix</code> hard toward <b>short-answer</b> traffic (≥ 80% short). Watch the mean <b>drop</b> — the number moved, but each hump’s own median did not.',
+    'Step 3 — Now switch the <code>reported metric</code> to <code>P95</code> (or P99) and read where it sits: out on the <b>slow long-answer hump</b>, the requests the mean was hiding.'
+  ];
+  var SUCCESS='Challenge complete! You just watched one number lie. With two populations, the <b>mean</b> and <b>P50</b> can sit in the empty <b>valley</b> between the humps, describing almost no real request. Shifting the <code>mix</code> slides that average around — but no request got faster; each population’s own median never moved. <b>P95/P99</b> are honest about the slow long-answer requests because they track the tail where those requests actually live. On a model service you read latency <b>per phase and per traffic class</b>, and you watch the <b>tail</b>, never one blended median.';
+
+  function evalChallenge(){
+    var r=S.stat||computeStats();
+    if(CH.step===1){
+      /* mean OR P50 selected AND the selected metric sits in the valley */
+      if((S.metric==='mean'||S.metric==='p50') && r.inValley){
+        CH.done[0]=true;CH.step=2;predictVerdict(0);
+        logEv('alert','try-this','Step 1 done — '+S.metric.toUpperCase()+' '+fmt(r.selVal)+'s is in the valley; only '+Math.round(r.nearFrac*100)+'% of requests live near it.');
+      }
+    }else if(CH.step===2){
+      if(CH.baseMean==null) CH.baseMean=computeStats(50,S.rate).mean;
+      /* mix pushed to >=80% short AND mean dropped below the 50/50 baseline */
+      if(S.metric==='mean' && r.shortPct>=80 && r.mean<CH.baseMean*0.9){
+        CH.done[1]=true;CH.step=3;predictVerdict(1);
+        logEv('','try-this','Step 2 done — mean fell from '+fmt(CH.baseMean)+'s to '+fmt(r.mean)+'s as traffic shifted short. No request sped up; the average was reweighted.');
+      }
+    }else if(CH.step===3){
+      /* P95 or P99 selected AND it sits on the slow side — past the valley midpoint,
+         up where the long-answer requests actually live. */
+      if((S.metric==='p95'||S.metric==='p99') && r.selVal>(SHORT_CENTER+LONG_CENTER)/2){
+        CH.done[2]=true;CH.step=4;predictVerdict(2);
+        logEv('','try-this','Step 3 done — '+S.metric.toUpperCase()+' '+fmt(r.selVal)+'s lands on the long-answer hump. That is the number the mean was hiding.');
+      }
+    }
+    updateChallenge();
+  }
+  function updateChallenge(){
+    for(var i=1;i<=3;i++){
+      var d=$('d'+i);d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
+      d.textContent=CH.done[i-1]?'✓':i;
+    }
+    var box=$('challenge'),txt=$('chTxt'),pr=$('chPredict');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;pr.innerHTML='';}
+    else{
+      box.classList.remove('success');
+      var i=CH.step-1, p=CH_PREDICT[i];
+      if(p && CH.pred[i]==null){
+        txt.innerHTML='Step '+CH.step+' — <b>Predict first:</b> '+p.q;
+        pr.innerHTML='';
+        for(var k=0;k<p.opts.length;k++){
+          var c=document.createElement('span');
+          c.className='chip'; c.innerHTML=p.opts[k];
+          c.title='Lock in this prediction, then try it';
+          (function(kk){c.addEventListener('click',function(){pickPredict(kk)})})(k);
+          pr.appendChild(c);
+        }
+      }else{
+        var tail=p?' <span class="pv">(you predicted: '+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+')</span>':'';
+        txt.innerHTML=CH_TEXT[i]+tail;
+        pr.innerHTML='';
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------ controls */
+  function syncLabels(){
+    $('mixRange').value=S.shortPct;
+    $('rateRange').value=S.rate;
+    $('shortVal').textContent=S.shortPct;
+    $('longVal').textContent=100-S.shortPct;
+    $('rateVal').textContent=S.rate;
+    Array.prototype.forEach.call($('metricSeg').children,function(b){
+      b.classList.toggle('on', b.getAttribute('data-m')===S.metric);
+    });
+  }
+  function onChange(logIt){
+    render();
+    if(logIt)logMix();
+    evalChallenge();
+    updateChallenge();
+  }
+
+  $('mixRange').addEventListener('input',function(){S.shortPct=+this.value;$('shortVal').textContent=S.shortPct;$('longVal').textContent=100-S.shortPct;onChange(false)});
+  $('mixRange').addEventListener('change',function(){onChange(true)});
+  $('rateRange').addEventListener('input',function(){S.rate=+this.value;$('rateVal').textContent=S.rate;onChange(false)});
+  $('rateRange').addEventListener('change',function(){onChange(true)});
+  Array.prototype.forEach.call($('metricSeg').children,function(b){
+    b.addEventListener('click',function(){S.metric=b.getAttribute('data-m');syncLabels();onChange(true)});
+  });
+  $('reset').addEventListener('click',function(){location.reload()});
+
+  /* ------------------------------------------------------------------ boot */
+  syncLabels();
+  render();
+  updateChallenge();
+  logEv('','ready','dashboard up · pick a mix, a rate, and the metric your alert reports on');
+
+  /* test hook (harmless in production) */
+  window.__sim={S:S,CH:CH,predict:pickPredict,
+    setMix:function(v){S.shortPct=v;syncLabels();onChange(true)},
+    setRate:function(v){S.rate=v;syncLabels();onChange(true)},
+    setMetric:function(m){S.metric=m;syncLabels();onChange(true)},
+    stats:function(){return S.stat||computeStats()},
+    compute:computeStats,
+    consts:{SHORT_CENTER:SHORT_CENTER,LONG_CENTER:LONG_CENTER,DEFAULTS:DEFAULTS,AXMAX:AXMAX}
+  };
+})();
+</script>
+</body>
+</html>

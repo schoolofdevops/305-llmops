@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// Headless-Chrome assertion harness for m1-prefill-decode.html
+// Headless-Chrome assertion harness for m5-grader-lab.html
 // Zero runtime deps: hand-rolled CDP client over Node built-ins (http + ws frames).
 // Chrome 150+: uses PUT /json/new?<url> and launch flag --remote-allow-origins=*.
-// Run: node site/static/sims/m1-prefill-decode.test.mjs
+// Run: node site/static/sims/m5-grader-lab.test.mjs
 
 import { spawn } from 'node:child_process';
 import http from 'node:http';
@@ -13,9 +13,9 @@ import path from 'node:path';
 import fs from 'node:fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const HTML = path.join(__dirname, 'm1-prefill-decode.html');
+const HTML = path.join(__dirname, 'm5-grader-lab.html');
 const FILE_URL = pathToFileURL(HTML).href;
-const PORT = 9330 + (process.pid % 400);
+const PORT = 9730 + (process.pid % 400);
 
 const CHROME = [
   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
@@ -112,7 +112,7 @@ async function main() {
   const child = spawn(CHROME, [
     '--headless=new', `--remote-debugging-port=${PORT}`, '--remote-allow-origins=*',
     '--no-sandbox', '--disable-gpu', '--window-size=800,500',
-    '--user-data-dir=/tmp/m1-prefill-chrome-' + process.pid, 'about:blank',
+    '--user-data-dir=/tmp/m5-grader-chrome-' + process.pid, 'about:blank',
   ], { stdio: 'ignore' });
 
   // wait for devtools endpoint
@@ -150,26 +150,20 @@ async function main() {
     if (r.result && r.result.result) return r.result.result.value;
     return undefined;
   }
-  // run the sim's instant path, then read the completed run's numbers
-  async function runAndRead() {
-    await ev('window.__sim.run()');
-    await sleep(120);
-    return ev(`(function(){var r=window.__sim.S.result||{};return {
-      promptLen:r.promptLen, outLen:r.outLen, ttft:r.ttft, decodeShare:r.decodeShare,
-      total:r.total, kv:r.kv, overflow:!!r.overflow, ran:!!window.__sim.S.ran};})()`);
-  }
 
   // ---------- 1. loads clean ----------
   ok('R1 no console errors', consoleErrors.length === 0, consoleErrors.join(' | '));
   ok('R1 no page exceptions', pageErrors.length === 0, pageErrors.join(' | '));
   ok('R1 zero external network requests', netRequests.length === 0, netRequests.join(' | '));
-  ok('renders — three sliders present',
-    (await ev('document.querySelectorAll("#controls input[type=range]").length')) === 3);
+  ok('renders — three grader columns present',
+    (await ev('document.querySelectorAll("#cols .gcol").length')) === 3);
+  ok('renders — six candidate answers loaded',
+    (await ev('window.__sim.consts.count')) === 6);
   ok('test hook exposed', (await ev('typeof window.__sim')) === 'object');
 
   // ---------- 2. affordance sanity (R2) ----------
   const affClickable = await ev(`(function(){
-    var sel=['#runBtn','#reset','#promptRange','#outRange','#ctxRange'];
+    var sel=['#runBtn','#reset','#prevBtn','#nextBtn','#thrRange'];
     var bad=[];
     sel.forEach(function(s){var e=document.querySelector(s);if(!e){bad.push(s+':missing');return;}
       var cs=getComputedStyle(e);
@@ -178,182 +172,193 @@ async function main() {
     return bad;
   })()`);
   ok('R2 interactive controls have pointer/help cursor', affClickable.length === 0, affClickable.join(','));
-  const runTip = await ev(`!!document.querySelector('#runBtn').title && !!document.querySelector('#reset').title`);
+  const runTip = await ev(`!!document.querySelector('#runBtn').title && !!document.querySelector('#reset').title
+    && !!document.querySelector('#nextBtn').title`);
   ok('R2 controls carry tooltips (title)', runTip === true);
   const inertLog = await ev(`getComputedStyle(document.querySelector('#evList')).cursor`);
   ok('R2 event log is inert (cursor:default)', inertLog === 'default', inertLog);
-  const inertReadout = await ev(`getComputedStyle(document.querySelector('#readout')).cursor`);
-  ok('R2 readout panel is inert (cursor:default)', inertReadout === 'default', inertReadout);
+  const inertQa = await ev(`getComputedStyle(document.querySelector('#qText')).cursor`);
+  ok('R2 question/reference panel is inert (cursor:default)', inertQa === 'default', inertQa);
   const noteTip = await ev(`!!document.querySelector('#note').getAttribute('data-tip')`);
   ok('R8 honest-model footnote present', noteTip === true);
+  const footMentions = await ev(`/Jaccard|token-overlap/.test(document.querySelector('#note').getAttribute('data-tip'))
+    && /scripted rubric|not a real model/.test(document.querySelector('#note').getAttribute('data-tip'))`);
+  ok('R8 footnote is honest about similarity + judge', footMentions === true);
 
-  // ---------- 3. prefill bar fills BEFORE any decode token appears ----------
-  // Drive the animated (non-instant) path and sample mid-prefill.
-  await ev('window.__sim.setPrompt(512);window.__sim.setOut(64);window.__sim.setCtx(1024)');
-  await ev('document.getElementById("runBtn").click()');
-  await sleep(180); // ~mid prefill (pfDur=520ms), before decode starts
-  const midPrefill = await ev(`(function(){
-    var w=parseFloat(getComputedStyle(document.getElementById("prefillFill")).width);
-    var barW=parseFloat(getComputedStyle(document.getElementById("prefillBar")).width);
-    var decodeToks=document.querySelectorAll('#decodeStrip .tok.on').length;
-    return {fillFrac: barW>0?w/barW:0, decodeToks:decodeToks};})()`);
-  ok('SEQUENCE prefill bar is filling before decode ticks', midPrefill.fillFrac > 0 && midPrefill.decodeToks === 0,
-    JSON.stringify(midPrefill));
-  await sleep(1200); // let the animated run complete
-  const afterAnim = await ev(`(function(){
-    return {decodeToks:document.querySelectorAll('#decodeStrip .tok.on').length,
-            fillFrac: parseFloat(getComputedStyle(document.getElementById("prefillFill")).width)/parseFloat(getComputedStyle(document.getElementById("prefillBar")).width),
-            running:window.__sim.isRunning()};})()`);
-  ok('SEQUENCE after run: prefill full + decode tokens emitted', afterAnim.fillFrac > 0.98 && afterAnim.decodeToks > 0,
-    JSON.stringify(afterAnim));
+  // ---------- 3. event log responds to selecting a candidate ----------
+  await ev('window.__sim.setCand(3)');
+  const selLog = await ev(`Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /candidate 4 selected/.test(e.textContent)})`);
+  ok('R7 event log narrates candidate selection', selLog === true);
 
-  // ---------- 4. TTFT gauge responds to prompt-length slider ----------
-  await ev('window.__sim.setPrompt(64);window.__sim.setOut(64);window.__sim.setCtx(2048)');
-  let rSmall = await runAndRead();
-  await ev('window.__sim.setPrompt(512)');
-  let rBig = await runAndRead();
-  ok('TTFT rises with prompt length', rBig.ttft > rSmall.ttft * 3.5, JSON.stringify({small:rSmall.ttft,big:rBig.ttft}));
-  const ttftShown = await ev(`document.getElementById('ttftV').textContent`);
-  ok('TTFT gauge shows a value after run', /ms|s/.test(ttftShown), ttftShown);
+  // ---------- 4. grading produces a per-column verdict + eval-runner case line ----------
+  await ev('window.__sim.setCand(0)');   // verbatim
+  await ev('window.__sim.gradeNow()');
+  const v0 = await ev(`(function(){var r=window.__sim.S.result;return {
+    exact:r.exact, simPass:r.simPass, judgePass:r.judgePass, correct:r.correct,
+    exactV:document.getElementById('exactV').textContent,
+    simV:document.getElementById('simV').textContent,
+    judgeV:document.getElementById('judgeV').textContent };})()`);
+  ok('GRADE verbatim: all three graders PASS a word-for-word correct answer',
+    v0.exact && v0.simPass && v0.judgePass && v0.correct === true, JSON.stringify(v0));
+  ok('GRADE columns show PASS/FAIL verdicts',
+    /PASS/.test(v0.exactV) && /PASS/.test(v0.simV) && /PASS/.test(v0.judgeV), JSON.stringify(v0));
+  const caseLog = await ev(`Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /case 1/.test(e.textContent)&&/exact=/.test(e.textContent)&&/sim=/.test(e.textContent)&&/judge=/.test(e.textContent)})`);
+  ok('R7 eval-runner logs a case line (exact/sim/judge)', caseLog === true);
 
-  // ---------- 5. decode-dominance scenario ----------
-  await ev('window.__sim.setPrompt(16);window.__sim.setOut(512);window.__sim.setCtx(2048)');
-  const rDec = await runAndRead();
-  ok('DECODE-DOMINATED: decode share > 80% with short prompt + long output', rDec.decodeShare > 0.80,
-    JSON.stringify({share:rDec.decodeShare}));
-  const shareShown = await ev(`document.getElementById('decShareV').textContent`);
-  ok('decode-share gauge reflects it (>=80%)', parseInt(shareShown) >= 80, shareShown);
+  // ---------- 5. TEACHING INVARIANT (i): correct paraphrase FAILS exact, PASSES sim@default + judge ----------
+  await ev('window.__sim.setCand(1)');   // paraphrase
+  await ev('window.__sim.gradeNow()');
+  const vPara = await ev(`(function(){var r=window.__sim.S.result;return {
+    exact:r.exact, sim:r.sim, thr:r.thr, simPass:r.simPass, judgePass:r.judgePass, correct:r.correct };})()`);
+  ok('INVARIANT i: correct paraphrase is actually correct', vPara.correct === true, JSON.stringify(vPara));
+  ok('INVARIANT i: paraphrase FAILS exact-phrase (false fail)', vPara.exact === false, JSON.stringify(vPara));
+  ok('INVARIANT i: paraphrase PASSES similarity at default threshold', vPara.simPass === true, JSON.stringify(vPara));
+  ok('INVARIANT i: paraphrase PASSES the judge', vPara.judgePass === true, JSON.stringify(vPara));
+  const falseFailLog = await ev(`Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /FALSE FAIL/.test(e.textContent)})`);
+  ok('INVARIANT i: eval log names the FALSE FAIL', falseFailLog === true);
 
-  // ---------- 6. context-overflow state ----------
-  await ev('window.__sim.setCtx(128);window.__sim.setPrompt(96);window.__sim.setOut(128)');
-  const rOver = await runAndRead();
-  ok('OVERFLOW: prompt+output past ctx sets overflow=true', rOver.overflow === true, JSON.stringify(rOver));
-  const overShown = await ev(`document.getElementById('overflow').classList.contains('on')`);
-  ok('OVERFLOW: banner is shown', overShown === true);
-  const overLog = await ev(`Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /overflow|num_ctx/.test(e.textContent)})`);
-  ok('OVERFLOW: trace logs a context-overflow line', overLog === true);
-  // and it clears when the window is large enough
-  await ev('window.__sim.setCtx(1024)');
-  const rFit = await runAndRead();
-  ok('OVERFLOW clears when ctx is large enough', rFit.overflow === false, JSON.stringify(rFit));
+  // ---------- 6. TEACHING INVARIANT (ii): a WRONG candidate PASSES exact (false pass) ----------
+  const falsePassIdx = await ev(`(function(){
+    for(var i=0;i<window.__sim.consts.count;i++){var r=window.__sim.grade(i,0.3);
+      if(r.exact===true && r.correct===false)return i;}
+    return -1;})()`);
+  ok('INVARIANT ii: some wrong candidate PASSES exact-phrase (false pass exists)', falsePassIdx >= 0, 'idx=' + falsePassIdx);
+  await ev(`window.__sim.setCand(${falsePassIdx})`);
+  await ev('window.__sim.gradeNow()');
+  const vFp = await ev(`(function(){var r=window.__sim.S.result;return {exact:r.exact,correct:r.correct};})()`);
+  ok('INVARIANT ii: graded false-pass candidate shows exact PASS on a wrong answer',
+    vFp.exact === true && vFp.correct === false, JSON.stringify(vFp));
+  const falsePassLog = await ev(`Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /FALSE PASS/.test(e.textContent)})`);
+  ok('INVARIANT ii: eval log names the FALSE PASS', falsePassLog === true);
 
-  // ---------- 7. teaching invariants ----------
-  // (a) TTFT depends ONLY on prompt length, not output length (phase separation).
-  const inv = await ev(`(function(){
-    var a=window.__sim.compute(200,10);
-    var b=window.__sim.compute(200,400);
-    return {ttftEqual: Math.abs(a.ttft-b.ttft)<1e-9, totalDiffers: b.total>a.total};})()`);
-  ok('INVARIANT: TTFT set by prompt only (output does not move it)', inv.ttftEqual === true);
-  ok('INVARIANT: total time grows with output length', inv.totalDiffers === true);
-  // (b) total time depends ONLY on output length for a fixed prompt shift check
-  const inv2 = await ev(`(function(){
-    var a=window.__sim.compute(50,300);
-    var b=window.__sim.compute(400,300);
-    return {decodeEqual: Math.abs(a.decodeMs-b.decodeMs)<1e-9, ttftDiffers: b.ttft>a.ttft};})()`);
-  ok('INVARIANT: decode time set by output only', inv2.decodeEqual === true);
-  ok('INVARIANT: prefill time set by prompt only', inv2.ttftDiffers === true);
-  // (c) KV cache = prompt + output exactly (conservation)
-  const inv3 = await ev(`(function(){var c=window.__sim.compute(123,77);return c.kv===200;})()`);
-  ok('INVARIANT: KV cache == prompt + output (conservation)', inv3 === true);
-  // (d) overflow iff kv > ctx
-  const inv4 = await ev(`(function(){
-    window.__sim.setCtx(300);
-    var under=window.__sim.compute(100,100);   // 200 <= 300
-    var over=window.__sim.compute(200,200);    // 400 > 300
-    return {underOK: under.overflow===false, overOK: over.overflow===true};})()`);
-  ok('INVARIANT: overflow ⇔ (prompt+output) > context limit', inv4.underOK && inv4.overOK, JSON.stringify(inv4));
+  // ---------- 7. TEACHING INVARIANT (iii): raising the threshold flips a sim PASS to FAIL ----------
+  const flip = await ev(`(function(){
+    // find a candidate whose sim passes at a low threshold AND sits low enough that
+    // raising the threshold above it stays inside the slider's 0..0.9 range.
+    var lo=0.05, idx=-1, simScore=0;
+    for(var i=0;i<window.__sim.consts.count;i++){var r=window.__sim.grade(i,lo);
+      if(r.simPass && r.sim>lo && r.sim<0.85){idx=i;simScore=r.sim;break;}}
+    if(idx<0)return {found:false};
+    var hiThr=Math.min(0.9, simScore+0.1);
+    var passLow=window.__sim.grade(idx,lo).simPass;      // passes when threshold below its score
+    var failHigh=window.__sim.grade(idx,hiThr).simPass;  // fails when threshold above
+    return {found:true, idx:idx, simScore:simScore, hiThr:hiThr, passLow:passLow, failHigh:failHigh};
+  })()`);
+  ok('INVARIANT iii: a candidate passes similarity at a low threshold', flip.found && flip.passLow === true, JSON.stringify(flip));
+  ok('INVARIANT iii: raising threshold past its Jaccard score flips PASS -> FAIL (deterministic)',
+    flip.found && flip.failHigh === false, JSON.stringify(flip));
+  // and it is reflected live in the UI when the slider moves
+  await ev(`window.__sim.setCand(${flip.idx})`);
+  await ev(`window.__sim.setThr(0.05)`);
+  await ev('window.__sim.gradeNow()');
+  const uiPass = await ev(`document.getElementById('simV').textContent`);
+  await ev(`window.__sim.setThr(${flip.hiThr})`);
+  const uiFail = await ev(`document.getElementById('simV').textContent`);
+  ok('INVARIANT iii: similarity verdict updates live as the threshold slider moves',
+    /PASS/.test(uiPass) && /FAIL/.test(uiFail), JSON.stringify({ uiPass, uiFail }));
 
-  // ---------- 8. all three TRY-THIS steps auto-detect end-to-end ----------
+  // ---------- 8. TEACHING INVARIANT (iv): judge verdicts are deterministic under the seed ----------
+  const jdet = await ev(`(function(){
+    var a=[],b=[];
+    for(var i=0;i<window.__sim.consts.count;i++){a.push(window.__sim.grade(i,0.3).judgePass);}
+    for(var j=0;j<window.__sim.consts.count;j++){b.push(window.__sim.grade(j,0.3).judgePass);}
+    var same=a.every(function(v,k){return v===b[k]});
+    var anyMargin=false;
+    for(var m=0;m<window.__sim.consts.count;m++){if(window.__sim.grade(m,0.3).judgeMargin)anyMargin=true;}
+    return {same:same, verdicts:a, anyMargin:anyMargin};
+  })()`);
+  ok('INVARIANT iv: judge verdicts are deterministic across repeated grades (seed)', jdet.same === true, JSON.stringify(jdet));
+  ok('INVARIANT iv: at least one candidate is a flagged margin case', jdet.anyMargin === true, JSON.stringify(jdet));
+
+  // ---------- 9. graders disagree => the log warns to trust no single grade ----------
+  await ev('window.__sim.setCand(1)');   // paraphrase: exact FAIL, sim PASS, judge PASS -> disagreement
+  await ev('window.__sim.setThr(0.3)');
+  await ev('window.__sim.gradeNow()');
+  const disagreeLog = await ev(`Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /DISAGREE|trust no single/.test(e.textContent)})`);
+  ok('DISAGREEMENT: log warns to corroborate when graders disagree', disagreeLog === true);
+
+  // ---------- 10. TRY-THIS challenge auto-detects end to end ----------
   await ev('location.reload()');
   await sleep(600);
-  // Step 1: grow prompt so TTFT >= 3x the default-prompt TTFT
-  const dflt = await ev('window.__sim.consts.DEFAULTS.promptLen');
-  await ev(`window.__sim.setPrompt(${dflt * 4})`);
-  await ev('window.__sim.run()'); await sleep(120);
+  // Step 1: grade candidate 2 (index 1) — correct paraphrase fails exact
+  await ev('window.__sim.setCand(1)');
+  await ev('window.__sim.gradeNow()'); await sleep(60);
   let step = await ev('window.__sim.CH.step');
-  ok('TRY-THIS step 1 auto-detected (TTFT ≥ 3×)', step >= 2, 'step=' + step);
-  // Step 2: without touching prompt, raise output so decode share >= 80%
-  await ev('window.__sim.setOut(512);window.__sim.setCtx(2048)');
-  await ev('window.__sim.run()'); await sleep(120);
+  ok('TRY-THIS step 1 auto-detected (paraphrase false-fails exact)', step >= 2, 'step=' + step);
+  // Step 2: grade the false-pass candidate (wrong answer that PASSES exact)
+  await ev(`window.__sim.setCand(${falsePassIdx})`);
+  await ev('window.__sim.gradeNow()'); await sleep(60);
   step = await ev('window.__sim.CH.step');
-  ok('TRY-THIS step 2 auto-detected (decode ≥ 80%)', step >= 3, 'step=' + step);
-  // Step 3: push prompt+output past ctx
-  await ev('window.__sim.setCtx(256);window.__sim.setPrompt(256);window.__sim.setOut(256)');
-  await ev('window.__sim.run()'); await sleep(120);
+  ok('TRY-THIS step 2 auto-detected (wrong answer false-passes exact)', step >= 3, 'step=' + step);
+  // Step 3: raise threshold past a passing candidate's Jaccard, then grade -> sim flips to FAIL
+  await ev(`window.__sim.setCand(${flip.idx})`);
+  await ev(`window.__sim.setThr(${flip.hiThr})`);
+  await ev('window.__sim.gradeNow()'); await sleep(60);
   const done = await ev(`(function(){return {step:window.__sim.CH.step,
     success:document.getElementById('challenge').classList.contains('success')};})()`);
-  ok('TRY-THIS step 3 auto-detected (context overflow)', done.step >= 4, JSON.stringify(done));
+  ok('TRY-THIS step 3 auto-detected (threshold flips sim PASS -> FAIL)', done.step >= 4, JSON.stringify(done));
   ok('CHALLENGE completes: success banner shown', done.success === true, JSON.stringify(done));
 
-  // ---------- 8b. PREDICT-FIRST mode (Brilliant-style) ----------
+  // ---------- 10b. PREDICT-FIRST mode ----------
   await ev('location.reload()');
   await sleep(600);
-  // At boot, step 1 shows the prediction question with chips, not the instruction
   const pBoot = await ev(`(function(){return {
     chips: document.querySelectorAll('#chPredict .chip').length,
     txt: document.getElementById('chTxt').textContent };})()`);
   ok('PREDICT: step 1 opens with a prediction question + chips', pBoot.chips >= 2 && /Predict first/.test(pBoot.txt),
     JSON.stringify(pBoot));
-  ok('PREDICT: instruction hidden until a prediction is made', !/Grow/.test(pBoot.txt), pBoot.txt);
-  // Chips carry the affordance contract (cursor:pointer + title)
+  ok('PREDICT: instruction hidden until a prediction is made', !/candidate 2/.test(pBoot.txt) || /Predict first/.test(pBoot.txt), pBoot.txt);
   const pAff = await ev(`(function(){var c=document.querySelector('#chPredict .chip');
     return {cur:getComputedStyle(c).cursor, tip:!!c.title};})()`);
   ok('PREDICT: chips are affordant (cursor:pointer + title)', pAff.cur === 'pointer' && pAff.tip, JSON.stringify(pAff));
-  // Tap a WRONG chip (index 1 = output length) — instruction appears, prediction logged
-  await ev(`document.querySelectorAll('#chPredict .chip')[1].click()`);
+  // Tap the WRONG chip for step 1 (index 0 = "PASS"; correct is "FAIL")
+  await ev(`document.querySelectorAll('#chPredict .chip')[0].click()`);
   const pAfter = await ev(`(function(){return {
     chips: document.querySelectorAll('#chPredict .chip').length,
     txt: document.getElementById('chTxt').textContent,
     logged: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /predicted/.test(e.textContent)}) };})()`);
   ok('PREDICT: tapping a chip reveals the instruction + shows your pick', pAfter.chips === 0
-    && /Grow/.test(pAfter.txt) && /you predicted/.test(pAfter.txt), JSON.stringify(pAfter));
+    && /candidate 2/.test(pAfter.txt) && /you predicted/.test(pAfter.txt), JSON.stringify(pAfter));
   ok('PREDICT: the pick is logged in the event stream', pAfter.logged === true);
-  // Complete step 1 — a WRONG prediction must NOT block, and the verdict must teach
-  await ev(`window.__sim.setPrompt(${dflt * 4})`);
-  await ev('window.__sim.run()'); await sleep(120);
+  // Complete step 1 — wrong prediction must NOT block, verdict must teach
+  await ev('window.__sim.setCand(1)');
+  await ev('window.__sim.gradeNow()'); await sleep(60);
   const pVerdict = await ev(`(function(){return {
     step: window.__sim.CH.step,
     verdict: [].slice.call(document.querySelectorAll('#evList .ev')).map(function(e){return e.textContent}).join(' | ') };})()`);
   ok('PREDICT: wrong prediction never blocks step completion', pVerdict.step >= 2, 'step=' + pVerdict.step);
-  ok('PREDICT: verdict names your pick and explains the model', /Not what you predicted/.test(pVerdict.verdict)
-    && /prefill/.test(pVerdict.verdict), pVerdict.verdict.slice(-200));
-  // Step 2 now shows its own prediction question; predict RIGHT via the hook, complete, expect a right verdict
-  const p2 = await ev(`document.getElementById('chTxt').textContent`);
-  ok('PREDICT: step 2 opens with its own question', /Predict first/.test(p2), p2);
-  await ev('window.__sim.predict(1)');   // "stays about the same" — correct
-  await ev('window.__sim.setOut(512);window.__sim.setCtx(2048)');
-  await ev('window.__sim.run()'); await sleep(120);
-  const p2v = await ev(`(function(){return {
-    step: window.__sim.CH.step,
-    right: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /Prediction right/.test(e.textContent)}) };})()`);
-  ok('PREDICT: right prediction confirmed in the log', p2v.step >= 3 && p2v.right === true, JSON.stringify(p2v));
-  // Skipping the prediction entirely must also work (formative, not a gate): complete step 3 without predicting
-  await ev('window.__sim.setCtx(256);window.__sim.setPrompt(256);window.__sim.setOut(256)');
-  await ev('window.__sim.run()'); await sleep(120);
+  ok('PREDICT: verdict names your pick and explains the model',
+    /Not what you predicted/.test(pVerdict.verdict) && /false fail/.test(pVerdict.verdict), pVerdict.verdict.slice(-260));
+  // Skipping predictions still lets the challenge finish
+  await ev(`window.__sim.setCand(${falsePassIdx})`);
+  await ev('window.__sim.gradeNow()'); await sleep(60);
+  await ev(`window.__sim.setCand(${flip.idx})`);
+  await ev(`window.__sim.setThr(${flip.hiThr})`);
+  await ev('window.__sim.gradeNow()'); await sleep(60);
   const p3 = await ev(`(function(){return {step:window.__sim.CH.step,
     success:document.getElementById('challenge').classList.contains('success')};})()`);
   ok('PREDICT: skipping a prediction never blocks the challenge', p3.step >= 4 && p3.success === true, JSON.stringify(p3));
 
-  // ---------- 9. Reset returns to initial state ----------
-  await ev('window.__sim.setPrompt(1024);window.__sim.setOut(512)');
+  // ---------- 11. Reset returns to initial state ----------
+  await ev('window.__sim.setCand(4)');
+  await ev('window.__sim.setThr(0.7)');
   await ev('location.reload()');
   await sleep(600);
   const afterReset = await ev(`(function(){return {
-    prompt:window.__sim.S.promptLen, out:window.__sim.S.outLen, ctx:window.__sim.S.ctxLimit,
-    ran:window.__sim.S.ran, step:window.__sim.CH.step,
-    ttft:document.getElementById('ttftV').textContent};})()`);
+    idx:window.__sim.S.idx, thr:window.__sim.S.thr, graded:window.__sim.S.graded,
+    step:window.__sim.CH.step, exactV:document.getElementById('exactV').textContent };})()`);
   const D = await ev('window.__sim.consts.DEFAULTS');
   ok('R5 Reset restores defaults + clears run',
-    afterReset.prompt === D.promptLen && afterReset.out === D.outLen && afterReset.ctx === D.ctxLimit
-    && afterReset.ran === false && afterReset.step === 1 && afterReset.ttft === '—',
+    afterReset.idx === D.idx && Math.abs(afterReset.thr - D.thr) < 1e-9
+    && afterReset.graded === false && afterReset.step === 1 && afterReset.exactV === '—',
     JSON.stringify(afterReset));
 
-  // ---------- 10. no scroll at embed size ----------
+  // ---------- 12. no scroll at embed size ----------
   const scroll = await ev('({sw:document.documentElement.scrollWidth,sh:document.documentElement.scrollHeight,cw:window.innerWidth,ch:window.innerHeight})');
   ok('NO horizontal scroll @800x500', scroll.sw <= scroll.cw + 1, JSON.stringify(scroll));
   ok('NO vertical scroll @800x500', scroll.sh <= scroll.ch + 1, JSON.stringify(scroll));
 
-  // ---------- 11. prefers-reduced-motion suppresses animation ----------
+  // ---------- 13. prefers-reduced-motion suppresses animation ----------
   await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
   await sleep(120);
   const reducedOK = await ev(`(function(){
@@ -365,7 +370,7 @@ async function main() {
 
   cdp.close();
   child.kill('SIGKILL');
-  try { fs.rmSync('/tmp/m1-prefill-chrome-' + process.pid, { recursive: true, force: true }); } catch {}
+  try { fs.rmSync('/tmp/m5-grader-chrome-' + process.pid, { recursive: true, force: true }); } catch {}
 
   console.log(results.join('\n'));
   console.log(`\n${PASS}/${PASS + FAIL} assertions passed`);

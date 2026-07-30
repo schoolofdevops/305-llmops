@@ -313,6 +313,55 @@ async function main() {
   ok('TRY-THIS step 3 auto-detected', step3.done3 === true && step3.step >= 4, JSON.stringify(step3));
   ok('CHALLENGE completes: success banner shown', step3.success === true, JSON.stringify(step3));
 
+  // ---------- 10b. PREDICT-FIRST mode (Brilliant-style) ----------
+  await reload();
+  // At boot, step 1 shows the prediction question with chips, not the instruction
+  const pBoot = await ev(`(function(){return {
+    chips: document.querySelectorAll('#chPredict .pchip').length,
+    txt: document.getElementById('chTxt').textContent };})()`);
+  ok('PREDICT: step 1 opens with a prediction question + chips', pBoot.chips >= 2 && /Predict first/.test(pBoot.txt),
+    JSON.stringify(pBoot));
+  ok('PREDICT: instruction hidden until a prediction is made', !/Set /.test(pBoot.txt), pBoot.txt);
+  // Chips carry the affordance contract (cursor:pointer + title)
+  const pAff = await ev(`(function(){var c=document.querySelector('#chPredict .pchip');
+    return {cur:getComputedStyle(c).cursor, tip:!!c.title};})()`);
+  ok('PREDICT: chips are affordant (cursor:pointer + title)', pAff.cur === 'pointer' && pAff.tip, JSON.stringify(pAff));
+  // Tap a WRONG chip (index 1 = "no — same meaning must mean the same chunks") — instruction appears, prediction logged
+  await ev(`document.querySelectorAll('#chPredict .pchip')[1].click()`);
+  const pAfter = await ev(`(function(){return {
+    chips: document.querySelectorAll('#chPredict .pchip').length,
+    txt: document.getElementById('chTxt').textContent,
+    logged: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /predicted/.test(e.textContent)}) };})()`);
+  ok('PREDICT: tapping a chip reveals the instruction + shows your pick', pAfter.chips === 0
+    && /rephrase/.test(pAfter.txt) && /you predicted/.test(pAfter.txt), JSON.stringify(pAfter));
+  ok('PREDICT: the pick is logged in the event stream', pAfter.logged === true);
+  // Complete step 1 (wrong-cluster query, then rephrase) — a WRONG prediction must NOT block, verdict must teach
+  await ev('window.__sim.setK(1)');
+  await ev(`window.__sim.pick('q-connrefused')`);
+  await ev(`window.__sim.pick('q-connrefused-fix')`);
+  const pVerdict = await ev(`(function(){return {
+    step: window.__sim.CH.step,
+    verdict: [].slice.call(document.querySelectorAll('#evList .ev')).map(function(e){return e.textContent}).join(' | ') };})()`);
+  ok('PREDICT: wrong prediction never blocks step completion', pVerdict.step >= 2, 'step=' + pVerdict.step);
+  ok('PREDICT: verdict names your pick and explains the model', /Not what you predicted/.test(pVerdict.verdict)
+    && /meaning-space|cluster/.test(pVerdict.verdict), pVerdict.verdict.slice(-260));
+  // Step 2 now shows its own prediction question; predict RIGHT via the hook, complete, expect a right verdict
+  const p2 = await ev(`document.getElementById('chTxt').textContent`);
+  ok('PREDICT: step 2 opens with its own question', /Predict first/.test(p2), p2);
+  await ev('window.__sim.predict(1)');   // "still k chunks, just all far away" — correct
+  await ev(`window.__sim.pick('q-bread')`);
+  const p2v = await ev(`(function(){return {
+    step: window.__sim.CH.step,
+    right: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /Prediction right/.test(e.textContent)}) };})()`);
+  ok('PREDICT: right prediction confirmed in the log', p2v.step >= 3 && p2v.right === true, JSON.stringify(p2v));
+  // Skipping the prediction entirely must also work (formative, not a gate): complete step 3 without predicting
+  await ev('window.__sim.setCs(2)');
+  await ev('window.__sim.setK(5)');
+  await ev(`window.__sim.pick('q-5xx')`);
+  const p3 = await ev(`(function(){return {step:window.__sim.CH.step,
+    success:document.getElementById('challenge').classList.contains('success')};})()`);
+  ok('PREDICT: skipping a prediction never blocks the challenge', p3.step >= 4 && p3.success === true, JSON.stringify(p3));
+
   // ---------- 11. Reset returns to initial state (R5) ----------
   await ev(`window.__sim.setK(5);window.__sim.setCs(0);window.__sim.pick('q-tls')`);
   await ev('location.reload()'); await sleep(500);

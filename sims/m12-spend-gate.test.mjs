@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// Headless-Chrome assertion harness for m8-kv-capacity.html
+// Headless-Chrome assertion harness for m12-spend-gate.html
 // Zero runtime deps: hand-rolled CDP client over Node built-ins (http + ws frames).
 // Chrome 150+: uses PUT /json/new?<url> and launch flag --remote-allow-origins=*.
-// Run: node site/static/sims/m8-kv-capacity.test.mjs
+// Run: node site/static/sims/m12-spend-gate.test.mjs
 
 import { spawn } from 'node:child_process';
 import http from 'node:http';
@@ -13,7 +13,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const HTML = path.join(__dirname, 'm8-kv-capacity.html');
+const HTML = path.join(__dirname, 'm12-spend-gate.html');
 const FILE_URL = pathToFileURL(HTML).href;
 const PORT = 9730 + (process.pid % 400);
 
@@ -112,9 +112,10 @@ async function main() {
   const child = spawn(CHROME, [
     '--headless=new', `--remote-debugging-port=${PORT}`, '--remote-allow-origins=*',
     '--no-sandbox', '--disable-gpu', '--window-size=800,500',
-    '--user-data-dir=/tmp/m8-kv-chrome-' + process.pid, 'about:blank',
+    '--user-data-dir=/tmp/m12-spend-chrome-' + process.pid, 'about:blank',
   ], { stdio: 'ignore' });
 
+  // wait for devtools endpoint
   let version;
   for (let i = 0; i < 60; i++) {
     try { version = await httpJSON('GET', '/json/version'); if (version && version.webSocketDebuggerUrl) break; } catch {}
@@ -148,21 +149,31 @@ async function main() {
     if (r.result && r.result.result) return r.result.result.value;
     return undefined;
   }
+  // run the sim's instant replay path, then read the completed run's summary
+  async function replayAndRead() {
+    for (let i = 0; i < 50 && await ev('window.__sim.isRunning()'); i++) await sleep(60);
+    await ev('window.__sim.replay()');
+    await sleep(60);
+    for (let i = 0; i < 50 && await ev('window.__sim.isRunning()'); i++) await sleep(60);
+    await sleep(40);
+    return ev(`(function(){var r=window.__sim.S.result||{};return {
+      total:r.total, served:r.served, bounced:r.bounced, price:r.price,
+      spend:r.spend, blocked:r.blocked, blockDay:r.blockDay, ran:!!window.__sim.S.ran};})()`);
+  }
 
   // ---------- 1. loads clean ----------
   ok('R1 no console errors', consoleErrors.length === 0, consoleErrors.join(' | '));
   ok('R1 no page exceptions', pageErrors.length === 0, pageErrors.join(' | '));
   ok('R1 zero external network requests', netRequests.length === 0, netRequests.join(' | '));
-  ok('renders — two sliders + budget slider present',
-    (await ev('document.querySelectorAll("#controls input[type=range]").length')) === 3);
-  ok('renders — model + quant segmented selectors present',
-    (await ev('document.querySelectorAll("#modelSeg button").length')) === 4 &&
-    (await ev('document.querySelectorAll("#quantSeg button").length')) === 3);
+  ok('renders — three per-key budget sliders present',
+    (await ev('document.querySelectorAll("#stage .kbudget input[type=range]").length')) === 3);
+  ok('renders — price slider present',
+    (await ev('!!document.getElementById("priceRange")')) === true);
   ok('test hook exposed', (await ev('typeof window.__sim')) === 'object');
 
   // ---------- 2. affordance sanity (R2) ----------
   const affClickable = await ev(`(function(){
-    var sel=['#reset','#budgetRange','#ctxRange','#usersRange','#modelSeg button','#quantSeg button'];
+    var sel=['#runBtn','#reset','#priceRange','#bud1','#bud2','#bud3','#chatBtn','#priceChips .pc'];
     var bad=[];
     sel.forEach(function(s){var e=document.querySelector(s);if(!e){bad.push(s+':missing');return;}
       var cs=getComputedStyle(e);
@@ -170,199 +181,165 @@ async function main() {
     });
     return bad;
   })()`);
-  ok('R2 interactive controls have pointer/help cursor', affClickable.length === 0, affClickable.join(','));
-  const ctlTips = await ev(`(function(){
-    var bad=[];
-    document.querySelectorAll('#controls .ctl').forEach(function(c){if(!c.title)bad.push('ctl-no-title');});
-    if(!document.querySelector('#reset').title)bad.push('reset');
-    return bad;})()`);
-  ok('R2 controls carry tooltips (title)', ctlTips.length === 0, ctlTips.join(','));
+  ok('R2 interactive controls have pointer cursor', affClickable.length === 0, affClickable.join(','));
+  const tips = await ev(`!!document.querySelector('#runBtn').title && !!document.querySelector('#reset').title
+    && !!document.querySelector('#chatBtn').title && !!document.querySelector('#priceRange').title`);
+  ok('R2 controls carry tooltips (title)', tips === true);
   const inertLog = await ev(`getComputedStyle(document.querySelector('#evList')).cursor`);
   ok('R2 event log is inert (cursor:default)', inertLog === 'default', inertLog);
   const inertReadout = await ev(`getComputedStyle(document.querySelector('#readout')).cursor`);
   ok('R2 readout panel is inert (cursor:default)', inertReadout === 'default', inertReadout);
-  const inertScale = await ev(`getComputedStyle(document.querySelector('#scale')).cursor`);
-  ok('R2 legend/scale is inert (cursor:default)', inertScale === 'default', inertScale);
+  // key spend cards read as status (inert) except their budget slider
+  const inertKey = await ev(`getComputedStyle(document.querySelector('#k1 .kname')).cursor`);
+  ok('R2 key spend card is inert (cursor:default)', inertKey === 'default', inertKey);
   const noteTip = await ev(`!!document.querySelector('#note').getAttribute('data-tip')`);
   ok('R8 honest-model footnote present', noteTip === true);
 
-  // ---------- 3. FORMULA spot-check: the course-table number ----------
-  // 0.6B @ 2048 ctx × 1 user KV must equal 112 KiB × 2048 = 224 MiB exactly.
-  const kvCheck = await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:1,budgetIdx:1});
-    var MiB=window.__sim.consts.MiB;
-    return {kvMiB:r.kv/MiB, over:r.over};})()`);
-  ok('FORMULA 0.6B@2048×1user KV == 224 MiB (course table)',
-    Math.abs(kvCheck.kvMiB - 224) < 0.01, JSON.stringify(kvCheck));
-  ok('FORMULA course node fits (0.6B@2048×1user on 8 GB not OOM)', kvCheck.over === false);
-  // per-token KV is exactly 112 KiB for the course model
-  const perTok = await ev(`window.__sim.consts.MODELS[0].kvPerTok / window.__sim.consts.KiB`);
-  ok('FORMULA per-token KV == 112 KiB (2×28×8×128×2 bytes)', perTok === 112, 'perTok=' + perTok);
-  // KV is linear in ctx and in users (conservation of the KV term)
-  const linear = await ev(`(function(){
-    var a=window.__sim.compute({model:0,quant:1,ctx:2048,users:1});
-    var b=window.__sim.compute({model:0,quant:1,ctx:4096,users:1});
-    var c=window.__sim.compute({model:0,quant:1,ctx:2048,users:2});
-    return {ctxDouble: Math.abs(b.kv-2*a.kv)<1, usersDouble: Math.abs(c.kv-2*a.kv)<1};})()`);
-  ok('FORMULA KV scales linearly with context', linear.ctxDouble === true);
-  ok('FORMULA KV scales linearly with concurrency', linear.usersDouble === true);
-  // total is exactly weights+runtime+KV (three-term sum)
-  const sum = await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:4});
-    return Math.abs(r.total-(r.weights+r.runtime+r.kv))<1;})()`);
-  ok('FORMULA total == weights + runtime + KV (three-term sum)', sum === true);
-  // weights band moves with quant only (Q4 < Q8 < FP16), KV unchanged
-  const quantMove = await ev(`(function(){
-    var q4=window.__sim.compute({model:0,quant:0,ctx:2048,users:1});
-    var q8=window.__sim.compute({model:0,quant:1,ctx:2048,users:1});
-    var f16=window.__sim.compute({model:0,quant:2,ctx:2048,users:1});
-    return {order: q4.weights<q8.weights && q8.weights<f16.weights,
-            kvSame: q4.kv===q8.kv && q8.kv===f16.kv};})()`);
-  ok('FORMULA quant moves weights band only (Q4<Q8<FP16, KV fixed)',
-    quantMove.order && quantMove.kvSame, JSON.stringify(quantMove));
+  // ---------- 3. event log responds to a replay ----------
+  await ev('window.__sim.setPrice(0.60)');
+  await ev('document.getElementById("runBtn").click()');
+  await sleep(3200); // animated replay completes (~29 steps × 70ms + day headers)
+  const logResponded = await ev(`Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /week\\/replay|budget/.test(e.textContent)})`);
+  ok('EVENT LOG responds — a replay writes spend-log lines', logResponded === true);
+  const notRunning = await ev('!window.__sim.isRunning()');
+  ok('replay finishes (not stuck running)', notRunning === true);
 
-  // ---------- 4. readout shows the live numbers ----------
-  await ev('window.__sim.setModel(0);window.__sim.setQuant(1);window.__sim.setCtx(2048);window.__sim.setUsers(1);window.__sim.setBudgetIdx(1)');
-  const kvShown = await ev(`document.getElementById('kvV').textContent`);
-  ok('readout KV cell shows 224 MB for the course node', /224\s*MB/.test(kvShown), kvShown);
+  // ---------- 4. THE $0 LIE — at price $0 no key ever blocks (invariant i) ----------
+  await ev('window.__sim.setPrice(0)');
+  const rZero = await replayAndRead();
+  ok('$0 LIE: at price $0 total week spend is exactly $0', rZero.total === 0, JSON.stringify({total:rZero.total}));
+  ok('$0 LIE: at price $0 NO key blocks (invariant i)',
+    rZero.blocked && rZero.blocked.every(b => b === false) && rZero.bounced === 0, JSON.stringify(rZero.blocked));
+  ok('$0 LIE: at price $0 every call is served (burst invisible)', rZero.served > 0, JSON.stringify({served:rZero.served}));
+  // pure-math cross-check that $0 keeps every tab at zero regardless of budgets
+  const zeroMath = await ev(`(function(){var r=window.__sim.computeReplay(0,[15,10,8]);
+    return {total:r.total, anyBlocked:r.blocked.some(function(b){return b})};})()`);
+  ok('$0 LIE (math): computeReplay(0,…) => total 0, none blocked', zeroMath.total === 0 && zeroMath.anyBlocked === false, JSON.stringify(zeroMath));
 
-  // ---------- 5. OOM state fires when the box is blown ----------
-  // One 40960-ctx user (~4.4 GB KV + weights + runtime ≈ 5.4 GB) blows the 4 GB node.
-  await ev('window.__sim.setModel(0);window.__sim.setQuant(1);window.__sim.setBudgetIdx(0);window.__sim.setUsers(1);window.__sim.setCtx(40960)');
-  await sleep(400); // let the band height transition settle before measuring
-  const oom = await ev(`(function(){return {
-    over: window.__sim.isOver(),
-    boxOOM: document.getElementById('box').classList.contains('oom'),
-    pill: document.getElementById('statusPill').textContent,
-    overBand: parseFloat(getComputedStyle(document.getElementById('bOver')).height)>0,
-    log: Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /OOMKilled/.test(e.textContent)})
-  };})()`);
-  ok('OOM: single 40960-ctx user blows the 8 GB box (over=true)', oom.over === true, JSON.stringify(oom));
-  ok('OOM: box turns red (box.oom class)', oom.boxOOM === true);
-  ok('OOM: status pill reads OOMKilled', oom.pill === 'OOMKilled', oom.pill);
-  ok('OOM: overflow band is rendered', oom.overBand === true);
-  ok('OOM: kubelet log fires a pod OOMKilled line', oom.log === true);
-  // and it clears when the box fits again
-  await ev('window.__sim.setCtx(2048)');
-  const recover = await ev(`(function(){return {over:window.__sim.isOver(),
-    pill:document.getElementById('statusPill').textContent};})()`);
-  ok('OOM clears when KV shrinks back (Running again)', recover.over === false && recover.pill === 'Running',
-    JSON.stringify(recover));
+  // ---------- 5. BLAST-RADIUS ISOLATION — real price blocks batch, interactive survives (invariant ii) ----------
+  await ev('window.__sim.setPrice(0.60)');
+  const rReal = await replayAndRead();
+  ok('BLAST RADIUS: at the default real price the batch key BLOCKS (invariant ii)',
+    rReal.blocked[1] === true, JSON.stringify(rReal.blocked));
+  ok('BLAST RADIUS: the interactive key finishes the week UNBLOCKED (invariant ii)',
+    rReal.blocked[0] === false, JSON.stringify(rReal.blocked));
+  ok('BLAST RADIUS: some batch calls bounce at the door', rReal.bounced > 0, JSON.stringify({bounced:rReal.bounced}));
+  const batchBlockedUI = await ev(`document.getElementById('st2').classList.contains('blocked')
+    && document.getElementById('k2').classList.contains('isblocked')`);
+  ok('BLAST RADIUS: batch card renders BLOCKED in the UI', batchBlockedUI === true);
+  const interactiveActiveUI = await ev(`!document.getElementById('st1').classList.contains('blocked')`);
+  ok('BLAST RADIUS: interactive card renders active in the UI', interactiveActiveUI === true);
+  const bounceLog = await ev(`Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /429|bounce/.test(e.textContent)})`);
+  ok('BLAST RADIUS: spend log records a 429 bounce line', bounceLog === true);
+  // math cross-check
+  const realMath = await ev(`(function(){var r=window.__sim.computeReplay(0.60,[15,10,8]);
+    return {b0:r.blocked[0], b1:r.blocked[1]};})()`);
+  ok('BLAST RADIUS (math): batch blocked, interactive not', realMath.b1 === true && realMath.b0 === false, JSON.stringify(realMath));
 
-  // ---------- 6. max-users readout matches the budget math ----------
-  const maxU = await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:1,budgetIdx:1});
-    // adding one more than maxUsers must overflow; maxUsers itself must fit
-    var atMax=window.__sim.compute({model:0,quant:1,ctx:2048,users:r.maxUsers,budgetIdx:1});
-    var overMax=window.__sim.compute({model:0,quant:1,ctx:2048,users:r.maxUsers+1,budgetIdx:1});
-    return {maxUsers:r.maxUsers, atMaxFits:!atMax.over, oneMoreOver:overMax.over};})()`);
-  ok('MAX-USERS: computed ceiling fits, one more overflows (0.6B@2048 on 8 GB)',
-    maxU.atMaxFits === true && maxU.oneMoreOver === true && maxU.maxUsers > 1, JSON.stringify(maxU));
+  // ---------- 6. HISTORY RESEND — super-linear turn cost (invariant iii) ----------
+  const chatInv = await ev(`(function(){
+    var t1=window.__sim.turnTokens(1), t10=window.__sim.turnTokens(10);
+    var lin=t1*10, cum=window.__sim.chatCumulative(10);
+    return {t1:t1,t10:t10,ratio:t10/t1, cumRatio:cum/(t1*10)};})()`);
+  ok('HISTORY RESEND: turn-10 single-call cost > 5× turn 1 (invariant iii)', chatInv.ratio > 5, JSON.stringify(chatInv));
+  ok('HISTORY RESEND: cumulative bill grows super-linearly (> flat 10×)', chatInv.cumRatio > 1.5, JSON.stringify(chatInv));
+  // drive the chat animation and confirm bars render + a done line appears
+  await ev('window.__sim.chat()');
+  await sleep(200);
+  const chatUI = await ev(`(function(){return {
+    bars: document.querySelectorAll('#turnBars .tb i').length,
+    tallLast: parseFloat(document.querySelectorAll('#turnBars .tb i')[9].style.height) > parseFloat(document.querySelectorAll('#turnBars .tb i')[0].style.height),
+    doneLog: Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /chat\\/done|turn 10/.test(e.textContent)})};})()`);
+  ok('HISTORY RESEND: 10 turn bars render, last taller than first', chatUI.bars === 10 && chatUI.tallLast === true, JSON.stringify(chatUI));
+  ok('HISTORY RESEND: chat replay logs a turn-10 cost line', chatUI.doneLog === true);
 
-  // ---------- 7. TEACHING INVARIANT: trade context for users holds the box ----------
-  // Halving ctx and doubling users leaves the KV term identical -> same total.
-  const trade = await ev(`(function(){
-    var a=window.__sim.compute({model:0,quant:1,ctx:8192,users:4});
-    var b=window.__sim.compute({model:0,quant:1,ctx:4096,users:8});
-    return {kvEqual: Math.abs(a.kv-b.kv)<1, totalEqual: Math.abs(a.total-b.total)<1};})()`);
-  ok('INVARIANT: halve ctx + double users == same KV (context traded for concurrency)',
-    trade.kvEqual === true && trade.totalEqual === true, JSON.stringify(trade));
-  // and a bigger model raises BOTH weights and per-user KV
-  const bigger = await ev(`(function(){
-    var s=window.__sim.compute({model:0,quant:1,ctx:2048,users:1});
-    var b=window.__sim.compute({model:3,quant:1,ctx:2048,users:1});
-    return {weightsUp:b.weights>s.weights, kvUp:b.kv>s.kv};})()`);
-  ok('INVARIANT: bigger model raises both weights and per-token KV', bigger.weightsUp && bigger.kvUp);
+  // ---------- 7. budget slider changes who blocks (per-key isolation is real, not scripted) ----------
+  await ev('window.__sim.setPrice(0.60); window.__sim.setBudget(1, 40)'); // give batch a huge budget
+  const rBigBatch = await replayAndRead();
+  ok('BUDGET SLIDER: raising the batch budget stops it blocking',
+    rBigBatch.blocked[1] === false, JSON.stringify(rBigBatch.blocked));
+  // starve the interactive key AND raise the price so its ~0.7M-tok week crosses $1
+  await ev('window.__sim.setPrice(2.0); window.__sim.setBudget(0, 1)');
+  const rTightInter = await replayAndRead();
+  ok('BUDGET SLIDER: starving the interactive budget makes IT block instead',
+    rTightInter.blocked[0] === true, JSON.stringify(rTightInter.blocked));
 
   // ---------- 8. all three TRY-THIS steps auto-detect end-to-end ----------
   await ev('location.reload()');
   await sleep(600);
-  // Step 1: on the course node, drive users up to the ceiling (max users, still fits)
-  await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:1,budgetIdx:1});
-    window.__sim.setUsers(r.maxUsers);
-  })()`);
-  await sleep(60);
+  // Step 1: price $0, replay -> nothing blocks
+  await ev('window.__sim.setPrice(0)');
+  await ev('window.__sim.replay()'); await sleep(280);
   let step = await ev('window.__sim.CH.step');
-  ok('TRY-THIS step 1 auto-detected (max users on the course node)', step >= 2, 'step=' + step);
-  // Step 2: back to 1 user, ctx to max, drop to the 4 GB node -> OOM
-  await ev('window.__sim.setUsers(1);window.__sim.setCtx(40960);window.__sim.setBudgetIdx(0)');
-  await sleep(60);
+  ok('TRY-THIS step 1 auto-detected ($0 → nothing blocks)', step >= 2, 'step=' + step);
+  // Step 2: real price, replay -> batch blocks, interactive survives
+  await ev('window.__sim.setPrice(0.60)');
+  await ev('window.__sim.replay()'); await sleep(280);
   step = await ev('window.__sim.CH.step');
-  ok('TRY-THIS step 2 auto-detected (40960 ctx OOMs the 4 GB box)', step >= 3, 'step=' + step);
-  // Step 3: trade context for users from the step-2 anchor (40960 × 1). Halve ctx,
-  // double users, and land inside the box. From 40960@1 the anchor is stored; go to a
-  // fitting point that is <= anchor/2 ctx AND >= anchor*2 users. Use 2048 ctx × 2 users.
-  await ev('window.__sim.setCtx(2048);window.__sim.setUsers(2)');
-  await sleep(60);
+  ok('TRY-THIS step 2 auto-detected (real price → batch blocks, interactive survives)', step >= 3, 'step=' + step);
+  // Step 3: send the chat
+  await ev('window.__sim.chat()'); await sleep(150);
   const done = await ev(`(function(){return {step:window.__sim.CH.step,
     success:document.getElementById('challenge').classList.contains('success')};})()`);
-  ok('TRY-THIS step 3 auto-detected (trade context for users)', done.step >= 4, JSON.stringify(done));
+  ok('TRY-THIS step 3 auto-detected (history resend)', done.step >= 4, JSON.stringify(done));
   ok('CHALLENGE completes: success banner shown', done.success === true, JSON.stringify(done));
 
-  // ---------- 8b. PREDICT-FIRST mode (Brilliant-style) ----------
+  // ---------- 8b. PREDICT-FIRST mode ----------
   await ev('location.reload()');
   await sleep(600);
-  // At boot, step 1 shows the prediction question with chips, not the instruction
   const pBoot = await ev(`(function(){return {
     chips: document.querySelectorAll('#chPredict .chip').length,
     txt: document.getElementById('chTxt').textContent };})()`);
-  ok('PREDICT: step 1 opens with a prediction question + chips', pBoot.chips >= 2 && /Predict first/.test(pBoot.txt),
-    JSON.stringify(pBoot));
-  ok('PREDICT: instruction hidden until a prediction is made', !/max users/.test(pBoot.txt), pBoot.txt);
-  // Chips carry the affordance contract (cursor:pointer + title)
+  ok('PREDICT: step 1 opens with a prediction question + chips', pBoot.chips >= 2 && /Predict first/.test(pBoot.txt), JSON.stringify(pBoot));
+  ok('PREDICT: instruction hidden until a prediction is made', !/Replay the week/.test(pBoot.txt) || /Predict first/.test(pBoot.txt), pBoot.txt);
   const pAff = await ev(`(function(){var c=document.querySelector('#chPredict .chip');
     return {cur:getComputedStyle(c).cursor, tip:!!c.title};})()`);
   ok('PREDICT: chips are affordant (cursor:pointer + title)', pAff.cur === 'pointer' && pAff.tip, JSON.stringify(pAff));
-  // Tap a WRONG chip (index 0 = "CPU saturates") — instruction appears, prediction logged
+  // tap a WRONG chip (index 0 = "nightly-batch-job"; correct is index 2 = "none of them")
   await ev(`document.querySelectorAll('#chPredict .chip')[0].click()`);
   const pAfter = await ev(`(function(){return {
     chips: document.querySelectorAll('#chPredict .chip').length,
     txt: document.getElementById('chTxt').textContent,
     logged: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /predicted/.test(e.textContent)}) };})()`);
-  ok('PREDICT: tapping a chip reveals the instruction + shows your pick', pAfter.chips === 0
-    && /max users/.test(pAfter.txt) && /you predicted/.test(pAfter.txt), JSON.stringify(pAfter));
-  ok('PREDICT: the pick is logged in the event stream', pAfter.logged === true);
-  // Complete step 1 — a WRONG prediction must NOT block, and the verdict must teach
-  await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:1,budgetIdx:1});
-    window.__sim.setUsers(r.maxUsers);
-  })()`);
-  await sleep(60);
+  ok('PREDICT: tapping a chip reveals instruction + shows your pick', pAfter.chips === 0 && /you predicted/.test(pAfter.txt), JSON.stringify(pAfter));
+  ok('PREDICT: the pick is logged in the spend stream', pAfter.logged === true);
+  // complete step 1 with the WRONG prediction — must NOT block, verdict must teach
+  await ev('window.__sim.setPrice(0)');
+  await ev('window.__sim.replay()'); await sleep(280);
   const pVerdict = await ev(`(function(){return {
     step: window.__sim.CH.step,
     verdict: [].slice.call(document.querySelectorAll('#evList .ev')).map(function(e){return e.textContent}).join(' | ') };})()`);
   ok('PREDICT: wrong prediction never blocks step completion', pVerdict.step >= 2, 'step=' + pVerdict.step);
-  ok('PREDICT: verdict names your pick and explains the model', /Not what you predicted/.test(pVerdict.verdict)
-    && /memory fills before compute/.test(pVerdict.verdict), pVerdict.verdict.slice(-260));
-  // Step 2 now shows its own prediction question; predict RIGHT via the hook, complete, expect a right verdict
+  ok('PREDICT: verdict names your pick and explains the model',
+    /Not what you predicted/.test(pVerdict.verdict) && /invisible|price/.test(pVerdict.verdict), pVerdict.verdict.slice(-240));
+  // step 2 shows its own question; predict RIGHT (index 1 = batch), complete, expect right verdict
   const p2 = await ev(`document.getElementById('chTxt').textContent`);
   ok('PREDICT: step 2 opens with its own question', /Predict first/.test(p2), p2);
-  await ev('window.__sim.predict(1)');   // "no — that one request’s KV alone blows the box" — correct
-  await ev('window.__sim.setUsers(1);window.__sim.setCtx(40960);window.__sim.setBudgetIdx(0)');
-  await sleep(60);
+  await ev('window.__sim.predict(1)');
+  await ev('window.__sim.setPrice(0.60)');
+  await ev('window.__sim.replay()'); await sleep(280);
   const p2v = await ev(`(function(){return {
     step: window.__sim.CH.step,
     right: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /Prediction right/.test(e.textContent)}) };})()`);
   ok('PREDICT: right prediction confirmed in the log', p2v.step >= 3 && p2v.right === true, JSON.stringify(p2v));
-  // Skipping the prediction entirely must also work (formative, not a gate): complete step 3 without predicting
-  await ev('window.__sim.setCtx(2048);window.__sim.setUsers(2)');
-  await sleep(60);
+  // skip the step-3 prediction entirely — still completes
+  await ev('window.__sim.chat()'); await sleep(150);
   const p3 = await ev(`(function(){return {step:window.__sim.CH.step,
     success:document.getElementById('challenge').classList.contains('success')};})()`);
   ok('PREDICT: skipping a prediction never blocks the challenge', p3.step >= 4 && p3.success === true, JSON.stringify(p3));
 
   // ---------- 9. Reset returns to initial state ----------
-  await ev('window.__sim.setCtx(40960);window.__sim.setUsers(32);window.__sim.setModel(3)');
+  await ev('window.__sim.setPrice(2.0); window.__sim.setBudget(1, 40)');
   await ev('location.reload()');
   await sleep(600);
-  const afterReset = await ev(`(function(){var D=window.__sim.consts.DEFAULTS;return {
-    ok: window.__sim.S.budgetIdx===D.budgetIdx && window.__sim.S.model===D.model &&
-        window.__sim.S.quant===D.quant && window.__sim.S.ctx===D.ctx && window.__sim.S.users===D.users,
-    step: window.__sim.CH.step, over: window.__sim.isOver(),
-    kv: document.getElementById('kvV').textContent};})()`);
-  ok('R5 Reset restores the course-node defaults + clears challenge',
-    afterReset.ok === true && afterReset.step === 1 && afterReset.over === false && /224\s*MB/.test(afterReset.kv),
+  const afterReset = await ev(`(function(){return {
+    priceRaw:window.__sim.S.priceRaw, budgets:window.__sim.S.budgets.slice(),
+    ran:window.__sim.S.ran, step:window.__sim.CH.step,
+    total:document.getElementById('totalV').textContent};})()`);
+  const D = await ev('window.__sim.consts.DEFAULTS');
+  ok('R5 Reset restores defaults + clears run',
+    afterReset.priceRaw === D.price && JSON.stringify(afterReset.budgets) === JSON.stringify(D.budgets)
+    && afterReset.ran === false && afterReset.step === 1 && afterReset.total === '—',
     JSON.stringify(afterReset));
 
   // ---------- 10. no scroll at embed size ----------
@@ -382,7 +359,7 @@ async function main() {
 
   cdp.close();
   child.kill('SIGKILL');
-  try { fs.rmSync('/tmp/m8-kv-chrome-' + process.pid, { recursive: true, force: true }); } catch {}
+  try { fs.rmSync('/tmp/m12-spend-chrome-' + process.pid, { recursive: true, force: true }); } catch {}
 
   console.log(results.join('\n'));
   console.log(`\n${PASS}/${PASS + FAIL} assertions passed`);

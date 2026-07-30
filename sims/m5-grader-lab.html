@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grader Lab — four ways to grade one answer</title>
+<style>
+  :root{
+    --bg:#0d1220; --panel:#151c2e; --panel2:#111827; --line:#26324e; --line2:#1c2740;
+    --txt:#dbe4f5; --dim:#8494b3; --faint:#5a6a8c;
+    --accent:#4cc9f0; --accent2:#7b6cf6;
+    --ok:#3ddc97; --warn:#f5b942; --bad:#ff6b6b;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:clamp(10.5px,0.4vw + 9.1px,16px)}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:1rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow:hidden;
+  }
+  #app{display:flex;flex-direction:column;height:100%;padding:8px 10px;gap:6px}
+
+  /* ---------- header ---------- */
+  header{display:flex;align-items:center;gap:12px;flex:0 0 auto;flex-wrap:wrap}
+  header h1{font-size:1.05rem;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+  header h1 .llm{color:var(--accent)}
+  #hsub{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--faint);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #reset{background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;
+    padding:3px 9px;font-size:.88rem;cursor:pointer;min-height:24px;flex:0 0 auto}
+  #reset:hover{color:var(--txt);border-color:var(--faint)}
+
+  /* ---------- challenge banner ---------- */
+  #challenge{flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    background:linear-gradient(90deg,rgba(123,108,246,.14),rgba(76,201,240,.07));
+    border:1px solid #3a3f6e;border-radius:8px;padding:4px 11px;min-height:30px;flex-wrap:wrap}
+  #challenge .tag{font-size:.8rem;font-weight:700;letter-spacing:.8px;color:var(--accent2);
+    text-transform:uppercase;white-space:nowrap}
+  #challenge .steps{display:flex;gap:5px}
+  #challenge .dot{width:1.3rem;height:1.3rem;border-radius:50%;border:1.5px solid var(--faint);
+    font-size:.76rem;display:flex;align-items:center;justify-content:center;color:var(--faint);font-weight:700}
+  #challenge .dot.cur{border-color:var(--accent);color:var(--accent)}
+  #challenge .dot.done{border-color:var(--ok);background:rgba(61,220,151,.15);color:var(--ok)}
+  #challenge .txt{flex:1;color:var(--txt);font-size:.94rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  #challenge .txt code{font-family:var(--mono);font-size:.86rem;color:var(--accent);background:rgba(76,201,240,.08);
+    padding:0 4px;border-radius:4px}
+  #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
+  #challenge.success .tag{color:var(--ok)}
+  #challenge.success .txt{white-space:normal;line-height:1.3}
+  #challenge .predict{flex:1 1 100%;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:1px 0 5px}
+  #challenge .chip{cursor:pointer;border:1px solid #3a3f6e;border-radius:999px;padding:2px 11px;
+    font-size:.85rem;color:var(--txt);background:rgba(76,201,240,.06);user-select:none}
+  #challenge .chip:hover{border-color:var(--accent);background:rgba(76,201,240,.16)}
+  #challenge .txt .pv{font-size:.8rem;color:var(--faint);margin-left:6px}
+
+  /* ---------- main grid ---------- */
+  #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(240px,21rem,352px) 1fr;gap:6px;min-height:0}
+  #main>.panel{min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;min-height:0}
+  .panel h2{font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .panel h2 span{text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- left column: question + candidate + controls ---------- */
+  #left{display:flex;flex-direction:column;gap:8px;overflow-y:auto;scrollbar-width:thin}
+
+  .qa{border:1px solid var(--line2);border-radius:8px;background:var(--panel2);padding:6px 9px}
+  .qa,.qa *{cursor:default}
+  .qa .ql{font-family:var(--mono);font-size:.68rem;letter-spacing:.5px;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
+  .qa .qt{font-size:.9rem;line-height:1.35;color:var(--txt)}
+  .qa .ref{font-size:.86rem;line-height:1.35;color:var(--dim)}
+  .qa .ref b{color:var(--accent2);font-weight:700}
+
+  #candCard{border:1px solid var(--line);border-radius:8px;background:#0a0f1c;padding:6px 9px}
+  #candCard .chd{display:flex;align-items:baseline;gap:8px;font-family:var(--mono);margin-bottom:3px}
+  #candCard .cno{font-size:.82rem;font-weight:700;color:var(--accent)}
+  #candCard .ckind{font-size:.7rem;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #candCard .cnav{margin-left:auto;display:flex;gap:4px}
+  #candCard .cbtn{border:1px solid var(--line);background:var(--panel);color:var(--dim);border-radius:6px;
+    width:1.6rem;height:1.5rem;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+  #candCard .cbtn:hover{color:var(--txt);border-color:var(--accent)}
+  #candText{font-size:.9rem;line-height:1.4;color:var(--txt);min-height:2.4rem}
+  #candText.empty{color:var(--faint);font-style:italic}
+
+  .ctl .cl{font-family:var(--mono);font-size:.76rem;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .ctl .cl b{color:var(--txt);font-weight:700}
+  .ctl .cl .hint{color:var(--faint);font-size:.68rem;font-weight:400}
+  .ctl input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:1.2rem}
+  #runBtn{width:100%;min-height:2.1rem;border-radius:8px;border:1px solid var(--accent);
+    background:color-mix(in srgb,var(--accent) 12%,var(--panel2));
+    color:var(--accent);font-weight:700;font-size:.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+    transition:background .15s;margin-top:2px}
+  #runBtn:hover:not(:disabled){background:color-mix(in srgb,var(--accent) 22%,var(--panel2))}
+  #runBtn:disabled{opacity:.5;cursor:default}
+
+  /* ---------- right column: three grader columns ---------- */
+  #graders{display:flex;flex-direction:column;min-height:0;gap:8px}
+  #cols{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:0 0 auto}
+  .gcol{border:1px solid var(--line2);border-radius:9px;background:var(--panel2);padding:7px 8px;display:flex;flex-direction:column;gap:5px;min-width:0}
+  .gcol .gname{font-family:var(--mono);font-size:.78rem;font-weight:700;letter-spacing:.3px;display:flex;align-items:baseline;gap:5px}
+  .gcol.exact .gname{color:var(--accent2)}
+  .gcol.sim .gname{color:var(--accent)}
+  .gcol.judge .gname{color:var(--warn)}
+  .gcol .gsub{font-size:.66rem;color:var(--faint);line-height:1.3;min-height:2.1rem}
+  .gcol .gmid{font-family:var(--mono);font-size:.8rem;color:var(--dim);min-height:1.2rem}
+  .gcol .gmid .num{color:var(--txt);font-weight:700}
+  .verdict{border-radius:7px;padding:4px 6px;text-align:center;font-family:var(--mono);font-weight:800;
+    font-size:.92rem;letter-spacing:.5px;border:1px solid var(--line);color:var(--faint);background:#0a0f1c}
+  .verdict.pass{color:var(--ok);border-color:#2c7a5b;background:rgba(61,220,151,.10)}
+  .verdict.fail{color:var(--bad);border-color:#7a3232;background:rgba(255,107,107,.10)}
+  .verdict .why{display:block;font-size:.6rem;font-weight:600;letter-spacing:0;margin-top:2px;color:var(--dim)}
+
+  /* truth strip: what the reference says the answer SHOULD be, vs each grader */
+  #truthWrap{border:1px solid var(--line2);border-radius:9px;background:var(--panel2);padding:7px 9px;flex:0 0 auto}
+  #truthWrap .th{font-size:.72rem;color:var(--faint);margin-bottom:4px;font-family:var(--mono)}
+  #truthRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:.78rem}
+  #truthRow .truth{font-weight:800}
+  #truthRow .truth.good{color:var(--ok)} #truthRow .truth.bad2{color:var(--bad)}
+  #truthRow .tag2{border:1px solid var(--line);border-radius:6px;padding:1px 7px;color:var(--dim)}
+  #truthRow .tag2.mismatch{border-color:var(--warn);color:var(--warn)}
+  #truthRow .tag2 b{font-weight:700}
+
+  /* ---------- event log ---------- */
+  #events{flex:1 1 auto;display:flex;flex-direction:column;min-height:5.5rem}
+  #events,#events *{cursor:default}
+  #evList{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6;scrollbar-width:thin}
+  .ev{display:flex;gap:8px;white-space:nowrap;overflow:hidden}
+  .ev .et{color:var(--faint);flex:0 0 4.2rem}
+  .ev .er{flex:0 0 5.0rem;color:var(--accent2);font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .ev.sim .er{color:var(--accent)}
+  .ev.judge .er{color:var(--warn)}
+  .ev.miss .er{color:var(--bad)}
+  .ev .em{flex:1;color:var(--txt);opacity:.9;overflow:hidden;text-overflow:ellipsis}
+  .ev.new{animation:evin .4s ease-out}
+  @keyframes evin{0%{background:rgba(76,201,240,.12)}100%{background:transparent}}
+  #note{margin-left:auto;font-size:1rem;color:var(--faint);cursor:help;position:relative;padding:0 4px}
+  #note:hover{color:var(--dim)}
+  #note:hover::after,#note:active::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 7px);
+    z-index:40;width:46ch;max-width:80vw;background:#0a0f1c;border:1px solid var(--line);border-radius:7px;padding:7px 10px;
+    color:var(--txt);text-align:left;white-space:normal;pointer-events:none;
+    font:.82rem/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    box-shadow:0 4px 16px rgba(0,0,0,.55)}
+
+  /* narrow fallback */
+  @media (max-width:620px){
+    body{overflow:auto}
+    #main{grid-template-columns:1fr}
+    #cols{grid-template-columns:1fr}
+    #app{height:auto;min-height:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <h1><span class="llm">◇</span> Grader Lab</h1>
+    <span id="hsub">one answer · three graders · which one do you trust?</span>
+    <button id="reset" title="Reset the grader lab to its starting state">↺ Reset</button>
+  </header>
+
+  <div id="challenge">
+    <span class="tag">Try this</span>
+    <span class="steps">
+      <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
+    </span>
+    <span class="txt" id="chTxt"></span>
+    <div class="predict" id="chPredict"></div>
+  </div>
+
+  <div id="main">
+    <!-- LEFT: the question, the candidate under test, the controls -->
+    <div class="panel" id="left">
+      <h2>Under test <span>· one fixed question, many answers</span></h2>
+
+      <div class="qa">
+        <div class="ql">Golden question</div>
+        <div class="qt" id="qText"></div>
+      </div>
+      <div class="qa">
+        <div class="ql">Reference answer</div>
+        <div class="ref" id="rText"></div>
+      </div>
+
+      <div id="candCard">
+        <div class="chd">
+          <span class="cno" id="candNo">Candidate 1 / 6</span>
+          <span class="ckind" id="candKind"></span>
+          <span class="cnav">
+            <button class="cbtn" id="prevBtn" title="Previous candidate answer">‹</button>
+            <button class="cbtn" id="nextBtn" title="Next candidate answer">›</button>
+          </span>
+        </div>
+        <div id="candText"></div>
+      </div>
+
+      <div class="ctl" title="The similarity grader passes when token overlap (Jaccard) with the reference is at or above this threshold. Drag it to trade false passes against false fails.">
+        <div class="cl">similarity threshold <span><b><span id="thrVal">0.30</span></b></span></div>
+        <input type="range" id="thrRange" min="0" max="0.9" step="0.01" value="0.30">
+        <div class="cl"><span class="hint">↑ stricter = fewer false passes, more false fails</span></div>
+      </div>
+
+      <button id="runBtn" title="Grade this candidate answer with all three graders at once.">▶ Grade this answer</button>
+    </div>
+
+    <!-- RIGHT: three graders + the truth strip + the event log -->
+    <div class="panel" id="graders">
+      <h2>Graders <span>· each scores the SAME answer independently</span></h2>
+
+      <div id="cols">
+        <div class="gcol exact">
+          <div class="gname">EXACT-PHRASE</div>
+          <div class="gsub">substring check — does the answer literally contain the reference key phrase?</div>
+          <div class="gmid" id="exactMid">—</div>
+          <div class="verdict" id="exactV">—</div>
+        </div>
+        <div class="gcol sim">
+          <div class="gname">SIMILARITY</div>
+          <div class="gsub">token overlap (Jaccard) vs reference, passes at the threshold slider</div>
+          <div class="gmid" id="simMid">—</div>
+          <div class="verdict" id="simV">—</div>
+        </div>
+        <div class="gcol judge">
+          <div class="gname">JUDGE</div>
+          <div class="gsub">a scripted rubric verdict — reads meaning, but wobbles on margin cases</div>
+          <div class="gmid" id="judgeMid">—</div>
+          <div class="verdict" id="judgeV">—</div>
+        </div>
+      </div>
+
+      <div id="truthWrap">
+        <div class="th">Ground truth for this candidate — is the answer actually correct? Then: did each grader agree?</div>
+        <div id="truthRow">
+          <span class="truth" id="truthLbl">—</span>
+          <span class="tag2" id="tExact">exact —</span>
+          <span class="tag2" id="tSim">sim —</span>
+          <span class="tag2" id="tJudge">judge —</span>
+        </div>
+      </div>
+
+      <div id="events">
+        <h2>Eval runner <span>— what the grading harness would print</span>
+          <span id="note" data-tip="Teaching model, not the real system. SIMILARITY here is plain token-overlap (Jaccard) on lowercased words — real evals use embedding cosine distance, which reads meaning far better than word overlap. JUDGE is a scripted rubric with modeled noise on margin cases (deterministic under a fixed seed), NOT a real model call — a live 0.6B judge is noisier still. The point is the pattern: no single grader is trustworthy alone.">ⓘ</span></h2>
+        <div id="evList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ------------------------------------------------------------------ model
+     ONE fixed golden question + reference answer. The learner cycles a set of
+     candidate answers and grades each with three independent graders:
+
+       EXACT-PHRASE : does the candidate contain the reference KEY PHRASE (substring)?
+                      — brittle: false-fails paraphrase, false-passes wrong answers
+                        that happen to include the phrase.
+       SIMILARITY   : Jaccard token-overlap with the reference, PASS at threshold.
+                      — the threshold trades false-pass vs false-fail.
+       JUDGE        : a scripted rubric verdict. Clear-correct -> PASS, clear-wrong
+                      -> FAIL, but MARGIN cases carry a deterministic flip-chance
+                      (seeded) so two "runs" can disagree — honest model of judge noise.
+
+     Every candidate also carries a GROUND-TRUTH `correct` flag so the sim can show
+     each grader as a true-pass / false-pass / true-fail / false-fail against reality. */
+
+  var QUESTION='OpsMate: a pod is CrashLoopBackOff. What is the first step to recover it?';
+  var REFERENCE='Check why it is crashing first: run kubectl logs on the crashing pod to read the crash reason before restarting anything.';
+  var KEY_PHRASE='kubectl logs';           /* the exact substring the naive assertion checks */
+
+  /* Jaccard token overlap on lowercased word sets — the sim's stand-in for "similarity". */
+  function tokenize(s){
+    return (s||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(function(w){return w.length>0});
+  }
+  var REF_TOKENS=(function(){var m={};tokenize(REFERENCE).forEach(function(w){m[w]=1});return m;})();
+  function jaccard(s){
+    var t={};tokenize(s).forEach(function(w){t[w]=1});
+    var inter=0, uni={};
+    Object.keys(REF_TOKENS).forEach(function(w){uni[w]=1;if(t[w])inter++});
+    Object.keys(t).forEach(function(w){uni[w]=1});
+    var u=Object.keys(uni).length;
+    return u>0?inter/u:0;
+  }
+
+  /* candidates. `correct` = ground truth. `judgeBase` = the judge's rubric lean:
+       'pass'   -> judge passes deterministically
+       'fail'   -> judge fails deterministically
+       'margin' -> borderline: judge's verdict can flip under the seed (modeled noise) */
+  var CANDS=[
+    {kind:'verbatim — the reference, word for word',
+     text:'Check why it is crashing first: run kubectl logs on the crashing pod to read the crash reason before restarting anything.',
+     correct:true, judgeBase:'pass'},
+    {kind:'correct, but paraphrased (no key phrase)',
+     text:'Before you restart it, look at the container output to find out why it is dying. Read the crash reason first, then act.',
+     correct:true, judgeBase:'pass'},
+    {kind:'correct, but reordered / reworded',
+     text:'First read the crash reason. Do not restart the pod until you have run kubectl logs on it and understood why it crashed.',
+     correct:true, judgeBase:'pass'},
+    {kind:'subtly wrong — mentions the phrase, wrong action',
+     text:'Ignore kubectl logs for now and just run kubectl delete pod on it right away so the Deployment recreates a fresh one and the loop clears.',
+     correct:false, judgeBase:'margin'},
+    {kind:'confidently wrong — plausible but incorrect',
+     text:'Scale the Deployment to zero and back up. CrashLoopBackOff is almost always a transient node issue that a full restart fixes.',
+     correct:false, judgeBase:'fail'},
+    {kind:'empty / refusal',
+     text:'',
+     correct:false, judgeBase:'fail'}
+  ];
+
+  var DEFAULTS={thr:0.30, idx:0};
+  var S={idx:DEFAULTS.idx, thr:DEFAULTS.thr, graded:false, result:null, t0:Date.now()};
+
+  /* ---- deterministic judge noise -------------------------------------------------
+     margin cases flip based on a seeded hash of (candidate index + threshold bucket)
+     so the harness gets a stable verdict, yet the learner sees the judge "change its
+     mind" as they move the slider across a margin candidate — honest wobble. */
+  function seededFlip(idx){
+    /* stable pseudo-random in [0,1) from the candidate index — fixed seed */
+    var x=Math.sin((idx+1)*12.9898)*43758.5453;
+    var f=x-Math.floor(x);
+    return f;                 /* deterministic per candidate */
+  }
+  function judgeVerdict(c,idx){
+    if(c.judgeBase==='pass')return {pass:true, margin:false};
+    if(c.judgeBase==='fail')return {pass:false, margin:false};
+    /* margin: verdict is deterministic per candidate (seed), but flagged as wobbly */
+    var f=seededFlip(idx);
+    return {pass:f>=0.5, margin:true};   /* candidate 3 (delete pod) -> deterministic */
+  }
+
+  /* pure grading the harness can call without animation */
+  function grade(idx,thr){
+    idx=(idx==null?S.idx:idx); thr=(thr==null?S.thr:thr);
+    var c=CANDS[idx];
+    var exact=c.text.indexOf(KEY_PHRASE)>=0;
+    var sim=jaccard(c.text);
+    var simPass=sim>=thr;
+    var jv=judgeVerdict(c,idx);
+    return {
+      idx:idx, kind:c.kind, correct:c.correct, empty:c.text.length===0,
+      exact:exact, sim:sim, thr:thr, simPass:simPass,
+      judgePass:jv.pass, judgeMargin:jv.margin,
+      /* did each grader agree with ground truth? */
+      exactRight: exact===c.correct,
+      simRight: simPass===c.correct,
+      judgeRight: jv.pass===c.correct
+    };
+  }
+
+  /* ------------------------------------------------------------------ events log */
+  var evList=$('evList');
+  function clock(){var s=Math.floor((Date.now()-S.t0)/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  function logEv(kind,reason,msg){
+    var d=document.createElement('div');
+    d.className='ev new '+(kind||'');
+    d.innerHTML='<span class="et"></span><span class="er"></span><span class="em"></span>';
+    d.children[0].textContent=clock();
+    d.children[1].textContent=reason; d.children[2].textContent=msg;
+    d.title=reason+'  —  '+msg;
+    evList.appendChild(d);
+    while(evList.children.length>90)evList.removeChild(evList.firstChild);
+    evList.scrollTop=evList.scrollHeight;
+  }
+
+  /* ------------------------------------------------------------------ render */
+  function renderCandidate(){
+    var c=CANDS[S.idx];
+    $('candNo').textContent='Candidate '+(S.idx+1)+' / '+CANDS.length;
+    $('candKind').textContent='· '+c.kind;
+    var ct=$('candText');
+    if(c.text.length===0){ct.textContent='(no answer — the model refused or returned empty)';ct.classList.add('empty');}
+    else{ct.textContent=c.text;ct.classList.remove('empty');}
+  }
+  function clearGraders(){
+    ['exactMid','simMid','judgeMid'].forEach(function(id){$(id).textContent='—'});
+    ['exactV','simV','judgeV'].forEach(function(id){var e=$(id);e.textContent='—';e.className='verdict';e.innerHTML='—';});
+    $('truthLbl').textContent='—';$('truthLbl').className='truth';
+    ['tExact','tSim','tJudge'].forEach(function(id){$(id).className='tag2';});
+    $('tExact').textContent='exact —';$('tSim').textContent='sim —';$('tJudge').textContent='judge —';
+  }
+  function verdictBox(id,pass,why){
+    var e=$(id);
+    e.className='verdict '+(pass?'pass':'fail');
+    e.innerHTML=(pass?'PASS':'FAIL')+'<span class="why">'+why+'</span>';
+  }
+
+  function showResult(r){
+    S.result=r;
+    /* exact */
+    $('exactMid').innerHTML='phrase <span class="num">"'+KEY_PHRASE+'"</span> '+(r.exact?'found':'not found');
+    verdictBox('exactV',r.exact,r.exact?'substring present':'substring absent');
+    /* similarity */
+    $('simMid').innerHTML='jaccard <span class="num">'+r.sim.toFixed(2)+'</span> vs thr '+r.thr.toFixed(2);
+    verdictBox('simV',r.simPass,r.simPass?'≥ threshold':'< threshold');
+    /* judge */
+    $('judgeMid').innerHTML='rubric verdict'+(r.judgeMargin?' <span class="num">(margin)</span>':'');
+    verdictBox('judgeV',r.judgePass,r.judgeMargin?'borderline — wobbles':'clear call');
+
+    /* truth strip */
+    var tl=$('truthLbl');
+    tl.textContent=r.correct?'✔ actually CORRECT':'✘ actually WRONG';
+    tl.className='truth '+(r.correct?'good':'bad2');
+    function tag(id,label,graderPass,right){
+      var e=$(id);
+      e.className='tag2'+(right?'':' mismatch');
+      var mark=right?'✓':'✗';
+      e.innerHTML=label+' <b>'+(graderPass?'PASS':'FAIL')+'</b> '+mark;
+    }
+    tag('tExact','exact',r.exact,r.exactRight);
+    tag('tSim','sim',r.simPass,r.simRight);
+    tag('tJudge','judge',r.judgePass,r.judgeRight);
+  }
+
+  /* ------------------------------------------------------------------ grade run */
+  function runGrade(){
+    var r=grade();
+    S.graded=true;
+    showResult(r);
+    var verdicts='exact='+(r.exact?'PASS':'FAIL')+' · sim='+r.sim.toFixed(2)+(r.simPass?' PASS':' FAIL')+'@'+r.thr.toFixed(2)+' · judge='+(r.judgePass?'PASS':'FAIL')+(r.judgeMargin?' (margin)':'');
+    logEv('','case','case '+(r.idx+1)+' ['+shortKind(r.kind)+']: '+verdicts);
+    /* narrate the interesting disagreements in eval-runner voice */
+    if(r.correct && !r.exact){
+      logEv('miss','exact','FALSE FAIL — answer is correct but paraphrased; key phrase "'+KEY_PHRASE+'" absent');
+    }
+    if(!r.correct && r.exact){
+      logEv('miss','exact','FALSE PASS — answer is wrong but contains "'+KEY_PHRASE+'", so substring check passes');
+    }
+    if(r.judgeMargin){
+      logEv('judge','judge','margin case — judge returned '+(r.judgePass?'PASS':'FAIL')+'; a real judge may disagree run to run');
+    }
+    /* the takeaway line: do the three graders even agree with each other? */
+    var votes=[r.exact,r.simPass,r.judgePass];
+    var agree=votes.every(function(v){return v===votes[0]});
+    if(!agree)logEv('','verdict','graders DISAGREE — trust no single grade; corroborate across layers');
+    evalChallenge(r);
+    updateChallenge();
+  }
+  function shortKind(k){return k.split('—')[0].split('(')[0].trim().split(',')[0];}
+
+  /* ------------------------------------------------------------------ challenge */
+  /* predict-first: commit a guess, then produce the condition. Formative only. */
+  var CH_PREDICT=[
+    {q:'candidate 2 is a fully correct paraphrase — no "kubectl logs" phrase. What does the <b>exact-phrase</b> check say?',
+     opts:['PASS','FAIL'], ok:1,
+     explain:'Exact-phrase is a substring test. A correct answer that never says the literal phrase FAILS — a false fail. That brittleness is why you never grade small models on one exact phrase.'},
+    {q:'one wrong candidate happens to contain "kubectl logs". Will the <b>exact-phrase</b> check catch that it is wrong?',
+     opts:['yes — it fails the wrong answer','no — it passes on the phrase'], ok:1,
+     explain:'Substring presence is not correctness. A wrong answer that includes the phrase PASSES exact-phrase — a false pass. The check measures wording, not meaning.'},
+    {q:'you raise the <b>similarity threshold</b> on an answer sitting just above it. What happens to its similarity verdict?',
+     opts:['it flips PASS → FAIL','it stays PASS'], ok:0,
+     explain:'The threshold is the knob that trades false-pass for false-fail. Raise it past an answer’s Jaccard score and its PASS flips to FAIL — stricter catches more junk but rejects more good paraphrases.'}
+  ];
+  var CH=  {step:1, done:[false,false,false], pred:[null,null,null], seenPara:false};
+
+  function pickPredict(idx){
+    if(CH.step>=4)return;
+    var i=CH.step-1;
+    if(CH.pred[i]!=null)return;
+    CH.pred[i]=idx;
+    logEv('','predict','step '+CH.step+' — you predicted: “'+CH_PREDICT[i].opts[idx].replace(/<[^>]*>/g,'')+'”');
+    updateChallenge();
+  }
+  function predictVerdict(i){
+    var p=CH_PREDICT[i];
+    if(!p||CH.pred[i]==null)return;
+    var right=CH.pred[i]===p.ok;
+    logEv(right?'':'miss','predict',(right?'Prediction right. ':'Not what you predicted — you said “'+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+'”. ')+p.explain.replace(/<[^>]*>/g,''));
+  }
+
+  var CH_TEXT=[
+    'Step 1 — Go to <b>candidate 2</b> (the correct paraphrase) and Grade it. Watch <code>exact-phrase</code> FAIL a right answer — the false fail.',
+    'Step 2 — Find the candidate where <code>exact-phrase</code> PASSES a <b>wrong</b> answer (it contains the phrase) and Grade it — the false pass.',
+    'Step 3 — On a candidate that <b>passes</b> similarity, drag the <code>threshold</code> up until similarity flips to <b>FAIL</b>, then Grade — feel the false-pass / false-fail trade.'
+  ];
+  var SUCCESS='Challenge complete! You just felt why no single grader is enough. <b>Exact-phrase</b> false-<i>fails</i> good paraphrases and false-<i>passes</i> wrong answers that echo the phrase — it grades wording, not meaning. <b>Similarity</b> tolerates paraphrase but its <code>threshold</code> only trades one error for the other. The <b>judge</b> reads meaning, yet wobbles on margin cases — so two runs can disagree. That is why OpsMate grades in layers and never treats one 0.6B judge grade as ground truth.';
+
+  function evalChallenge(r){
+    if(CH.step===1){
+      /* step 1: grade candidate 2 (index 1, the correct paraphrase) — exact fails, but it's correct */
+      if(r.idx===1 && r.correct && !r.exact){
+        CH.done[0]=true;CH.step=2;predictVerdict(0);
+        logEv('miss','try-this','Step 1 done — a CORRECT answer just FAILED exact-phrase. That false fail is the whole problem with exact checks.');
+      }
+    }else if(CH.step===2){
+      /* step 2: grade any wrong candidate that exact PASSES (false pass) */
+      if(!r.correct && r.exact){
+        CH.done[1]=true;CH.step=3;predictVerdict(1);
+        logEv('miss','try-this','Step 2 done — a WRONG answer just PASSED exact-phrase because it contained the phrase. That false pass is why substring checks lie.');
+        /* remember a threshold-passing baseline for step 3 re-arming */
+        CH.step3Armed=false;
+      }
+    }else if(CH.step===3){
+      /* step 3: a candidate whose similarity was passing must now FAIL due to a raised threshold.
+         Detect the flip: sim score is below thr AND thr is above the sim score by the learner's raise,
+         i.e. simPass===false but the candidate's raw sim would have passed at a lower thr. */
+      if(!r.simPass && r.sim>0 && r.thr>r.sim){
+        CH.done[2]=true;CH.step=4;predictVerdict(2);
+        logEv('sim','try-this','Step 3 done — you raised the threshold past this answer’s Jaccard score and its PASS flipped to FAIL. That knob is the false-pass / false-fail dial.');
+      }
+    }
+  }
+  function updateChallenge(){
+    for(var i=1;i<=3;i++){
+      var d=$('d'+i);d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
+      d.textContent=CH.done[i-1]?'✓':i;
+    }
+    var box=$('challenge'),txt=$('chTxt'),pr=$('chPredict');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;pr.innerHTML='';}
+    else{
+      box.classList.remove('success');
+      var i=CH.step-1, p=CH_PREDICT[i];
+      if(p && CH.pred[i]==null){
+        txt.innerHTML='Step '+CH.step+' — <b>Predict first:</b> '+p.q;
+        pr.innerHTML='';
+        for(var k=0;k<p.opts.length;k++){
+          var c=document.createElement('span');
+          c.className='chip'; c.innerHTML=p.opts[k];
+          c.title='Lock in this prediction, then try it';
+          (function(kk){c.addEventListener('click',function(){pickPredict(kk)})})(k);
+          pr.appendChild(c);
+        }
+      }else{
+        var tail=p?' <span class="pv">(you predicted: '+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+')</span>':'';
+        txt.innerHTML=CH_TEXT[i]+tail;
+        pr.innerHTML='';
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------ controls */
+  function gotoCand(i){
+    S.idx=(i+CANDS.length)%CANDS.length;
+    clearGraders();
+    S.graded=false;S.result=null;
+    renderCandidate();
+    logEv('','select','candidate '+(S.idx+1)+' selected — '+shortKind(CANDS[S.idx].kind));
+    updateChallenge();
+  }
+  function syncThr(){$('thrVal').textContent=S.thr.toFixed(2);$('thrRange').value=S.thr;}
+
+  $('prevBtn').addEventListener('click',function(){gotoCand(S.idx-1)});
+  $('nextBtn').addEventListener('click',function(){gotoCand(S.idx+1)});
+  $('thrRange').addEventListener('input',function(){
+    S.thr=+this.value;$('thrVal').textContent=S.thr.toFixed(2);
+    /* live-update the similarity verdict if this candidate is already graded */
+    if(S.graded && S.result){
+      var r=grade();S.result=r;
+      $('simMid').innerHTML='jaccard <span class="num">'+r.sim.toFixed(2)+'</span> vs thr '+r.thr.toFixed(2);
+      verdictBox('simV',r.simPass,r.simPass?'≥ threshold':'< threshold');
+      var e=$('tSim');e.className='tag2'+(r.simRight?'':' mismatch');
+      e.innerHTML='sim <b>'+(r.simPass?'PASS':'FAIL')+'</b> '+(r.simRight?'✓':'✗');
+    }
+  });
+  $('runBtn').addEventListener('click',runGrade);
+  $('reset').addEventListener('click',function(){location.reload()});
+
+  /* ------------------------------------------------------------------ boot */
+  $('qText').textContent=QUESTION;
+  $('rText').innerHTML='Check why it is crashing first: run <b>kubectl logs</b> on the crashing pod to read the crash reason before restarting anything.';
+  renderCandidate();
+  syncThr();
+  clearGraders();
+  updateChallenge();
+  logEv('','ready','eval runner up · 6 candidates · pick one and press Grade');
+
+  /* test hook (harmless in production) */
+  window.__sim={S:S,CH:CH,CANDS:CANDS,predict:pickPredict,
+    setCand:function(i){gotoCand(i)},
+    setThr:function(v){S.thr=v;syncThr();
+      if(S.graded){var r=grade();S.result=r;showResult(r);}},
+    gradeNow:function(){runGrade()},
+    grade:grade,
+    consts:{KEY_PHRASE:KEY_PHRASE, DEFAULTS:DEFAULTS, count:CANDS.length}
+  };
+})();
+</script>
+</body>
+</html>

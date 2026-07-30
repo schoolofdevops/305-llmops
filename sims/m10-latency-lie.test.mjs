@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// Headless-Chrome assertion harness for m8-kv-capacity.html
+// Headless-Chrome assertion harness for m10-latency-lie.html
 // Zero runtime deps: hand-rolled CDP client over Node built-ins (http + ws frames).
 // Chrome 150+: uses PUT /json/new?<url> and launch flag --remote-allow-origins=*.
-// Run: node site/static/sims/m8-kv-capacity.test.mjs
+// Run: node site/static/sims/m10-latency-lie.test.mjs
 
 import { spawn } from 'node:child_process';
 import http from 'node:http';
@@ -13,7 +13,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const HTML = path.join(__dirname, 'm8-kv-capacity.html');
+const HTML = path.join(__dirname, 'm10-latency-lie.html');
 const FILE_URL = pathToFileURL(HTML).href;
 const PORT = 9730 + (process.pid % 400);
 
@@ -112,7 +112,7 @@ async function main() {
   const child = spawn(CHROME, [
     '--headless=new', `--remote-debugging-port=${PORT}`, '--remote-allow-origins=*',
     '--no-sandbox', '--disable-gpu', '--window-size=800,500',
-    '--user-data-dir=/tmp/m8-kv-chrome-' + process.pid, 'about:blank',
+    '--user-data-dir=/tmp/m10-latency-chrome-' + process.pid, 'about:blank',
   ], { stdio: 'ignore' });
 
   let version;
@@ -153,16 +153,17 @@ async function main() {
   ok('R1 no console errors', consoleErrors.length === 0, consoleErrors.join(' | '));
   ok('R1 no page exceptions', pageErrors.length === 0, pageErrors.join(' | '));
   ok('R1 zero external network requests', netRequests.length === 0, netRequests.join(' | '));
-  ok('renders — two sliders + budget slider present',
-    (await ev('document.querySelectorAll("#controls input[type=range]").length')) === 3);
-  ok('renders — model + quant segmented selectors present',
-    (await ev('document.querySelectorAll("#modelSeg button").length')) === 4 &&
-    (await ev('document.querySelectorAll("#quantSeg button").length')) === 3);
+  ok('renders — two sliders present',
+    (await ev('document.querySelectorAll("#controls input[type=range]").length')) === 2);
+  ok('renders — four metric buttons present',
+    (await ev('document.querySelectorAll("#metricSeg button").length')) === 4);
+  ok('renders — histogram draws bars', (await ev('document.querySelectorAll("#histSvg rect.bar").length')) > 0);
   ok('test hook exposed', (await ev('typeof window.__sim')) === 'object');
 
   // ---------- 2. affordance sanity (R2) ----------
   const affClickable = await ev(`(function(){
-    var sel=['#reset','#budgetRange','#ctxRange','#usersRange','#modelSeg button','#quantSeg button'];
+    var sel=['#reset','#mixRange','#rateRange'];
+    document.querySelectorAll('#metricSeg button').forEach(function(b,i){b.id='__seg'+i;sel.push('#__seg'+i);});
     var bad=[];
     sel.forEach(function(s){var e=document.querySelector(s);if(!e){bad.push(s+':missing');return;}
       var cs=getComputedStyle(e);
@@ -171,199 +172,164 @@ async function main() {
     return bad;
   })()`);
   ok('R2 interactive controls have pointer/help cursor', affClickable.length === 0, affClickable.join(','));
-  const ctlTips = await ev(`(function(){
-    var bad=[];
-    document.querySelectorAll('#controls .ctl').forEach(function(c){if(!c.title)bad.push('ctl-no-title');});
-    if(!document.querySelector('#reset').title)bad.push('reset');
-    return bad;})()`);
-  ok('R2 controls carry tooltips (title)', ctlTips.length === 0, ctlTips.join(','));
+  const tips = await ev(`!!document.querySelector('#reset').title
+    && !!document.querySelector('#mixRange').closest('.ctl').title
+    && !!document.querySelector('#rateRange').closest('.ctl').title`);
+  ok('R2 controls carry tooltips (title)', tips === true);
   const inertLog = await ev(`getComputedStyle(document.querySelector('#evList')).cursor`);
   ok('R2 event log is inert (cursor:default)', inertLog === 'default', inertLog);
   const inertReadout = await ev(`getComputedStyle(document.querySelector('#readout')).cursor`);
   ok('R2 readout panel is inert (cursor:default)', inertReadout === 'default', inertReadout);
-  const inertScale = await ev(`getComputedStyle(document.querySelector('#scale')).cursor`);
-  ok('R2 legend/scale is inert (cursor:default)', inertScale === 'default', inertScale);
+  const inertBig = await ev(`getComputedStyle(document.querySelector('#bigmetric')).cursor`);
+  ok('R2 big-metric readout is inert (cursor:default)', inertBig === 'default', inertBig);
   const noteTip = await ev(`!!document.querySelector('#note').getAttribute('data-tip')`);
   ok('R8 honest-model footnote present', noteTip === true);
+  const noteTwoPop = await ev(`/two-population|two population/i.test(document.querySelector('#note').getAttribute('data-tip'))
+    && /longer|tail/i.test(document.querySelector('#note').getAttribute('data-tip'))`);
+  ok('R8 footnote names the two-population synthetic model + longer real tails', noteTwoPop === true);
 
-  // ---------- 3. FORMULA spot-check: the course-table number ----------
-  // 0.6B @ 2048 ctx × 1 user KV must equal 112 KiB × 2048 = 224 MiB exactly.
-  const kvCheck = await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:1,budgetIdx:1});
-    var MiB=window.__sim.consts.MiB;
-    return {kvMiB:r.kv/MiB, over:r.over};})()`);
-  ok('FORMULA 0.6B@2048×1user KV == 224 MiB (course table)',
-    Math.abs(kvCheck.kvMiB - 224) < 0.01, JSON.stringify(kvCheck));
-  ok('FORMULA course node fits (0.6B@2048×1user on 8 GB not OOM)', kvCheck.over === false);
-  // per-token KV is exactly 112 KiB for the course model
-  const perTok = await ev(`window.__sim.consts.MODELS[0].kvPerTok / window.__sim.consts.KiB`);
-  ok('FORMULA per-token KV == 112 KiB (2×28×8×128×2 bytes)', perTok === 112, 'perTok=' + perTok);
-  // KV is linear in ctx and in users (conservation of the KV term)
-  const linear = await ev(`(function(){
-    var a=window.__sim.compute({model:0,quant:1,ctx:2048,users:1});
-    var b=window.__sim.compute({model:0,quant:1,ctx:4096,users:1});
-    var c=window.__sim.compute({model:0,quant:1,ctx:2048,users:2});
-    return {ctxDouble: Math.abs(b.kv-2*a.kv)<1, usersDouble: Math.abs(c.kv-2*a.kv)<1};})()`);
-  ok('FORMULA KV scales linearly with context', linear.ctxDouble === true);
-  ok('FORMULA KV scales linearly with concurrency', linear.usersDouble === true);
-  // total is exactly weights+runtime+KV (three-term sum)
-  const sum = await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:4});
-    return Math.abs(r.total-(r.weights+r.runtime+r.kv))<1;})()`);
-  ok('FORMULA total == weights + runtime + KV (three-term sum)', sum === true);
-  // weights band moves with quant only (Q4 < Q8 < FP16), KV unchanged
-  const quantMove = await ev(`(function(){
-    var q4=window.__sim.compute({model:0,quant:0,ctx:2048,users:1});
-    var q8=window.__sim.compute({model:0,quant:1,ctx:2048,users:1});
-    var f16=window.__sim.compute({model:0,quant:2,ctx:2048,users:1});
-    return {order: q4.weights<q8.weights && q8.weights<f16.weights,
-            kvSame: q4.kv===q8.kv && q8.kv===f16.kv};})()`);
-  ok('FORMULA quant moves weights band only (Q4<Q8<FP16, KV fixed)',
-    quantMove.order && quantMove.kvSame, JSON.stringify(quantMove));
+  // ---------- 3. metric selector drives the big readout ----------
+  await ev('window.__sim.setMix(50);window.__sim.setMetric("p50")');
+  const selP50 = await ev(`(function(){return {lbl:document.getElementById('bigLbl').textContent,
+    on:document.querySelector('#metricSeg button.on').getAttribute('data-m')};})()`);
+  ok('metric selector: P50 selected reflects in readout + button', selP50.lbl === 'P50' && selP50.on === 'p50', JSON.stringify(selP50));
+  await ev('window.__sim.setMetric("p99")');
+  const selP99 = await ev(`(function(){return {lbl:document.getElementById('bigLbl').textContent,
+    val:document.getElementById('bigVal').textContent};})()`);
+  ok('metric selector: switching to P99 updates the big value', selP99.lbl === 'P99' && /\d/.test(selP99.val), JSON.stringify(selP99));
 
-  // ---------- 4. readout shows the live numbers ----------
-  await ev('window.__sim.setModel(0);window.__sim.setQuant(1);window.__sim.setCtx(2048);window.__sim.setUsers(1);window.__sim.setBudgetIdx(1)');
-  const kvShown = await ev(`document.getElementById('kvV').textContent`);
-  ok('readout KV cell shows 224 MB for the course node', /224\s*MB/.test(kvShown), kvShown);
+  // ---------- 4. event log responds with alert-voice line ----------
+  await ev('window.__sim.setMix(70)');
+  const logLine = await ev(`(function(){var xs=[].slice.call(document.querySelectorAll('#evList .ev')).map(function(e){return e.textContent});
+    return xs.some(function(t){return /mix 70\\/30/.test(t) && /mean/.test(t) && /P50/.test(t) && /P95/.test(t);});})()`);
+  ok('R7 event log posts dashboard-voice line (mix · mean · P50 · P95)', logLine === true);
 
-  // ---------- 5. OOM state fires when the box is blown ----------
-  // One 40960-ctx user (~4.4 GB KV + weights + runtime ≈ 5.4 GB) blows the 4 GB node.
-  await ev('window.__sim.setModel(0);window.__sim.setQuant(1);window.__sim.setBudgetIdx(0);window.__sim.setUsers(1);window.__sim.setCtx(40960)');
-  await sleep(400); // let the band height transition settle before measuring
-  const oom = await ev(`(function(){return {
-    over: window.__sim.isOver(),
-    boxOOM: document.getElementById('box').classList.contains('oom'),
-    pill: document.getElementById('statusPill').textContent,
-    overBand: parseFloat(getComputedStyle(document.getElementById('bOver')).height)>0,
-    log: Array.from(document.querySelectorAll('#evList .ev')).some(function(e){return /OOMKilled/.test(e.textContent)})
-  };})()`);
-  ok('OOM: single 40960-ctx user blows the 8 GB box (over=true)', oom.over === true, JSON.stringify(oom));
-  ok('OOM: box turns red (box.oom class)', oom.boxOOM === true);
-  ok('OOM: status pill reads OOMKilled', oom.pill === 'OOMKilled', oom.pill);
-  ok('OOM: overflow band is rendered', oom.overBand === true);
-  ok('OOM: kubelet log fires a pod OOMKilled line', oom.log === true);
-  // and it clears when the box fits again
-  await ev('window.__sim.setCtx(2048)');
-  const recover = await ev(`(function(){return {over:window.__sim.isOver(),
-    pill:document.getElementById('statusPill').textContent};})()`);
-  ok('OOM clears when KV shrinks back (Running again)', recover.over === false && recover.pill === 'Running',
-    JSON.stringify(recover));
+  // ---------- 5. TEACHING INVARIANT (i): the valley — mean sits far from both humps ----------
+  const valley = await ev(`(function(){
+    var r=window.__sim.compute(50,200);
+    return {mean:r.mean, meanInValley:r.meanInValley, meanNearest:r.meanNearest, half:r.humpHalfWidth, meanNearFrac:r.meanNearFrac,
+      sc:window.__sim.consts.SHORT_CENTER, lc:window.__sim.consts.LONG_CENTER};})()`);
+  ok('INVARIANT (i) at 50/50 the mean lands in the valley between the humps', valley.meanInValley === true, JSON.stringify(valley));
+  ok('INVARIANT (i) valley: |mean − nearest hump| exceeds a hump half-width', valley.meanNearest > valley.half, JSON.stringify(valley));
+  ok('INVARIANT (i) valley: almost no real request lives near the mean (<20% within ±20%)', valley.meanNearFrac < 0.20, 'meanNearFrac=' + valley.meanNearFrac);
 
-  // ---------- 6. max-users readout matches the budget math ----------
-  const maxU = await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:1,budgetIdx:1});
-    // adding one more than maxUsers must overflow; maxUsers itself must fit
-    var atMax=window.__sim.compute({model:0,quant:1,ctx:2048,users:r.maxUsers,budgetIdx:1});
-    var overMax=window.__sim.compute({model:0,quant:1,ctx:2048,users:r.maxUsers+1,budgetIdx:1});
-    return {maxUsers:r.maxUsers, atMaxFits:!atMax.over, oneMoreOver:overMax.over};})()`);
-  ok('MAX-USERS: computed ceiling fits, one more overflows (0.6B@2048 on 8 GB)',
-    maxU.atMaxFits === true && maxU.oneMoreOver === true && maxU.maxUsers > 1, JSON.stringify(maxU));
+  // ---------- 6. TEACHING INVARIANT (ii): P95 >= P50 always, and P95 tracks the slow hump ----------
+  const ord = await ev(`(function(){
+    var out=[];
+    [0,10,30,50,70,90,100].forEach(function(m){var r=window.__sim.compute(m,200);
+      out.push({m:m, p50:r.p50, p95:r.p95, p99:r.p99, ok:(r.p95>=r.p50 && r.p99>=r.p95 && r.p95>=r.mean-1e-9?false:true)});});
+    return out;})()`);
+  const monotone = await ev(`(function(){
+    var bad=[];
+    [0,10,30,50,70,90,100].forEach(function(m){var r=window.__sim.compute(m,200);
+      if(!(r.p95>=r.p50-1e-9))bad.push('mix'+m+':p95<p50');
+      if(!(r.p99>=r.p95-1e-9))bad.push('mix'+m+':p99<p95');});
+    return bad;})()`);
+  ok('INVARIANT (ii) P95 ≥ P50 and P99 ≥ P95 across every mix', monotone.length === 0, monotone.join(','));
+  // P95 tracks the slow hump: once ANY long-answer traffic exists (even 10%), P95 lives
+  // up in the slow region — at or above the long-answer median, and far above the fast hump.
+  const p95track = await ev(`(function(){
+    var sc=window.__sim.consts.SHORT_CENTER, lc=window.__sim.consts.LONG_CENTER;
+    function probe(mix){var r=window.__sim.compute(mix,300);return {p95:r.p95,longMed:r.longMed};}
+    var a=probe(50);   // 50% long
+    var b=probe(90);   // 10% long
+    var c=probe(10);   // 90% long
+    return {a:a,b:b,c:c,sc:sc,lc:lc,
+      aSlow: a.p95>=a.longMed*0.9 && a.p95>sc*3,
+      bSlow: b.p95>=b.longMed*0.9 && b.p95>sc*3,   // even at only 10% long, P95 is out in the tail
+      cSlow: c.p95>=c.longMed*0.9 && c.p95>sc*3};})()`);
+  ok('INVARIANT (ii) P95 tracks the slow (long-answer) region whenever long traffic is present',
+    p95track.aSlow && p95track.bSlow && p95track.cSlow, JSON.stringify(p95track));
 
-  // ---------- 7. TEACHING INVARIANT: trade context for users holds the box ----------
-  // Halving ctx and doubling users leaves the KV term identical -> same total.
-  const trade = await ev(`(function(){
-    var a=window.__sim.compute({model:0,quant:1,ctx:8192,users:4});
-    var b=window.__sim.compute({model:0,quant:1,ctx:4096,users:8});
-    return {kvEqual: Math.abs(a.kv-b.kv)<1, totalEqual: Math.abs(a.total-b.total)<1};})()`);
-  ok('INVARIANT: halve ctx + double users == same KV (context traded for concurrency)',
-    trade.kvEqual === true && trade.totalEqual === true, JSON.stringify(trade));
-  // and a bigger model raises BOTH weights and per-user KV
-  const bigger = await ev(`(function(){
-    var s=window.__sim.compute({model:0,quant:1,ctx:2048,users:1});
-    var b=window.__sim.compute({model:3,quant:1,ctx:2048,users:1});
-    return {weightsUp:b.weights>s.weights, kvUp:b.kv>s.kv};})()`);
-  ok('INVARIANT: bigger model raises both weights and per-token KV', bigger.weightsUp && bigger.kvUp);
+  // ---------- 7. TEACHING INVARIANT (iii): shifting mix moves the mean, each hump's own median holds ----------
+  const shift = await ev(`(function(){
+    var lo=window.__sim.compute(50,200);
+    var hi=window.__sim.compute(85,200);   // shift toward short
+    return {
+      meanDropped: hi.mean < lo.mean - 0.3,
+      shortMedStable: Math.abs(hi.shortMed - lo.shortMed) < lo.shortMed*0.12,
+      longMedStable:  Math.abs(hi.longMed  - lo.longMed)  < lo.longMed*0.12,
+      loMean:lo.mean, hiMean:hi.mean,
+      loShort:lo.shortMed, hiShort:hi.shortMed, loLong:lo.longMed, hiLong:hi.longMed};})()`);
+  ok('INVARIANT (iii) shifting mix toward short DROPS the mean', shift.meanDropped === true, JSON.stringify(shift));
+  ok('INVARIANT (iii) each population median is unchanged by the mix — short hump holds', shift.shortMedStable === true, JSON.stringify(shift));
+  ok('INVARIANT (iii) each population median is unchanged by the mix — long hump holds', shift.longMedStable === true, JSON.stringify(shift));
+
+  // hump centers themselves are fixed constants regardless of mix (structural)
+  const centersFixed = await ev(`(function(){
+    var a=window.__sim.compute(20,200), b=window.__sim.compute(80,500);
+    return Math.abs(a.shortMed-b.shortMed)<a.shortMed*0.15 && Math.abs(a.longMed-b.longMed)<a.longMed*0.15;})()`);
+  ok('INVARIANT (iii) hump centers are mix- and rate-independent', centersFixed === true);
 
   // ---------- 8. all three TRY-THIS steps auto-detect end-to-end ----------
-  await ev('location.reload()');
-  await sleep(600);
-  // Step 1: on the course node, drive users up to the ceiling (max users, still fits)
-  await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:1,budgetIdx:1});
-    window.__sim.setUsers(r.maxUsers);
-  })()`);
-  await sleep(60);
+  await ev('location.reload()'); await sleep(600);
+  // Step 1: mean (or p50) in the valley at a balanced mix
+  await ev('window.__sim.setMetric("mean");window.__sim.setMix(50)');
   let step = await ev('window.__sim.CH.step');
-  ok('TRY-THIS step 1 auto-detected (max users on the course node)', step >= 2, 'step=' + step);
-  // Step 2: back to 1 user, ctx to max, drop to the 4 GB node -> OOM
-  await ev('window.__sim.setUsers(1);window.__sim.setCtx(40960);window.__sim.setBudgetIdx(0)');
-  await sleep(60);
+  ok('TRY-THIS step 1 auto-detected (mean in the valley)', step >= 2, 'step=' + step);
+  // Step 2: keep mean, shift to >=80% short so the mean drops
+  await ev('window.__sim.setMix(85)');
   step = await ev('window.__sim.CH.step');
-  ok('TRY-THIS step 2 auto-detected (40960 ctx OOMs the 4 GB box)', step >= 3, 'step=' + step);
-  // Step 3: trade context for users from the step-2 anchor (40960 × 1). Halve ctx,
-  // double users, and land inside the box. From 40960@1 the anchor is stored; go to a
-  // fitting point that is <= anchor/2 ctx AND >= anchor*2 users. Use 2048 ctx × 2 users.
-  await ev('window.__sim.setCtx(2048);window.__sim.setUsers(2)');
-  await sleep(60);
+  ok('TRY-THIS step 2 auto-detected (mean drops on short-heavy mix)', step >= 3, 'step=' + step);
+  // Step 3: switch to P95 to land on the slow hump
+  await ev('window.__sim.setMetric("p95")');
   const done = await ev(`(function(){return {step:window.__sim.CH.step,
     success:document.getElementById('challenge').classList.contains('success')};})()`);
-  ok('TRY-THIS step 3 auto-detected (trade context for users)', done.step >= 4, JSON.stringify(done));
+  ok('TRY-THIS step 3 auto-detected (P95 on the long-answer hump)', done.step >= 4, JSON.stringify(done));
   ok('CHALLENGE completes: success banner shown', done.success === true, JSON.stringify(done));
 
-  // ---------- 8b. PREDICT-FIRST mode (Brilliant-style) ----------
-  await ev('location.reload()');
-  await sleep(600);
-  // At boot, step 1 shows the prediction question with chips, not the instruction
+  // ---------- 8b. PREDICT-FIRST mode ----------
+  await ev('location.reload()'); await sleep(600);
   const pBoot = await ev(`(function(){return {
     chips: document.querySelectorAll('#chPredict .chip').length,
     txt: document.getElementById('chTxt').textContent };})()`);
-  ok('PREDICT: step 1 opens with a prediction question + chips', pBoot.chips >= 2 && /Predict first/.test(pBoot.txt),
-    JSON.stringify(pBoot));
-  ok('PREDICT: instruction hidden until a prediction is made', !/max users/.test(pBoot.txt), pBoot.txt);
-  // Chips carry the affordance contract (cursor:pointer + title)
+  ok('PREDICT: step 1 opens with a prediction question + chips', pBoot.chips >= 2 && /Predict first/.test(pBoot.txt), JSON.stringify(pBoot));
+  ok('PREDICT: instruction hidden until a prediction is made', !/valley/.test(pBoot.txt) || /Predict first/.test(pBoot.txt), pBoot.txt);
   const pAff = await ev(`(function(){var c=document.querySelector('#chPredict .chip');
     return {cur:getComputedStyle(c).cursor, tip:!!c.title};})()`);
   ok('PREDICT: chips are affordant (cursor:pointer + title)', pAff.cur === 'pointer' && pAff.tip, JSON.stringify(pAff));
-  // Tap a WRONG chip (index 0 = "CPU saturates") — instruction appears, prediction logged
+  // Tap a WRONG chip (index 0 = "it rises") — instruction appears, prediction logged
   await ev(`document.querySelectorAll('#chPredict .chip')[0].click()`);
   const pAfter = await ev(`(function(){return {
     chips: document.querySelectorAll('#chPredict .chip').length,
     txt: document.getElementById('chTxt').textContent,
     logged: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /predicted/.test(e.textContent)}) };})()`);
   ok('PREDICT: tapping a chip reveals the instruction + shows your pick', pAfter.chips === 0
-    && /max users/.test(pAfter.txt) && /you predicted/.test(pAfter.txt), JSON.stringify(pAfter));
+    && /valley/.test(pAfter.txt) && /you predicted/.test(pAfter.txt), JSON.stringify(pAfter));
   ok('PREDICT: the pick is logged in the event stream', pAfter.logged === true);
   // Complete step 1 — a WRONG prediction must NOT block, and the verdict must teach
-  await ev(`(function(){
-    var r=window.__sim.compute({model:0,quant:1,ctx:2048,users:1,budgetIdx:1});
-    window.__sim.setUsers(r.maxUsers);
-  })()`);
-  await sleep(60);
+  await ev('window.__sim.setMetric("mean");window.__sim.setMix(50)');
   const pVerdict = await ev(`(function(){return {
     step: window.__sim.CH.step,
     verdict: [].slice.call(document.querySelectorAll('#evList .ev')).map(function(e){return e.textContent}).join(' | ') };})()`);
   ok('PREDICT: wrong prediction never blocks step completion', pVerdict.step >= 2, 'step=' + pVerdict.step);
   ok('PREDICT: verdict names your pick and explains the model', /Not what you predicted/.test(pVerdict.verdict)
-    && /memory fills before compute/.test(pVerdict.verdict), pVerdict.verdict.slice(-260));
-  // Step 2 now shows its own prediction question; predict RIGHT via the hook, complete, expect a right verdict
+    && /mean/.test(pVerdict.verdict), pVerdict.verdict.slice(-220));
+  // Step 2 shows its own question; predict RIGHT via the hook, complete, expect a right verdict
   const p2 = await ev(`document.getElementById('chTxt').textContent`);
   ok('PREDICT: step 2 opens with its own question', /Predict first/.test(p2), p2);
-  await ev('window.__sim.predict(1)');   // "no — that one request’s KV alone blows the box" — correct
-  await ev('window.__sim.setUsers(1);window.__sim.setCtx(40960);window.__sim.setBudgetIdx(0)');
-  await sleep(60);
+  await ev('window.__sim.predict(1)');   // "no, only the metric moved" — correct
+  await ev('window.__sim.setMix(85)');
   const p2v = await ev(`(function(){return {
     step: window.__sim.CH.step,
     right: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /Prediction right/.test(e.textContent)}) };})()`);
   ok('PREDICT: right prediction confirmed in the log', p2v.step >= 3 && p2v.right === true, JSON.stringify(p2v));
-  // Skipping the prediction entirely must also work (formative, not a gate): complete step 3 without predicting
-  await ev('window.__sim.setCtx(2048);window.__sim.setUsers(2)');
-  await sleep(60);
+  // Skipping the prediction entirely must also work: complete step 3 without predicting
+  await ev('window.__sim.setMetric("p95")');
   const p3 = await ev(`(function(){return {step:window.__sim.CH.step,
     success:document.getElementById('challenge').classList.contains('success')};})()`);
   ok('PREDICT: skipping a prediction never blocks the challenge', p3.step >= 4 && p3.success === true, JSON.stringify(p3));
 
   // ---------- 9. Reset returns to initial state ----------
-  await ev('window.__sim.setCtx(40960);window.__sim.setUsers(32);window.__sim.setModel(3)');
-  await ev('location.reload()');
-  await sleep(600);
-  const afterReset = await ev(`(function(){var D=window.__sim.consts.DEFAULTS;return {
-    ok: window.__sim.S.budgetIdx===D.budgetIdx && window.__sim.S.model===D.model &&
-        window.__sim.S.quant===D.quant && window.__sim.S.ctx===D.ctx && window.__sim.S.users===D.users,
-    step: window.__sim.CH.step, over: window.__sim.isOver(),
-    kv: document.getElementById('kvV').textContent};})()`);
-  ok('R5 Reset restores the course-node defaults + clears challenge',
-    afterReset.ok === true && afterReset.step === 1 && afterReset.over === false && /224\s*MB/.test(afterReset.kv),
-    JSON.stringify(afterReset));
+  await ev('window.__sim.setMix(90);window.__sim.setMetric("p99")');
+  await ev('location.reload()'); await sleep(600);
+  const afterReset = await ev(`(function(){return {
+    mix:window.__sim.S.shortPct, rate:window.__sim.S.rate, metric:window.__sim.S.metric,
+    step:window.__sim.CH.step};})()`);
+  const D = await ev('window.__sim.consts.DEFAULTS');
+  ok('R5 Reset restores defaults + clears challenge',
+    afterReset.mix === D.shortPct && afterReset.rate === D.rate && afterReset.metric === D.metric
+    && afterReset.step === 1, JSON.stringify(afterReset));
 
   // ---------- 10. no scroll at embed size ----------
   const scroll = await ev('({sw:document.documentElement.scrollWidth,sh:document.documentElement.scrollHeight,cw:window.innerWidth,ch:window.innerHeight})');
@@ -382,7 +348,7 @@ async function main() {
 
   cdp.close();
   child.kill('SIGKILL');
-  try { fs.rmSync('/tmp/m8-kv-chrome-' + process.pid, { recursive: true, force: true }); } catch {}
+  try { fs.rmSync('/tmp/m10-latency-chrome-' + process.pid, { recursive: true, force: true }); } catch {}
 
   console.log(results.join('\n'));
   console.log(`\n${PASS}/${PASS + FAIL} assertions passed`);

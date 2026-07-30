@@ -50,6 +50,12 @@
   #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
   #challenge.success .tag{color:var(--ok)}
   #challenge.success .txt{white-space:normal;line-height:1.3}
+  #challenge{flex-wrap:wrap}
+  #challenge .predict{flex:1 1 100%;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:1px 0 5px}
+  #challenge .chip{cursor:pointer;border:1px solid #3a3f6e;border-radius:999px;padding:2px 11px;
+    font-size:.85rem;color:var(--txt);background:rgba(76,201,240,.06);user-select:none}
+  #challenge .chip:hover{border-color:var(--accent);background:rgba(76,201,240,.16)}
+  #challenge .txt .pv{font-size:.8rem;color:var(--faint);margin-left:6px}
 
   /* ---------- main grid ---------- */
   #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(238px,21rem,340px) 1fr;gap:6px;min-height:0}
@@ -182,6 +188,7 @@
       <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
     </span>
     <span class="txt" id="chTxt"></span>
+    <div class="predict" id="chPredict"></div>
   </div>
 
   <div id="main">
@@ -308,7 +315,35 @@
     ctx:DEFAULTS.ctx, users:DEFAULTS.users, t0:Date.now(),
     oom:false           /* is the box currently blown? */
   };
-  var CH={step:1, done:[false,false,false], s3ctx:null, s3users:null};
+  var CH={step:1, done:[false,false,false], s3ctx:null, s3users:null, pred:[null,null,null]};
+  /* predict-first (Brilliant-style): commit to a guess, then take the action and see
+     whether the model agrees. Formative only — never blocks the challenge. Each question
+     targets the step's counter-intuition, the answer a naive learner gets wrong. */
+  var CH_PREDICT=[
+    {q:'you keep adding <b>concurrent users</b> to this node. What gives out <b>first</b>?',
+     opts:['the CPU saturates — it runs out of compute','the box runs out of memory — KV fills it','nothing until you hit the model’s user limit'], ok:1,
+     explain:'Each live request pins its own full KV cache, so memory fills before compute does — the box OOMs long before the CPU is the bottleneck.'},
+    {q:'<b>one</b> user at the model’s max <code>40960</code> context on the small <code>4 GB</code> box. Does it fit?',
+     opts:['yes — a single user is always safe','no — that one request’s KV alone blows the box'], ok:1,
+     explain:'KV = 112 KiB × context × users, so a single 40960-token request needs ~4.4 GB of KV alone — the context you configure sets the bill, not the user count.'},
+    {q:'you <b>halve the context</b> and <b>double the users</b>. What happens to total <b>KV</b>?',
+     opts:['it doubles','it halves','it stays the same'], ok:2,
+     explain:'KV is per-token × context × users, so halving one factor and doubling the other leaves the product — and the memory bill — unchanged.'}
+  ];
+  function pickPredict(idx){
+    if(CH.step>=4)return;
+    var i=CH.step-1;
+    if(!CH_PREDICT[i]||CH.pred[i]!=null)return;
+    CH.pred[i]=idx;
+    logEv('','predict','step '+CH.step+' — you predicted: “'+CH_PREDICT[i].opts[idx].replace(/<[^>]*>/g,'')+'”');
+    updateChallenge(compute());
+  }
+  function predictVerdict(i){
+    var p=CH_PREDICT[i];
+    if(!p||CH.pred[i]==null)return;
+    var right=CH.pred[i]===p.ok;
+    logEv(right?'kv':'oom','predict',(right?'Prediction right. ':'Not what you predicted — you said “'+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+'”. ')+p.explain.replace(/<[^>]*>/g,''));
+  }
 
   /* pure math — the harness calls this without touching the DOM */
   function compute(o){
@@ -452,19 +487,19 @@
     if(CH.step===1 && !CH.done[0]){
       var onCourseNode = S.budgetIdx===1 && S.model===0 && S.quant===1 && S.ctx===2048;
       if(onCourseNode && !r.over && r.users===r.maxUsers && r.maxUsers>1){
-        CH.done[0]=true; CH.step=2;
+        CH.done[0]=true; CH.step=2; predictVerdict(0);
         logEv('kv','try-this','Step 1 done — '+r.maxUsers+' users is the ceiling for 0.6B@2048 on 8 GB. One more and it OOMs.');
       }
     }else if(CH.step===2 && !CH.done[1]){
       if(S.users===1 && S.ctx>=40960 && r.over){
-        CH.done[1]=true; CH.step=3;
+        CH.done[1]=true; CH.step=3; predictVerdict(1);
         CH.s3ctx=S.ctx; CH.s3users=S.users;   /* anchor the trade from the overflow point */
         logEv('oom','try-this','Step 2 done — 40960 ctx × 1 user = '+fmtGB(r.kv)+' of KV alone. The context you configure is a memory decision.');
       }
     }else if(CH.step===3 && !CH.done[2]){
       /* trade: ctx roughly halved AND users roughly doubled vs the step-2 anchor, box fits */
       if(CH.s3ctx && !r.over && S.ctx<=CH.s3ctx/2 + 1 && S.users>=CH.s3users*2){
-        CH.done[2]=true; CH.step=4;
+        CH.done[2]=true; CH.step=4; predictVerdict(2);
         logEv('kv','try-this','Step 3 done — half the context, double the users, back inside the box. KV trades context for concurrency.');
       }
     }
@@ -472,9 +507,27 @@
       var d=$('d'+i); d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
       d.textContent=CH.done[i-1]?'✓':i;
     }
-    var box=$('challenge'), txt=$('chTxt');
-    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;}
-    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[CH.step-1];}
+    var box=$('challenge'), txt=$('chTxt'), pr=$('chPredict');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;pr.innerHTML='';}
+    else{
+      box.classList.remove('success');
+      var i=CH.step-1, p=CH_PREDICT[i];
+      if(p && CH.pred[i]==null){
+        txt.innerHTML='Step '+CH.step+' — <b>Predict first:</b> '+p.q;
+        pr.innerHTML='';
+        for(var k=0;k<p.opts.length;k++){
+          var c=document.createElement('span');
+          c.className='chip'; c.innerHTML=p.opts[k];
+          c.title='Lock in this prediction, then try it';
+          (function(kk){c.addEventListener('click',function(){pickPredict(kk)})})(k);
+          pr.appendChild(c);
+        }
+      }else{
+        var tail=p?' <span class="pv">(you predicted: '+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+')</span>':'';
+        txt.innerHTML=CH_TEXT[i]+tail;
+        pr.innerHTML='';
+      }
+    }
   }
 
   /* ------------------------------------------------------------------ controls */
@@ -507,7 +560,7 @@
   logEv('','fit', describe(compute()));
 
   /* test hook (harmless in production) */
-  window.__sim={S:S,CH:CH,
+  window.__sim={S:S,CH:CH,predict:pickPredict,
     setBudgetIdx:function(v){S.budgetIdx=v;syncSeg();apply('budget')},
     setModel:function(v){S.model=v;syncSeg();apply('model')},
     setQuant:function(v){S.quant=v;syncSeg();apply('quant')},

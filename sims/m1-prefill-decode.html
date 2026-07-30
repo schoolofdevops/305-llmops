@@ -49,6 +49,12 @@
   #challenge.success{background:linear-gradient(90deg,rgba(61,220,151,.16),rgba(61,220,151,.05));border-color:#2c7a5b}
   #challenge.success .tag{color:var(--ok)}
   #challenge.success .txt{white-space:normal;line-height:1.3}
+  #challenge{flex-wrap:wrap}
+  #challenge .predict{flex:1 1 100%;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:1px 0 5px}
+  #challenge .chip{cursor:pointer;border:1px solid #3a3f6e;border-radius:999px;padding:2px 11px;
+    font-size:.85rem;color:var(--txt);background:rgba(76,201,240,.06);user-select:none}
+  #challenge .chip:hover{border-color:var(--accent);background:rgba(76,201,240,.16)}
+  #challenge .txt .pv{font-size:.8rem;color:var(--faint);margin-left:6px}
 
   /* ---------- main grid ---------- */
   #main{flex:1 1 auto;display:grid;grid-template-columns:clamp(232px,20rem,330px) 1fr;gap:6px;min-height:0}
@@ -171,6 +177,7 @@
       <span class="dot" id="d1">1</span><span class="dot" id="d2">2</span><span class="dot" id="d3">3</span>
     </span>
     <span class="txt" id="chTxt"></span>
+    <div class="predict" id="chPredict"></div>
   </div>
 
   <div id="main">
@@ -277,7 +284,34 @@
     result:null,        /* last completed run's numbers */
     t0:Date.now()
   };
-  var CH={step:1, done:[false,false,false], baseTtft:null};
+  var CH={step:1, done:[false,false,false], baseTtft:null, pred:[null,null,null]};
+  /* predict-first (Brilliant-style): commit to a guess, then produce the condition and
+     see whether the model agrees. Formative only — never blocks the challenge. */
+  var CH_PREDICT=[
+    {q:'which control decides <b>TTFT</b>, the wait before the first word?',
+     opts:['prompt length','output length','context limit'], ok:0,
+     explain:'TTFT is prefill — one parallel pass over the prompt. Only prompt length sets it.'},
+    {q:'you are about to raise <b>output length</b> a lot. What happens to TTFT?',
+     opts:['it grows with the answer','it stays about the same'], ok:1,
+     explain:'TTFT is fixed before the first output token exists. A longer answer adds decode time after the first word, not wait before it.'},
+    {q:'what happens when <b>prompt + output</b> cross the context limit?',
+     opts:['the run just gets slower','the answer is cut off at the wall','nothing — the limit is advisory'], ok:1,
+     explain:'The KV cache must fit under num_ctx. When the window fills, generation stops — the answer is truncated.'}
+  ];
+  function pickPredict(idx){
+    if(CH.step>=4)return;
+    var i=CH.step-1;
+    if(CH.pred[i]!=null)return;
+    CH.pred[i]=idx;
+    logEv('','predict','step '+CH.step+' — you predicted: \u201c'+CH_PREDICT[i].opts[idx].replace(/<[^>]*>/g,'')+'\u201d');
+    updateChallenge();
+  }
+  function predictVerdict(i){
+    var p=CH_PREDICT[i];
+    if(!p||CH.pred[i]==null)return;
+    var right=CH.pred[i]===p.ok;
+    logEv(right?'':'over','predict',(right?'Prediction right. ':'Not what you predicted \u2014 you said \u201c'+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+'\u201d. ')+p.explain.replace(/<[^>]*>/g,''));
+  }
 
   /* pure math the harness can call without animation */
   function compute(p,o){
@@ -446,13 +480,13 @@
       /* baseTtft is captured at the FIRST run; success when a later run is >=3x it.
          Anchor to the default-prompt TTFT so it can't be spoofed by shrinking first. */
       var base=PREFILL_PER_TOK*DEFAULTS.promptLen;
-      if(r.ttft>=base*3){CH.done[0]=true;CH.step=2;
+      if(r.ttft>=base*3){CH.done[0]=true;CH.step=2;predictVerdict(0);
         logEv('','try-this','Step 1 done — TTFT is '+ (r.ttft/base).toFixed(1) +'× the starting value. That is prefill growing with the prompt.');}
     }else if(CH.step===2){
-      if(r.decodeShare>=0.80){CH.done[1]=true;CH.step=3;
+      if(r.decodeShare>=0.80){CH.done[1]=true;CH.step=3;predictVerdict(1);
         logEv('decode','try-this','Step 2 done — '+Math.round(r.decodeShare*100)+'% of the time is decode now. The answer owns the clock.');}
     }else if(CH.step===3){
-      if(r.overflow){CH.done[2]=true;CH.step=4;
+      if(r.overflow){CH.done[2]=true;CH.step=4;predictVerdict(2);
         logEv('over','try-this','Step 3 done — prompt+output overran num_ctx. That is the context window wall.');}
     }
     updateChallenge();
@@ -462,9 +496,27 @@
       var d=$('d'+i);d.className='dot'+(CH.done[i-1]?' done':CH.step===i?' cur':'');
       d.textContent=CH.done[i-1]?'✓':i;
     }
-    var box=$('challenge'),txt=$('chTxt');
-    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;}
-    else{box.classList.remove('success');txt.innerHTML=CH_TEXT[CH.step-1];}
+    var box=$('challenge'),txt=$('chTxt'),pr=$('chPredict');
+    if(CH.step>=4){box.classList.add('success');txt.innerHTML=SUCCESS;pr.innerHTML='';}
+    else{
+      box.classList.remove('success');
+      var i=CH.step-1, p=CH_PREDICT[i];
+      if(p && CH.pred[i]==null){
+        txt.innerHTML='Step '+CH.step+' \u2014 <b>Predict first:</b> '+p.q;
+        pr.innerHTML='';
+        for(var k=0;k<p.opts.length;k++){
+          var c=document.createElement('span');
+          c.className='chip'; c.innerHTML=p.opts[k];
+          c.title='Lock in this prediction, then try it';
+          (function(kk){c.addEventListener('click',function(){pickPredict(kk)})})(k);
+          pr.appendChild(c);
+        }
+      }else{
+        var tail=p?' <span class="pv">(you predicted: '+p.opts[CH.pred[i]].replace(/<[^>]*>/g,'')+')</span>':'';
+        txt.innerHTML=CH_TEXT[i]+tail;
+        pr.innerHTML='';
+      }
+    }
   }
 
   /* ------------------------------------------------------------------ controls */
@@ -491,7 +543,7 @@
   logEv('','ready','engine up · set prompt / output / context and press Run');
 
   /* test hook (harmless in production) */
-  window.__sim={S:S,CH:CH,
+  window.__sim={S:S,CH:CH,predict:pickPredict,
     setPrompt:function(v){S.promptLen=v;syncLabels();onChange()},
     setOut:function(v){S.outLen=v;syncLabels();onChange()},
     setCtx:function(v){S.ctxLimit=v;syncLabels();onChange()},

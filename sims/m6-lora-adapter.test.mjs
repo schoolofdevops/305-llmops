@@ -312,6 +312,60 @@ async function main() {
   ok('TRY-THIS step 3 auto-detected (serve-merged)', step3.done3 === true && step3.step >= 4, JSON.stringify(step3));
   ok('CHALLENGE completes: success banner shown', step3.success === true, JSON.stringify(step3));
 
+  // ---------- 12b. PREDICT-FIRST mode (Brilliant-style) ----------
+  // Step 1 completes at boot (default IS the config), so the FIRST prediction the learner
+  // meets is on step 2 (raise r → does the meter follow the params 8×?).
+  await reload();
+  const pBoot = await ev(`(function(){return {
+    step: window.__sim.CH.step,
+    chips: document.querySelectorAll('#chPredict .chip').length,
+    txt: document.getElementById('chTxt').textContent };})()`);
+  ok('PREDICT: step 2 opens with a prediction question + chips (step 1 auto-done at boot)',
+    pBoot.step === 2 && pBoot.chips >= 2 && /Predict first/.test(pBoot.txt), JSON.stringify(pBoot));
+  ok('PREDICT: the drag-r instruction is hidden until a prediction is made', !/Drag/.test(pBoot.txt), pBoot.txt);
+  // Chips carry the affordance contract (cursor:pointer + title)
+  const pAff = await ev(`(function(){var c=document.querySelector('#chPredict .chip');
+    return {cur:getComputedStyle(c).cursor, tip:!!c.title};})()`);
+  ok('PREDICT: chips are affordant (cursor:pointer + title)', pAff.cur === 'pointer' && pAff.tip, JSON.stringify(pAff));
+  // Tap a WRONG chip (index 0 = "climbs ~8× too") — instruction appears, prediction logged
+  await ev(`document.querySelectorAll('#chPredict .chip')[0].click()`);
+  const pAfter = await ev(`(function(){return {
+    chips: document.querySelectorAll('#chPredict .chip').length,
+    txt: document.getElementById('chTxt').textContent,
+    logged: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /predicted/.test(e.textContent)}) };})()`);
+  ok('PREDICT: tapping a chip reveals the instruction + shows your pick', pAfter.chips === 0
+    && /Drag/.test(pAfter.txt) && /you predicted/.test(pAfter.txt), JSON.stringify(pAfter));
+  ok('PREDICT: the pick is logged in the event stream', pAfter.logged === true);
+  // Complete step 2 with r=64 — a WRONG prediction must NOT block, and the verdict must teach
+  await ev('window.__sim.setRankValue(64)');
+  const pVerdict = await ev(`(function(){return {
+    step: window.__sim.CH.step,
+    verdict: [].slice.call(document.querySelectorAll('#evList .ev')).map(function(e){return e.textContent}).join(' | ') };})()`);
+  ok('PREDICT: wrong prediction never blocks step completion', pVerdict.step >= 3, 'step=' + pVerdict.step);
+  ok('PREDICT: verdict names your pick and explains the model', /Not what you predicted/.test(pVerdict.verdict)
+    && /diminishing-returns|saturat/i.test(pVerdict.verdict), pVerdict.verdict.slice(-220));
+  // Step 3 now shows its own prediction; predict RIGHT via the hook, complete, expect a right verdict
+  const p2 = await ev(`document.getElementById('chTxt').textContent`);
+  ok('PREDICT: step 3 opens with its own question', /Predict first/.test(p2), p2);
+  await ev('window.__sim.predict(2)');   // "identical — ΔW folds into W" — correct
+  await ev(`window.__sim.setMode('serve')`);
+  const p2v = await ev(`(function(){return {
+    step: window.__sim.CH.step,
+    right: [].slice.call(document.querySelectorAll('#evList .ev')).some(function(e){return /Prediction right/.test(e.textContent)}) };})()`);
+  ok('PREDICT: right prediction confirmed in the log', p2v.step >= 4 && p2v.right === true, JSON.stringify(p2v));
+
+  // Skipping the prediction entirely must also work (formative, not a gate).
+  await reload();
+  // step 2 is current with a prediction pending; skip it — drive r=64 without predicting
+  await ev('window.__sim.setRankValue(64)');
+  const pSkip2 = await ev('window.__sim.CH.step');
+  ok('PREDICT: skipping step-2 prediction never blocks it', pSkip2 >= 3, 'step=' + pSkip2);
+  // step 3 pending a prediction; skip it too — go straight to serve-merged
+  await ev(`window.__sim.setMode('serve')`);
+  const pSkip3 = await ev(`(function(){return {step:window.__sim.CH.step,
+    success:document.getElementById('challenge').classList.contains('success')};})()`);
+  ok('PREDICT: skipping a prediction never blocks the challenge', pSkip3.step >= 4 && pSkip3.success === true, JSON.stringify(pSkip3));
+
   // ---------- 13. Reset returns to initial state (R5) ----------
   await ev(`window.__sim.setRankValue(64);window.__sim.setMode('serve');window.__sim.setModule('mlp',true)`);
   await ev('location.reload()'); await sleep(500);

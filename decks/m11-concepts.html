@@ -98,6 +98,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .slides section.divider{ justify-content:center; align-items:center; }
+  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -169,6 +171,16 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M11·01</div>
 </section>
 
+<section class="divider">
+  <h2 class="t">The Two Jobs — A Real Signal, and a Version in Git</h2>
+  <div class="pageno">M11·02</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">1 · Why CPU% is the wrong signal — kitchen noise versus the queue at the door</h2>
+  <div class="pageno">M11·03</div>
+</section>
+
 <!-- ═══════════════ SLIDE 2 · DON'T LISTEN TO THE KITCHEN (restaurant, build A) ═══════════════ -->
 <section>
   <h2 class="t">Don't judge the room by the kitchen</h2>
@@ -193,7 +205,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><circle cx="650" cy="180" r="12"/></g>
     <text x="785" y="278" text-anchor="middle" class="lbl-g">half empty</text>
   </svg>
-  <div class="pageno">M11·02</div>
+  <div class="pageno">M11·04</div>
 </section>
 
 <!-- ═══════════════ SLIDE 3 · ONE REQUEST PINS ONE CORE (mechanism, fragments) ═══════════════ -->
@@ -227,7 +239,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5"><path d="M760,60 C800,60 800,258 760,258"/></g>
     <text x="820" y="164" text-anchor="middle" class="lbl-g">one core per<tspan x="820" dy="26">in-flight request</tspan></text>
   </svg>
-  <div class="pageno">M11·03</div>
+  <div class="pageno">M11·05</div>
 </section>
 
 <!-- ═══════════════ SLIDE 4 · CPU FLAT WHILE QUEUE GROWS (the surge) ═══════════════ -->
@@ -251,7 +263,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="915" y="194" text-anchor="middle" class="lbl-g">"nothing to do"</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="800" y1="210" x2="1030" y2="130"/></g>
   </svg>
-  <div class="pageno">M11·04</div>
+  <div class="pageno">M11·06</div>
 </section>
 
 <!-- ═══════════════ SLIDE 5 · SCALE ON THE QUEUE (restaurant, build B — the turn) ═══════════════ -->
@@ -276,7 +288,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="910" y="256" text-anchor="middle" class="lbl-b">requests_deferred</text>
     <text x="975" y="130" text-anchor="middle" class="lbl-good">watch this</text>
   </svg>
-  <div class="pageno">M11·05</div>
+  <div class="pageno">M11·07</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">2 · KEDA — the maître d' who opens the second dining room</h2>
+  <div class="pageno">M11·08</div>
 </section>
 
 <!-- ═══════════════ SLIDE 6 · KEDA IS THE MAÎTRE D' ═══════════════ -->
@@ -302,7 +319,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1000" y="150" text-anchor="middle" class="lbl-g" style="font-size:16px">builds ↦<tspan x="1000" dy="24">open</tspan></text>
     <text x="1000" y="222" text-anchor="middle" class="lbl-g" style="font-size:16px">drains ↦<tspan x="1000" dy="24">close</tspan></text>
   </svg>
-  <div class="pageno">M11·06</div>
+  <div class="pageno">M11·09</div>
 </section>
 
 <!-- ═══════════════ SLIDE 7 · KEDA READS PROMETHEUS DIRECTLY ═══════════════ -->
@@ -329,7 +346,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="80" y1="288" x2="740" y2="212"/></g>
     <text x="900" y="256" text-anchor="middle" class="lbl-g">no rule<tspan x="900" dy="26">language</tspan></text>
   </svg>
-  <div class="pageno">M11·07</div>
+  <div class="pageno">M11·10</div>
 </section>
 
 <!-- ═══════════════ SLIDE 8 · ONE OBJECT YOU WRITE, ONE IT BUILDS (fragments) ═══════════════ -->
@@ -358,7 +375,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="975" y="176" text-anchor="middle" class="lbl">Deployment</text>
     </g>
   </svg>
-  <div class="pageno">M11·08</div>
+  <div class="pageno">M11·11</div>
 </section>
 
 <!-- ═══════════════ SLIDE 9 · OPEN THE ROOM, THEN CLOSE IT (1→2→1) ═══════════════ -->
@@ -393,7 +410,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="980" y="178" text-anchor="middle" class="lbl-b">1</text>
     <text x="980" y="248" text-anchor="middle" class="lbl-good">back to rest</text>
   </svg>
-  <div class="pageno">M11·09</div>
+  <div class="pageno">M11·12</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">3 · Scale-to-zero, and the cold-start you cannot ignore</h2>
+  <div class="pageno">M11·13</div>
 </section>
 
 <!-- ═══════════════ SLIDE 10 · SCALE-TO-ZERO IS A TRAP HERE ═══════════════ -->
@@ -419,7 +441,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="820" y="244" text-anchor="middle" class="lbl-b">model pod</text>
     <text x="770" y="304" text-anchor="middle" class="lbl-bad">back in minutes</text>
   </svg>
-  <div class="pageno">M11·10</div>
+  <div class="pageno">M11·14</div>
 </section>
 
 <!-- ═══════════════ SLIDE 11 · WARM FOR INTERACTIVE, SLEEP FOR BATCH ═══════════════ -->
@@ -446,7 +468,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M930,170 C934,160 946,160 950,170 C954,180 940,192 940,200 M940,150 L940,142"/></g>
     <text x="810" y="264" text-anchor="middle" class="lbl-g">keep one warm</text>
   </svg>
-  <div class="pageno">M11·11</div>
+  <div class="pageno">M11·15</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">4 · Why the second engine comes up fast — the presence-cache, working for you</h2>
+  <div class="pageno">M11·16</div>
 </section>
 
 <!-- ═══════════════ SLIDE 12 · THE SECOND ENGINE SKIPS THE UNPACK (presence-cache) ═══════════════ -->
@@ -479,7 +506,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="640" y="210" width="430" height="56" rx="8"/></g>
     <text x="855" y="244" text-anchor="middle" class="lbl-g" style="font-size:16px">"model already present on PVC — skipping unpack"</text>
   </svg>
-  <div class="pageno">M11·12</div>
+  <div class="pageno">M11·17</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">5 · GitOps where the desired state includes the model version</h2>
+  <div class="pageno">M11·18</div>
 </section>
 
 <!-- ═══════════════ SLIDE 13 · THE MANIFEST ON THE DOOR DECIDES (warehouse) ═══════════════ -->
@@ -504,7 +536,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><path d="M600,300 C520,340 460,320 470,306" marker-end="url(#ah)"/></g>
     <text x="850" y="180" text-anchor="middle" class="lbl-g">paper decides,<tspan x="850" dy="26">building matches</tspan></text>
   </svg>
-  <div class="pageno">M11·13</div>
+  <div class="pageno">M11·19</div>
 </section>
 
 <!-- ═══════════════ SLIDE 14 · THE MODEL VERSION IS ON THE MANIFEST (GitOps loop) ═══════════════ -->
@@ -541,7 +573,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="820" y="250" width="250" height="56" rx="10"/></g>
     <text x="945" y="284" text-anchor="middle" class="lbl-g" style="font-size:16px">PVC · per-tag dir</text>
   </svg>
-  <div class="pageno">M11·14</div>
+  <div class="pageno">M11·20</div>
 </section>
 
 <!-- ═══════════════ SLIDE 15 · PROMOTE IS A PULL REQUEST ═══════════════ -->
@@ -569,7 +601,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="940" y="138" text-anchor="middle" class="lbl-g" style="font-size:16px">ticket: "promoted"</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="850" y1="210" x2="1030" y2="110"/></g>
   </svg>
-  <div class="pageno">M11·15</div>
+  <div class="pageno">M11·21</div>
 </section>
 
 <!-- ═══════════════ SLIDE 16 · ROLL BACK WITH GIT REVERT ═══════════════ -->
@@ -597,7 +629,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><circle cx="800" cy="255" r="22"/><line x1="816" y1="271" x2="840" y2="295"/></g>
     <text x="900" y="262" text-anchor="middle" class="lbl-good">checkable</text>
   </svg>
-  <div class="pageno">M11·16</div>
+  <div class="pageno">M11·22</div>
 </section>
 
 <!-- ═══════════════ SLIDE 17 · POLL OR POKE ═══════════════ -->
@@ -622,7 +654,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- note -->
     <text x="730" y="248" text-anchor="middle" class="lbl-g">poll vs webhook = latency vs plumbing</text>
   </svg>
-  <div class="pageno">M11·17</div>
+  <div class="pageno">M11·23</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">6 · The promotion lie — swapping the label on a full jar</h2>
+  <div class="pageno">M11·24</div>
 </section>
 
 <!-- ═══════════════ SLIDE 18 · THE PROMOTION LIE (full jar) ═══════════════ -->
@@ -650,7 +687,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="905" y="196" text-anchor="middle" class="lbl-g" style="font-size:16px">"saw a GGUF → skip"</text>
     <text x="905" y="226" text-anchor="middle" class="lbl-g" style="font-size:15px">a model ≠ the right model</text>
   </svg>
-  <div class="pageno">M11·18</div>
+  <div class="pageno">M11·25</div>
 </section>
 
 <!-- ═══════════════ SLIDE 19 · MAKE THE TAG PART OF THE PATH ═══════════════ -->
@@ -680,7 +717,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="182" text-anchor="middle" class="lbl-g" style="font-size:16px">guard · unpack</text>
     <text x="935" y="210" text-anchor="middle" class="lbl-g" style="font-size:16px">server -m flag</text>
   </svg>
-  <div class="pageno">M11·19</div>
+  <div class="pageno">M11·26</div>
 </section>
 
 <!-- ═══════════════ SLIDE 20 · VERSIONED CACHE MAKES ROLLBACK FREE ═══════════════ -->
@@ -707,7 +744,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="815" y="180" text-anchor="middle" class="lbl-g" style="font-size:15px">Ready</text>
     <text x="1000" y="166" text-anchor="middle" class="lbl-good">seconds</text>
   </svg>
-  <div class="pageno">M11·20</div>
+  <div class="pageno">M11·27</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">7 · Training as a pipeline step — the circuit breaker on a shared node</h2>
+  <div class="pageno">M11·28</div>
 </section>
 
 <!-- ═══════════════ SLIDE 21 · CAP THE SPACE HEATER (circuit breaker = control-plane protection) ═══════════════ -->
@@ -733,7 +775,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="770" y="250" text-anchor="middle" class="lbl-g">must not starve</text>
     <text x="770" y="300" text-anchor="middle" class="lbl-g">kubectl needs it alive</text>
   </svg>
-  <div class="pageno">M11·21</div>
+  <div class="pageno">M11·29</div>
 </section>
 
 <!-- ═══════════════ SLIDE 22 · DRAIN SERVING FIRST (paused-replicas → 0) ═══════════════ -->
@@ -758,7 +800,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="205" text-anchor="middle" class="lbl-g">nothing but the training pod,</text>
     <text x="800" y="232" text-anchor="middle" class="lbl-g">running under its CPU cap</text>
   </svg>
-  <div class="pageno">M11·22</div>
+  <div class="pageno">M11·30</div>
 </section>
 
 <!-- ═══════════════ SLIDE 23 · CLOSING — OpsMate v2.5, operated ═══════════════ -->
@@ -787,7 +829,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1050" y="256" text-anchor="middle" class="lbl-g">M12</text>
   </svg>
   <p class="credit">Now open <b>Module 11 · Lab</b>. &nbsp;·&nbsp; next: M12 puts a governed gateway on the door &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M11·23</div>
+  <div class="pageno">M11·31</div>
 </section>
 </div></div>
 <script>/* reveal.js 5.x (inlined) */

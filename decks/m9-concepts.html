@@ -99,6 +99,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .slides section.divider{ justify-content:center; align-items:center; }
+  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -171,6 +173,11 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M9·01</div>
 </section>
 
+<section class="divider">
+  <h2 class="t">Why a Staging Pass Isn&rsquo;t Enough</h2>
+  <div class="pageno">M9·02</div>
+</section>
+
 <!-- ═══════════════ SLIDE 2 · THE TRAP (scene) ═══════════════ -->
 <section>
   <h2 class="t">The pod is Healthy, the model is wrong</h2>
@@ -206,7 +213,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="329" text-anchor="middle" class="lbl-g">a readiness probe checks the kitchen is <tspan class="lbl-b">OPEN</tspan> — not that the cooking is any <tspan class="lbl-b">GOOD</tspan></text>
   </svg>
-  <div class="pageno">M9·02</div>
+  <div class="pageno">M9·03</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">1 · The new cook shadowing — one table in ten, and the manager tastes the food</h2>
+  <div class="pageno">M9·04</div>
 </section>
 
 <!-- ═══════════════ SLIDE 3 · THE CANARY = ONE TABLE IN TEN ═══════════════ -->
@@ -240,7 +252,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="329" text-anchor="middle" class="lbl-g">a thin slice to the new cook <tspan class="lbl-b">bounds the blast radius</tspan> — a problem hits one table, not the whole room</text>
   </svg>
-  <div class="pageno">M9·03</div>
+  <div class="pageno">M9·05</div>
 </section>
 
 <!-- ═══════════════ SLIDE 4 · TWO WAYS TO JUDGE (scene) ═══════════════ -->
@@ -268,7 +280,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="334" text-anchor="middle" class="lbl-g">a <tspan class="lbl-b">crash signal</tspan> is not a <tspan class="lbl-b">quality signal</tspan> — the one that matters is the one a probe cannot see</text>
   </svg>
-  <div class="pageno">M9·04</div>
+  <div class="pageno">M9·06</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">2 · The router and the split — how two versions live behind one address</h2>
+  <div class="pageno">M9·07</div>
 </section>
 
 <!-- ═══════════════ SLIDE 5 · ROUTER + TWO BACKENDS (fragments) ═══════════════ -->
@@ -309,7 +326,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="327" text-anchor="middle" class="lbl-g">two backends <tspan class="lbl-b">plus a router that splits per request</tspan> — the third thing you add to run two versions at once</text>
   </svg>
-  <div class="pageno">M9·05</div>
+  <div class="pageno">M9·08</div>
 </section>
 
 <!-- ═══════════════ SLIDE 6 · THE CLIENT NEVER CHANGES ═══════════════ -->
@@ -345,7 +362,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="312" text-anchor="middle" class="lbl-g">the <tspan class="lbl-b">/v1 contract</tspan> that held from laptop to cluster now holds across two versions — the client is untouched</text>
   </svg>
-  <div class="pageno">M9·06</div>
+  <div class="pageno">M9·09</div>
 </section>
 
 <!-- ═══════════════ SLIDE 7 · SPLIT_CLIENTS HASHES INTO BUCKETS ═══════════════ -->
@@ -370,7 +387,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="560" y="250" text-anchor="middle" class="lbl">the remaining 90%</text>
     <text x="560" y="298" text-anchor="middle" class="lbl-g">base</text>
   </svg>
-  <div class="pageno">M9·07</div>
+  <div class="pageno">M9·10</div>
 </section>
 
 <!-- ═══════════════ SLIDE 8 · X-SERVED-BY — WATCH THE SPLIT ═══════════════ -->
@@ -399,7 +416,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="283" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">X-Served-By</tspan> is the hook — <tspan class="lbl-b">watch</tspan> the split, don't just trust it</text>
   </svg>
-  <div class="pageno">M9·08</div>
+  <div class="pageno">M9·11</div>
 </section>
 
 <!-- ═══════════════ SLIDE 9 · MANUAL, VISIBLE WEIGHT EDIT ═══════════════ -->
@@ -432,7 +449,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="280" text-anchor="middle" class="lbl-g">manual <tspan class="lbl-b">on purpose</tspan> — you feel promote and rollback in your hands before an abstraction hides them</text>
   </svg>
-  <div class="pageno">M9·09</div>
+  <div class="pageno">M9·12</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">3 · Reading a split honestly — you cannot judge a coin from three flips</h2>
+  <div class="pageno">M9·13</div>
 </section>
 
 <!-- ═══════════════ SLIDE 10 · READING A SPLIT (scene) ═══════════════ -->
@@ -471,7 +493,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">20 requests lie the way a <tspan class="lbl-b">three-flip coin</tspan> lies — read a split at a sample size that can <tspan class="lbl-b">show it</tspan></text>
   </svg>
-  <div class="pageno">M9·10</div>
+  <div class="pageno">M9·14</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">4 · The quality gate — the yardstick that rejected it in M6 gets to kill it in production</h2>
+  <div class="pageno">M9·15</div>
 </section>
 
 <!-- ═══════════════ SLIDE 11 · THE QUALITY GATE — THE M5/M6 RECALL + RUN VS BOTH (climax A) ═══════════════ -->
@@ -505,7 +532,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="337" text-anchor="middle" class="lbl-g">the same <tspan class="lbl-b">M5/M6 yardstick</tspan>, now pointed at production — run it against the canary <tspan class="lbl-b">and</tspan> the version it would replace</text>
   </svg>
-  <div class="pageno">M9·11</div>
+  <div class="pageno">M9·16</div>
 </section>
 
 <!-- ═══════════════ SLIDE 12 · THE GATE PRINTS ROLLBACK — DATA VERBS (climax B) ═══════════════ -->
@@ -540,7 +567,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="341" text-anchor="middle" class="lbl-g">the probe said <tspan class="lbl-b">healthy</tspan>, the golden set said <tspan class="lbl-b">wrong</tspan> — promote and rollback are now <tspan class="lbl-b">data verbs</tspan></text>
   </svg>
-  <div class="pageno">M9·12</div>
+  <div class="pageno">M9·17</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">5 · Staged promotion — the new driver does not get the school van on day one</h2>
+  <div class="pageno">M9·18</div>
 </section>
 
 <!-- ═══════════════ SLIDE 13 · STAGED PROMOTION (ladder) ═══════════════ -->
@@ -573,7 +605,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1006" y="228" text-anchor="middle" class="lbl-g">pull back a rung</text>
     <text x="1006" y="252" text-anchor="middle" class="lbl-g">(or → 0)</text>
   </svg>
-  <div class="pageno">M9·13</div>
+  <div class="pageno">M9·19</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">6 · When the router is not enough — KServe, and the frontier</h2>
+  <div class="pageno">M9·20</div>
 </section>
 
 <!-- ═══════════════ SLIDE 14 · KSERVE ═══════════════ -->
@@ -609,7 +646,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">the two weight lines become <tspan class="lbl-b">one field</tspan> — a real upgrade, paid for in a dependency stack you keep patched</text>
   </svg>
-  <div class="pageno">M9·14</div>
+  <div class="pageno">M9·21</div>
 </section>
 
 <!-- ═══════════════ SLIDE 15 · THE FRONTIER — CACHE-AWARE ROUTING ═══════════════ -->
@@ -640,7 +677,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="305" text-anchor="middle" class="lbl-g">beyond anything nginx can do — the router sends you to the pod that <tspan class="lbl-b">already holds your cache</tspan></text>
   </svg>
-  <div class="pageno">M9·15</div>
+  <div class="pageno">M9·22</div>
 </section>
 
 <!-- ═══════════════ SLIDE 16 · THE FRONTIER — DISAGGREGATION (M1 callback) ═══════════════ -->
@@ -679,7 +716,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="310" text-anchor="middle" class="lbl-g">the phases you met as a <tspan class="lbl-b">memory diagram</tspan> become, at scale, two <tspan class="lbl-b">separately-scaled fleets</tspan></text>
   </svg>
-  <div class="pageno">M9·16</div>
+  <div class="pageno">M9·23</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">7 · The decision tree — the one artifact to keep</h2>
+  <div class="pageno">M9·24</div>
 </section>
 
 <!-- ═══════════════ SLIDE 17 · THE DECISION TREE (ladder) ═══════════════ -->
@@ -710,7 +752,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="120" y="332" text-anchor="start" class="lbl-g">less capability / less dependency cost</text>
     <text x="1030" y="332" text-anchor="end" class="lbl-g">more / more →</text>
   </svg>
-  <div class="pageno">M9·17</div>
+  <div class="pageno">M9·25</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">8 · Where this leaves OpsMate — and the seam to M10</h2>
+  <div class="pageno">M9·26</div>
 </section>
 
 <!-- ═══════════════ SLIDE 18 · THE M10 SEAM ═══════════════ -->
@@ -740,7 +787,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="315" text-anchor="middle" class="lbl-g">you cannot canary what you cannot <tspan class="lbl-b">observe</tspan> — M9 fetched its signals by hand, M10 makes them <tspan class="lbl-b">always-on</tspan></text>
   </svg>
-  <div class="pageno">M9·18</div>
+  <div class="pageno">M9·27</div>
 </section>
 
 <!-- ═══════════════ SLIDE 19 · CLOSING ═══════════════ -->
@@ -771,7 +818,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="600" y="242" text-anchor="middle" class="lbl">→ <tspan class="lbl-b">M10</tspan>: observability — traces + metrics, so you can canary what you can now observe</text>
   </svg>
   <p class="credit">OpsMate is <b>v2.0</b> — a safe way to change what it serves &nbsp;·&nbsp; now open <b>Module 9 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M9·19</div>
+  <div class="pageno">M9·28</div>
 </section>
 </div></div>
 <script>/* reveal.js 5.x (inlined) */

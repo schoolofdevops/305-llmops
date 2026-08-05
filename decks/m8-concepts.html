@@ -99,6 +99,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal p{ margin:0; line-height:1.3; }
   /* subtitle sits BELOW the visual (founder, 2026-07-25) — flex order, no markup change */
   .reveal .kicker{ order:0; } .reveal h2.t{ order:1; } .reveal .slides section:first-of-type svg{ min-height:32%; }
+  .reveal .slides section.divider{ justify-content:center; align-items:center; }
+  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
   .reveal svg{ order:2; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
   .reveal .credit{ order:4; }
@@ -181,6 +183,12 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M8·01</div>
 </section>
 
+<!-- ═══════════════ DIVIDER · INTRO ═══════════════ -->
+<section class="divider">
+  <h2 class="t">Why Every Serving Reflex Needs Re-Deriving</h2>
+  <div class="pageno">M8·02</div>
+</section>
+
 <!-- ═══════════════ SLIDE 2 · STACK PHASE CHANGES ═══════════════ -->
 <section>
   <h2 class="t">One heavyweight stack at a time — Compose comes down first</h2>
@@ -222,7 +230,13 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="150" y="322" width="800" height="16" rx="8"/>
     </g>
   </svg>
-  <div class="pageno">M8·02</div>
+  <div class="pageno">M8·03</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 1 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">1 &middot; Capacity first — book the hall before you sign the contract</h2>
+  <div class="pageno">M8·04</div>
 </section>
 
 <!-- ═══════════════ SLIDE 3 · CAPACITY FIRST (scene) ═══════════════ -->
@@ -272,7 +286,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="329" text-anchor="middle" class="lbl-g">the memory limit is the <tspan class="lbl-b">hall you book</tspan> — the capacity sum is the <tspan class="lbl-b">guest count you do first</tspan></text>
   </svg>
-  <div class="pageno">M8·03</div>
+  <div class="pageno">M8·05</div>
 </section>
 
 <!-- ═══════════════ SLIDE 4 · THE THREE-TERM SUM ═══════════════ -->
@@ -314,7 +328,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="756" y="202" text-anchor="middle" class="lbl">weights + runtime + KV</text>
     <text x="756" y="230" text-anchor="middle" class="lbl-g">= the pod's working set</text>
   </svg>
-  <div class="pageno">M8·04</div>
+  <div class="pageno">M8·06</div>
 </section>
 
 <!-- ═══════════════ SLIDE 5 · KV GROWS WITH CONTEXT ═══════════════ -->
@@ -339,7 +353,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="4 6" stroke-linecap="round"><path d="M640,64 L640,262"/></g>
     <text x="648" y="60" text-anchor="start" class="lbl-g">the box fills</text>
   </svg>
-  <div class="pageno">M8·05</div>
+  <div class="pageno">M8·07</div>
 </section>
 
 <!-- ═══════════════ SLIDE 6 · TURN THE SUM AROUND ═══════════════ -->
@@ -374,7 +388,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="308" width="800" height="30" rx="8"/></g>
     <text x="550" y="329" text-anchor="middle" class="lbl-g">all three answers come from the <tspan class="lbl-b">one worksheet</tspan> you filled in</text>
   </svg>
-  <div class="pageno">M8·06</div>
+  <div class="pageno">M8·08</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 2 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">2 &middot; An isolated kubeconfig — a visitor badge, not the master key</h2>
+  <div class="pageno">M8·09</div>
 </section>
 
 <!-- ═══════════════ SLIDE 7 · ISOLATED KUBECONFIG ═══════════════ -->
@@ -428,7 +448,13 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">an isolated kubeconfig names <tspan class="lbl-b">only the throwaway cluster</tspan> — your real context is never touched</text>
   </svg>
-  <div class="pageno">M8·07</div>
+  <div class="pageno">M8·10</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 3 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">3 &middot; Getting the model into the pod — four patterns, one chosen</h2>
+  <div class="pageno">M8·11</div>
 </section>
 
 <!-- ═══════════════ SLIDE 8 · FOUR LOADING PATTERNS, ONE AXIS ═══════════════ -->
@@ -472,7 +498,13 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="353" text-anchor="middle" class="lbl-g">a <tspan class="lbl-b">signed, versioned artifact</tspan> → the initContainer is the natural fit</text>
   </svg>
-  <div class="pageno">M8·08</div>
+  <div class="pageno">M8·12</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 4 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">4 &middot; The artifact chain — the advance man who sets the stage</h2>
+  <div class="pageno">M8·13</div>
 </section>
 
 <!-- ═══════════════ SLIDE 9 · THE ARTIFACT CHAIN (scene, fragments) ═══════════════ -->
@@ -526,7 +558,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- selective pull note -->
     <text x="550" y="270" text-anchor="middle" class="lbl-g">the same M7 selective pull — <tspan class="lbl-b">--filter=model</tspan> takes only the weights, not the eval set or prompts</text>
   </svg>
-  <div class="pageno">M8·09</div>
+  <div class="pageno">M8·14</div>
 </section>
 
 <!-- ═══════════════ SLIDE 10 · THE PVC MATTERS ═══════════════ -->
@@ -563,7 +595,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="320" width="800" height="16" rx="8"/></g>
   </svg>
-  <div class="pageno">M8·10</div>
+  <div class="pageno">M8·15</div>
 </section>
 
 <!-- ═══════════════ SLIDE 11 · ADMISSION POLICY ═══════════════ -->
@@ -593,7 +625,13 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- M7 -> M8 bridge note -->
     <text x="550" y="300" text-anchor="middle" class="lbl-g">you ran this by hand in <tspan class="lbl-b">M7's preflight</tspan> — here it is the same check at the cluster's front door</text>
   </svg>
-  <div class="pageno">M8·11</div>
+  <div class="pageno">M8·16</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 5 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">5 &middot; The two-paths registry lesson — the wall you will hit on purpose</h2>
+  <div class="pageno">M8·17</div>
 </section>
 
 <!-- ═══════════════ SLIDE 12 · THE WALL — WHY LOCALHOST FAILS IN A POD ═══════════════ -->
@@ -626,7 +664,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="325" text-anchor="middle" class="lbl-g">the mirror covers <tspan class="lbl-b">image pulls</tspan>, not in-pod HTTP — so <tspan class="lbl-b">localhost</tspan> inside a pod finds nothing</text>
   </svg>
-  <div class="pageno">M8·12</div>
+  <div class="pageno">M8·18</div>
 </section>
 
 <!-- ═══════════════ SLIDE 13 · THE FIX — HOSTALIASES PINS THE NAME ═══════════════ -->
@@ -656,7 +694,13 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="325" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">hostAliases</tspan> fixes the second path — a name you pin, an IP the node resolves</text>
   </svg>
-  <div class="pageno">M8·13</div>
+  <div class="pageno">M8·19</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 6 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">6 &middot; Probes for a slow starter — the sound-check versus the show-must-go-on check</h2>
+  <div class="pageno">M8·20</div>
 </section>
 
 <!-- ═══════════════ SLIDE 13 · THREE PROBES, THREE JOBS ═══════════════ -->
@@ -686,7 +730,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="276" width="800" height="30" rx="8"/></g>
     <text x="550" y="297" text-anchor="middle" class="lbl-g">name the <tspan class="lbl-b">question each answers</tspan> and the job follows</text>
   </svg>
-  <div class="pageno">M8·14</div>
+  <div class="pageno">M8·21</div>
 </section>
 
 <!-- ═══════════════ SLIDE 14 · THE ORDERING PROTECTS THE LOAD ═══════════════ -->
@@ -718,7 +762,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="560" y="280" text-anchor="middle" class="lbl-g">load budget = <tspan class="lbl-b">failureThreshold × periodSeconds</tspan> &nbsp;(e.g. 30 × 5 s = 150 s &gt; ~40 s)</text>
     <text x="560" y="304" text-anchor="middle" class="lbl-g">the total grace the model gets before Kubernetes gives up</text>
   </svg>
-  <div class="pageno">M8·15</div>
+  <div class="pageno">M8·22</div>
 </section>
 
 <!-- ═══════════════ SLIDE 15 · THE AGGRESSIVE-LIVENESS LOOP (fragments) ═══════════════ -->
@@ -773,7 +817,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="354" text-anchor="middle" class="lbl-g">apply the bad probe, watch the loop, revert — a self-inflicted outage seen in a safe place</text>
   </svg>
-  <div class="pageno">M8·16</div>
+  <div class="pageno">M8·23</div>
 </section>
 
 <!-- ═══════════════ SLIDE 16 · REQUESTS VS LIMITS ═══════════════ -->
@@ -808,7 +852,13 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="315" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">requests</tspan> is the working set, <tspan class="lbl-b">limits</tspan> is the OOM ceiling — both derived from the three-term sum</text>
   </svg>
-  <div class="pageno">M8·17</div>
+  <div class="pageno">M8·24</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 7 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">7 &middot; The engine fork — stated honestly, no drama</h2>
+  <div class="pageno">M8·25</div>
 </section>
 
 <!-- ═══════════════ SLIDE 17 · THE ENGINE FORK ═══════════════ -->
@@ -845,7 +895,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="323" text-anchor="middle" class="lbl-g">swapping the engine is an <tspan class="lbl-b">image-and-args change</tspan>, not a manifest rewrite — the <tspan class="lbl-b">/v1 contract</tspan> holds the client stable</text>
   </svg>
-  <div class="pageno">M8·18</div>
+  <div class="pageno">M8·26</div>
 </section>
 
 <!-- ═══════════════ SLIDE 18 · GPU SURVEY ═══════════════ -->
@@ -880,7 +930,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="313" text-anchor="middle" class="lbl-g">the pattern is portable, the numbers are not — <tspan class="lbl-b">derive the box, don't paste the values</tspan></text>
   </svg>
-  <div class="pageno">M8·19</div>
+  <div class="pageno">M8·27</div>
 </section>
 
 <!-- ═══════════════ SLIDE 19 · CLOSING ═══════════════ -->
@@ -911,7 +961,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="600" y="242" text-anchor="middle" class="lbl">→ <tspan class="lbl-b">M9</tspan>: many models, one door — a gateway that routes without the client changing, + autoscaling + GitOps</text>
   </svg>
   <p class="credit">OpsMate is <b>v2.0</b> — served by the cluster &nbsp;·&nbsp; now open <b>Module 8 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M8·20</div>
+  <div class="pageno">M8·28</div>
 </section>
 </div></div>
 <script>/* reveal.js 5.x (inlined) */

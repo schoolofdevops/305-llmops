@@ -98,6 +98,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .slides section.divider{ justify-content:center; align-items:center; }
+  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -175,6 +177,18 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M10·01</div>
 </section>
 
+<!-- ═══════════════ DIVIDER · INTRO ═══════════════ -->
+<section class="divider">
+  <h2 class="t">Feel the system, or see it?</h2>
+  <div class="pageno">M10·02</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 1 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">1 &middot; Two instruments, two questions &mdash; the ward chart and the case file</h2>
+  <div class="pageno">M10·03</div>
+</section>
+
 <!-- ═══════════════ SLIDE 2 · THE WARD CHART (scene, build A) ═══════════════ -->
 <section>
   <h2 class="t">The ward chart</h2>
@@ -200,7 +214,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="950" y="186" text-anchor="middle" class="lbl-b">= METRICS</text>
     <text x="950" y="212" text-anchor="middle" class="lbl-g" style="font-size:15px">Prometheus + Grafana</text>
   </svg>
-  <div class="pageno">M10·02</div>
+  <div class="pageno">M10·04</div>
 </section>
 
 <!-- ═══════════════ SLIDE 3 · THE CASE FILE (scene, build B) ═══════════════ -->
@@ -229,7 +243,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="950" y="216" text-anchor="middle" class="lbl-b">= TRACES</text>
     <text x="950" y="242" text-anchor="middle" class="lbl-g" style="font-size:15px">OpenTelemetry + Phoenix</text>
   </svg>
-  <div class="pageno">M10·03</div>
+  <div class="pageno">M10·05</div>
 </section>
 
 <!-- ═══════════════ SLIDE 4 · YOU NEED BOTH (scene, build C) ═══════════════ -->
@@ -255,7 +269,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M150,84 C150,60 1000,60 1000,84"/></g>
     <text x="575" y="52" text-anchor="middle" class="lbl-b" style="font-size:26px">BOTH</text>
   </svg>
-  <div class="pageno">M10·04</div>
+  <div class="pageno">M10·06</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 2 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">2 &middot; The metric model &mdash; M1's vocabulary, now as production signals</h2>
+  <div class="pageno">M10·07</div>
 </section>
 
 <!-- ═══════════════ SLIDE 5 · TWO STOPWATCHES (scene) ═══════════════ -->
@@ -290,7 +310,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- dripping output tokens -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="895" cy="150" r="7"/><circle cx="930" cy="176" r="7"/><circle cx="895" cy="200" r="7"/></g>
   </svg>
-  <div class="pageno">M10·05</div>
+  <div class="pageno">M10·08</div>
 </section>
 
 <!-- ═══════════════ SLIDE 6 · THE QUEUE (scene) ═══════════════ -->
@@ -326,7 +346,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="760" y="270" width="300" height="44" rx="10"/></g>
     <text x="910" y="298" text-anchor="middle" class="lbl-g">not slow — <tspan class="lbl-b">WAITING</tspan></text>
   </svg>
-  <div class="pageno">M10·06</div>
+  <div class="pageno">M10·09</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 3 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">3 &middot; SLOs per phase &mdash; why one P50 is a lie for a model service</h2>
+  <div class="pageno">M10·10</div>
 </section>
 
 <!-- ═══════════════ SLIDE 7 · ONE CLOCK OVER THE DOOR (scene, P50 build A) ═══════════════ -->
@@ -355,7 +381,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="326" text-anchor="middle" class="lbl-g">blends both</text>
     <text x="640" y="120" text-anchor="start" class="lbl-bad">distrust this</text>
   </svg>
-  <div class="pageno">M10·07</div>
+  <div class="pageno">M10·11</div>
 </section>
 
 <!-- ═══════════════ SLIDE 8 · KITCHEN + WAITER CLOCKS (scene, P50 build B) ═══════════════ -->
@@ -388,7 +414,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="524" y1="92" x2="576" y2="48"/></g>
     <text x="600" y="76" text-anchor="start" class="lbl-g" style="font-size:15px">set separately</text>
   </svg>
-  <div class="pageno">M10·08</div>
+  <div class="pageno">M10·12</div>
 </section>
 
 <!-- ═══════════════ SLIDE 9 · TWO HUMPS UNDER ONE LINE (scene, P50 build C) ═══════════════ -->
@@ -417,7 +443,13 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- single average line hiding it (drawn last, faint) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="10 8"><line x1="120" y1="235" x2="1000" y2="235"/></g>
   </svg>
-  <div class="pageno">M10·09</div>
+  <div class="pageno">M10·13</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 4 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">4 &middot; Scrape mechanics on Kubernetes &mdash; briefly, because the LLM part is <em>which</em> families</h2>
+  <div class="pageno">M10·14</div>
 </section>
 
 <!-- ═══════════════ SLIDE 10 · PUMP THE POD (scene) ═══════════════ -->
@@ -449,7 +481,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="790" y="234" text-anchor="middle" class="lbl-b">Prometheus</text>
     <text x="790" y="264" text-anchor="middle" class="lbl-g">one target</text>
   </svg>
-  <div class="pageno">M10·10</div>
+  <div class="pageno">M10·15</div>
 </section>
 
 <!-- ═══════════════ SLIDE 11 · REACH PAST UP (scene) ═══════════════ -->
@@ -479,7 +511,13 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1010" y="150" text-anchor="end" class="lbl-g" style="font-size:15px">phase timings</text>
     <text x="1010" y="174" text-anchor="end" class="lbl-g" style="font-size:15px">queue gauges</text>
   </svg>
-  <div class="pageno">M10·11</div>
+  <div class="pageno">M10·16</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 5 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">5 &middot; Dashboards as shared truth &mdash; the wall</h2>
+  <div class="pageno">M10·17</div>
 </section>
 
 <!-- ═══════════════ SLIDE 12 · THE WALL (scene) ═══════════════ -->
@@ -515,7 +553,13 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="220" y="300" text-anchor="middle" class="lbl-g" style="font-size:14px">on-call</text>
     <text x="710" y="308" text-anchor="middle" class="lbl-g">checked-in</text>
   </svg>
-  <div class="pageno">M10·12</div>
+  <div class="pageno">M10·18</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 6 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">6 &middot; Tracing the pipeline &mdash; the ask &rarr; retrieve &rarr; generate waterfall</h2>
+  <div class="pageno">M10·19</div>
 </section>
 
 <!-- ═══════════════ SLIDE 13 · THE TRACE WATERFALL (scene, fragments) ═══════════════ -->
@@ -550,7 +594,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="520" y="316" text-anchor="middle" class="lbl-g">M1 phases</text>
     </g>
   </svg>
-  <div class="pageno">M10·13</div>
+  <div class="pageno">M10·20</div>
 </section>
 
 <!-- ═══════════════ SLIDE 14 · PIN THE SEMCONV (a moving standard) ═══════════════ -->
@@ -588,7 +632,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#2e7d32" stroke-width="2.8" stroke-linecap="round"><path d="M748,156 C560,300 360,300 200,278" marker-end="url(#ah)"/></g>
     <text x="470" y="322" text-anchor="middle" class="lbl-good">pinned = the trace shape holds steady</text>
   </svg>
-  <div class="pageno">M10·14</div>
+  <div class="pageno">M10·21</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 7 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">7 &middot; Tokens as cost per request &mdash; the bill, on the span</h2>
+  <div class="pageno">M10·22</div>
 </section>
 
 <!-- ═══════════════ SLIDE 15 · THE BILL RIDES ON THE SPAN (scene) ═══════════════ -->
@@ -621,7 +671,13 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- receipt lifted onto the span as this attribute -->
     <text x="160" y="46" text-anchor="middle" class="lbl-g" style="font-size:14px">llm.token_count</text>
   </svg>
-  <div class="pageno">M10·15</div>
+  <div class="pageno">M10·23</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 8 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">8 &middot; What not to log &mdash; the receptionist's register</h2>
+  <div class="pageno">M10·24</div>
 </section>
 
 <!-- ═══════════════ SLIDE 16 · THE REGISTER (scene) ═══════════════ -->
@@ -648,7 +704,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="490" y1="150" x2="530" y2="196"/><line x1="530" y1="150" x2="490" y2="196"/></g>
     <text x="510" y="232" text-anchor="middle" class="lbl-b">NOT logged</text>
   </svg>
-  <div class="pageno">M10·16</div>
+  <div class="pageno">M10·25</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 9 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">9 &middot; One more thing the lab will throw at you &mdash; the service-link crash</h2>
+  <div class="pageno">M10·26</div>
 </section>
 
 <!-- ═══════════════ SLIDE 17 · SERVICE-LINK CRASH (exhibit) ═══════════════ -->
@@ -682,7 +744,13 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="970" y="149" text-anchor="middle" class="lbl-sm">PHOENIX_PORT: "6006"</text>
     <text x="970" y="211" text-anchor="middle" class="lbl-sm">enableServiceLinks: false</text>
   </svg>
-  <div class="pageno">M10·17</div>
+  <div class="pageno">M10·27</div>
+</section>
+
+<!-- ═══════════════ DIVIDER · SECTION 10 ═══════════════ -->
+<section class="divider">
+  <h2 class="t">10 &middot; Where this leaves OpsMate &mdash; and the hand-off to M11</h2>
+  <div class="pageno">M10·28</div>
 </section>
 
 <!-- ═══════════════ SLIDE 18 · GAUGE DRIVES THE DIAL (scene) ═══════════════ -->
@@ -712,7 +780,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="900" y="150" text-anchor="start" class="lbl-g" style="font-size:16px">builds → + engine</text>
     <text x="900" y="212" text-anchor="start" class="lbl-g" style="font-size:16px">drains → − engine</text>
   </svg>
-  <div class="pageno">M10·18</div>
+  <div class="pageno">M10·29</div>
 </section>
 
 <!-- ═══════════════ SLIDE 19 · CLOSING — three icons + bridge ═══════════════ -->
@@ -737,7 +805,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1050" y="200" text-anchor="middle" class="lbl-g" style="font-size:15px">→ M11</text>
   </svg>
   <p class="credit">OpsMate is <b>v2.5, part one</b> — the platform you can finally see &nbsp;·&nbsp; now open <b>Module 10 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M10·19</div>
+  <div class="pageno">M10·30</div>
 </section>
 </div></div>
 <script>/* reveal.js 5.x (inlined) */

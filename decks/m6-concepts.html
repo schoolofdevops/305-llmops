@@ -99,6 +99,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .slides section.divider{ justify-content:center; align-items:center; }
+  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -191,6 +193,16 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M6·01</div>
 </section>
 
+<section class="divider">
+  <h2 class="t">Fixing Behaviour, Not Knowledge</h2>
+  <div class="pageno">M6·02</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">1 &middot; When do you tune? The decision ladder</h2>
+  <div class="pageno">M6·03</div>
+</section>
+
 <!-- ============ SLIDE 2 — DECISION LADDER (scene) ============ -->
 <section>
   <h2 class="t">Climb the decision ladder — three rungs, cheapest first</h2>
@@ -215,7 +227,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="340" y="126" text-anchor="start" class="lbl-b">3 · FINE-TUNE</text>
     <text x="340" y="150" text-anchor="start" class="lbl-g">hours · data + compute → behaviour that survives NO prompt, NO context</text>
   </svg>
-  <div class="pageno">M6·02</div>
+  <div class="pageno">M6·04</div>
 </section>
 
 <!-- ============ SLIDE 2b — CLIMB ONLY WHEN THE RUNG BELOW CAN'T (split from 2) ============ -->
@@ -249,7 +261,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M70,330 L1040,330"/></g>
     <text x="555" y="352" text-anchor="middle" class="lbl-g">climb only when the rung below truly can't — <tspan class="lbl-b">you earn the top rung, you don't start there</tspan></text>
   </svg>
-  <div class="pageno">M6·03</div>
+  <div class="pageno">M6·05</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">2 &middot; LoRA &mdash; renovate with removable fittings, don't rebuild the walls</h2>
+  <div class="pageno">M6·06</div>
 </section>
 
 <!-- ============ SLIDE 3 — LoRA REMOVABLE FITTINGS (scene) ============ -->
@@ -286,7 +303,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="344" text-anchor="middle" class="lbl-g">freeze the whole base — <tspan class="lbl-b">train only the bolted-on fittings</tspan></text>
   </svg>
-  <div class="pageno">M6·04</div>
+  <div class="pageno">M6·07</div>
 </section>
 
 <!-- ============ SLIDE 3b — THE 0.19% NUMBER (split from 3) ============ -->
@@ -317,7 +334,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M120,330 L1040,330"/></g>
     <text x="580" y="352" text-anchor="middle" class="lbl-g">train <tspan class="lbl-b">0.19% of the model</tspan> — the rest stays frozen</text>
   </svg>
-  <div class="pageno">M6·05</div>
+  <div class="pageno">M6·08</div>
 </section>
 
 <!-- ============ SLIDE 3b — WHERE THE SMALL NUMBER COMES FROM (low-rank intuition) ============ -->
@@ -350,7 +367,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="820" y="284" text-anchor="middle" class="lbl-g">more rank · more layers = more capacity to learn</text>
     <text x="820" y="306" text-anchor="middle" class="lbl-g">…and more room to <tspan class="lbl-b">overfit</tspan></text>
   </svg>
-  <div class="pageno">M6·06</div>
+  <div class="pageno">M6·09</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">3 &middot; QLoRA &mdash; the same idea, one tier up</h2>
+  <div class="pageno">M6·10</div>
 </section>
 
 <!-- ============ SLIDE 4 — QLoRA ============ -->
@@ -389,7 +411,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="843" y="204" text-anchor="middle" class="lbl-g">trains</text>
     <text x="815" y="288" text-anchor="middle" class="lbl-g">¼ the memory → a 7B/13B fits on one small GPU</text>
   </svg>
-  <div class="pageno">M6·07</div>
+  <div class="pageno">M6·11</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">4 &middot; Synthetic data &mdash; build the practice question bank</h2>
+  <div class="pageno">M6·12</div>
 </section>
 
 <!-- ============ SLIDE 5 — SYNTHETIC DATA PIPELINE ============ -->
@@ -417,7 +444,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-dasharray="9 7"><rect x="180" y="290" width="740" height="44" rx="10"/></g>
     <text x="550" y="317" text-anchor="middle" class="lbl-g">the training is a script — <tspan class="lbl-b">the hard part is the data</tspan></text>
   </svg>
-  <div class="pageno">M6·08</div>
+  <div class="pageno">M6·13</div>
 </section>
 
 <!-- ============ SLIDE 6b — FILTER DECIDES QUALITY (split from 6) ============ -->
@@ -457,7 +484,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="927" y="204" text-anchor="middle" class="lbl-g" fill="#c62828">loss still drops —</text>
     <text x="927" y="228" text-anchor="middle" class="lbl-g">so you'd never know</text>
   </svg>
-  <div class="pageno">M6·09</div>
+  <div class="pageno">M6·14</div>
 </section>
 
 <!-- ============ SLIDE 6 — CONTAMINATION BOUNDARY ============ -->
@@ -512,7 +539,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="342" text-anchor="middle" class="lbl-b">same sources · different questions · test set held out</text>
   </svg>
-  <div class="pageno">M6·10</div>
+  <div class="pageno">M6·15</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">5 &middot; Reading a loss curve &mdash; what the training tells you while it runs</h2>
+  <div class="pageno">M6·16</div>
 </section>
 
 <!-- ============ SLIDE 7 — READING THE LOSS CURVE ============ -->
@@ -546,7 +578,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="840" y="300" text-anchor="middle" class="lbl-g">keeps dropping to zero = OVERFIT</text>
     <text x="840" y="324" text-anchor="middle" class="lbl-g">memorizing, not learning · fails real Qs</text>
   </svg>
-  <div class="pageno">M6·11</div>
+  <div class="pageno">M6·17</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">6 &middot; Merge, or serve with the adapter attached?</h2>
+  <div class="pageno">M6·18</div>
 </section>
 
 <!-- ============ SLIDE 8 — MERGE OR SERVE APART ============ -->
@@ -575,7 +612,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- band -->
     <text x="550" y="322" text-anchor="middle" class="lbl-g">merge wins here — the goal is <tspan class="lbl-b">one servable model</tspan> that drops into the existing stack</text>
   </svg>
-  <div class="pageno">M6·12</div>
+  <div class="pageno">M6·19</div>
 </section>
 
 <!-- ============ SLIDE 9 — CONVERT TO GGUF ============ -->
@@ -623,7 +660,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="308" text-anchor="middle" class="lbl-g">it's a normal model now — convert it the way <tspan class="lbl-b">M3</tspan> taught, and drop it beside the base</text>
   </svg>
-  <div class="pageno">M6·13</div>
+  <div class="pageno">M6·20</div>
 </section>
 
 <!-- ============ SLIDE 10 — THE SWAP ============ -->
@@ -669,7 +706,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="324" text-anchor="middle" class="lbl-g">the <tspan class="lbl-b">OpenAI-compatible endpoint never changed</tspan> — that's why a model you trained drops in where the base was</text>
   </svg>
-  <div class="pageno">M6·14</div>
+  <div class="pageno">M6·21</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">7 &middot; The measurement ritual &mdash; weigh on the same scale, read the result honestly</h2>
+  <div class="pageno">M6·22</div>
 </section>
 
 <!-- ============ SLIDE 10b — TWO CONTROLS BEFORE YOU READ THE NUMBER ============ -->
@@ -701,7 +743,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="160" y="296" width="780" height="40" rx="10"/></g>
     <text x="550" y="323" text-anchor="middle" class="lbl-g">a control that stays put + an isolated arm → now <tspan class="lbl-b">beat / tie / lose</tspan> reads clean</text>
   </svg>
-  <div class="pageno">M6·15</div>
+  <div class="pageno">M6·23</div>
 </section>
 
 <!-- ============ SLIDE 11 — MEASUREMENT RITUAL (scene) ============ -->
@@ -736,7 +778,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="120" y="298" width="860" height="44" rx="10"/></g>
     <text x="550" y="325" text-anchor="middle" class="lbl-g">feelings are not evidence — the golden set is the scale, <tspan class="lbl-b">M5's baseline is your "before" weight</tspan></text>
   </svg>
-  <div class="pageno">M6·16</div>
+  <div class="pageno">M6·24</div>
 </section>
 
 <!-- ============ SLIDE 13b — THE HONEST RESULT: IT LOST (split from 13) ============ -->
@@ -768,7 +810,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="314" text-anchor="middle" class="lbl-g">honest note: a lose on a <tspan class="lbl-b">knowledge</tspan> set may still have fixed the <tspan class="lbl-b">voice</tspan> you tuned for —</text>
     <text x="550" y="335" text-anchor="middle" class="lbl-g">this set does not measure voice; note what it does and doesn't measure</text>
   </svg>
-  <div class="pageno">M6·17</div>
+  <div class="pageno">M6·25</div>
 </section>
 
 <!-- ============ SLIDE 12 — HAND OFF TO M7 ============ -->
@@ -819,7 +861,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- band -->
     <text x="550" y="312" text-anchor="middle" class="lbl-g">the artifacts are not scratch — they are <tspan class="lbl-b">v1.0</tspan>, packaged and signed in M7 alongside the v0 base</text>
   </svg>
-  <div class="pageno">M6·18</div>
+  <div class="pageno">M6·26</div>
 </section>
 
 <!-- ============ SLIDE 13 — CLOSING ============ -->
@@ -850,7 +892,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="130" y="276" text-anchor="start" class="lbl-g">same committed scale — read beat/tie/lose straight, not the feeling</text>
   </svg>
   <p class="credit">the part most people skip is <b>#4</b> &nbsp;·&nbsp; now open <b>Module 6 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M6·19</div>
+  <div class="pageno">M6·27</div>
 </section>
 </div></div>
 

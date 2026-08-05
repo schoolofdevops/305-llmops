@@ -91,6 +91,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
+  .reveal .slides section.divider{ justify-content:center; align-items:center; }
+  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -185,6 +187,11 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M1·01</div>
 </section>
 
+<section class="divider">
+  <h2 class="t">Why This Module Exists</h2>
+  <div class="pageno">M1·02</div>
+</section>
+
 <section>
   <h2 class="t">The whole trip, on one strip</h2>
   <p class="s">Our map for the whole module — every later slide lights up one stop.</p>
@@ -222,7 +229,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="260" text-anchor="middle" class="lbl-g">every later slide lights up one stop of this strip — so you always know where you are</text>
   </svg>
-  <div class="pageno">M1·02</div>
+  <div class="pageno">M1·03</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">1 &middot; Tokens &mdash; you pay per word-piece, not per idea</h2>
+  <div class="pageno">M1·04</div>
 </section>
 
 <section>
@@ -311,7 +323,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="440" y="365" text-anchor="middle" class="lbl-g">this — not the words — is what you pay for and what fills the window</text>
     </g>
   </svg>
-  <div class="pageno">M1·03</div>
+  <div class="pageno">M1·05</div>
 </section>
 
 <section>
@@ -380,7 +392,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="900" y="372" text-anchor="start" class="lbl-b" fill="#2e7d32">$</text>
   </svg>
-  <div class="pageno">M1·04</div>
+  <div class="pageno">M1·06</div>
 </section>
 
 <section>
@@ -475,7 +487,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="379" text-anchor="middle" class="lbl-g">a longer prompt costs more <em>and</em> fills the window faster — the same feature, written loose, hits the limit twice as fast</text>
   </svg>
-  <div class="pageno">M1·05</div>
+  <div class="pageno">M1·07</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">2 &middot; The model generates one token at a time</h2>
+  <div class="pageno">M1·08</div>
 </section>
 
 <section>
@@ -524,7 +541,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="925" y="348" text-anchor="middle" class="lbl-b">you are here</text>
   </svg>
-  <div class="pageno">M1·06</div>
+  <div class="pageno">M1·09</div>
 </section>
 
 <section>
@@ -594,7 +611,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="560" y="332" text-anchor="middle" class="lbl-g">append, then loop again — autoregressive, always looking back</text>
     </g>
   </svg>
-  <div class="pageno">M1·07</div>
+  <div class="pageno">M1·10</div>
 </section>
 
 <section>
@@ -660,7 +677,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="600" y="322" text-anchor="middle" class="lbl-g">re-read the whole line — now including the word just said</text>
   </svg>
-  <div class="pageno">M1·08</div>
+  <div class="pageno">M1·11</div>
 </section>
 
 <section>
@@ -741,7 +758,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="820" y="320" text-anchor="middle" class="lbl-g">one, then the next, then the next</text>
   </svg>
-  <div class="pageno">M1·09</div>
+  <div class="pageno">M1·12</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">3 &middot; Prefill and decode &mdash; two very different phases</h2>
+  <div class="pageno">M1·13</div>
 </section>
 
 <section>
@@ -815,7 +837,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="845" y="358" text-anchor="middle" class="lbl-b">WRITE the answer — line by line</text>
   </svg>
-  <div class="pageno">M1·10</div>
+  <div class="pageno">M1·14</div>
 </section>
 
 <section>
@@ -870,7 +892,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="830" y="258" text-anchor="middle" class="lbl-g">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
   </svg>
-  <div class="pageno">M1·11</div>
+  <div class="pageno">M1·15</div>
 </section>
 
 <section>
@@ -946,7 +968,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="690" y="310" text-anchor="middle" class="lbl-b">TPOT</text>
     <text x="690" y="340" text-anchor="middle" class="lbl-g">= decode · the drip you watch · driven by answer length</text>
   </svg>
-  <div class="pageno">M1·12</div>
+  <div class="pageno">M1·16</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">4 &middot; The KV cache &mdash; the notes the model keeps so it never re-reads</h2>
+  <div class="pageno">M1·17</div>
 </section>
 
 <section>
@@ -1000,7 +1027,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="765" y="252" text-anchor="middle" class="lbl-b">KV cache</text>
     <text x="765" y="284" text-anchor="middle" class="lbl-g">the model's rough work — read, don't redo</text>
   </svg>
-  <div class="pageno">M1·13</div>
+  <div class="pageno">M1·18</div>
 </section>
 
 <section>
@@ -1040,7 +1067,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="265" text-anchor="middle" class="lbl-b">KV budget ÷ one request</text>
     <text x="800" y="296" text-anchor="middle" class="lbl">= users that fit at once</text>
   </svg>
-  <div class="pageno">M1·14</div>
+  <div class="pageno">M1·19</div>
 </section>
 
 <section>
@@ -1096,7 +1123,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
     <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
   </svg>
-  <div class="pageno">M1·15</div>
+  <div class="pageno">M1·20</div>
 </section>
 
 <section>
@@ -1137,7 +1164,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the kind of request — not by "the model"</text>
   </svg>
-  <div class="pageno">M1·16</div>
+  <div class="pageno">M1·21</div>
 </section>
 
 <section>
@@ -1171,7 +1198,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 1 · Lab</b> — you'll measure the split and print the KV table on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M1·17</div>
+  <div class="pageno">M1·22</div>
 </section>
 
 </div></div>

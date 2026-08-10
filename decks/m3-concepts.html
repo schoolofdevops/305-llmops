@@ -611,7 +611,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Prefix caching — don't re-read the same opening every request</h2>
   <p class="s">Every request opens the same way — prefill that opening once, then reuse it.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="Request one is a long system prompt followed by a new line; the engine prefills all of it and keeps the KV of the prefix. Request two is the same system prompt followed by a different new line; the prefix arrow is dashed and gray, served from cache, and only the new line is inked as real prefill. A gray callout notes the response reports cached_tokens — prefill you did not pay for.">
+  <svg viewBox="0 0 1100 380" role="img" aria-label="Request one is a long system prompt followed by a new line; the engine prefills all of it and keeps the KV of the prefix. Request two is the same system prompt followed by a different new line; the prefix arrow is dashed and gray, served from cache, and only the new line is inked as real prefill. The cold call reports cached_tokens 0 and the repeat reports cached_tokens 42 — the measured lab example. A gray callout notes the response reports cached_tokens — prefill you did not pay for.">
     <!-- request 1 (fragment 1) -->
     <g class="fragment">
       <text x="70" y="72" class="lbl-b" text-anchor="start">request 1</text>
@@ -622,6 +622,7 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M732,68 L800,68" marker-end="url(#ah)"/></g>
       <text x="900" y="62" text-anchor="middle" class="lbl-g">prefill ALL</text>
       <text x="900" y="90" text-anchor="middle" class="lbl-g">keep KV of prefix</text>
+      <text x="900" y="122" text-anchor="middle" class="lbl-sm" fill="#757575">cached_tokens: 0  (cold call)</text>
     </g>
 
     <!-- request 2 (fragment 2) -->
@@ -637,6 +638,7 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M732,212 L800,212" marker-end="url(#ah)"/></g>
       <text x="900" y="216" text-anchor="middle" class="lbl-g">only the new line</text>
       <text x="900" y="244" text-anchor="middle" class="lbl-g">gets real prefill</text>
+      <text x="900" y="276" text-anchor="middle" class="lbl-sm" fill="#2e7d32">cached_tokens: 42  (repeat)</text>
     </g>
 
     <!-- callout -->

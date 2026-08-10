@@ -412,20 +412,24 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="255" y="192" text-anchor="middle" class="lbl-g" style="font-size:14px">tool</text>
     <text x="130" y="232" text-anchor="middle" class="lbl-g" style="font-size:14px">model</text>
     <text x="255" y="272" text-anchor="middle" class="lbl-g" style="font-size:14px">tool</text>
-    <!-- cost per turn: neutral tally -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="370" y="70" width="300" height="230" rx="12"/></g>
-    <text x="520" y="104" text-anchor="middle" class="lbl-b">cost is per turn</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="410" y1="150" x2="630" y2="150"/><line x1="410" y1="195" x2="630" y2="195"/><line x1="410" y1="240" x2="630" y2="240"/></g>
-    <text x="430" y="140" text-anchor="start" class="lbl-g" style="font-size:15px">3 tool calls</text>
-    <text x="520" y="284" text-anchor="middle" class="lbl-b" style="font-size:22px">= 4 billed turns</text>
-    <!-- phone-menu loop: red = the live failure mode -->
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="700" y="70" width="360" height="230" rx="12"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="700" y="70" width="360" height="230" rx="12"/></g>
-    <text x="880" y="104" text-anchor="middle" class="lbl-b">the phone menu</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="760" y="140" width="240" height="60" rx="8"/></g>
-    <text x="880" y="176" text-anchor="middle" class="lbl-g" style="font-size:15px">"press 1 for billing"</text>
-    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.6"><path d="M760,200 C700,240 700,120 758,150" marker-end="url(#ah)"/></g>
-    <text x="880" y="252" text-anchor="middle" class="lbl-bad" style="font-size:15px">same menu again — stuck</text>
+    <!-- cost per turn: neutral tally (fragment 1 — narration "cost is per turn") -->
+    <g class="fragment" data-fragment-index="1">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="370" y="70" width="300" height="230" rx="12"/></g>
+      <text x="520" y="104" text-anchor="middle" class="lbl-b">cost is per turn</text>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="410" y1="150" x2="630" y2="150"/><line x1="410" y1="195" x2="630" y2="195"/><line x1="410" y1="240" x2="630" y2="240"/></g>
+      <text x="430" y="140" text-anchor="start" class="lbl-g" style="font-size:15px">3 tool calls</text>
+      <text x="520" y="284" text-anchor="middle" class="lbl-b" style="font-size:22px">= 4 billed turns</text>
+    </g>
+    <!-- phone-menu loop: red = the live failure mode (fragment 2 — narration "loops are a live failure mode") -->
+    <g class="fragment" data-fragment-index="2">
+      <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="700" y="70" width="360" height="230" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="700" y="70" width="360" height="230" rx="12"/></g>
+      <text x="880" y="104" text-anchor="middle" class="lbl-b">the phone menu</text>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="760" y="140" width="240" height="60" rx="8"/></g>
+      <text x="880" y="176" text-anchor="middle" class="lbl-g" style="font-size:15px">"press 1 for billing"</text>
+      <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.6"><path d="M760,200 C700,240 700,120 758,150" marker-end="url(#ah)"/></g>
+      <text x="880" y="252" text-anchor="middle" class="lbl-bad" style="font-size:15px">same menu again — stuck</text>
+    </g>
   </svg>
   <div class="pageno">M13·14</div>
 </section>
@@ -685,28 +689,58 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The capstone is the whole route, one drive</h2>
   <p class="s">No new skills — chain the ones you have, end to end, without stalling.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A left-to-right lifecycle chain: a new cache-eviction runbook, synthesize Q&amp;A from M6, LoRA fine-tune v1.2, convert to GGUF, kit pack and sign 1.2.0 from M7, gate.sh from M12, a PR bumping the tag from M11, Argo sync, and verify serving. An examiner-in-the-passenger-seat motif sits over it.">
-    <!-- lifecycle chain, blue = the run being studied -->
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="30" y="130" width="120" height="66" rx="9"/><rect x="330" y="130" width="120" height="66" rx="9"/><rect x="630" y="130" width="120" height="66" rx="9"/><rect x="930" y="130" width="140" height="66" rx="9"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="30" y="130" width="120" height="66" rx="9"/><rect x="180" y="130" width="120" height="66" rx="9"/><rect x="330" y="130" width="120" height="66" rx="9"/><rect x="480" y="130" width="120" height="66" rx="9"/><rect x="630" y="130" width="120" height="66" rx="9"/><rect x="780" y="130" width="120" height="66" rx="9"/><rect x="930" y="130" width="140" height="66" rx="9"/></g>
+    <!-- BASE: the runbook arrives + the examiner framing (blue = the run being studied) -->
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="30" y="130" width="120" height="66" rx="9"/></g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="30" y="130" width="120" height="66" rx="9"/></g>
     <text x="90" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">runbook</text>
     <text x="90" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">cache-evict</text>
-    <text x="240" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">synthesize</text>
-    <text x="240" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M6</text>
-    <text x="390" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">fine-tune</text>
-    <text x="390" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">v1.2 · M6</text>
-    <text x="540" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">→ GGUF</text>
-    <text x="540" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M6</text>
-    <text x="690" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">pack+sign</text>
-    <text x="690" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">1.2.0 · M7</text>
-    <text x="840" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">gate.sh</text>
-    <text x="840" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M12</text>
-    <text x="1000" y="158" text-anchor="middle" class="lbl-g" style="font-size:13px">PR → Argo</text>
-    <text x="1000" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">verify · M11</text>
-    <!-- chain arrows -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="150" y1="163" x2="178" y2="163" marker-end="url(#ah)"/><line x1="300" y1="163" x2="328" y2="163" marker-end="url(#ah)"/><line x1="450" y1="163" x2="478" y2="163" marker-end="url(#ah)"/><line x1="600" y1="163" x2="628" y2="163" marker-end="url(#ah)"/><line x1="750" y1="163" x2="778" y2="163" marker-end="url(#ah)"/><line x1="900" y1="163" x2="928" y2="163" marker-end="url(#ah)"/></g>
-    <!-- examiner-in-passenger motif -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="420" y="50" width="260" height="52" rx="10"/></g>
     <text x="550" y="82" text-anchor="middle" class="lbl-g" style="font-size:16px">examiner in the passenger seat</text>
+    <!-- fragment 1 — narration "Synthesize from the corpus" -->
+    <g class="fragment" data-fragment-index="1">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="150" y1="163" x2="178" y2="163" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="180" y="130" width="120" height="66" rx="9"/></g>
+      <text x="240" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">synthesize</text>
+      <text x="240" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M6</text>
+    </g>
+    <!-- fragment 2 — narration "Tune under the smoke profile" -->
+    <g class="fragment" data-fragment-index="2">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="300" y1="163" x2="328" y2="163" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="330" y="130" width="120" height="66" rx="9"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="330" y="130" width="120" height="66" rx="9"/></g>
+      <text x="390" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">fine-tune</text>
+      <text x="390" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">v1.2 · M6</text>
+    </g>
+    <!-- fragment 3 — narration "Merge and convert to a GGUF" -->
+    <g class="fragment" data-fragment-index="3">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="450" y1="163" x2="478" y2="163" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="480" y="130" width="120" height="66" rx="9"/></g>
+      <text x="540" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">→ GGUF</text>
+      <text x="540" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M6</text>
+    </g>
+    <!-- fragment 4 — narration "Pack and sign as version one-point-two" -->
+    <g class="fragment" data-fragment-index="4">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="600" y1="163" x2="628" y2="163" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="630" y="130" width="120" height="66" rx="9"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="630" y="130" width="120" height="66" rx="9"/></g>
+      <text x="690" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">pack+sign</text>
+      <text x="690" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">1.2.0 · M7</text>
+    </g>
+    <!-- fragment 5 — narration "Run it through gate.sh" -->
+    <g class="fragment" data-fragment-index="5">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="750" y1="163" x2="778" y2="163" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="780" y="130" width="120" height="66" rx="9"/></g>
+      <text x="840" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">gate.sh</text>
+      <text x="840" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M12</text>
+    </g>
+    <!-- fragment 6 — lead-out to the gate slide: "PR bumps the tag, Argo syncs, verify serving" -->
+    <g class="fragment" data-fragment-index="6">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="900" y1="163" x2="928" y2="163" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="930" y="130" width="140" height="66" rx="9"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="930" y="130" width="140" height="66" rx="9"/></g>
+      <text x="1000" y="158" text-anchor="middle" class="lbl-g" style="font-size:13px">PR → Argo</text>
+      <text x="1000" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">verify · M11</text>
+    </g>
   </svg>
   <div class="pageno">M13·27</div>
 </section>

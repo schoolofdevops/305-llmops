@@ -521,11 +521,15 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="544" y="232" width="320" height="72" rx="10"/></g>
     <text x="704" y="264" text-anchor="middle" class="lbl-b">run vs BASE /v1</text>
     <text x="704" y="288" text-anchor="middle" class="lbl-g">direct — its own Service</text>
+    <!-- real captured scores (M9 lab: base 4/6 > canary 3/6) -->
+    <text x="704" y="152" text-anchor="middle" class="lbl-b">scored 3 / 6</text>
+    <text x="704" y="218" text-anchor="middle" class="lbl-b">scored 4 / 6</text>
     <!-- compare -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M864,92 C920,120 940,150 948,176" marker-end="url(#ah)"/><path d="M864,268 C920,240 940,210 948,184" marker-end="url(#ah)"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="952" y="150" width="120" height="60" rx="10"/></g>
-    <text x="1012" y="178" text-anchor="middle" class="lbl-b">compare</text>
-    <text x="1012" y="200" text-anchor="middle" class="lbl-g">pass-counts</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="948" y="140" width="128" height="80" rx="10"/></g>
+    <text x="1012" y="166" text-anchor="middle" class="lbl-b">compare</text>
+    <text x="1012" y="188" text-anchor="middle" class="lbl-g">pass-counts</text>
+    <text x="1012" y="211" text-anchor="middle" class="lbl-b">3 &lt; 4</text>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="120" y="316" width="860" height="30" rx="9"/>
@@ -544,6 +548,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M60,175 L200,110 L340,175 L200,240 Z"/></g>
     <text x="200" y="170" text-anchor="middle" class="lbl-sm">canary pass-count</text>
     <text x="200" y="192" text-anchor="middle" class="lbl-b">≥ base?</text>
+    <text x="200" y="274" text-anchor="middle" class="lbl-b">canary 3 &lt; base 4</text>
     <!-- YES → PROMOTE (path not taken) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M340,150 C450,110 520,96 600,92" marker-end="url(#ahg)"/></g>
     <text x="470" y="104" text-anchor="middle" class="lbl-g">yes</text>

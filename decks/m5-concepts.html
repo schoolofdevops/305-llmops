@@ -431,7 +431,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Two layers, built differently on purpose — a tripwire and a graded lane</h2>
   <p class="s">One deterministic layer, one graded — each question tagged to its lane.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="A golden question splits into two lanes. The top lane, layer one retrieval, goes through slash retrieve to a check: is the right source in top-k, inked, tagged deterministic, phrase-independent, a regression tripwire run by retrieval_check dot py. The bottom lane, layer two generation, goes through slash ask to a check: contains-any net plus judge rubric, inked, tagged graded and paraphrase-tolerant, run by promptfoo. A footline reads each question is tagged with its layer, so a run reports retrieval 22 of 24 and generation 14 of 15, two teams of fixes.">
+  <svg viewBox="0 0 1100 340" role="img" aria-label="A golden question splits into two lanes. The top lane, layer one retrieval, goes through slash retrieve to a check: is the right source in top-k, inked, tagged deterministic, phrase-independent, a regression tripwire run by retrieval_check dot py. The bottom lane, layer two generation, goes through slash ask to a check: contains-any net plus judge rubric, inked, tagged graded and paraphrase-tolerant, run by promptfoo. A footline reads each question is tagged with its layer, so a run reports retrieval 24 of 24 and generation 6 of 15, two teams of fixes.">
     <!-- question -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="50" y="120" width="150" height="80" rx="12"/>
@@ -477,7 +477,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
       <rect x="80" y="300" width="940" height="38" rx="9"/>
     </g>
-    <text x="550" y="324" text-anchor="middle" class="lbl-g">each Q tagged with its layer → a run reports "<tspan class="lbl-b">retrieval 22/24 · generation 14/15</tspan>" = two teams of fixes</text>
+    <text x="550" y="324" text-anchor="middle" class="lbl-g">each Q tagged with its layer → a run reports "<tspan class="lbl-b">retrieval 24/24 · generation 6/15</tspan>" = two teams of fixes</text>
   </svg>
   <div class="pageno">M5·12</div>
 </section>
@@ -667,7 +667,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">The baseline ritual — run it twice, no-RAG vs RAG, write both numbers down</h2>
   <p class="s">Run the suite twice — the gap between the two scores is what retrieval buys.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels with score bars. Left, gray: no-RAG, the base model with no retrieval, answering alone, with a lower score bar. Right, inked: RAG, slash ask with the right pages in front, with a higher score bar. A gray bracket between them labels the gap as the measured value of retrieval from Module 4. A note under the honesty questions reads no-RAG invents, RAG admits the gap. A band reads numbers are modest on a 0.6B CPU model and that is honest, a believable 62 percent beats an invented 95 percent, written to baseline dot md and committed.">
+  <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels with score bars. Left, gray: no-RAG, the base model with no retrieval, answering alone, with a score bar at 3 of 15, 20 percent. Right, inked: RAG, slash ask with the right pages in front, with a score bar at 6 of 15, 40 percent. A gray bracket between them labels the gap as plus 20 points, the measured value of retrieval from Module 4. A note under the honesty questions reads no-RAG invents, RAG admits the gap. A band reads numbers are modest on a 0.6B CPU model and that is honest, a believable 62 percent beats an invented 95 percent, written to baseline dot md and committed.">
     <!-- left: no-RAG — red, the lower score -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="70" y="80" width="360" height="120" rx="12"/>
@@ -677,7 +677,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" stroke="#757575" stroke-width="2.4">
       <rect x="110" y="158" width="150" height="26" rx="6" class="f-red"/>
     </g>
-    <text x="290" y="178" text-anchor="start" class="lbl-bad">lower score</text>
+    <text x="290" y="178" text-anchor="start" class="lbl-bad">3/15 · 20%</text>
     <!-- right: RAG — green, the higher score -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="620" y="80" width="410" height="120" rx="12"/>
@@ -687,13 +687,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="660" y="158" width="300" height="26" rx="6" class="f-green"/>
     </g>
-    <text x="985" y="178" text-anchor="end" class="lbl-good">higher score</text>
+    <text x="985" y="178" text-anchor="end" class="lbl-good">6/15 · 40%</text>
     <!-- gap bracket -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M440,140 L610,140"/>
       <path d="M440,132 L440,148 M610,132 L610,148"/>
     </g>
-    <text x="525" y="126" text-anchor="middle" class="lbl-g">the gap =</text>
+    <text x="525" y="126" text-anchor="middle" class="lbl-g">gap = <tspan class="lbl-b">+20 pts</tspan></text>
     <text x="525" y="112" text-anchor="middle" class="lbl-b">value of retrieval (M4)</text>
     <!-- honesty note -->
     <text x="550" y="228" text-anchor="middle" class="lbl-g">on the honesty Qs: no-RAG <tspan class="lbl-b">invents</tspan> · RAG <tspan class="lbl-b">admits the gap</tspan></text>

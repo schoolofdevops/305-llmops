@@ -311,25 +311,32 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">You train 0.19% of the model — that's why it fits on a CPU</h2>
   <p class="s">Two-tenths of one percent trainable — hold that number out of the whole module.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="The real number, drawn large. A callout box: trainable one million one hundred forty-six thousand eight hundred eighty, out of five hundred ninety-seven million one hundred ninety-six thousand eight hundred, equals 0.19 percent. Below, why it matters: you only hold gradients for that tiny slice, so it fits on a CPU. Two consequence cards: swappable — many adapters, one base; and tiny to ship — M7 versions it as v1.0. A band reads: train 0.19% of the model, the rest stays frozen.">
-    <!-- the number callout, large -->
+    <!-- the number callout frame, present from the start -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="120" y="70" width="620" height="130" rx="12"/>
     </g>
-    <text x="430" y="112" text-anchor="middle" class="lbl-b">trainable 1,146,880</text>
-    <text x="430" y="150" text-anchor="middle" class="lbl">of 597,196,800 =</text>
-    <text x="430" y="185" text-anchor="middle" class="lbl-b" style="font-size:30px" fill="#2e7d32">0.19%</text>
-    <!-- why it fits -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="770" y="70" width="290" height="130" rx="12"/></g>
-    <text x="915" y="110" text-anchor="middle" class="lbl-b">why it fits on a CPU</text>
-    <text x="915" y="146" text-anchor="middle" class="lbl-g">you only hold gradients</text>
-    <text x="915" y="172" text-anchor="middle" class="lbl-g">for that tiny slice</text>
-    <!-- two consequences as cards -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="120" y="232" width="440" height="76" rx="11" class="f-blue"/></g>
-    <text x="340" y="266" text-anchor="middle" class="lbl-b">swappable</text>
-    <text x="340" y="292" text-anchor="middle" class="lbl-g">many adapters, one base</text>
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="600" y="232" width="440" height="76" rx="11" class="f-blue"/></g>
-    <text x="820" y="266" text-anchor="middle" class="lbl-b">tiny to ship</text>
-    <text x="820" y="292" text-anchor="middle" class="lbl-g">M7 versions it as v1.0</text>
+    <!-- built one line at a time, timed to the narration: trainable → total → the 0.19% punchline -->
+    <g class="fragment"><text x="430" y="112" text-anchor="middle" class="lbl-b">trainable 1,146,880</text></g>
+    <g class="fragment"><text x="430" y="150" text-anchor="middle" class="lbl">of 597,196,800 =</text></g>
+    <g class="fragment"><text x="430" y="185" text-anchor="middle" class="lbl-b" style="font-size:30px" fill="#2e7d32">0.19%</text></g>
+    <!-- why it fits (revealed next) -->
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="770" y="70" width="290" height="130" rx="12"/></g>
+      <text x="915" y="110" text-anchor="middle" class="lbl-b">why it fits on a CPU</text>
+      <text x="915" y="146" text-anchor="middle" class="lbl-g">you only hold gradients</text>
+      <text x="915" y="172" text-anchor="middle" class="lbl-g">for that tiny slice</text>
+    </g>
+    <!-- two consequences, each its own reveal -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="120" y="232" width="440" height="76" rx="11" class="f-blue"/></g>
+      <text x="340" y="266" text-anchor="middle" class="lbl-b">swappable</text>
+      <text x="340" y="292" text-anchor="middle" class="lbl-g">many adapters, one base</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="600" y="232" width="440" height="76" rx="11" class="f-blue"/></g>
+      <text x="820" y="266" text-anchor="middle" class="lbl-b">tiny to ship</text>
+      <text x="820" y="292" text-anchor="middle" class="lbl-g">M7 versions it as v1.0</text>
+    </g>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M120,330 L1040,330"/></g>
     <text x="580" y="352" text-anchor="middle" class="lbl-g">train <tspan class="lbl-b">0.19% of the model</tspan> — the rest stays frozen</text>
@@ -342,30 +349,38 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The "low-rank" trick — approximate a big update with two thin matrices</h2>
   <p class="s">Two thin matrices stand in for one big one — the rank sets how thin.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="On the left, a large gray dense square marked full update, big dense matrix, frozen. An equals sign leads to the product of two thin blue matrices: a tall-skinny one and a short-wide one, their shared narrow edge labelled r equals 8, the rank. A note reads: small r means tiny matrices means few trainable params. On the right, a small card names which layers get an adapter: q_proj plus v_proj, the attention query and value projections, the common minimal choice. A band reads: more rank and more layers buy more capacity to learn — and more room to overfit.">
-    <!-- full dense update (gray, frozen) -->
+    <!-- full dense update (gray, frozen) — the starting point of the derivation, present from the start -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7"><rect x="60" y="110" width="150" height="150" rx="8"/></g>
     <text x="135" y="188" text-anchor="middle" class="lbl-sm">full update</text>
     <text x="135" y="290" text-anchor="middle" class="lbl-g">big dense matrix</text>
-    <text x="250" y="192" text-anchor="middle" class="lbl-b">≈</text>
-    <!-- two thin matrices (blue = the trainable adapter) -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="296" y="110" width="46" height="150" rx="7" class="f-blue"/></g>
-    <text x="319" y="284" text-anchor="middle" class="lbl-g">tall-skinny</text>
-    <text x="360" y="192" text-anchor="middle" class="lbl-b">×</text>
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="378" y="150" width="150" height="46" rx="7" class="f-blue"/></g>
-    <text x="453" y="220" text-anchor="middle" class="lbl-g">short-wide</text>
-    <!-- rank annotation -->
-    <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round"><path d="M319,96 L319,104 M300,100 L338,100"/></g>
-    <text x="319" y="86" text-anchor="middle" class="lbl-good">r = 8 (the rank)</text>
-    <text x="300" y="322" text-anchor="start" class="lbl-g">small r → tiny matrices → few trainable params</text>
-    <!-- which layers card -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="600" y="110" width="440" height="120" rx="12" class="f-blue"/></g>
-    <text x="820" y="146" text-anchor="middle" class="lbl-b">which layers get an adapter?</text>
-    <text x="820" y="178" text-anchor="middle" class="lbl">q_proj + v_proj</text>
-    <text x="820" y="206" text-anchor="middle" class="lbl-g">attention query &amp; value projections — the common minimal choice</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="600" y="256" width="440" height="60" rx="10"/></g>
-    <text x="820" y="284" text-anchor="middle" class="lbl-g">more rank · more layers = more capacity to learn</text>
-    <text x="820" y="306" text-anchor="middle" class="lbl-g">…and more room to <tspan class="lbl-b">overfit</tspan></text>
+    <!-- reveal: approximated by two thin matrices -->
+    <g class="fragment">
+      <text x="250" y="192" text-anchor="middle" class="lbl-b">≈</text>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="296" y="110" width="46" height="150" rx="7" class="f-blue"/></g>
+      <text x="319" y="284" text-anchor="middle" class="lbl-g">tall-skinny</text>
+      <text x="360" y="192" text-anchor="middle" class="lbl-b">×</text>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="378" y="150" width="150" height="46" rx="7" class="f-blue"/></g>
+      <text x="453" y="220" text-anchor="middle" class="lbl-g">short-wide</text>
+    </g>
+    <!-- reveal: the rank sets how thin -->
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round"><path d="M319,96 L319,104 M300,100 L338,100"/></g>
+      <text x="319" y="86" text-anchor="middle" class="lbl-good">r = 8 (the rank)</text>
+      <text x="300" y="322" text-anchor="start" class="lbl-g">small r → tiny matrices → few trainable params</text>
+    </g>
+    <!-- reveal: which layers get an adapter -->
+    <g class="fragment">
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="600" y="110" width="440" height="120" rx="12" class="f-blue"/></g>
+      <text x="820" y="146" text-anchor="middle" class="lbl-b">which layers get an adapter?</text>
+      <text x="820" y="178" text-anchor="middle" class="lbl">q_proj + v_proj</text>
+      <text x="820" y="206" text-anchor="middle" class="lbl-g">attention query &amp; value projections — the common minimal choice</text>
+    </g>
+    <!-- reveal: the capacity/overfit trade-off -->
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="600" y="256" width="440" height="60" rx="10"/></g>
+      <text x="820" y="284" text-anchor="middle" class="lbl-g">more rank · more layers = more capacity to learn</text>
+      <text x="820" y="306" text-anchor="middle" class="lbl-g">…and more room to <tspan class="lbl-b">overfit</tspan></text>
+    </g>
   </svg>
   <div class="pageno">M6·09</div>
 </section>
@@ -551,7 +566,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Read the loss curve — a healthy curve flattens, a diving one is overfitting</h2>
   <p class="s">Loss is the model's surprise at the next token — two shapes to tell apart.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A gray definition line reads loss equals how surprised the model is at the next token, from the Module 1 vocabulary. Below it, two panels, each a sketched loss curve on axes. Left, inked and labelled healthy: a curve falling from about 5.05 and then flattening toward about 3.54, tagged falls then flattens, more steps buy little, stop here, the real spike shape. Right, gray-dashed and labelled suspicious: a curve diving toward zero on a tiny set, tagged keeps dropping to zero equals overfit, memorizing not learning, aces training but fails the real questions. A band reads: train a few epochs and stop — you want it to generalize, not memorize.">
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A gray definition line reads loss equals how surprised the model is at the next token, from the Module 1 vocabulary. Below it, two panels, each a sketched loss curve on axes. Left, inked and labelled healthy: a curve falling from about 5.0 and then flattening toward about 0.7, tagged falls then flattens, more steps buy little, stop here, the real run's shape. Right, gray-dashed and labelled suspicious: a curve diving toward zero on a tiny set, tagged keeps dropping to zero equals overfit, memorizing not learning, aces training but fails the real questions. A band reads: train a few epochs and stop — you want it to generalize, not memorize.">
     <!-- definition annotation (M1 vocabulary) -->
     <text x="550" y="28" text-anchor="middle" class="lbl-g">loss = how surprised the model is at the next token (M1)</text>
     <!-- left panel HEALTHY -->
@@ -560,12 +575,12 @@ footer, header, hgroup, main, menu, nav, section {
       <path d="M100,90 L100,270 L500,270"/>
     </g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round">
-      <path d="M110,110 C180,140 230,230 320,252 C390,266 440,258 490,256"/>
+      <path d="M110,108 C175,150 225,240 320,260 C390,268 445,265 490,264"/>
     </g>
-    <text x="118" y="112" text-anchor="start" class="lbl-g">~5.05</text>
-    <text x="452" y="246" text-anchor="start" class="lbl-g">~3.54</text>
+    <text x="118" y="110" text-anchor="start" class="lbl-g">~5.0</text>
+    <text x="452" y="252" text-anchor="start" class="lbl-g">~0.7</text>
     <text x="300" y="300" text-anchor="middle" class="lbl-g">falls then flattens → more steps buy little · STOP</text>
-    <text x="300" y="324" text-anchor="middle" class="lbl-g">(the real spike shape)</text>
+    <text x="300" y="324" text-anchor="middle" class="lbl-g">(the real run's shape)</text>
     <!-- right panel SUSPICIOUS -->
     <text x="820" y="60" text-anchor="middle" class="lbl-bad">SUSPICIOUS</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">

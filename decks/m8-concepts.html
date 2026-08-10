@@ -294,39 +294,48 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The working set is three terms — two fixed, one that grows</h2>
   <p class="s">Add the three and you have the memory the pod pins down.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Three feeder boxes arrow into one sum box. Weights, about 0.65 gibibytes, fixed, the same for one user or fifty. Runtime buffers, about 0.3 gibibytes, fixed, engine scratch and the compute graph. KV cache, equal to context times concurrency times 112 kibibytes per token, which grows with use. They add to the box you need: weights plus runtime plus KV, the pod's working set.">
-    <!-- three feeder boxes — two fixed (blue), KV grows (orange caution) -->
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="40" y="60" width="250" height="72" rx="10"/>
+    <!-- three feeder boxes build one term at a time (fragments), timed to the narration's Weights / Runtime / KV sentences; the sum box lands last -->
+    <!-- fragment 1: weights (blue, fixed) -->
+    <g class="fragment" data-fragment-index="1">
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="40" y="60" width="250" height="72" rx="10"/>
+      </g>
+      <text x="165" y="90" text-anchor="middle" class="lbl-b">weights ~0.65 GiB</text>
+      <text x="165" y="116" text-anchor="middle" class="lbl-g">fixed — same for 1 or 50 users</text>
     </g>
-    <text x="165" y="90" text-anchor="middle" class="lbl-b">weights ~0.65 GiB</text>
-    <text x="165" y="116" text-anchor="middle" class="lbl-g">fixed — same for 1 or 50 users</text>
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#757575" stroke-width="2.4">
-      <rect x="40" y="148" width="250" height="72" rx="10"/>
+    <!-- fragment 2: runtime buffers (blue, fixed) + first plus -->
+    <g class="fragment" data-fragment-index="2">
+      <text x="330" y="104" text-anchor="middle" class="lbl-b">+</text>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="#757575" stroke-width="2.4">
+        <rect x="40" y="148" width="250" height="72" rx="10"/>
+      </g>
+      <text x="165" y="178" text-anchor="middle" class="lbl">runtime buffers ~0.3 GiB</text>
+      <text x="165" y="204" text-anchor="middle" class="lbl-g">fixed — scratch + compute graph</text>
     </g>
-    <text x="165" y="178" text-anchor="middle" class="lbl">runtime buffers ~0.3 GiB</text>
-    <text x="165" y="204" text-anchor="middle" class="lbl-g">fixed — scratch + compute graph</text>
-    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="40" y="236" width="250" height="82" rx="10"/>
+    <!-- fragment 3: KV cache (orange, grows) + second plus -->
+    <g class="fragment" data-fragment-index="3">
+      <text x="330" y="192" text-anchor="middle" class="lbl-b">+</text>
+      <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="3">
+        <rect x="40" y="236" width="250" height="82" rx="10"/>
+      </g>
+      <text x="165" y="266" text-anchor="middle" class="lbl-b">KV cache</text>
+      <text x="165" y="290" text-anchor="middle" class="lbl-sm">ctx × concurrency ×</text>
+      <text x="165" y="312" text-anchor="middle" class="lbl-sm">112 KiB/token — GROWS</text>
     </g>
-    <text x="165" y="266" text-anchor="middle" class="lbl-b">KV cache</text>
-    <text x="165" y="290" text-anchor="middle" class="lbl-sm">ctx × concurrency ×</text>
-    <text x="165" y="312" text-anchor="middle" class="lbl-sm">112 KiB/token — GROWS</text>
-    <!-- plus signs -->
-    <text x="330" y="104" text-anchor="middle" class="lbl-b">+</text>
-    <text x="330" y="192" text-anchor="middle" class="lbl-b">+</text>
-    <!-- arrows into sum -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M290,96 C360,96 380,160 448,178" marker-end="url(#ah)"/>
-      <path d="M290,184 L448,190" marker-end="url(#ah)"/>
-      <path d="M290,276 C360,276 380,218 448,202" marker-end="url(#ah)"/>
+    <!-- fragment 4: add them — arrows + the derived sum box (green) -->
+    <g class="fragment" data-fragment-index="4">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+        <path d="M290,96 C360,96 380,160 448,178" marker-end="url(#ah)"/>
+        <path d="M290,184 L448,190" marker-end="url(#ah)"/>
+        <path d="M290,276 C360,276 380,218 448,202" marker-end="url(#ah)"/>
+      </g>
+      <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
+        <rect x="452" y="128" width="608" height="124" rx="13"/>
+      </g>
+      <text x="756" y="170" text-anchor="middle" class="lbl-b">the box you need</text>
+      <text x="756" y="202" text-anchor="middle" class="lbl">weights + runtime + KV</text>
+      <text x="756" y="230" text-anchor="middle" class="lbl-g">= the pod's working set</text>
     </g>
-    <!-- sum box — the derived answer (green) -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="452" y="128" width="608" height="124" rx="13"/>
-    </g>
-    <text x="756" y="170" text-anchor="middle" class="lbl-b">the box you need</text>
-    <text x="756" y="202" text-anchor="middle" class="lbl">weights + runtime + KV</text>
-    <text x="756" y="230" text-anchor="middle" class="lbl-g">= the pod's working set</text>
   </svg>
   <div class="pageno">M8·06</div>
 </section>
@@ -361,32 +370,35 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Turn the sum around and it answers all three questions</h2>
   <p class="s">Read the one worksheet the other way and all three answers fall out of it.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A central sum box, weights plus runtime plus KV, fans out to three answer boxes. Memory limit equals the sum at your configured context and concurrency, plus headroom — a derived number, not a round one. Replica count equals one until concurrency outgrows one pod's KV budget, then add a replica. Context length is the lever you pull when the box will not fit. A band reads all three answers come from the one worksheet you filled in.">
-    <!-- central sum box (green, the derived source) -->
+    <!-- central sum box (green, base — the derived source we turn around) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="118" width="270" height="104" rx="12"/></g>
     <text x="175" y="158" text-anchor="middle" class="lbl-b">the sum</text>
     <text x="175" y="188" text-anchor="middle" class="lbl-sm">weights + runtime + KV</text>
     <text x="175" y="212" text-anchor="middle" class="lbl-g">the pod's working set</text>
-    <!-- fan-out arrows -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M310,140 C400,120 440,80 500,70" marker-end="url(#ah)"/>
-      <path d="M310,170 L500,170" marker-end="url(#ah)"/>
-      <path d="M310,200 C400,220 440,258 500,270" marker-end="url(#ah)"/>
+    <!-- the three answers fan out one at a time (fragments), timed to the narration's Memory limit / Replica count / Context length sentences -->
+    <!-- fragment 1: memory limit -->
+    <g class="fragment" data-fragment-index="1">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M310,140 C400,120 440,80 500,70" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="504" y="40" width="556" height="64" rx="10"/></g>
+      <text x="530" y="68" text-anchor="start" class="lbl-b">memory limit</text>
+      <text x="530" y="92" text-anchor="start" class="lbl-g">= the sum at your ctx + concurrency, plus headroom — derived, not round</text>
     </g>
-    <!-- answer 1: memory limit -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="504" y="40" width="556" height="64" rx="10"/></g>
-    <text x="530" y="68" text-anchor="start" class="lbl-b">memory limit</text>
-    <text x="530" y="92" text-anchor="start" class="lbl-g">= the sum at your ctx + concurrency, plus headroom — derived, not round</text>
-    <!-- answer 2: replica count -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="504" y="138" width="556" height="64" rx="10"/></g>
-    <text x="530" y="166" text-anchor="start" class="lbl-b">replica count</text>
-    <text x="530" y="190" text-anchor="start" class="lbl-g">= 1 until concurrency outgrows one pod's KV budget → then add one (M9)</text>
-    <!-- answer 3: context lever -->
-    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.6"><rect x="504" y="236" width="556" height="64" rx="10"/></g>
-    <text x="530" y="264" text-anchor="start" class="lbl-b">context lever</text>
-    <text x="530" y="288" text-anchor="start" class="lbl-g">the knob you pull when the box will not fit — shorter ctx, smaller KV</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="308" width="800" height="30" rx="8"/></g>
-    <text x="550" y="329" text-anchor="middle" class="lbl-g">all three answers come from the <tspan class="lbl-b">one worksheet</tspan> you filled in</text>
+    <!-- fragment 2: replica count -->
+    <g class="fragment" data-fragment-index="2">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M310,170 L500,170" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="504" y="138" width="556" height="64" rx="10"/></g>
+      <text x="530" y="166" text-anchor="start" class="lbl-b">replica count</text>
+      <text x="530" y="190" text-anchor="start" class="lbl-g">= 1 until concurrency outgrows one pod's KV budget → then add one (M9)</text>
+    </g>
+    <!-- fragment 3: context lever + the summing band -->
+    <g class="fragment" data-fragment-index="3">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M310,200 C400,220 440,258 500,270" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.6"><rect x="504" y="236" width="556" height="64" rx="10"/></g>
+      <text x="530" y="264" text-anchor="start" class="lbl-b">context lever</text>
+      <text x="530" y="288" text-anchor="start" class="lbl-g">the knob you pull when the box will not fit — shorter ctx, smaller KV</text>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="308" width="800" height="30" rx="8"/></g>
+      <text x="550" y="329" text-anchor="middle" class="lbl-g">all three answers come from the <tspan class="lbl-b">one worksheet</tspan> you filled in</text>
+    </g>
   </svg>
   <div class="pageno">M8·08</div>
 </section>

@@ -488,42 +488,68 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">A golden set that discriminates — from sources, with honesty probes</h2>
-  <p class="s">A set is only as good as its questions — here are the three rules.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="Three numbered rows. One: author from a source, each question from a runbook passage with the source recorded, making it answerable, retrieval-checkable, and reusable in Module 6. Two: make it discriminate, so the right answer and a plausible-wrong answer clearly diverge and a broken system fails it. Three: honesty probes, unanswerable-from-corpus questions whose correct answer is no runbook for that, where a confident bluff is a failure. A footline reads a good golden question is one a broken system would get wrong.">
+  <h2 class="t">Author every question from a source — and make it discriminate</h2>
+  <p class="s">the first two rules for a golden question</p>
+  <svg viewBox="0 0 1100 250" role="img" aria-label="Two numbered rows. One: author from a source, each question from a runbook passage with the source recorded, making it answerable, retrieval-checkable, and reusable in Module 6. Two: make it discriminate, so the right answer and a plausible-wrong answer clearly diverge and a broken system fails it. A footline reads a good golden question is one a broken system would get wrong.">
     <!-- row 1 (fragment) -->
     <g class="fragment">
-      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="70" r="22" class="f-blue"/></g>
-      <text x="90" y="79" text-anchor="middle" class="num">1</text>
-      <text x="130" y="62" text-anchor="start" class="lbl-b">author FROM a source</text>
-      <text x="130" y="90" text-anchor="start" class="lbl-g">each Q from a runbook passage, <tspan class="lbl">source:</tspan> recorded → answerable · retrieval-checkable · reusable in M6</text>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="60" r="22" class="f-blue"/></g>
+      <text x="90" y="69" text-anchor="middle" class="num">1</text>
+      <text x="130" y="52" text-anchor="start" class="lbl-b">author FROM a source</text>
+      <text x="130" y="80" text-anchor="start" class="lbl-g">each Q from a runbook passage, <tspan class="lbl">source:</tspan> recorded → answerable · retrieval-checkable · reusable in M6</text>
     </g>
     <!-- row 2 (fragment) -->
     <g class="fragment">
-      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="160" r="22" class="f-blue"/></g>
-      <text x="90" y="169" text-anchor="middle" class="num">2</text>
-      <text x="130" y="152" text-anchor="start" class="lbl-b">make it DISCRIMINATE</text>
-      <text x="130" y="180" text-anchor="start" class="lbl-g">right answer vs plausible-wrong clearly diverge — "payments 500s → pool exhaustion", not "what company is this?"</text>
-    </g>
-    <!-- row 3 (fragment) -->
-    <g class="fragment">
-      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="250" r="22" class="f-blue"/></g>
-      <text x="90" y="259" text-anchor="middle" class="num">3</text>
-      <text x="130" y="242" text-anchor="start" class="lbl-b">honesty probes</text>
-      <text x="130" y="270" text-anchor="start" class="lbl-g">unanswerable-from-corpus Qs · correct = "no runbook for that" · a confident bluff = <tspan class="lbl">FAIL</tspan> (dangerous in an incident)</text>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="150" r="22" class="f-blue"/></g>
+      <text x="90" y="159" text-anchor="middle" class="num">2</text>
+      <text x="130" y="142" text-anchor="start" class="lbl-b">make it DISCRIMINATE</text>
+      <text x="130" y="170" text-anchor="start" class="lbl-g">right answer vs plausible-wrong clearly diverge — "payments 500s → pool exhaustion", not "what company is this?"</text>
     </g>
     <!-- footline -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
-      <rect x="80" y="296" width="940" height="38" rx="9"/>
+      <rect x="80" y="200" width="940" height="38" rx="9"/>
     </g>
-    <text x="550" y="320" text-anchor="middle" class="lbl-g">a good golden question is one a <tspan class="lbl-b">broken system would get wrong</tspan></text>
+    <text x="550" y="224" text-anchor="middle" class="lbl-g">a good golden question is one a <tspan class="lbl-b">broken system would get wrong</tspan></text>
   </svg>
   <div class="pageno">M5·14</div>
 </section>
 
+<section>
+  <h2 class="t">Plant questions with no answer — the honesty probe most people skip</h2>
+  <p class="s">a confident bluff in an incident is dangerous</p>
+  <svg viewBox="0 0 1100 340" role="img" aria-label="Two unanswerable questions on the left — the optimal number of Kafka partitions, and the on-call pay — tagged no runbook in the corpus. They branch to two outcomes on the right. The correct outcome, in green, is the assistant admitting I do not have a runbook for that. The failing outcome, in red, is the assistant inventing a confident answer, which is a failure and dangerous in an incident. A footline reads the honesty questions exist precisely to catch the bluff.">
+    <!-- the unanswerable questions (blue = the thing studied) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="60" y="108" width="300" height="124" rx="12" class="f-blue"/></g>
+    <text x="210" y="146" text-anchor="middle" class="lbl-b">no runbook for this</text>
+    <text x="210" y="180" text-anchor="middle" class="lbl-g">"optimal Kafka partitions?"</text>
+    <text x="210" y="208" text-anchor="middle" class="lbl-g">"the on-call pay?"</text>
+    <!-- branch arrows -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M362,150 L516,88" marker-end="url(#ah)"/>
+      <path d="M362,190 L516,252" marker-end="url(#ah)"/>
+    </g>
+    <!-- correct outcome (green = good) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="516" y="52" width="504" height="82" rx="12" class="f-green"/></g>
+    <text x="542" y="88" text-anchor="start" class="lbl-b">"I don't have a runbook for that"</text>
+    <text x="542" y="116" text-anchor="start" class="lbl-g">admits the gap — this is <tspan class="lbl">correct</tspan></text>
+    <text x="1006" y="46" text-anchor="end" class="lbl-g" fill="#2e7d32">honest ✓</text>
+    <!-- fail outcome (red = bad) -->
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="516" y="206" width="504" height="82" rx="12" class="f-red"/></g>
+    <text x="542" y="242" text-anchor="start" class="lbl-b">invents a confident answer</text>
+    <text x="542" y="270" text-anchor="start" class="lbl-g">a bluff = <tspan class="lbl">FAIL</tspan> · dangerous in an incident</text>
+    <text x="1006" y="200" text-anchor="end" class="lbl-g" fill="#c62828">bluff ✗</text>
+    <!-- footline -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
+      <rect x="80" y="304" width="940" height="30" rx="9"/>
+    </g>
+    <text x="550" y="324" text-anchor="middle" class="lbl-g">honesty questions exist precisely to <tspan class="lbl-b">catch the bluff</tspan></text>
+  </svg>
+  <div class="pageno">M5·15</div>
+</section>
+
 <section class="divider">
   <h2 class="t">6 · Prompts as config — version it, test it, roll it back</h2>
-  <div class="pageno">M5·15</div>
+  <div class="pageno">M5·16</div>
 </section>
 
 <section>
@@ -569,12 +595,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="323" text-anchor="middle" class="lbl-g">A/B <tspan class="lbl-b">system.txt</tspan> vs <tspan class="lbl-b">system-v2.txt</tspan> on the SAME suite — scores move, code untouched</text>
   </svg>
-  <div class="pageno">M5·16</div>
+  <div class="pageno">M5·17</div>
 </section>
 
 <section class="divider">
   <h2 class="t">7 · The local judge — a smoke detector, not an examiner</h2>
-  <div class="pageno">M5·17</div>
+  <div class="pageno">M5·18</div>
 </section>
 
 <section>
@@ -600,7 +626,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="920" y="196" text-anchor="middle" class="lbl-g">caught <tspan class="lbl-b">automatically</tspan>,</text>
     <text x="920" y="222" text-anchor="middle" class="lbl-g" fill="#2e7d32">on every change</text>
   </svg>
-  <div class="pageno">M5·18</div>
+  <div class="pageno">M5·19</div>
 </section>
 
 <section>
@@ -630,12 +656,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="312" text-anchor="middle" class="lbl-g">trust it to catch the obvious · corroborate with the deterministic layers · <tspan class="lbl-b">never one grade as ground truth</tspan></text>
   </svg>
-  <div class="pageno">M5·19</div>
+  <div class="pageno">M5·20</div>
 </section>
 
 <section class="divider">
   <h2 class="t">8 · The baseline ritual — record the number, then beat it</h2>
-  <div class="pageno">M5·20</div>
+  <div class="pageno">M5·21</div>
 </section>
 
 <section>
@@ -678,7 +704,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="286" text-anchor="middle" class="lbl-g">modest numbers on a 0.6B CPU model — and that is <tspan class="lbl-b">honest</tspan>: a believable 62% beats an invented 95%</text>
     <text x="550" y="316" text-anchor="middle" class="lbl-b">→ written to baseline.md, committed</text>
   </svg>
-  <div class="pageno">M5·21</div>
+  <div class="pageno">M5·22</div>
 </section>
 
 <section>
@@ -725,7 +751,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="279" text-anchor="middle" class="lbl-g">a number in a chat is gone tomorrow — a number in a <tspan class="lbl-b">committed file is a contract</tspan> the next change must meet</text>
   </svg>
-  <div class="pageno">M5·22</div>
+  <div class="pageno">M5·23</div>
 </section>
 
 <section>
@@ -755,7 +781,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="285" text-anchor="middle" class="lbl-g">the baseline you record here is the <tspan class="lbl-b">yardstick for the whole course</tspan> — now open Module 5 · Lab</text>
   </svg>
   <p class="credit">Now open <b>Module 5 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M5·23</div>
+  <div class="pageno">M5·24</div>
 </section>
 </div></div>
 

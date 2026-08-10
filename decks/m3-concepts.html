@@ -299,28 +299,64 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ============ SLIDE 5 — THREE ENGINES PLACED ============ -->
 <section>
-  <h2 class="t">Ollama, llama-server, vLLM — where each engine fits</h2>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Three stacked rows place the engines. Ollama is the dev-box engine: pull-and-run, native, reaches Metal on a Mac, wraps llama.cpp. llama-server is the portable CPU engine: containerized, speaks slash-v-one, exposes slash-metrics, runs identically everywhere. vLLM is the production engine: GPU, high concurrency, where continuous batching and PagedAttention were popularised.">
-    <!-- Ollama (blue) -->
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="30" width="980" height="86" rx="12"/></g>
-    <text x="86" y="66" class="lbl-b" text-anchor="start">Ollama</text>
-    <text x="86" y="96" class="lbl-g" text-anchor="start">the dev box</text>
-    <text x="560" y="66" class="lbl" text-anchor="start">pull-and-run · native (reaches Metal on a Mac)</text>
-    <text x="560" y="96" class="lbl-g" text-anchor="start">friendly library · wraps llama.cpp underneath</text>
-    <!-- llama-server (orange — the course's portable middle) -->
-    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="136" width="980" height="86" rx="12"/></g>
-    <text x="86" y="172" class="lbl-b" text-anchor="start">llama-server</text>
-    <text x="86" y="202" class="lbl-g" text-anchor="start">portable CPU</text>
-    <text x="560" y="172" class="lbl" text-anchor="start">containerized · /v1 · /metrics · continuous batching</text>
-    <text x="560" y="202" class="lbl-g" text-anchor="start">runs identically on Mac · Linux · WSL2 — you build on it</text>
-    <!-- vLLM (purple) -->
-    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="242" width="980" height="86" rx="12"/></g>
-    <text x="86" y="278" class="lbl-b" text-anchor="start">vLLM</text>
-    <text x="86" y="308" class="lbl-g" text-anchor="start">production</text>
-    <text x="560" y="278" class="lbl" text-anchor="start">GPU · high concurrency · the industry default</text>
-    <text x="560" y="308" class="lbl-g" text-anchor="start">where continuous batching + PagedAttention were popularised</text>
+  <h2 class="t">Ollama — pull, run, and you have a local server</h2>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Ollama, the dev-box engine. Two commands — ollama pull and ollama run — give you a model server in seconds. It has a friendly model library, runs native, and swaps models easily. Underneath it wraps llama.cpp, and it was never meant to be a production tier.">
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="54" width="430" height="252" rx="14"/></g>
+    <text x="275" y="104" class="lbl-b" text-anchor="middle">Ollama</text>
+    <text x="275" y="136" class="lbl-g" text-anchor="middle">the dev-box engine</text>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"><rect x="100" y="168" width="350" height="44" rx="9"/></g>
+    <text x="275" y="197" class="lbl" text-anchor="middle">ollama pull</text>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"><rect x="100" y="224" width="350" height="44" rx="9"/></g>
+    <text x="275" y="253" class="lbl" text-anchor="middle">ollama run</text>
+    <line x1="490" y1="180" x2="576" y2="180" stroke="#1e1e1e" stroke-width="2.6" marker-end="url(#ah)"/>
+    <text x="805" y="120" class="lbl" text-anchor="middle">a model server in seconds</text>
+    <text x="805" y="162" class="lbl-g" text-anchor="middle">friendly library · native · swap models easily</text>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#757575" stroke-width="1.8" stroke-dasharray="6 5"><rect x="600" y="200" width="410" height="92" rx="10"/></g>
+    <text x="805" y="234" class="lbl-g" text-anchor="middle">wraps llama.cpp underneath</text>
+    <text x="805" y="262" class="lbl-g" text-anchor="middle">never meant to be a production tier</text>
   </svg>
+  <p class="s">Two commands to a local model — the dev-box engine, wraps llama.cpp.</p>
   <div class="pageno">M3·08</div>
+</section>
+
+<section>
+  <h2 class="t">llama-server — the same engine, containerized for any CPU</h2>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="llama-server is llama.cpp used directly as its built-in HTTP server. It is the portable CPU engine: it runs a quantized GGUF on a plain CPU and on Apple-Silicon Metal, speaks the OpenAI-compatible slash-v-one API, exposes a Prometheus slash-metrics endpoint, and does continuous batching. In a container it behaves the same on Mac, Linux and WSL2 — this is the engine you containerize in the lab.">
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="54" width="430" height="252" rx="14"/></g>
+    <text x="275" y="104" class="lbl-b" text-anchor="middle">llama-server</text>
+    <text x="275" y="136" class="lbl-g" text-anchor="middle">portable CPU engine</text>
+    <text x="275" y="186" class="lbl" text-anchor="middle">quantized GGUF</text>
+    <text x="275" y="218" class="lbl-g" text-anchor="middle">on a plain CPU (+ Apple Metal)</text>
+    <text x="275" y="266" class="lbl-g" text-anchor="middle">it is llama.cpp, used directly</text>
+    <line x1="490" y1="180" x2="576" y2="180" stroke="#1e1e1e" stroke-width="2.6" marker-end="url(#ah)"/>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"><rect x="600" y="70" width="410" height="44" rx="9"/></g>
+    <text x="805" y="99" class="lbl" text-anchor="middle">/v1 · OpenAI-compatible</text>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"><rect x="600" y="126" width="410" height="44" rx="9"/></g>
+    <text x="805" y="155" class="lbl" text-anchor="middle">/metrics · Prometheus</text>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"><rect x="600" y="182" width="410" height="44" rx="9"/></g>
+    <text x="805" y="211" class="lbl" text-anchor="middle">continuous batching</text>
+    <text x="805" y="266" class="lbl-g" text-anchor="middle" fill="#2e7d32">same on Mac · Linux · WSL2 — you build on this one</text>
+  </svg>
+  <p class="s">Portable CPU engine — /v1, /metrics, same on Mac, Linux and WSL2.</p>
+  <div class="pageno">M3·09</div>
+</section>
+
+<section>
+  <h2 class="t">vLLM — built for many users on a GPU</h2>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="vLLM is the production engine, designed from day one to serve many users at once on a GPU. Continuous batching and PagedAttention became popular through vLLM itself. With a GPU and real traffic it is the industry default, and it is the engine OpsMate runs on in production later in the course.">
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="54" width="430" height="252" rx="14"/></g>
+    <text x="275" y="104" class="lbl-b" text-anchor="middle">vLLM</text>
+    <text x="275" y="136" class="lbl-g" text-anchor="middle">the production engine</text>
+    <text x="275" y="190" class="lbl" text-anchor="middle">GPU</text>
+    <text x="275" y="226" class="lbl-g" text-anchor="middle">many users at once</text>
+    <line x1="490" y1="180" x2="576" y2="180" stroke="#1e1e1e" stroke-width="2.6" marker-end="url(#ah)"/>
+    <text x="805" y="120" class="lbl" text-anchor="middle">built for concurrency from day one</text>
+    <text x="805" y="164" class="lbl-g" text-anchor="middle">continuous batching + PagedAttention were born here</text>
+    <text x="805" y="206" class="lbl-g" text-anchor="middle">GPU + real traffic → the industry default</text>
+    <text x="805" y="258" class="lbl-g" text-anchor="middle">OpsMate's production engine (later in the course)</text>
+  </svg>
+  <p class="s">The GPU production engine — where batching and PagedAttention began.</p>
+  <div class="pageno">M3·10</div>
 </section>
 
 <!-- ============ SLIDE 6 — ONE CONTRACT (hub-and-spoke) ============ -->
@@ -368,12 +404,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="330" y="290" width="500" height="46" rx="10"/></g>
     <text x="580" y="319" text-anchor="middle" class="lbl-g">change one env var — same code, two engines (you prove it in the lab)</text>
   </svg>
-  <div class="pageno">M3·09</div>
+  <div class="pageno">M3·11</div>
 </section>
 
 <section class="divider">
   <h2 class="t">3 · The Apple-Silicon pattern — why the Mac runs the model differently</h2>
-  <div class="pageno">M3·10</div>
+  <div class="pageno">M3·12</div>
 </section>
 
 <!-- ============ SLIDE 7 — WHY A MAC CONTAINER IS CPU-ONLY (scene) ============ -->
@@ -407,7 +443,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="3" stroke-linecap="round"><path d="M660,158 L710,196"/></g>
     <text x="700" y="148" text-anchor="middle" class="lbl-g" fill="#c62828">no corridor</text>
   </svg>
-  <div class="pageno">M3·11</div>
+  <div class="pageno">M3·13</div>
 </section>
 
 <!-- ============ SLIDE 8 — THE THREE PLACEMENTS (the rule) ============ -->
@@ -440,12 +476,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="230" y="300" width="640" height="46" rx="10"/></g>
     <text x="550" y="329" text-anchor="middle" class="lbl-g">the OpsMate stack uses the portable middle — the same compose.yaml runs on every machine</text>
   </svg>
-  <div class="pageno">M3·12</div>
+  <div class="pageno">M3·14</div>
 </section>
 
 <section class="divider">
   <h2 class="t">4 · Continuous batching — the lift that stops for every floor</h2>
-  <div class="pageno">M3·13</div>
+  <div class="pageno">M3·15</div>
 </section>
 
 <!-- ============ SLIDE 9 — CONTINUOUS BATCHING (scene, 2 fragments) ============ -->
@@ -472,7 +508,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="870" y="226" text-anchor="middle" class="lbl-g">request behind a long one —</text>
     <text x="870" y="250" text-anchor="middle" class="lbl-g" fill="#c62828">both wait for the whole batch</text>
   </svg>
-  <div class="pageno">M3·14</div>
+  <div class="pageno">M3·16</div>
 </section>
 
 <!-- ============ SLIDE 9b — CONTINUOUS BATCHING (scene, split from 9) ============ -->
@@ -503,12 +539,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="200" y="312" width="700" height="44" rx="10"/></g>
     <text x="550" y="341" text-anchor="middle" class="lbl-g">keeps the engine busy &amp; full — no batch boundary for anyone to wait behind</text>
   </svg>
-  <div class="pageno">M3·15</div>
+  <div class="pageno">M3·17</div>
 </section>
 
 <section class="divider">
   <h2 class="t">5 · PagedAttention — page-numbered shelves instead of one long plank</h2>
-  <div class="pageno">M3·16</div>
+  <div class="pageno">M3·18</div>
 </section>
 
 <!-- ============ SLIDE 10 — PAGEDATTENTION (scene) ============ -->
@@ -531,7 +567,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="230" y="316" width="640" height="40" rx="10"/></g>
     <text x="550" y="343" text-anchor="middle" class="lbl-g">over-reserve + fragment = far fewer concurrent requests per box</text>
   </svg>
-  <div class="pageno">M3·17</div>
+  <div class="pageno">M3·19</div>
 </section>
 
 <!-- ============ SLIDE 10b — PAGEDATTENTION FIX (scene, split from 10) ============ -->
@@ -563,12 +599,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="316" text-anchor="middle" class="lbl-g">it's OS virtual-memory paging, applied to the cache —</text>
     <text x="550" y="338" text-anchor="middle" class="lbl-g" fill="#2e7d32">stop over-reserving · stop fragmenting = far more requests per box</text>
   </svg>
-  <div class="pageno">M3·18</div>
+  <div class="pageno">M3·20</div>
 </section>
 
 <section class="divider">
   <h2 class="t">6 · Prefix caching — don't re-read the same opening every time</h2>
-  <div class="pageno">M3·19</div>
+  <div class="pageno">M3·21</div>
 </section>
 
 <!-- ============ SLIDE 11 — PREFIX CACHING (2 fragments) ============ -->
@@ -607,12 +643,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="230" y="318" width="640" height="48" rx="10"/></g>
     <text x="550" y="348" text-anchor="middle" class="lbl-g">the response reports <tspan class="lbl-b">cached_tokens</tspan> — prefill you did not pay for</text>
   </svg>
-  <div class="pageno">M3·20</div>
+  <div class="pageno">M3·22</div>
 </section>
 
 <section class="divider">
   <h2 class="t">7 · The compose stack starts here</h2>
-  <div class="pageno">M3·21</div>
+  <div class="pageno">M3·23</div>
 </section>
 
 <!-- ============ SLIDE 12 — THE COMPOSE SPINE ============ -->
@@ -634,7 +670,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="120" y="278" width="860" height="46" rx="10"/></g>
     <text x="550" y="307" text-anchor="middle" class="lbl-g">one service now → grows one per module → full system (M13) · make up / make down carry the whole way</text>
   </svg>
-  <div class="pageno">M3·22</div>
+  <div class="pageno">M3·24</div>
 </section>
 
 <!-- ============ SLIDE 13 — READING /metrics ============ -->
@@ -660,12 +696,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- tag -->
     <text x="550" y="298" text-anchor="middle" class="lbl-g">11 llamacpp:* families exposed (measured on the real llama-server)</text>
   </svg>
-  <div class="pageno">M3·23</div>
+  <div class="pageno">M3·25</div>
 </section>
 
 <section class="divider">
   <h2 class="t">8 · vLLM, positioned honestly</h2>
-  <div class="pageno">M3·24</div>
+  <div class="pageno">M3·26</div>
 </section>
 
 <!-- ============ SLIDE 14 — HONEST CROSS-ARCH VERDICT ============ -->
@@ -699,7 +735,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="210" y="290" width="680" height="44" rx="10"/></g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">a CPU image being present for your arch ≠ it works on your host</text>
   </svg>
-  <div class="pageno">M3·25</div>
+  <div class="pageno">M3·27</div>
 </section>
 
 <!-- ============ SLIDE 15 — CLOSING: THREE DECISIONS ============ -->
@@ -727,7 +763,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="560" y="272" class="lbl-g" text-anchor="start">one /v1 API — swap engines under an unchanged client</text>
   </svg>
   <p class="credit">Now open <b>Module 3 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M3·26</div>
+  <div class="pageno">M3·28</div>
 </section>
 
 </div></div>

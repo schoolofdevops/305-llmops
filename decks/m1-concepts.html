@@ -1528,43 +1528,153 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">The rough work takes space — that space is capacity</h2>
-  <p class="s">Weights take a fixed chunk; what's left is the KV budget each request eats.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="A box's total memory is split into a fixed model-weights block and a KV budget block; a formula reads per-token cost times tokens times concurrent equals KV memory, and the KV budget divided by one request equals the number of users that fit.">
-    <!-- outer box memory -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="60" y="70" width="440" height="240" rx="12"/>
+  <h2 class="t">The KV cache grows one fixed step per token</h2>
+  <p class="s">Every new token adds one more fixed-size block, and it stays.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="The KV cache grows by one fixed-size block for every token in the request, prompt and answer together, and every block stays in memory for as long as the request is being processed.">
+    <text x="550" y="70" text-anchor="middle" class="lbl-b" style="font-size:20px">the rough work takes space, right?</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="60" y="130" width="980" height="120" rx="12"/>
     </g>
-    <text x="280" y="102" text-anchor="middle" class="lbl-b">one box · total memory</text>
-    <!-- weights block (fixed) — set once, the fixed occupancy (purple) -->
-    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="90" y="120" width="380" height="70" rx="8"/>
+    <text x="550" y="164" text-anchor="middle" class="lbl-g">one request's KV cache</text>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="90" y="184" width="90" height="50" rx="7"/>
+      </g>
+      <text x="135" y="215" text-anchor="middle" class="lbl-sm">tok</text>
     </g>
-    <text x="280" y="152" text-anchor="middle" class="lbl">model weights</text>
-    <text x="280" y="180" text-anchor="middle" class="lbl-g">fixed — set once</text>
-    <!-- KV budget block — the usable capacity that's left (green) -->
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="90" y="205" width="380" height="85" rx="8"/>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="196" y="184" width="90" height="50" rx="7"/>
+      </g>
+      <text x="241" y="215" text-anchor="middle" class="lbl-sm">tok</text>
     </g>
-    <text x="280" y="240" text-anchor="middle" class="lbl-b">KV budget</text>
-    <text x="280" y="270" text-anchor="middle" class="lbl-g">whatever is left — fills per request</text>
-    <!-- formula band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="560" y="110" width="480" height="80" rx="10"/>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="302" y="184" width="90" height="50" rx="7"/>
+      </g>
+      <text x="347" y="215" text-anchor="middle" class="lbl-sm">tok</text>
     </g>
-    <text x="800" y="145" text-anchor="middle" class="lbl-b">per-token cost × tokens ×</text>
-    <text x="800" y="176" text-anchor="middle" class="lbl-b">concurrent = KV memory</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M800,192 L800,222" marker-end="url(#ahg)"/>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="408" y="184" width="90" height="50" rx="7"/>
+      </g>
+      <text x="453" y="215" text-anchor="middle" class="lbl-sm">tok</text>
     </g>
-    <!-- capacity answer band — the users-that-fit payoff (green) -->
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
-      <rect x="560" y="230" width="480" height="80" rx="10"/>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 6">
+        <rect x="514" y="184" width="90" height="50" rx="7"/>
+      </g>
+      <text x="559" y="215" text-anchor="middle" class="lbl-sm">…</text>
+      <text x="550" y="286" text-anchor="middle" class="lbl-g" style="font-size:19px">a fixed amount, for every token — prompt and answer, together</text>
     </g>
-    <text x="800" y="265" text-anchor="middle" class="lbl-b">KV budget ÷ one request</text>
-    <text x="800" y="296" text-anchor="middle" class="lbl">= users that fit at once</text>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="336" width="820" height="42" rx="10"/>
+    </g>
+    <text x="550" y="363" text-anchor="middle" class="lbl-g">and every block stays in memory for as long as the request is being processed</text>
   </svg>
   <div class="pageno">M1·26</div>
+</section>
+
+<section>
+  <h2 class="t">Three numbers multiply into one memory number</h2>
+  <p class="s">Per-token cost × tokens in the request × concurrent requests.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Per-token cost, a number you look up, times the tokens in one request equals the memory that one request holds; times the number of concurrent requests equals the total KV memory.">
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="50" y="80" width="260" height="90" rx="10"/>
+      </g>
+      <text x="180" y="120" text-anchor="middle" class="lbl-b">per-token cost</text>
+      <text x="180" y="150" text-anchor="middle" class="lbl-sm">set by the model — look it up</text>
+    </g>
+
+    <g class="fragment">
+      <text x="332" y="135" text-anchor="middle" class="lbl-b" style="font-size:28px">×</text>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="360" y="80" width="260" height="90" rx="10"/>
+      </g>
+      <text x="490" y="120" text-anchor="middle" class="lbl-b">tokens in the request</text>
+      <text x="490" y="150" text-anchor="middle" class="lbl-sm">prompt + answer, together</text>
+      <text x="672" y="135" text-anchor="middle" class="lbl-b" style="font-size:24px">=</text>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 5">
+        <rect x="700" y="80" width="330" height="90" rx="10"/>
+      </g>
+      <text x="865" y="120" text-anchor="middle" class="lbl-b">memory for ONE request</text>
+    </g>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+        <path d="M865,170 L865,222" marker-end="url(#ahg)"/>
+      </g>
+      <text x="500" y="260" text-anchor="middle" class="lbl-b" style="font-size:20px">× concurrent requests you want to run at once</text>
+    </g>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
+        <rect x="180" y="286" width="740" height="80" rx="10"/>
+      </g>
+      <text x="550" y="322" text-anchor="middle" class="lbl-b" style="font-size:22px">per-token cost × tokens × concurrent</text>
+      <text x="550" y="352" text-anchor="middle" class="lbl-b" style="font-size:22px">= total KV memory</text>
+    </g>
+  </svg>
+  <div class="pageno">M1·27</div>
+</section>
+
+<section>
+  <h2 class="t">Weights take their share; whatever's left is yours</h2>
+  <p class="s">Budget ÷ one request's cost = how many users fit.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A box's total memory splits into a fixed model-weights block and a leftover KV budget block; the KV budget divided by the cost of one request equals the number of users that fit at once.">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="60" y="60" width="440" height="270" rx="12"/>
+    </g>
+    <text x="280" y="92" text-anchor="middle" class="lbl-b">one box · total memory</text>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="90" y="112" width="380" height="80" rx="8"/>
+      </g>
+      <text x="280" y="147" text-anchor="middle" class="lbl">model weights</text>
+      <text x="280" y="176" text-anchor="middle" class="lbl-g">fixed chunk — set once</text>
+    </g>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+        <rect x="90" y="204" width="380" height="106" rx="8"/>
+      </g>
+      <text x="280" y="245" text-anchor="middle" class="lbl-b">KV budget</text>
+      <text x="280" y="275" text-anchor="middle" class="lbl-g">whatever is left over</text>
+      <text x="280" y="300" text-anchor="middle" class="lbl-sm">this is the third question from the start of the module</text>
+    </g>
+
+    <g class="fragment">
+      <text x="580" y="140" text-anchor="middle" class="lbl-b" style="font-size:22px">how many users fit into one box?</text>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="560" y="170" width="480" height="80" rx="10"/>
+      </g>
+      <text x="800" y="205" text-anchor="middle" class="lbl-b">KV budget ÷ cost of</text>
+      <text x="800" y="235" text-anchor="middle" class="lbl-b">one user's request</text>
+    </g>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+        <path d="M800,250 L800,272" marker-end="url(#ah)"/>
+      </g>
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
+        <rect x="560" y="282" width="480" height="66" rx="10"/>
+      </g>
+      <text x="800" y="322" text-anchor="middle" class="lbl-b" style="font-size:20px">= users that fit at once</text>
+    </g>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="356" width="820" height="34" rx="10"/>
+    </g>
+    <text x="550" y="378" text-anchor="middle" class="lbl-g">not a guess — an actual calculation, on paper, before you provision anything</text>
+  </svg>
+  <div class="pageno">M1·28</div>
 </section>
 
 <section>
@@ -1620,7 +1730,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
     <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
   </svg>
-  <div class="pageno">M1·27</div>
+  <div class="pageno">M1·29</div>
 </section>
 
 <section>
@@ -1661,7 +1771,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the kind of request — not by "the model"</text>
   </svg>
-  <div class="pageno">M1·28</div>
+  <div class="pageno">M1·30</div>
 </section>
 
 <section>
@@ -1695,7 +1805,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 1 · Lab</b> — you'll measure the split and print the KV table on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M1·29</div>
+  <div class="pageno">M1·31</div>
 </section>
 
 </div></div>

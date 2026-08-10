@@ -973,6 +973,66 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
+  <h2 class="t">Two hundred tokens, two hundred trips round this loop</h2>
+  <p class="s">Every predicted token means re-reading everything before it.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A predict-append-loop-back cycle repeats, counting up to two hundred trips for a two hundred token answer, each trip re-reading everything before it, which is where the runtime cost lives.">
+    <!-- journey strip: model lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="315" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
+
+    <!-- the loop: predict -> append -> loop back -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="220" y="140" width="230" height="90" rx="12"/>
+    </g>
+    <text x="335" y="192" text-anchor="middle" class="lbl-b">predict next token</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M452,185 L520,185" marker-end="url(#ah)"/>
+    </g>
+
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="530" y="140" width="230" height="90" rx="12"/>
+    </g>
+    <text x="645" y="192" text-anchor="middle" class="lbl-b">append it</text>
+
+    <!-- loop back arrow -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7" stroke-linecap="round">
+      <path d="M645,232 C 645,300 335,300 335,232" marker-end="url(#ahg)"/>
+    </g>
+    <text x="490" y="290" text-anchor="middle" class="lbl-g">re-read everything so far, every single trip</text>
+
+    <!-- the ×200 count -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
+      <rect x="800" y="150" width="220" height="70" rx="10"/>
+    </g>
+    <text x="910" y="196" text-anchor="middle" class="lbl-b" style="font-size:26px">×200</text>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="336" width="820" height="42" rx="10"/>
+    </g>
+    <text x="550" y="363" text-anchor="middle" class="lbl-g">a 200-token answer is 200 trips round this loop — this is where the runtime cost lives</text>
+  </svg>
+  <div class="pageno">M1·16</div>
+</section>
+
+<section>
   <h2 class="t">Read everything at once, then write one piece at a time</h2>
   <p class="s">Read the whole prompt in one go, then write the answer piece by piece.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with model-reads and model-writes both lit. Two linked panels: phase one reads the prompt, all pieces in one go; phase two writes the answer, one piece at a time, streamed.">
@@ -1060,12 +1120,12 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="820" y="320" text-anchor="middle" class="lbl-g">one, then the next, then the next</text>
     </g>
   </svg>
-  <div class="pageno">M1·16</div>
+  <div class="pageno">M1·17</div>
 </section>
 
 <section class="divider">
   <h2 class="t">3 &middot; Prefill and decode &mdash; two very different phases</h2>
-  <div class="pageno">M1·17</div>
+  <div class="pageno">M1·18</div>
 </section>
 
 <section>
@@ -1151,7 +1211,7 @@ footer, header, hgroup, main, menu, nav, section {
       <line x1="710" y1="300" x2="980" y2="300"/>
     </g>
   </svg>
-  <div class="pageno">M1·18</div>
+  <div class="pageno">M1·19</div>
 </section>
 
 <section>
@@ -1193,7 +1253,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="378" text-anchor="middle" class="lbl-g">prefill is where TTFT comes from — the wait to your first word</text>
   </svg>
-  <div class="pageno">M1·19</div>
+  <div class="pageno">M1·20</div>
 </section>
 
 <section>
@@ -1264,7 +1324,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="363" text-anchor="middle" class="lbl-g">a longer prompt means a longer prefill — which means a longer wait before anything appears</text>
   </svg>
-  <div class="pageno">M1·20</div>
+  <div class="pageno">M1·21</div>
 </section>
 
 <section>
@@ -1325,7 +1385,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="378" text-anchor="middle" class="lbl-g">decode is where TPOT comes from — the steady pace after the first word</text>
   </svg>
-  <div class="pageno">M1·21</div>
+  <div class="pageno">M1·22</div>
 </section>
 
 <section>
@@ -1405,12 +1465,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="363" text-anchor="middle" class="lbl-g">a longer answer means more decode steps — which means a longer total time, even if TTFT was fast</text>
   </svg>
-  <div class="pageno">M1·22</div>
+  <div class="pageno">M1·23</div>
 </section>
 
 <section class="divider">
   <h2 class="t">4 &middot; The KV cache &mdash; the notes the model keeps so it never re-reads</h2>
-  <div class="pageno">M1·23</div>
+  <div class="pageno">M1·24</div>
 </section>
 
 <section>
@@ -1464,7 +1524,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="765" y="252" text-anchor="middle" class="lbl-b">KV cache</text>
     <text x="765" y="284" text-anchor="middle" class="lbl-g">the model's rough work — read, don't redo</text>
   </svg>
-  <div class="pageno">M1·24</div>
+  <div class="pageno">M1·25</div>
 </section>
 
 <section>
@@ -1504,7 +1564,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="265" text-anchor="middle" class="lbl-b">KV budget ÷ one request</text>
     <text x="800" y="296" text-anchor="middle" class="lbl">= users that fit at once</text>
   </svg>
-  <div class="pageno">M1·25</div>
+  <div class="pageno">M1·26</div>
 </section>
 
 <section>
@@ -1560,7 +1620,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
     <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
   </svg>
-  <div class="pageno">M1·26</div>
+  <div class="pageno">M1·27</div>
 </section>
 
 <section>
@@ -1601,7 +1661,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the kind of request — not by "the model"</text>
   </svg>
-  <div class="pageno">M1·27</div>
+  <div class="pageno">M1·28</div>
 </section>
 
 <section>
@@ -1635,7 +1695,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 1 · Lab</b> — you'll measure the split and print the KV table on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M1·28</div>
+  <div class="pageno">M1·29</div>
 </section>
 
 </div></div>

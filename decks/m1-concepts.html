@@ -839,6 +839,92 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
+  <h2 class="t">A token becomes numbers, then looks back for meaning</h2>
+  <p class="s">One token, in numbers — then a look back that resolves "it".</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. Two panels: left, the token pod becomes an embedding, a list of numbers; right, a word strip with the token it highlighted, a dashed arrow attending back to pod, resolving what it refers to.">
+    <!-- journey strip: model lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="315" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
+
+    <!-- LEFT: embedding example -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="50" y="94" width="470" height="236" rx="12"/>
+    </g>
+    <text x="285" y="128" text-anchor="middle" class="lbl-b">EMBEDDING</text>
+
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="90" y="150" width="120" height="56" rx="8"/>
+    </g>
+    <text x="150" y="184" text-anchor="middle" class="lbl-b">pod</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
+      <path d="M212,178 L252,178" marker-end="url(#ah)"/>
+    </g>
+
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8">
+      <rect x="262" y="156" width="58" height="44" rx="6"/>
+      <rect x="326" y="156" width="58" height="44" rx="6"/>
+      <rect x="390" y="156" width="58" height="44" rx="6"/>
+      <rect x="454" y="156" width="58" height="44" rx="6"/>
+    </g>
+    <g class="lbl-sm" text-anchor="middle">
+      <text x="291" y="183">0.42</text>
+      <text x="355" y="183">-.18</text>
+      <text x="419" y="183">0.91</text>
+      <text x="483" y="183">0.05</text>
+    </g>
+    <text x="285" y="238" text-anchor="middle" class="lbl-g">a list of numbers — a point in the model's meaning-space</text>
+    <text x="285" y="268" text-anchor="middle" class="lbl-g">similar tokens end up with similar numbers</text>
+    <text x="285" y="300" text-anchor="middle" class="lbl">every token gets one of these before anything else happens</text>
+
+    <!-- RIGHT: attention example -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="580" y="94" width="470" height="236" rx="12"/>
+    </g>
+    <text x="815" y="128" text-anchor="middle" class="lbl-b">ATTENTION</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2">
+      <rect x="600" y="150" width="110" height="50" rx="7"/>
+      <rect x="720" y="150" width="130" height="50" rx="7"/>
+      <rect x="860" y="150" width="150" height="50" rx="7"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="1020" y="150" width="90" height="50" rx="7"/>
+    </g>
+    <g class="lbl-sm" text-anchor="middle">
+      <text x="655" y="180">…pod</text>
+      <text x="785" y="180">crashed</text>
+      <text x="935" y="180">because</text>
+    </g>
+    <text x="1065" y="180" text-anchor="middle" class="lbl-b">it</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-dasharray="9 7" stroke-linecap="round">
+      <path d="M1030,196 C 900,260 700,260 655,202" marker-end="url(#ah)"/>
+    </g>
+    <text x="815" y="248" text-anchor="middle" class="lbl-g">"it" attends back — and finds "pod"</text>
+    <text x="815" y="280" text-anchor="middle" class="lbl-g">this is how the model tracks context across the whole answer</text>
+    <text x="815" y="310" text-anchor="middle" class="lbl">who does "it" refer to, ten tokens back? — attention answers this</text>
+  </svg>
+  <div class="pageno">M1·14</div>
+</section>
+
+<section>
   <h2 class="t">Read everything at once, then write one piece at a time</h2>
   <p class="s">Read the whole prompt in one go, then write the answer piece by piece.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with model-reads and model-writes both lit. Two linked panels: phase one reads the prompt, all pieces in one go; phase two writes the answer, one piece at a time, streamed.">
@@ -916,12 +1002,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="820" y="320" text-anchor="middle" class="lbl-g">one, then the next, then the next</text>
   </svg>
-  <div class="pageno">M1·14</div>
+  <div class="pageno">M1·15</div>
 </section>
 
 <section class="divider">
   <h2 class="t">3 &middot; Prefill and decode &mdash; two very different phases</h2>
-  <div class="pageno">M1·15</div>
+  <div class="pageno">M1·16</div>
 </section>
 
 <section>
@@ -995,7 +1081,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="845" y="358" text-anchor="middle" class="lbl-b">WRITE the answer — line by line</text>
   </svg>
-  <div class="pageno">M1·16</div>
+  <div class="pageno">M1·17</div>
 </section>
 
 <section>
@@ -1050,7 +1136,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="830" y="258" text-anchor="middle" class="lbl-g">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
   </svg>
-  <div class="pageno">M1·17</div>
+  <div class="pageno">M1·18</div>
 </section>
 
 <section>
@@ -1126,12 +1212,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="690" y="310" text-anchor="middle" class="lbl-b">TPOT</text>
     <text x="690" y="340" text-anchor="middle" class="lbl-g">= decode · the drip you watch · driven by answer length</text>
   </svg>
-  <div class="pageno">M1·18</div>
+  <div class="pageno">M1·19</div>
 </section>
 
 <section class="divider">
   <h2 class="t">4 &middot; The KV cache &mdash; the notes the model keeps so it never re-reads</h2>
-  <div class="pageno">M1·19</div>
+  <div class="pageno">M1·20</div>
 </section>
 
 <section>
@@ -1185,7 +1271,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="765" y="252" text-anchor="middle" class="lbl-b">KV cache</text>
     <text x="765" y="284" text-anchor="middle" class="lbl-g">the model's rough work — read, don't redo</text>
   </svg>
-  <div class="pageno">M1·20</div>
+  <div class="pageno">M1·21</div>
 </section>
 
 <section>
@@ -1225,7 +1311,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="265" text-anchor="middle" class="lbl-b">KV budget ÷ one request</text>
     <text x="800" y="296" text-anchor="middle" class="lbl">= users that fit at once</text>
   </svg>
-  <div class="pageno">M1·21</div>
+  <div class="pageno">M1·22</div>
 </section>
 
 <section>
@@ -1281,7 +1367,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
     <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
   </svg>
-  <div class="pageno">M1·22</div>
+  <div class="pageno">M1·23</div>
 </section>
 
 <section>
@@ -1322,7 +1408,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the kind of request — not by "the model"</text>
   </svg>
-  <div class="pageno">M1·23</div>
+  <div class="pageno">M1·24</div>
 </section>
 
 <section>
@@ -1356,7 +1442,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 1 · Lab</b> — you'll measure the split and print the KV table on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M1·24</div>
+  <div class="pageno">M1·25</div>
 </section>
 
 </div></div>

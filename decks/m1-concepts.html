@@ -496,9 +496,9 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">Three kinds of model — you use the writer</h2>
-  <p class="s">Three kinds exist; chat uses the one that just writes the next piece.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. Three stacked rows compare model kinds: encoder-only turns text into numbers for search, encoder-decoder transforms text into other text for translation, and decoder-only generates the next piece over and over for chat, boxed as you are here.">
+  <h2 class="t">Encoder-only reads and turns text into numbers</h2>
+  <p class="s">No writing here — just text becoming numbers you can search.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. Text in goes through an encoder and comes out the other side as a list of numbers you can search and compare, labelled embeddings, BERT, you meet these in Module 4.">
     <!-- journey strip: model lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
       <rect x="30"  y="16" width="150" height="48" rx="9"/>
@@ -519,29 +519,181 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
 
-    <!-- three rows -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <rect x="70" y="96" width="960" height="86" rx="10"/>
-      <rect x="70" y="196" width="960" height="86" rx="10"/>
-    </g>
-    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
-      <rect x="70" y="296" width="960" height="90" rx="10"/>
-    </g>
-    <!-- row 1: encoder-only -->
-    <text x="100" y="132" text-anchor="start" class="lbl-b">encoder-only</text>
-    <text x="100" y="164" text-anchor="start" class="lbl-g">reads text → numbers you can search &amp; compare · embeddings (BERT) · you meet these in M4</text>
-    <!-- row 2: encoder-decoder -->
-    <text x="100" y="232" text-anchor="start" class="lbl-b">encoder-decoder</text>
-    <text x="100" y="264" text-anchor="start" class="lbl-g">text in → other text out · translation is the textbook case (T5)</text>
-    <!-- row 3: decoder-only (you are here) -->
-    <text x="100" y="332" text-anchor="start" class="lbl-b">decoder-only</text>
-    <text x="100" y="364" text-anchor="start" class="lbl-g">just generates the next piece, over and over · every chat model, ChatGPT included</text>
+    <!-- kind tag -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
-      <rect x="840" y="308" width="170" height="66" rx="10"/>
+      <rect x="440" y="94" width="220" height="46" rx="9"/>
     </g>
-    <text x="925" y="348" text-anchor="middle" class="lbl-b">you are here</text>
+    <text x="550" y="123" text-anchor="middle" class="lbl-b">kind 1 · encoder-only</text>
+
+    <!-- pipeline: text -> encoder -> numbers -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
+      <rect x="50" y="176" width="220" height="96" rx="10"/>
+    </g>
+    <text x="160" y="220" text-anchor="middle" class="lbl-b">text in</text>
+    <text x="160" y="248" text-anchor="middle" class="lbl-g">a sentence</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M272,224 L336,224" marker-end="url(#ah)"/>
+    </g>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="346" y="166" width="260" height="116" rx="12"/>
+    </g>
+    <text x="476" y="216" text-anchor="middle" class="lbl-b">encoder</text>
+    <text x="476" y="246" text-anchor="middle" class="lbl-g">reads it all, once</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M608,224 L672,224" marker-end="url(#ah)"/>
+    </g>
+
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
+      <rect x="682" y="176" width="368" height="96" rx="10"/>
+    </g>
+    <text x="866" y="212" text-anchor="middle" class="lbl-b">numbers</text>
+    <text x="866" y="240" text-anchor="middle" class="lbl-g">a vector you can search &amp; compare</text>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="316" width="820" height="46" rx="10"/>
+    </g>
+    <text x="550" y="344" text-anchor="middle" class="lbl-g">no generation, no reply — the classic example is BERT · these are the embedding models you meet in Module 4</text>
   </svg>
   <div class="pageno">M1·09</div>
+</section>
+
+<section>
+  <h2 class="t">Encoder-decoder reads one language, writes another</h2>
+  <p class="s">Read the whole input, then generate a different kind of output.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. English text in goes through an encoder, then a decoder, and comes out the other side as French text out, labelled translation, T5.">
+    <!-- journey strip: model lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="315" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
+
+    <!-- kind tag -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
+      <rect x="410" y="94" width="280" height="46" rx="9"/>
+    </g>
+    <text x="550" y="123" text-anchor="middle" class="lbl-b">kind 2 · encoder-decoder</text>
+
+    <!-- pipeline: english in -> encoder -> decoder -> french out -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="20" y="182" width="200" height="86" rx="9"/>
+    </g>
+    <text x="120" y="220" text-anchor="middle" class="lbl-b">English in</text>
+    <text x="120" y="246" text-anchor="middle" class="lbl-g">whole sentence</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M222,225 L266,225" marker-end="url(#ah)"/>
+    </g>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="276" y="172" width="230" height="106" rx="10"/>
+    </g>
+    <text x="391" y="218" text-anchor="middle" class="lbl-b">encoder</text>
+    <text x="391" y="246" text-anchor="middle" class="lbl-g">reads it all</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M508,225 L552,225" marker-end="url(#ah)"/>
+    </g>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="562" y="172" width="230" height="106" rx="10"/>
+    </g>
+    <text x="677" y="218" text-anchor="middle" class="lbl-b">decoder</text>
+    <text x="677" y="246" text-anchor="middle" class="lbl-g">writes new text</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M794,225 L838,225" marker-end="url(#ah)"/>
+    </g>
+
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="848" y="182" width="202" height="86" rx="9"/>
+    </g>
+    <text x="949" y="220" text-anchor="middle" class="lbl-b">French out</text>
+    <text x="949" y="246" text-anchor="middle" class="lbl-g">a different text</text>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="316" width="820" height="46" rx="10"/>
+    </g>
+    <text x="550" y="344" text-anchor="middle" class="lbl-g">translation is the textbook case — read one piece of text, transform it into another · T5 is the classic example</text>
+  </svg>
+  <div class="pageno">M1·10</div>
+</section>
+
+<section>
+  <h2 class="t">Decoder-only just keeps generating the next piece</h2>
+  <p class="s">Every chat model works this way — ChatGPT included.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. A decoder-only box, marked you are here, feeds its own next token back into itself in a loop, over and over, labelled every chat model including ChatGPT.">
+    <!-- journey strip: model lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="315" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
+
+    <!-- kind tag -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
+      <rect x="420" y="94" width="260" height="46" rx="9"/>
+    </g>
+    <text x="550" y="123" text-anchor="middle" class="lbl-b">kind 3 · decoder-only</text>
+
+    <!-- the big box, purple = the chosen kind -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
+      <rect x="390" y="168" width="320" height="118" rx="14"/>
+    </g>
+    <text x="550" y="220" text-anchor="middle" class="lbl-b" style="font-size:20px">decoder-only</text>
+    <text x="550" y="252" text-anchor="middle" class="lbl-g">predicts the next piece, over and over</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 5">
+      <rect x="420" y="296" width="260" height="42" rx="9"/>
+    </g>
+    <text x="550" y="323" text-anchor="middle" class="lbl-b">you are here</text>
+
+    <!-- self-loop arrow: output feeds back in -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7" stroke-linecap="round">
+      <path d="M710,200 C 830,180 830,290 712,272" marker-end="url(#ahg)"/>
+    </g>
+    <text x="850" y="235" text-anchor="middle" class="lbl-g">next</text>
+    <text x="850" y="256" text-anchor="middle" class="lbl-g">→ next</text>
+    <text x="850" y="277" text-anchor="middle" class="lbl-g">→ next…</text>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="352" width="820" height="42" rx="10"/>
+    </g>
+    <text x="550" y="379" text-anchor="middle" class="lbl-g">this is every chat model you've ever used — and the kind this course builds from here on</text>
+  </svg>
+  <div class="pageno">M1·11</div>
 </section>
 
 <section>
@@ -611,7 +763,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="560" y="332" text-anchor="middle" class="lbl-g">append, then loop again — autoregressive, always looking back</text>
     </g>
   </svg>
-  <div class="pageno">M1·10</div>
+  <div class="pageno">M1·12</div>
 </section>
 
 <section>
@@ -677,7 +829,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="600" y="322" text-anchor="middle" class="lbl-g">re-read the whole line — now including the word just said</text>
   </svg>
-  <div class="pageno">M1·11</div>
+  <div class="pageno">M1·13</div>
 </section>
 
 <section>
@@ -758,12 +910,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="820" y="320" text-anchor="middle" class="lbl-g">one, then the next, then the next</text>
   </svg>
-  <div class="pageno">M1·12</div>
+  <div class="pageno">M1·14</div>
 </section>
 
 <section class="divider">
   <h2 class="t">3 &middot; Prefill and decode &mdash; two very different phases</h2>
-  <div class="pageno">M1·13</div>
+  <div class="pageno">M1·15</div>
 </section>
 
 <section>
@@ -837,7 +989,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="845" y="358" text-anchor="middle" class="lbl-b">WRITE the answer — line by line</text>
   </svg>
-  <div class="pageno">M1·14</div>
+  <div class="pageno">M1·16</div>
 </section>
 
 <section>
@@ -892,7 +1044,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="830" y="258" text-anchor="middle" class="lbl-g">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
   </svg>
-  <div class="pageno">M1·15</div>
+  <div class="pageno">M1·17</div>
 </section>
 
 <section>
@@ -968,12 +1120,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="690" y="310" text-anchor="middle" class="lbl-b">TPOT</text>
     <text x="690" y="340" text-anchor="middle" class="lbl-g">= decode · the drip you watch · driven by answer length</text>
   </svg>
-  <div class="pageno">M1·16</div>
+  <div class="pageno">M1·18</div>
 </section>
 
 <section class="divider">
   <h2 class="t">4 &middot; The KV cache &mdash; the notes the model keeps so it never re-reads</h2>
-  <div class="pageno">M1·17</div>
+  <div class="pageno">M1·19</div>
 </section>
 
 <section>
@@ -1027,7 +1179,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="765" y="252" text-anchor="middle" class="lbl-b">KV cache</text>
     <text x="765" y="284" text-anchor="middle" class="lbl-g">the model's rough work — read, don't redo</text>
   </svg>
-  <div class="pageno">M1·18</div>
+  <div class="pageno">M1·20</div>
 </section>
 
 <section>
@@ -1067,7 +1219,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="265" text-anchor="middle" class="lbl-b">KV budget ÷ one request</text>
     <text x="800" y="296" text-anchor="middle" class="lbl">= users that fit at once</text>
   </svg>
-  <div class="pageno">M1·19</div>
+  <div class="pageno">M1·21</div>
 </section>
 
 <section>
@@ -1123,7 +1275,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
     <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
   </svg>
-  <div class="pageno">M1·20</div>
+  <div class="pageno">M1·22</div>
 </section>
 
 <section>
@@ -1164,7 +1316,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the kind of request — not by "the model"</text>
   </svg>
-  <div class="pageno">M1·21</div>
+  <div class="pageno">M1·23</div>
 </section>
 
 <section>
@@ -1198,7 +1350,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 1 · Lab</b> — you'll measure the split and print the KV table on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M1·22</div>
+  <div class="pageno">M1·24</div>
 </section>
 
 </div></div>

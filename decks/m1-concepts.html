@@ -1567,7 +1567,7 @@ footer, header, hgroup, main, menu, nav, section {
         <rect x="514" y="184" width="90" height="50" rx="7"/>
       </g>
       <text x="559" y="215" text-anchor="middle" class="lbl-sm">…</text>
-      <text x="550" y="286" text-anchor="middle" class="lbl-g" style="font-size:19px">a fixed amount, for every token — prompt and answer, together</text>
+      <text x="550" y="286" text-anchor="middle" class="lbl-g" style="font-size:19px">each block ≈ 112 KiB, on the course model — Qwen3-0.6B, FP16 KV</text>
     </g>
 
     <!-- payoff band -->
@@ -1580,15 +1580,15 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">Three numbers multiply into one memory number</h2>
-  <p class="s">Per-token cost × tokens in the request × concurrent requests.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="Per-token cost, a number you look up, times the tokens in one request equals the memory that one request holds; times the number of concurrent requests equals the total KV memory.">
+  <h2 class="t">112 KiB, times 8,192 tokens, times 10 users</h2>
+  <p class="s">Three numbers you look up or choose — multiplied.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A worked example: 112 kibibytes per token, times an 8192-token request, equals 896 mebibytes for one request; times 10 concurrent requests equals 8.75 gibibytes of total KV memory.">
     <g class="fragment">
       <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6">
         <rect x="50" y="80" width="260" height="90" rx="10"/>
       </g>
-      <text x="180" y="120" text-anchor="middle" class="lbl-b">per-token cost</text>
-      <text x="180" y="150" text-anchor="middle" class="lbl-sm">set by the model — look it up</text>
+      <text x="180" y="115" text-anchor="middle" class="lbl-b" style="font-size:22px">112 KiB</text>
+      <text x="180" y="145" text-anchor="middle" class="lbl-sm">per token — this model, look it up</text>
     </g>
 
     <g class="fragment">
@@ -1596,76 +1596,76 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
         <rect x="360" y="80" width="260" height="90" rx="10"/>
       </g>
-      <text x="490" y="120" text-anchor="middle" class="lbl-b">tokens in the request</text>
-      <text x="490" y="150" text-anchor="middle" class="lbl-sm">prompt + answer, together</text>
+      <text x="490" y="115" text-anchor="middle" class="lbl-b" style="font-size:22px">8,192 tokens</text>
+      <text x="490" y="145" text-anchor="middle" class="lbl-sm">one long request — prompt + answer</text>
       <text x="672" y="135" text-anchor="middle" class="lbl-b" style="font-size:24px">=</text>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 5">
         <rect x="700" y="80" width="330" height="90" rx="10"/>
       </g>
-      <text x="865" y="120" text-anchor="middle" class="lbl-b">memory for ONE request</text>
+      <text x="865" y="120" text-anchor="middle" class="lbl-b" style="font-size:22px">896 MiB</text>
+      <text x="865" y="150" text-anchor="middle" class="lbl-sm">for that ONE request</text>
     </g>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
         <path d="M865,170 L865,222" marker-end="url(#ahg)"/>
       </g>
-      <text x="500" y="260" text-anchor="middle" class="lbl-b" style="font-size:20px">× concurrent requests you want to run at once</text>
+      <text x="500" y="260" text-anchor="middle" class="lbl-b" style="font-size:20px">× 10 users, all connected at once</text>
     </g>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
         <rect x="180" y="286" width="740" height="80" rx="10"/>
       </g>
-      <text x="550" y="322" text-anchor="middle" class="lbl-b" style="font-size:22px">per-token cost × tokens × concurrent</text>
-      <text x="550" y="352" text-anchor="middle" class="lbl-b" style="font-size:22px">= total KV memory</text>
+      <text x="550" y="322" text-anchor="middle" class="lbl-b" style="font-size:24px">112 KiB × 8,192 × 10</text>
+      <text x="550" y="352" text-anchor="middle" class="lbl-b" style="font-size:24px">= 8.75 GiB of KV memory</text>
     </g>
   </svg>
   <div class="pageno">M1·27</div>
 </section>
 
 <section>
-  <h2 class="t">Weights take their share; whatever's left is yours</h2>
-  <p class="s">Budget ÷ one request's cost = how many users fit.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="A box's total memory splits into a fixed model-weights block and a leftover KV budget block; the KV budget divided by the cost of one request equals the number of users that fit at once.">
+  <h2 class="t">A 16 GB box, 1.2 GB of weights — how many users fit?</h2>
+  <p class="s">Whatever's left over, divided by one request's cost.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A 16 gibibyte box holds 1.2 gibibytes of fixed model weights, leaving about 14.8 gibibytes of KV budget; divided by 896 mebibytes for one 8192-token request, about 16 users fit at once.">
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="60" y="60" width="440" height="270" rx="12"/>
     </g>
-    <text x="280" y="92" text-anchor="middle" class="lbl-b">one box · total memory</text>
+    <text x="280" y="92" text-anchor="middle" class="lbl-b">one box · 16 GB total</text>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="90" y="112" width="380" height="80" rx="8"/>
+        <rect x="90" y="112" width="380" height="60" rx="8"/>
       </g>
-      <text x="280" y="147" text-anchor="middle" class="lbl">model weights</text>
-      <text x="280" y="176" text-anchor="middle" class="lbl-g">fixed chunk — set once</text>
+      <text x="280" y="147" text-anchor="middle" class="lbl">weights ≈ 1.2 GB</text>
     </g>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-        <rect x="90" y="204" width="380" height="106" rx="8"/>
+        <rect x="90" y="184" width="380" height="126" rx="8"/>
       </g>
-      <text x="280" y="245" text-anchor="middle" class="lbl-b">KV budget</text>
-      <text x="280" y="275" text-anchor="middle" class="lbl-g">whatever is left over</text>
-      <text x="280" y="300" text-anchor="middle" class="lbl-sm">this is the third question from the start of the module</text>
+      <text x="280" y="222" text-anchor="middle" class="lbl-b">KV budget ≈ 14.8 GB</text>
+      <text x="280" y="250" text-anchor="middle" class="lbl-g">whatever is left over</text>
+      <text x="280" y="278" text-anchor="middle" class="lbl-sm">the third question from the start of the module</text>
     </g>
 
     <g class="fragment">
-      <text x="580" y="140" text-anchor="middle" class="lbl-b" style="font-size:22px">how many users fit into one box?</text>
+      <text x="580" y="130" text-anchor="middle" class="lbl-b" style="font-size:20px">how many users fit into this box?</text>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="560" y="170" width="480" height="80" rx="10"/>
+        <rect x="560" y="160" width="480" height="80" rx="10"/>
       </g>
-      <text x="800" y="205" text-anchor="middle" class="lbl-b">KV budget ÷ cost of</text>
-      <text x="800" y="235" text-anchor="middle" class="lbl-b">one user's request</text>
+      <text x="800" y="196" text-anchor="middle" class="lbl-b" style="font-size:20px">14.8 GB ÷ 896 MiB</text>
+      <text x="800" y="226" text-anchor="middle" class="lbl-sm">budget ÷ one 8k-token request</text>
     </g>
 
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-        <path d="M800,250 L800,272" marker-end="url(#ah)"/>
+        <path d="M800,240 L800,262" marker-end="url(#ah)"/>
       </g>
       <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
-        <rect x="560" y="282" width="480" height="66" rx="10"/>
+        <rect x="560" y="272" width="480" height="66" rx="10"/>
       </g>
-      <text x="800" y="322" text-anchor="middle" class="lbl-b" style="font-size:20px">= users that fit at once</text>
+      <text x="800" y="312" text-anchor="middle" class="lbl-b" style="font-size:22px">≈ 16 users fit at once</text>
     </g>
 
     <!-- payoff band -->

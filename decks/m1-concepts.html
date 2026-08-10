@@ -1197,67 +1197,6 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">Decode writes your answer one token at a time</h2>
-  <p class="s">Each token depends on the one before it — memory-bandwidth-bound.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="Decode emits tokens one after another in a serial chain, revealed one token at a time, memory-bandwidth-bound, which is where TPOT comes from.">
-    <!-- step tag -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
-      <rect x="420" y="30" width="260" height="46" rx="9"/>
-    </g>
-    <text x="550" y="59" text-anchor="middle" class="lbl-b">phase 2 · decode</text>
-
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="80" y="110" width="940" height="150" rx="12"/>
-    </g>
-    <text x="550" y="152" text-anchor="middle" class="lbl-b" style="font-size:22px">write the answer</text>
-
-    <!-- serial chain: token -> token -> token -> …, revealed one fragment per token -->
-    <g class="fragment">
-      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="130" y="186" width="130" height="56" rx="8"/>
-      </g>
-      <text x="195" y="221" text-anchor="middle" class="lbl-b">tok</text>
-    </g>
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M266,214 L326,214" marker-end="url(#ah)"/>
-      </g>
-      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="336" y="186" width="130" height="56" rx="8"/>
-      </g>
-      <text x="401" y="221" text-anchor="middle" class="lbl-b">tok</text>
-    </g>
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M472,214 L532,214" marker-end="url(#ah)"/>
-      </g>
-      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="542" y="186" width="130" height="56" rx="8"/>
-      </g>
-      <text x="607" y="221" text-anchor="middle" class="lbl-b">tok</text>
-    </g>
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M678,214 L738,214" marker-end="url(#ah)"/>
-      </g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 6">
-        <rect x="748" y="186" width="130" height="56" rx="8"/>
-      </g>
-      <text x="813" y="221" text-anchor="middle" class="lbl-sm">…</text>
-      <text x="550" y="300" text-anchor="middle" class="lbl-g" style="font-size:20px">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
-      <text x="550" y="332" text-anchor="middle" class="lbl-g">the limit here is moving weights + working notes through memory, every step</text>
-    </g>
-
-    <!-- payoff band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="140" y="356" width="820" height="34" rx="10"/>
-    </g>
-    <text x="550" y="378" text-anchor="middle" class="lbl-g">decode is where TPOT comes from — the steady pace after the first word</text>
-  </svg>
-  <div class="pageno">M1·20</div>
-</section>
-
-<section>
   <h2 class="t">TTFT — the wait before the first word</h2>
   <p class="s">The wait to the first word — set by your prompt length.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the streams-back stage lit. A large stopwatch marks the wait before the first reply chip appears, labelled TTFT, driven by prefill and prompt length.">
@@ -1324,6 +1263,67 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="140" y="336" width="820" height="42" rx="10"/>
     </g>
     <text x="550" y="363" text-anchor="middle" class="lbl-g">a longer prompt means a longer prefill — which means a longer wait before anything appears</text>
+  </svg>
+  <div class="pageno">M1·20</div>
+</section>
+
+<section>
+  <h2 class="t">Decode writes your answer one token at a time</h2>
+  <p class="s">Each token depends on the one before it — memory-bandwidth-bound.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Decode emits tokens one after another in a serial chain, revealed one token at a time, memory-bandwidth-bound, which is where TPOT comes from.">
+    <!-- step tag -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
+      <rect x="420" y="30" width="260" height="46" rx="9"/>
+    </g>
+    <text x="550" y="59" text-anchor="middle" class="lbl-b">phase 2 · decode</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="80" y="110" width="940" height="150" rx="12"/>
+    </g>
+    <text x="550" y="152" text-anchor="middle" class="lbl-b" style="font-size:22px">write the answer</text>
+
+    <!-- serial chain: token -> token -> token -> …, revealed one fragment per token -->
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="130" y="186" width="130" height="56" rx="8"/>
+      </g>
+      <text x="195" y="221" text-anchor="middle" class="lbl-b">tok</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+        <path d="M266,214 L326,214" marker-end="url(#ah)"/>
+      </g>
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="336" y="186" width="130" height="56" rx="8"/>
+      </g>
+      <text x="401" y="221" text-anchor="middle" class="lbl-b">tok</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+        <path d="M472,214 L532,214" marker-end="url(#ah)"/>
+      </g>
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="542" y="186" width="130" height="56" rx="8"/>
+      </g>
+      <text x="607" y="221" text-anchor="middle" class="lbl-b">tok</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+        <path d="M678,214 L738,214" marker-end="url(#ah)"/>
+      </g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 6">
+        <rect x="748" y="186" width="130" height="56" rx="8"/>
+      </g>
+      <text x="813" y="221" text-anchor="middle" class="lbl-sm">…</text>
+      <text x="550" y="300" text-anchor="middle" class="lbl-g" style="font-size:20px">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
+      <text x="550" y="332" text-anchor="middle" class="lbl-g">the limit here is moving weights + working notes through memory, every step</text>
+    </g>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="356" width="820" height="34" rx="10"/>
+    </g>
+    <text x="550" y="378" text-anchor="middle" class="lbl-g">decode is where TPOT comes from — the steady pace after the first word</text>
   </svg>
   <div class="pageno">M1·21</div>
 </section>

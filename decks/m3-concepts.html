@@ -92,7 +92,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -135,39 +136,8 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 3 &nbsp;·&nbsp; SERVING ENGINES — OLLAMA, LLAMA.CPP &amp; VLLM</p>
   <h2 class="t" style="font-size:2.1em">One model, many riders</h2>
   <p class="s" style="font-size:1.2em">One copy now has to answer many people — which engine makes it a shared service?</p>
-  <svg viewBox="0 0 1100 330" role="img" aria-label="One model box on the left fans out through a serving engine to many little user figures on the right. A gray footline names the three things the engine choice decides: cost per answer, latency under load, and whether it runs everywhere.">
-    <!-- the model (studied artefact = blue) -->
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
-      <rect x="60" y="112" width="200" height="96" rx="12"/>
-    </g>
-    <text x="160" y="152" text-anchor="middle" class="lbl-b">one model</text>
-    <text x="160" y="182" text-anchor="middle" class="lbl-g">the artefact (M2)</text>
-    <!-- serving engine hub (the control layer = purple) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
-      <path d="M262,160 L360,160" marker-end="url(#ah)"/>
-    </g>
-    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
-      <rect x="368" y="120" width="180" height="80" rx="12"/>
-    </g>
-    <text x="458" y="152" text-anchor="middle" class="lbl-b">serving engine</text>
-    <text x="458" y="182" text-anchor="middle" class="lbl-g">this module</text>
-    <!-- fan-out to many users -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M548,140 C640,120 700,96 780,90" marker-end="url(#ahg)"/>
-      <path d="M548,150 C640,150 700,150 780,150" marker-end="url(#ahg)"/>
-      <path d="M548,175 C640,190 700,214 780,220" marker-end="url(#ahg)"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
-      <circle cx="820" cy="86" r="15"/><circle cx="880" cy="86" r="15"/><circle cx="940" cy="86" r="15"/>
-      <circle cx="820" cy="150" r="15"/><circle cx="880" cy="150" r="15"/><circle cx="940" cy="150" r="15"/>
-      <circle cx="820" cy="216" r="15"/><circle cx="880" cy="216" r="15"/><circle cx="940" cy="216" r="15"/>
-    </g>
-    <text x="1010" y="156" text-anchor="middle" class="lbl-g">many<tspan x="1010" dy="24">users</tspan></text>
-    <!-- footline: three things it decides -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5">
-      <rect x="180" y="266" width="760" height="46" rx="10"/>
-    </g>
-    <text x="560" y="295" text-anchor="middle" class="lbl-g">the choice decides:&nbsp; $ per answer&nbsp; ·&nbsp; latency under load&nbsp; ·&nbsp; runs everywhere?</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A single glowing doorway with a fanned crowd of silhouette people converging toward it from all directions.">
+    <image href="../img/decks/m3/title-doorway-crowd.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M3·01</div>
@@ -175,60 +145,29 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">From One User to Many</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A lone silhouette figure repeats and grows into a dense crowd of silhouettes.">
+    <image href="../img/decks/m3/divider-0-intro-one-becomes-many.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3·02</div>
 </section>
 
 <section class="divider">
   <h2 class="t">1 · Why the engine is a real decision, not a default</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person stands before three unlabeled levers on a wall panel, hand hovering, deciding.">
+    <image href="../img/decks/m3/divider-1-levers.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3·03</div>
 </section>
 
-<!-- ============ SLIDE 2 — VEHICLE ANALOGY (scene) ============ -->
 <section>
   <h2 class="t">A scooter for one, a bus for a full load — ask what the trip is</h2>
   <p class="s">Like choosing a vehicle — you never ask which is "better", you ask the trip.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="On the left, a scooter with one rider over a small dollar mark, labelled one rider, cheap, instant. On the right, a bus full of little figures over a dollar-divided-by-many note, labelled a full load, cost per rider is tiny. A gray band reads: you don't ask which is better, you ask what the trip is.">
-    <!-- scooter: one rider -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <circle cx="140" cy="150" r="30"/>
-      <circle cx="300" cy="150" r="30"/>
-      <path d="M140,150 L215,150 L250,110 L300,150"/>
-      <circle cx="215" cy="86" r="16"/>
-      <path d="M215,102 L215,140"/>
-    </g>
-    <text x="220" y="212" text-anchor="middle" class="lbl-b">scooter · one rider</text>
-    <text x="220" y="242" text-anchor="middle" class="lbl-g">cheap · instant · no overhead</text>
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2.4"><rect x="188" y="262" width="64" height="40" rx="7"/></g>
-    <text x="220" y="290" text-anchor="middle" class="lbl-g">$</text>
-
-    <text x="550" y="150" text-anchor="middle" class="lbl-b">vs</text>
-
-    <!-- bus: full load (the other fit, not "better" = purple) -->
-    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
-      <rect x="660" y="80" width="320" height="120" rx="16"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <circle cx="730" cy="212" r="26"/>
-      <circle cx="910" cy="212" r="26"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
-      <circle cx="710" cy="130" r="14"/><circle cx="760" cy="130" r="14"/><circle cx="810" cy="130" r="14"/>
-      <circle cx="860" cy="130" r="14"/><circle cx="910" cy="130" r="14"/><circle cx="940" cy="130" r="14"/>
-    </g>
-    <text x="820" y="242" text-anchor="middle" class="lbl-b">bus · a full load</text>
-    <text x="820" y="272" text-anchor="middle" class="lbl-g">cost per rider is tiny — everyone rides together</text>
-    <g filter="url(#rough)" fill="#e1d5e7" stroke="#757575" stroke-width="2.4"><rect x="788" y="290" width="64" height="34" rx="7"/></g>
-    <text x="820" y="314" text-anchor="middle" class="lbl-g">$ ÷ many</text>
-
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
-      <rect x="260" y="322" width="360" height="34" rx="9"/>
-    </g>
-    <text x="440" y="345" text-anchor="middle" class="lbl-g">you ask what the trip is — not which is "better"</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A small scooter with one rider next to a full bus packed with many riders, side by side on a road.">
+    <image href="../img/decks/m3/analogy-scooter-bus.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M3·04</div>
 </section>
 
-<!-- ============ SLIDE 3 — THREE AXES ============ -->
 <section>
   <h2 class="t">Three questions decide the engine — fit, not best</h2>
   <p class="s">Answer these three before you pick — each is a fit, none has a "best".</p>
@@ -255,7 +194,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M3·05</div>
 </section>
 
-<!-- ============ SLIDE 4 — DECISION TREE ============ -->
 <section>
   <h2 class="t">Walk the tree — three questions in order pick the engine</h2>
   <p class="s">Walk the questions in order — dev or prod first, then CPU or GPU.</p>
@@ -294,10 +232,12 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">2 · The three engines, placed on those questions</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Three vehicles lined up for comparison: a small scooter, a van, and a large truck.">
+    <image href="../img/decks/m3/divider-2-three-vehicles.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3·07</div>
 </section>
 
-<!-- ============ SLIDE 5 — THREE ENGINES PLACED ============ -->
 <section>
   <h2 class="t">Ollama — pull, run, and you have a local server</h2>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Ollama, the dev-box engine. Two commands — ollama pull and ollama run — give you a model server in seconds. It has a friendly model library, runs native, and swaps models easily. Underneath it wraps llama.cpp, and it was never meant to be a production tier.">
@@ -359,7 +299,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M3·10</div>
 </section>
 
-<!-- ============ SLIDE 6 — ONE CONTRACT (hub-and-spoke) ============ -->
 <section>
   <h2 class="t">One contract — swap the engine under a client that never changes</h2>
   <p class="s">All three speak /v1 — so you swap engines without touching the client code.</p>
@@ -409,10 +348,12 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">3 · The Apple-Silicon pattern — why the Mac runs the model differently</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A laptop with a small closed door on its side; a floating key does not fit the lock.">
+    <image href="../img/decks/m3/divider-3-laptop-door-key.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3·12</div>
 </section>
 
-<!-- ============ SLIDE 7 — WHY A MAC CONTAINER IS CPU-ONLY (scene) ============ -->
 <section>
   <h2 class="t">On a Mac, a container can't see the GPU</h2>
   <p class="s">The GPU workshop opens only from inside — a container is the building next door.</p>
@@ -446,7 +387,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M3·13</div>
 </section>
 
-<!-- ============ SLIDE 8 — THE THREE PLACEMENTS (the rule) ============ -->
 <section>
   <h2 class="t">Native for Metal, container-CPU for portability, Linux-GPU for prod</h2>
   <p class="s">One placement rule, three settings — get it wrong and it dies in the cluster.</p>
@@ -481,73 +421,38 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">4 · Continuous batching — the lift that stops for every floor</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A cutaway of a multi-floor building showing an elevator shaft with the lift car mid-shaft between floors.">
+    <image href="../img/decks/m3/divider-4-elevator-lift.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3·15</div>
 </section>
 
-<!-- ============ SLIDE 9 — CONTINUOUS BATCHING (scene, 2 fragments) ============ -->
 <section>
   <h2 class="t">Static batching makes everyone wait for the fullest, slowest trip</h2>
   <p class="s">The old lift won't move till full, and won't stop till everyone's done.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="A static-batching lift, drawn large. The lift car is full with three riders, tagged won't move till full and won't stop till done. A queued rider is stuck outside in a dashed box tagged waits for the whole trip. A gray band reads: the engine runs one batch to completion before it starts the next — a late or short request waits for the whole thing.">
-    <!-- lift car full (rigid batch = red waste) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="120" y="46" width="500" height="256" rx="12"/></g>
-    <text x="370" y="84" text-anchor="middle" class="lbl-b">STATIC batching — one full trip, start to finish</text>
-    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8"><rect x="180" y="116" width="220" height="150" rx="8"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
-      <circle cx="240" cy="166" r="18"/><circle cx="340" cy="166" r="18"/><circle cx="290" cy="226" r="18"/>
-    </g>
-    <text x="290" y="292" text-anchor="middle" class="lbl-g">won't move till full · won't stop till done</text>
-    <!-- queued rider stuck outside (waiting = red) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="500" cy="160" r="18"/></g>
-    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="440" y="196" width="150" height="52" rx="9"/></g>
-    <text x="515" y="228" text-anchor="middle" class="lbl-g">waits for the whole trip</text>
-    <!-- reason band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="690" y="130" width="360" height="110" rx="12"/></g>
-    <text x="870" y="170" text-anchor="middle" class="lbl-b">the trap</text>
-    <text x="870" y="202" text-anchor="middle" class="lbl-g">a late arrival, or a short</text>
-    <text x="870" y="226" text-anchor="middle" class="lbl-g">request behind a long one —</text>
-    <text x="870" y="250" text-anchor="middle" class="lbl-g" fill="#c62828">both wait for the whole batch</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A packed elevator with its doors closed and full of riders, while one more rider waits outside with arms crossed.">
+    <image href="../img/decks/m3/analogy-static-lift.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M3·16</div>
 </section>
 
-<!-- ============ SLIDE 9b — CONTINUOUS BATCHING (scene, split from 9) ============ -->
 <section>
   <h2 class="t">Continuous batching lets riders join and leave at every floor</h2>
   <p class="s">A modern lift takes whoever's ready and drops whoever's arrived — always.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="A continuous-batching lift, drawn large. The car is mid-shaft with one rider, an arrow out to a rider who leaves and an arrow in from a rider who joins, tagged join and leave every step. A gray band reads: it keeps the engine busy and full with no batch boundary for anyone to wait behind — higher throughput and lower latency at once.">
-    <!-- lift car mid-shaft (busy & efficient = green) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="46" width="620" height="230" rx="12"/></g>
-    <text x="430" y="84" text-anchor="middle" class="lbl-b">CONTINUOUS batching — join &amp; leave mid-flight</text>
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8"><rect x="330" y="116" width="200" height="130" rx="8"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="430" cy="181" r="20"/></g>
-    <!-- one leaves -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M534,146 L620,146" marker-end="url(#ah)"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="655" cy="146" r="17"/></g>
-    <text x="660" y="120" text-anchor="middle" class="lbl-g">leaves</text>
-    <!-- one joins -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M620,220 L536,220" marker-end="url(#ah)"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="655" cy="220" r="17"/></g>
-    <text x="658" y="252" text-anchor="middle" class="lbl-g">joins</text>
-    <text x="430" y="270" text-anchor="middle" class="lbl-g">works one token-step across all active requests</text>
-    <!-- payoff card (green) -->
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6"><rect x="790" y="120" width="270" height="120" rx="12"/></g>
-    <text x="925" y="160" text-anchor="middle" class="lbl-b">why it wins</text>
-    <text x="925" y="192" text-anchor="middle" class="lbl-g" fill="#2e7d32">throughput UP</text>
-    <text x="925" y="220" text-anchor="middle" class="lbl-g" fill="#2e7d32">latency DOWN — at once</text>
-    <!-- reason band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="200" y="312" width="700" height="44" rx="10"/></g>
-    <text x="550" y="341" text-anchor="middle" class="lbl-g">keeps the engine busy &amp; full — no batch boundary for anyone to wait behind</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A modern elevator mid-motion with doors open, one rider stepping out while another steps in at the same moment.">
+    <image href="../img/decks/m3/analogy-continuous-lift.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M3·17</div>
 </section>
 
 <section class="divider">
   <h2 class="t">5 · PagedAttention — page-numbered shelves instead of one long plank</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A wall of small library storage cubbies, some filled and some empty.">
+    <image href="../img/decks/m3/divider-5-library-cubbies.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3·18</div>
 </section>
 
-<!-- ============ SLIDE 10 — PAGEDATTENTION (scene) ============ -->
 <section>
   <h2 class="t">One long shelf per reader wastes memory two ways at once</h2>
   <p class="s">Guess your max up front: reserve too much, and leave gaps no one can use.</p>
@@ -570,44 +475,23 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M3·19</div>
 </section>
 
-<!-- ============ SLIDE 10b — PAGEDATTENTION FIX (scene, split from 10) ============ -->
 <section>
   <h2 class="t">PagedAttention hands out numbered cubbies on demand</h2>
   <p class="s">Small blocks taken as you grow, a block table to find them, no guessing.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="PagedAttention, drawn large. A reader has scattered numbered cubbies three, seven and twelve holding blue KV blocks, with free green cubbies between them reusable by anyone, and a purple index card labelled block table listing which cubbies hold the tokens in order. A gray band reads: the cache is broken into small fixed-size blocks handed out on demand — like OS virtual-memory paging — so far more requests fit per box.">
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="46" width="860" height="200" rx="12"/></g>
-    <text x="550" y="84" text-anchor="middle" class="lbl-b">PagedAttention — small blocks on demand</text>
-    <!-- scattered numbered cubbies (in-use blocks = blue KV data) -->
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="180" y="120" width="70" height="70" rx="6"/>
-      <rect x="420" y="120" width="70" height="70" rx="6"/>
-      <rect x="660" y="120" width="70" height="70" rx="6"/>
-    </g>
-    <g class="lbl-b" text-anchor="middle"><text x="215" y="163">3</text><text x="455" y="163">7</text><text x="695" y="163">12</text></g>
-    <!-- free cubbies (reusable by anyone = green) -->
-    <g filter="url(#rough)" fill="#d5e8d4" stroke="#757575" stroke-width="2" stroke-dasharray="5 5">
-      <rect x="300" y="120" width="70" height="70" rx="6"/>
-      <rect x="540" y="120" width="70" height="70" rx="6"/>
-    </g>
-    <text x="455" y="222" text-anchor="middle" class="lbl-g">free blocks — reusable by anyone</text>
-    <!-- block table index card (the control structure = purple) -->
-    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6"><rect x="790" y="112" width="150" height="86" rx="8"/></g>
-    <text x="865" y="146" text-anchor="middle" class="lbl-b">block table</text>
-    <text x="865" y="176" text-anchor="middle" class="lbl-g">3 · 7 · 12 …in order</text>
-    <!-- reason band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="200" y="292" width="700" height="52" rx="10"/></g>
-    <text x="550" y="316" text-anchor="middle" class="lbl-g">it's OS virtual-memory paging, applied to the cache —</text>
-    <text x="550" y="338" text-anchor="middle" class="lbl-g" fill="#2e7d32">stop over-reserving · stop fragmenting = far more requests per box</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A librarian hands a numbered key to a visitor in front of a wall of numbered library storage cubbies.">
+    <image href="../img/decks/m3/analogy-library-cubbies.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M3·20</div>
 </section>
 
 <section class="divider">
   <h2 class="t">6 · Prefix caching — don't re-read the same opening every time</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand places a bookmark at the first page of an open book before flipping ahead.">
+    <image href="../img/decks/m3/divider-6-bookmark.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3·21</div>
 </section>
 
-<!-- ============ SLIDE 11 — PREFIX CACHING (2 fragments) ============ -->
 <section>
   <h2 class="t">Prefix caching — don't re-read the same opening every request</h2>
   <p class="s">Every request opens the same way — prefill that opening once, then reuse it.</p>
@@ -650,10 +534,12 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">7 · The compose stack starts here</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand writes on a blank sheet of paper that morphs into a small stack of connected building blocks.">
+    <image href="../img/decks/m3/divider-7-compose-stack.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3·23</div>
 </section>
 
-<!-- ============ SLIDE 12 — THE COMPOSE SPINE ============ -->
 <section>
   <h2 class="t">The stack stops being a command and becomes a file</h2>
   <p class="s">OpsMate is now a stack you bring up as a unit — one service today, on purpose.</p>
@@ -675,7 +561,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M3·24</div>
 </section>
 
-<!-- ============ SLIDE 13 — READING /metrics ============ -->
 <section>
   <h2 class="t">Read the engine's /metrics — queueing made visible</h2>
   <p class="s">Two metric families carry the story — the token meter and the live queue gauges.</p>
@@ -703,10 +588,12 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">8 · vLLM, positioned honestly</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A large plain industrial engine stands next to a small simple engine, both drawn honestly with no decoration.">
+    <image href="../img/decks/m3/divider-8-vllm-honest.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3·26</div>
 </section>
 
-<!-- ============ SLIDE 14 — HONEST CROSS-ARCH VERDICT ============ -->
 <section>
   <h2 class="t">The honest cross-arch verdict — one measured table</h2>
   <p class="s">What the M3 spike actually found on this course's Apple-Silicon host.</p>
@@ -740,7 +627,15 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M3·27</div>
 </section>
 
-<!-- ============ SLIDE 15 — CLOSING: THREE DECISIONS ============ -->
+<section>
+  <h2 class="t">Next: download, wire the compose block, swap one env var</h2>
+  <p class="s">Same client script, two engines — then a small load test to watch the queue.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A cable runs from a laptop and can plug into either of two different engine-shaped devices, with a small rising step-graph in the corner.">
+    <image href="../img/decks/m3/lab-bridge-engine-swap.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M3·28</div>
+</section>
+
 <section>
   <h2 class="t">The engine decision you can now defend</h2>
   <p class="s">Three things you carry into the lab and prove on your own machine.</p>
@@ -765,7 +660,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="560" y="272" class="lbl-g" text-anchor="start">one /v1 API — swap engines under an unchanged client</text>
   </svg>
   <p class="credit">Now open <b>Module 3 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M3·28</div>
+  <div class="pageno">M3·29</div>
 </section>
 
 </div></div>
@@ -804,7 +699,7 @@ footer, header, hgroup, main, menu, nav, section {
       if(!sec) return;
       var svg = sec.querySelector('svg');
       if(!svg) return;
-      var mh = 58;
+      var mh = sec.classList.contains('divider') ? 80 : 58;
       svg.style.maxHeight = mh + '%';
       var guard = 0;
       while (sec.scrollHeight > sec.clientHeight + 2 && mh > 18 && guard++ < 20){

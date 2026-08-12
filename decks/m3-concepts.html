@@ -657,8 +657,44 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Next: download, wire the compose block, swap one env var</h2>
   <p class="s">Same client script, two engines — then a small load test to watch the queue.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A cable runs from a laptop and can plug into either of two different engine-shaped devices, with a small rising step-graph in the corner.">
-    <image href="../img/decks/m3/lab-bridge-engine-swap.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <svg viewBox="0 0 940 260" role="img" aria-label="A row of five icons revealed one at a time: the compose service block is written by hand and the stack brought up; one script points at two engines with a single environment variable swap; the cached-tokens field shows prefix caching working; a small load test raises concurrency and the queue is watched building; and the X-Ray's new Engine lens shows the numbers moving live.">
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="40" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="60" y="55" width="70" height="60" rx="6"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.8"><path d="M74,72 L116,72"/><path d="M74,86 L108,86"/><path d="M74,100 L112,100"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M138,105 L108,150"/></g>
+      <text x="110" y="196" text-anchor="middle" class="lbl-b">write the block</text>
+      <text x="110" y="218" text-anchor="middle" class="lbl-sm">download, compose up</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="220" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="230" y="70" width="60" height="40" rx="8"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M296,90 L322,60" marker-end="url(#ahg)"/><path d="M296,90 L322,120" marker-end="url(#ah)"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><rect x="328" y="45" width="30" height="26" rx="4"/><rect x="328" y="107" width="30" height="26" rx="4"/></g>
+      <text x="290" y="196" text-anchor="middle" class="lbl-b">one env var</text>
+      <text x="290" y="218" text-anchor="middle" class="lbl-sm">same script, two engines</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="400" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="470" cy="85" r="30"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><path d="M470,85 L470,62"/><path d="M470,85 L488,95"/></g>
+      <text x="470" y="196" text-anchor="middle" class="lbl-b">cached tokens</text>
+      <text x="470" y="218" text-anchor="middle" class="lbl-sm">prefix caching, real</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="580" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2"><rect x="595" y="105" width="14" height="20"/><rect x="615" y="90" width="14" height="35"/><rect x="635" y="70" width="14" height="55"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.8"><circle cx="675" cy="70" r="8"/><circle cx="695" cy="70" r="8"/></g>
+      <text x="650" y="196" text-anchor="middle" class="lbl-b">load test</text>
+      <text x="650" y="218" text-anchor="middle" class="lbl-sm">watch the queue grow</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="760" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="830" cy="85" r="26"/><circle cx="830" cy="85" r="9"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.8"><circle cx="875" cy="60" r="10"/><path d="M875,52 L875,45 M875,75 L875,68 M867,60 L860,60 M890,60 L883,60"/></g>
+      <text x="830" y="196" text-anchor="middle" class="lbl-b">X-Ray, Engine</text>
+      <text x="830" y="218" text-anchor="middle" class="lbl-sm">numbers move, live</text>
+    </g>
   </svg>
   <div class="pageno">M3·29</div>
 </section>

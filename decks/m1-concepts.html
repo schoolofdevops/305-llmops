@@ -1585,8 +1585,46 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">No GPU, one laptop, two real measurements</h2>
   <p class="s">You will run both instrumented phases yourself, live.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A person works at a laptop showing two live dials, beside a crossed-out GPU tower, a sticky note reads 0.6B.">
-    <image href="../img/decks/m1/lab-bridge-no-gpu.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <svg viewBox="0 0 940 260" role="img" aria-label="A row of five icons revealed one at a time: the tokenizer runs live across English, Hindi, and code; one request goes through the OpenAI-compatible API; prefill and decode are timed as two separate instrumented runs; thinking mode's cost is measured; and the LLM Stack X-Ray watches a real request split into its two phases live.">
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="40" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="60" y="55" width="60" height="76" rx="6"/></g>
+      <text x="90" y="80" text-anchor="middle" class="lbl-sm">|||</text>
+      <text x="90" y="100" text-anchor="middle" class="lbl-sm">||</text>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><path class="f-blue" d="M135,70 a20,6 0 0 0 40,0 a20,6 0 0 0 -40,0 v40 a20,6 0 0 0 40,0 v-40"/></g>
+      <text x="110" y="196" text-anchor="middle" class="lbl-b">tokenizer, live</text>
+      <text x="110" y="218" text-anchor="middle" class="lbl-sm">count EN/HI/code</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="220" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6"><rect x="220" y="55" width="70" height="46" rx="10"/><path d="M235,101 L228,116 L250,101 Z"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M296,78 L324,78" marker-end="url(#ahg)"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="330" y="58" width="60" height="60" rx="8"/></g>
+      <text x="290" y="196" text-anchor="middle" class="lbl-b">one API call</text>
+      <text x="290" y="218" text-anchor="middle" class="lbl-sm">the /v1 contract</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="400" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="470" cy="85" r="30"/><path d="M470,85 L470,60" stroke-dasharray="0"/></g>
+      <path d="M470,55 A30,30 0 0 1 500,85" fill="#dae8fc" stroke="none"/>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.6" stroke-dasharray="2 3"><path d="M470,85 L440,85"/></g>
+      <text x="470" y="196" text-anchor="middle" class="lbl-b">prefill vs decode</text>
+      <text x="470" y="218" text-anchor="middle" class="lbl-sm">two timed runs</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="580" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><circle cx="650" cy="75" r="26"/><path d="M638,100 L662,100 L660,112 L640,112 Z"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="3 3"><rect x="690" y="60" width="30" height="24" rx="4"/></g>
+      <text x="650" y="196" text-anchor="middle" class="lbl-b">thinking mode</text>
+      <text x="650" y="218" text-anchor="middle" class="lbl-sm">the cost of it</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="760" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="830" cy="85" r="26"/><circle cx="830" cy="85" r="9"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.8"><path d="M868,70 Q878,85 868,100"/></g>
+      <text x="830" y="196" text-anchor="middle" class="lbl-b">X-Ray, live</text>
+      <text x="830" y="218" text-anchor="middle" class="lbl-sm">watch it split</text>
+    </g>
   </svg>
   <div class="pageno">M1·37</div>
 </section>

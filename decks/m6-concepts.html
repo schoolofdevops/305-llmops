@@ -100,7 +100,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -151,43 +152,8 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 6 &nbsp;·&nbsp; FINE-TUNING — SYNTHETIC DATA, LoRA &amp; QLoRA</p>
   <h2 class="t" style="font-size:1.55em">Retrieval got the facts right — this makes the model sound like your team</h2>
   <p class="s" style="font-size:1.15em">RAG fixed what the model knows — not how it writes. That's what we fix now.</p>
-  <svg viewBox="0 0 1100 330" role="img" aria-label="A RAG box feeds a model box with the right pages in front. The model emits two answers to the same question: the runbook's own phrasing, check db_pool_in_use and cancel the backend, tagged your voice; and the model's generic phrasing, you may want to investigate whether connections are held open, tagged generic-assistant voice. A gray band names the split: knowledge is fixed by RAG, behaviour is fixed by fine-tuning, this module.">
-    <!-- RAG feeds the model -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="56" y="96" width="130" height="64" rx="11"/>
-    </g>
-    <text x="121" y="126" text-anchor="middle" class="lbl-b">RAG</text>
-    <text x="121" y="150" text-anchor="middle" class="lbl-g">right pages</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M190,128 L246,128" marker-end="url(#ah)"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="250" y="92" width="130" height="72" rx="12"/>
-    </g>
-    <text x="315" y="124" text-anchor="middle" class="lbl-b">model</text>
-    <text x="315" y="150" text-anchor="middle" class="lbl-g">writes the answer</text>
-    <!-- two answers, same question -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
-      <path d="M384,116 L440,96" marker-end="url(#ahg)"/>
-      <path d="M384,140 L440,164" marker-end="url(#ahg)"/>
-    </g>
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="446" y="66" width="520" height="52" rx="10" class="f-green"/>
-    </g>
-    <text x="470" y="97" text-anchor="start" class="lbl">"check <tspan class="lbl-b">db_pool_in_use</tspan>, cancel the blocking backend"</text>
-    <text x="978" y="88" text-anchor="start" class="lbl-good">your</text>
-    <text x="978" y="110" text-anchor="start" class="lbl-good">voice</text>
-    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="446" y="140" width="520" height="52" rx="10" class="f-red"/>
-    </g>
-    <text x="470" y="171" text-anchor="start" class="lbl-g">"you may want to investigate whether connections…"</text>
-    <text x="978" y="162" text-anchor="start" class="lbl-bad">generic</text>
-    <text x="978" y="184" text-anchor="start" class="lbl-bad">voice</text>
-    <!-- the split band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="120" y="248" width="860" height="46" rx="10"/>
-    </g>
-    <text x="550" y="277" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">knowledge</tspan> = RAG (done) &nbsp;·&nbsp; <tspan class="lbl-b">behaviour</tspan> = fine-tune — <tspan class="lbl-b">this module</tspan></text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A robot assistant stands between a faint crossed-out generic speech bubble and a bold checked speech bubble matching a clipboard beside it.">
+    <image href="../img/decks/m6/title-robot-voice.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M6·01</div>
@@ -195,15 +161,20 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">Fixing Behaviour, Not Knowledge</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand adjusts a dial on a robot's chest while a stack of closed books sits untouched beside it.">
+    <image href="../img/decks/m6/divider-0-intro-dial-books.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M6·02</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">1 &middot; When do you tune? The decision ladder</h2>
+  <h2 class="t">When Should You Fine-Tune an LLM?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person stands at the bottom of a three-rung ladder, looking up, deciding.">
+    <image href="../img/decks/m6/divider-1-ladder.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M6·03</div>
 </section>
 
-<!-- ============ SLIDE 2 — DECISION LADDER (scene) ============ -->
 <section>
   <h2 class="t">Climb the decision ladder — three rungs, cheapest first</h2>
   <p class="s">Prompt edit, then RAG, then fine-tune — each fixes a different kind of problem.</p>
@@ -230,7 +201,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M6·04</div>
 </section>
 
-<!-- ============ SLIDE 2b — CLIMB ONLY WHEN THE RUNG BELOW CAN'T (split from 2) ============ -->
 <section>
   <h2 class="t">Most "we need to fine-tune" requests are really prompt problems</h2>
   <p class="s">Climb only when the rung below genuinely can't — you earn the top rung.</p>
@@ -265,48 +235,22 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">2 &middot; LoRA &mdash; renovate with removable fittings, don't rebuild the walls</h2>
+  <h2 class="t">What Is LoRA?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand bolts a small removable shelf bracket onto a plain wall.">
+    <image href="../img/decks/m6/divider-2-shelf-bolt.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M6·06</div>
 </section>
 
-<!-- ============ SLIDE 3 — LoRA REMOVABLE FITTINGS (scene) ============ -->
 <section>
   <h2 class="t">LoRA renovates with removable fittings — freeze the walls, bolt on an adapter</h2>
   <p class="s">A full fine-tune needs a data-center; you're a tenant who can't touch the walls.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="A large wobbly building box labelled base model, roughly 597 million parameters, drawn gray and frozen — the landlord froze the structure. Bolted onto its side is a small blue adapter fitting, tagged removable, rank eight, q_proj plus v_proj — the thin extra layer you own and train. A gray note reads: a full fine-tune updates all 597M plus gradients plus optimizer state — that needs a data-center. A band reads: freeze the whole base, train only the bolted-on fittings.">
-    <!-- the frozen building (base model) — GRAY, unfilled: frozen = de-emphasized -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7">
-      <rect x="80" y="86" width="420" height="210" rx="12"/>
-    </g>
-    <text x="290" y="150" text-anchor="middle" class="lbl-b">base model</text>
-    <text x="290" y="184" text-anchor="middle" class="lbl-g">~597M params · FROZEN</text>
-    <text x="290" y="216" text-anchor="middle" class="lbl-g">(the landlord froze the walls)</text>
-    <!-- the bolted-on adapter — BLUE: the small trainable thing you actually study -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
-      <path d="M500,150 L548,150 M500,232 L548,232"/>
-    </g>
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="548" y="128" width="170" height="126" rx="11" class="f-blue"/>
-    </g>
-    <text x="633" y="172" text-anchor="middle" class="lbl-b">adapter</text>
-    <text x="633" y="202" text-anchor="middle" class="lbl-g">removable · you own it</text>
-    <text x="633" y="228" text-anchor="middle" class="lbl-g">r=8 · q/v_proj</text>
-    <!-- the full-finetune-needs-datacenter note -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="770" y="110" width="290" height="150" rx="12"/></g>
-    <text x="915" y="146" text-anchor="middle" class="lbl-b">a FULL fine-tune</text>
-    <text x="915" y="180" text-anchor="middle" class="lbl-g">all 597M + gradients</text>
-    <text x="915" y="206" text-anchor="middle" class="lbl-g">+ optimizer state</text>
-    <text x="915" y="240" text-anchor="middle" class="lbl-b">= needs a data-center</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M80,320 L1020,320"/>
-    </g>
-    <text x="550" y="344" text-anchor="middle" class="lbl-g">freeze the whole base — <tspan class="lbl-b">train only the bolted-on fittings</tspan></text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A tenant bolts a small removable shelf onto a wall in a rented flat, with a landlord figure watching from a doorway, the structural walls untouched.">
+    <image href="../img/decks/m6/analogy-lora-tenant.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M6·07</div>
 </section>
 
-<!-- ============ SLIDE 3b — THE 0.19% NUMBER (split from 3) ============ -->
 <section>
   <h2 class="t">You train 0.19% of the model — that's why it fits on a CPU</h2>
   <p class="s">Two-tenths of one percent trainable — hold that number out of the whole module.</p>
@@ -344,7 +288,6 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M6·08</div>
 </section>
 
-<!-- ============ SLIDE 3b — WHERE THE SMALL NUMBER COMES FROM (low-rank intuition) ============ -->
 <section>
   <h2 class="t">The "low-rank" trick — approximate a big update with two thin matrices</h2>
   <p class="s">Two thin matrices stand in for one big one — the rank sets how thin.</p>
@@ -386,11 +329,13 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">3 &middot; QLoRA &mdash; the same idea, one tier up</h2>
+  <h2 class="t">What Is QLoRA?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A small box wrapped tightly in shrink-wrap with an adapter clip resting on top.">
+    <image href="../img/decks/m6/divider-3-shrinkwrap.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M6·10</div>
 </section>
 
-<!-- ============ SLIDE 4 — QLoRA ============ -->
 <section>
   <h2 class="t">QLoRA is LoRA one tier up — a 4-bit frozen base so a bigger model fits</h2>
   <p class="s">Store the frozen base at 4-bit so a bigger model fits — adapter untouched.</p>
@@ -430,39 +375,22 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">4 &middot; Synthetic data &mdash; build the practice question bank</h2>
+  <h2 class="t">How to Generate Synthetic Training Data</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A stack of closed textbooks with small flashcards fanning out from the top book.">
+    <image href="../img/decks/m6/divider-4-textbook-cards.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M6·12</div>
 </section>
 
-<!-- ============ SLIDE 5 — SYNTHETIC DATA PIPELINE ============ -->
 <section>
   <h2 class="t">The hard part isn't training — it's building the practice question bank</h2>
   <p class="s">You don't re-read the textbook — you turn each chapter into practice questions.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="The generate step drawn large. The corpus, the textbook of runbooks, flows into generate — walk the corpus and for each section ask a local model for a few grounded question-and-answer pairs. A gray note reads: like building an exam question bank from a textbook, not re-reading it. A band reads: the training is a script — the hard part is the data.">
-    <!-- corpus — blue = the source data -->
-    <g filter="url(#rough)" stroke="#757575" stroke-width="2.6">
-      <rect x="70" y="120" width="300" height="120" rx="12" class="f-blue"/>
-    </g>
-    <text x="220" y="170" text-anchor="middle" class="lbl-b">corpus/*.md</text>
-    <text x="220" y="200" text-anchor="middle" class="lbl-g">the textbook — your runbooks</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
-      <path d="M370,180 L470,180" marker-end="url(#ah)"/>
-    </g>
-    <!-- generate -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="480" y="118" width="470" height="124" rx="12"/>
-    </g>
-    <text x="715" y="160" text-anchor="middle" class="lbl-b">GENERATE</text>
-    <text x="715" y="192" text-anchor="middle" class="lbl-g">walk the corpus · per section, ask a local</text>
-    <text x="715" y="218" text-anchor="middle" class="lbl-g">model for a few grounded Q&amp;A pairs</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-dasharray="9 7"><rect x="180" y="290" width="740" height="44" rx="10"/></g>
-    <text x="550" y="317" text-anchor="middle" class="lbl-g">the training is a script — <tspan class="lbl-b">the hard part is the data</tspan></text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A student sits at a desk surrounded by open textbooks, writing a flashcard by hand.">
+    <image href="../img/decks/m6/analogy-exam-revision.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M6·13</div>
 </section>
 
-<!-- ============ SLIDE 6b — FILTER DECIDES QUALITY (split from 6) ============ -->
 <section>
   <h2 class="t">The FILTER is the step that decides if the data is worth training on</h2>
   <p class="s">A model making its own data makes junk — and the loss still drops on garbage.</p>
@@ -502,7 +430,14 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M6·14</div>
 </section>
 
-<!-- ============ SLIDE 6 — CONTAMINATION BOUNDARY ============ -->
+<section class="divider">
+  <h2 class="t">What Is Data Contamination?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Two baskets side by side, one open and one sealed shut with caution tape between them.">
+    <image href="../img/decks/m6/divider-5-contamination-baskets.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M6·15</div>
+</section>
+
 <section>
   <h2 class="t">The one rule you cannot break — train and golden set must never overlap</h2>
   <p class="s">If a trained question lands in the eval, the model saw the answer key.</p>
@@ -554,15 +489,17 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="342" text-anchor="middle" class="lbl-b">same sources · different questions · test set held out</text>
   </svg>
-  <div class="pageno">M6·15</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">5 &middot; Reading a loss curve &mdash; what the training tells you while it runs</h2>
   <div class="pageno">M6·16</div>
 </section>
 
-<!-- ============ SLIDE 7 — READING THE LOSS CURVE ============ -->
+<section class="divider">
+  <h2 class="t">How to Read a Loss Curve</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand points at the flat part of a descending line graph curve.">
+    <image href="../img/decks/m6/divider-6-loss-curve.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M6·17</div>
+</section>
+
 <section>
   <h2 class="t">Read the loss curve — a healthy curve flattens, a diving one is overfitting</h2>
   <p class="s">Loss is the model's surprise at the next token — two shapes to tell apart.</p>
@@ -593,15 +530,17 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="840" y="300" text-anchor="middle" class="lbl-g">keeps dropping to zero = OVERFIT</text>
     <text x="840" y="324" text-anchor="middle" class="lbl-g">memorizing, not learning · fails real Qs</text>
   </svg>
-  <div class="pageno">M6·17</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">6 &middot; Merge, or serve with the adapter attached?</h2>
   <div class="pageno">M6·18</div>
 </section>
 
-<!-- ============ SLIDE 8 — MERGE OR SERVE APART ============ -->
+<section class="divider">
+  <h2 class="t">Merge vs Serve a LoRA Adapter</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Two jigsaw puzzle pieces joined into one on the left, and two pieces deliberately kept apart on the right.">
+    <image href="../img/decks/m6/divider-7-merge-fork.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M6·19</div>
+</section>
+
 <section>
   <h2 class="t">Merge the adapter in, or serve base + adapter apart — OpsMate merges</h2>
   <p class="s">Fold the adapter in for one model, or keep it bolted on and swappable.</p>
@@ -627,10 +566,9 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- band -->
     <text x="550" y="322" text-anchor="middle" class="lbl-g">merge wins here — the goal is <tspan class="lbl-b">one servable model</tspan> that drops into the existing stack</text>
   </svg>
-  <div class="pageno">M6·19</div>
+  <div class="pageno">M6·20</div>
 </section>
 
-<!-- ============ SLIDE 9 — CONVERT TO GGUF ============ -->
 <section>
   <h2 class="t">Convert the merged model to a GGUF — same quantization, same convert path</h2>
   <p class="s">It's a normal model now — convert it the way M3 taught, no new machinery.</p>
@@ -675,10 +613,9 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="308" text-anchor="middle" class="lbl-g">it's a normal model now — convert it the way <tspan class="lbl-b">M3</tspan> taught, and drop it beside the base</text>
   </svg>
-  <div class="pageno">M6·20</div>
+  <div class="pageno">M6·21</div>
 </section>
 
-<!-- ============ SLIDE 10 — THE SWAP ============ -->
 <section>
   <h2 class="t">The swap is one env var — same stack, same server, a different file</h2>
   <p class="s">Deploying the model you trained is a filename change, not a new deployment.</p>
@@ -721,15 +658,17 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="324" text-anchor="middle" class="lbl-g">the <tspan class="lbl-b">OpenAI-compatible endpoint never changed</tspan> — that's why a model you trained drops in where the base was</text>
   </svg>
-  <div class="pageno">M6·21</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">7 &middot; The measurement ritual &mdash; weigh on the same scale, read the result honestly</h2>
   <div class="pageno">M6·22</div>
 </section>
 
-<!-- ============ SLIDE 10b — TWO CONTROLS BEFORE YOU READ THE NUMBER ============ -->
+<section class="divider">
+  <h2 class="t">How to Evaluate a Fine-Tuned Model</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A pair of bare feet stepping onto a simple bathroom scale.">
+    <image href="../img/decks/m6/divider-8-scale.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M6·23</div>
+</section>
+
 <section>
   <h2 class="t">Set two controls before you read the number — or you'll misread it</h2>
   <p class="s">Two controls make the comparison clean before you read beat, tie, or lose.</p>
@@ -758,45 +697,18 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="160" y="296" width="780" height="40" rx="10"/></g>
     <text x="550" y="323" text-anchor="middle" class="lbl-g">a control that stays put + an isolated arm → now <tspan class="lbl-b">beat / tie / lose</tspan> reads clean</text>
   </svg>
-  <div class="pageno">M6·23</div>
-</section>
-
-<!-- ============ SLIDE 11 — MEASUREMENT RITUAL (scene) ============ -->
-<section>
-  <h2 class="t">Weigh it on the same scale — a tuned model always feels better</h2>
-  <p class="s">"I lost weight" means nothing unless you weighed on the same scale.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="A weighing scene. Two bathroom scales. The BEFORE scale, gray, reads M5 baseline.md, RAG 6 of 15, retrieval 24 of 24, tagged recorded, committed. The AFTER scale, inked, holds the tuned model and is tagged same golden set, same graders. A note recalls the controls set on the previous slide — retrieval held, no-RAG arm isolated — so now you read the number. A band reads: feelings are not evidence — the golden set is the scale, M5's baseline is your before weight.">
-    <!-- BEFORE scale — blue = the recorded M5 baseline data -->
-    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4">
-      <rect x="90" y="96" width="300" height="120" rx="14" class="f-blue"/>
-      <circle cx="240" cy="160" r="38" fill="none"/>
-    </g>
-    <text x="240" y="80" text-anchor="middle" class="lbl-b">BEFORE</text>
-    <text x="240" y="152" text-anchor="middle" class="lbl-sm">baseline.md</text>
-    <text x="240" y="178" text-anchor="middle" class="lbl-g">RAG 6/15 · retrieval 24/24</text>
-    <text x="240" y="244" text-anchor="middle" class="lbl-g">recorded, committed (M5)</text>
-    <!-- AFTER scale -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="490" y="96" width="300" height="120" rx="14"/>
-      <circle cx="640" cy="160" r="38"/>
-    </g>
-    <text x="640" y="80" text-anchor="middle" class="lbl-b">AFTER</text>
-    <text x="640" y="166" text-anchor="middle" class="lbl-b">tuned model</text>
-    <text x="640" y="244" text-anchor="middle" class="lbl-g">same golden set · same graders</text>
-    <!-- controls carried from the prior slide -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="850" y="110" width="200" height="130" rx="12"/></g>
-    <text x="950" y="142" text-anchor="middle" class="lbl-g">controls set</text>
-    <text x="950" y="168" text-anchor="middle" class="lbl-g">(prev slide):</text>
-    <text x="950" y="196" text-anchor="middle" class="lbl-g">retrieval held ·</text>
-    <text x="950" y="220" text-anchor="middle" class="lbl-g">no-RAG isolated</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="120" y="298" width="860" height="44" rx="10"/></g>
-    <text x="550" y="325" text-anchor="middle" class="lbl-g">feelings are not evidence — the golden set is the scale, <tspan class="lbl-b">M5's baseline is your "before" weight</tspan></text>
-  </svg>
   <div class="pageno">M6·24</div>
 </section>
 
-<!-- ============ SLIDE 13b — THE HONEST RESULT: IT LOST (split from 13) ============ -->
+<section>
+  <h2 class="t">Weigh it on the same scale — a tuned model always feels better</h2>
+  <p class="s">"I lost weight" means nothing unless you weighed on the same scale.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person stands on a bathroom scale with a faint ghost outline of themselves beside them on the same scale, a before-and-after comparison.">
+    <image href="../img/decks/m6/analogy-diet-scale.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M6·25</div>
+</section>
+
 <section>
   <h2 class="t">On our real run the tune lost — and the baseline refused the ship</h2>
   <p class="s">Beat, tie, or lose — all three teach; here the number blocked a regression.</p>
@@ -825,10 +737,17 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="314" text-anchor="middle" class="lbl-g">honest note: a lose on a <tspan class="lbl-b">knowledge</tspan> set may still have fixed the <tspan class="lbl-b">voice</tspan> you tuned for —</text>
     <text x="550" y="335" text-anchor="middle" class="lbl-g">this set does not measure voice; note what it does and doesn't measure</text>
   </svg>
-  <div class="pageno">M6·25</div>
+  <div class="pageno">M6·26</div>
 </section>
 
-<!-- ============ SLIDE 12 — HAND OFF TO M7 ============ -->
+<section class="divider">
+  <h2 class="t">What Artifacts Come Out of Fine-Tuning an LLM?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Three small distinct objects sitting in a row on a shelf.">
+    <image href="../img/decks/m6/divider-9-artifacts.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M6·27</div>
+</section>
+
 <section>
   <h2 class="t">The artifacts become OpsMate v1.0 — what M7 packages and versions</h2>
   <p class="s">Teardown keeps three things — they're the material M7 turns into a release.</p>
@@ -876,38 +795,73 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- band -->
     <text x="550" y="312" text-anchor="middle" class="lbl-g">the artifacts are not scratch — they are <tspan class="lbl-b">v1.0</tspan>, packaged and signed in M7 alongside the v0 base</text>
   </svg>
-  <div class="pageno">M6·26</div>
+  <div class="pageno">M6·28</div>
 </section>
 
-<!-- ============ SLIDE 13 — CLOSING ============ -->
 <section>
   <p class="kicker">MODULE 6 &nbsp;·&nbsp; FINE-TUNING — SYNTHETIC DATA, LoRA &amp; QLoRA</p>
   <h2 class="t" style="font-size:2.05em">The whole loop — decide, build the data, tune, and measure honestly</h2>
   <p class="s">The skill is the whole loop — and the part most people skip is the last one.</p>
-  <svg viewBox="0 0 1100 300" role="img" aria-label="Four numbered takeaways. One: decide — climb the ladder, tune only for behaviour that survives with no prompt and no context. Two: build the data — a practice question bank from the corpus, filtered hard, golden set held out. Three: run the tune — LoRA, 0.19 percent trainable, minutes on CPU, watch the loss flatten. Four: measure honestly — same committed scale, read beat, tie, or lose straight, not the feeling. A footline reads: the part most people skip is number four — now open Module 6 Lab.">
-    <!-- row 1 — orange = the judgment call -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="46" r="22" class="f-orange"/></g>
-    <text x="90" y="55" text-anchor="middle" class="num">1</text>
-    <text x="130" y="40" text-anchor="start" class="lbl-b">DECIDE</text>
-    <text x="130" y="66" text-anchor="start" class="lbl-g">climb the ladder — tune only for behaviour that survives NO prompt, NO context</text>
-    <!-- row 2 -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="116" r="22" class="f-blue"/></g>
-    <text x="90" y="125" text-anchor="middle" class="num">2</text>
-    <text x="130" y="110" text-anchor="start" class="lbl-b">BUILD THE DATA</text>
-    <text x="130" y="136" text-anchor="start" class="lbl-g">a practice question bank from the corpus — filtered hard, golden set held out</text>
-    <!-- row 3 -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="186" r="22" class="f-blue"/></g>
-    <text x="90" y="195" text-anchor="middle" class="num">3</text>
-    <text x="130" y="180" text-anchor="start" class="lbl-b">RUN THE TUNE</text>
-    <text x="130" y="206" text-anchor="start" class="lbl-g">LoRA — 0.19% trainable, minutes on CPU, watch the loss flatten</text>
-    <!-- row 4 -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="256" r="22" class="f-green"/></g>
-    <text x="90" y="265" text-anchor="middle" class="num">4</text>
-    <text x="130" y="250" text-anchor="start" class="lbl-b">MEASURE HONESTLY</text>
-    <text x="130" y="276" text-anchor="start" class="lbl-g">same committed scale — read beat/tie/lose straight, not the feeling</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A confident presenter points at a clipboard with three checked-off items, next to three small distinct artifacts on a shelf.">
+    <image href="../img/decks/m6/closing-presenter-artifacts.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">the part most people skip is <b>#4</b> &nbsp;·&nbsp; now open <b>Module 6 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M6·27</div>
+  <div class="pageno">M6·29</div>
+</section>
+
+<section>
+  <h2 class="t">Next: generate data, run the tune, weigh it honestly</h2>
+  <p class="s">Build it, then weigh it on the same scale as the baseline.</p>
+  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: the stack shuts down to free memory for training; synthetic pairs are generated and then filtered, kept and rejected examples both readable; a real LoRA tune runs while the loss streams into the X-Ray Train lens; the adapter is merged, converted to a GGUF, and swapped in with one environment variable; the tuned model is weighed on the same golden set and graders as the baseline; and three artifacts survive the teardown for Module 7 to version.">
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="40" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="65" y="60" width="55" height="55" rx="6"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><path d="M75,70 L110,105"/><path d="M110,70 L75,105"/></g>
+      <text x="110" y="196" text-anchor="middle" class="lbl-b">shut the stack down</text>
+      <text x="110" y="218" text-anchor="middle" class="lbl-sm">training needs the memory</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="220" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="240" y="55" width="40" height="30" rx="4"/></g>
+      <text x="260" y="76" text-anchor="middle" class="lbl-good">&#10003;</text>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><rect x="290" y="55" width="40" height="30" rx="4"/></g>
+      <text x="310" y="76" text-anchor="middle" class="lbl-g">&#10005;</text>
+      <text x="290" y="196" text-anchor="middle" class="lbl-b">generate, then filter</text>
+      <text x="290" y="218" text-anchor="middle" class="lbl-sm">read what got kept and cut</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="400" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><path d="M420,100 L432,75 L444,90 L456,60 L470,95" fill="none"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><circle cx="500" cy="90" r="22"/><circle cx="500" cy="90" r="7"/></g>
+      <text x="470" y="196" text-anchor="middle" class="lbl-b">run the LoRA tune</text>
+      <text x="470" y="218" text-anchor="middle" class="lbl-sm">watch the loss, live</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="580" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2"><rect x="600" y="60" width="35" height="55" rx="4"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M645,88 L672,88" marker-end="url(#ahg)"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="678" y="60" width="35" height="55" rx="4"/></g>
+      <text x="650" y="196" text-anchor="middle" class="lbl-b">merge, convert, swap</text>
+      <text x="650" y="218" text-anchor="middle" class="lbl-sm">one env var, one restart</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="760" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><path d="M820,55 L820,80"/><path d="M785,68 L855,68"/></g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2"><path d="M785,68 L775,95 L800,95 Z"/></g>
+      <g filter="url(#rough)" fill="#e1d5e7" stroke="#757575" stroke-width="2"><path d="M855,68 L840,100 L870,100 Z"/></g>
+      <text x="830" y="196" text-anchor="middle" class="lbl-b">weigh it</text>
+      <text x="830" y="218" text-anchor="middle" class="lbl-sm">same golden set, same graders</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="940" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2"><rect x="960" y="80" width="30" height="40" rx="4"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2"><rect x="1000" y="70" width="30" height="50" rx="4"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2"><rect x="1040" y="75" width="30" height="45" rx="4"/></g>
+      <text x="1010" y="196" text-anchor="middle" class="lbl-b">keep three artifacts</text>
+      <text x="1010" y="218" text-anchor="middle" class="lbl-sm">for M7 to version</text>
+    </g>
+  </svg>
+  <div class="pageno">M6·30</div>
 </section>
 </div></div>
 
@@ -945,7 +899,7 @@ footer, header, hgroup, main, menu, nav, section {
       if(!sec) return;
       var svg = sec.querySelector('svg');
       if(!svg) return;
-      var mh = 58;
+      var mh = sec.classList.contains('divider') ? 80 : 58;
       svg.style.maxHeight = mh + '%';
       var guard = 0;
       while (sec.scrollHeight > sec.clientHeight + 2 && mh > 18 && guard++ < 20){

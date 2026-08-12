@@ -683,21 +683,67 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">Next: ingest the corpus, inspect retrieval, poison a runbook</h2>
-  <p class="s">Build the app and UI by hand, then watch retrieval work — and get attacked.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand types at a laptop; a question bubble arrows down into an answer bubble with a citation mark, connected to a document icon by a dotted line.">
-    <image href="../img/decks/m4/lab-bridge-laptop-chat.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M4·25</div>
-</section>
-
-<section>
   <h2 class="t" style="font-size:2.0em">From "never read our docs" to "answers from our runbooks"</h2>
   <p class="s">Three things leave with you — and the lab makes you prove every one.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A confident presenter points at a clipboard with three checked-off items, next to a stack of books now open with a glowing checkmark.">
     <image href="../img/decks/m4/closing-presenter-books.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">Now open <b>Module 4 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
+  <div class="pageno">M4·25</div>
+</section>
+
+<section>
+  <h2 class="t">Next: ingest the corpus, inspect retrieval, poison a runbook</h2>
+  <p class="s">Build the app and UI by hand, then watch retrieval work — and get attacked.</p>
+  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: the compose stack grows by two hand-written services, app and ui; the corpus is ingested and the document and chunk counts climb; retrieval is inspected, one query wins decisively, another shows a bad-retrieval miss; the ask endpoint and Streamlit UI show sources with an expander; the poisoned runbook is retrieved and the tagged-source template holds the line; and the new RAG lens in the X-Ray watches live calls while the teardown keeps the Chroma index for the next module.">
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="40" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="60" width="45" height="45" rx="6"/></g>
+      <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4"><rect x="115" y="50" width="42" height="38" rx="6"/></g>
+      <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4"><rect x="115" y="98" width="42" height="38" rx="6"/></g>
+      <text x="110" y="196" text-anchor="middle" class="lbl-b">compose grows</text>
+      <text x="110" y="218" text-anchor="middle" class="lbl-sm">app + ui, by hand</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="220" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="240" y="55" width="60" height="76" rx="6"/><rect x="248" y="48" width="60" height="76" rx="6"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M318,88 L346,88" marker-end="url(#ahg)"/></g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2"><rect x="352" y="108" width="14" height="24"/><rect x="372" y="90" width="14" height="42"/><rect x="392" y="70" width="14" height="62"/></g>
+      <text x="290" y="196" text-anchor="middle" class="lbl-b">ingest the corpus</text>
+      <text x="290" y="218" text-anchor="middle" class="lbl-sm">watch counts climb</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="400" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><circle cx="450" cy="80" r="22"/><path d="M468,98 L486,116"/></g>
+      <text x="450" y="86" text-anchor="middle" class="lbl-good">&#10003;</text>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="510" cy="120" r="18"/><path d="M524,134 L538,148"/></g>
+      <text x="510" y="126" text-anchor="middle" class="lbl-g">?</text>
+      <text x="470" y="196" text-anchor="middle" class="lbl-b">inspect retrieval</text>
+      <text x="470" y="218" text-anchor="middle" class="lbl-sm">a hit, and a miss</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="580" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6"><rect x="600" y="55" width="100" height="54" rx="10"/><path d="M620,109 L610,124 L636,109 Z"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="3 3"><rect x="600" y="132" width="100" height="30" rx="6"/></g>
+      <text x="650" y="196" text-anchor="middle" class="lbl-b">ask + the UI</text>
+      <text x="650" y="218" text-anchor="middle" class="lbl-sm">sources, expanded</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="760" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4"><rect x="790" y="50" width="70" height="90" rx="6"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><path d="M800,150 L825,175 L850,150 L850,120 L800,120 Z"/></g>
+      <text x="825" y="145" text-anchor="middle" class="lbl-good">&#10003;</text>
+      <text x="830" y="196" text-anchor="middle" class="lbl-b">the injection</text>
+      <text x="830" y="218" text-anchor="middle" class="lbl-sm">tagged, and held</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="940" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="985" cy="85" r="26"/><circle cx="985" cy="85" r="9"/></g>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><path class="f-blue" d="M1030,110 a20,6 0 0 0 40,0 a20,6 0 0 0 -40,0 v24 a20,6 0 0 0 40,0 v-24"/></g>
+      <text x="1010" y="196" text-anchor="middle" class="lbl-b">x-ray + keep index</text>
+      <text x="1010" y="218" text-anchor="middle" class="lbl-sm">the RAG lens, live</text>
+    </g>
+  </svg>
   <div class="pageno">M4·26</div>
 </section>
 

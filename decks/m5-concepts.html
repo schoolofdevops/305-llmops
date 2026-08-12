@@ -100,7 +100,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -151,42 +152,8 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 5 &nbsp;·&nbsp; PROMPTS AS CONFIG &amp; THE BASELINE EVAL</p>
   <h2 class="t" style="font-size:1.55em">The prompt shipped on a feeling — this turns the shrug into a number</h2>
   <p class="s" style="font-size:1.2em">Ship a prompt edit on a feeling, and "did it help?" gets a shrug.</p>
-  <svg viewBox="0 0 1100 330" role="img" aria-label="A system prompt file box carries a gray edit scribble reading could be sharper, Friday. An arrow leads to a ship box, then to two gray dashed answer boxes reading Monday: a different answer, with a question mark between them asking better or worse. A gray band at the bottom names the fix: a golden set plus a recorded baseline turns it looks right into a number.">
-    <!-- the prompt file, edited -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="60" y="86" width="210" height="96" rx="12"/>
-    </g>
-    <text x="165" y="126" text-anchor="middle" class="lbl-b">system prompt</text>
-    <text x="165" y="156" text-anchor="middle" class="lbl-g">"could be sharper" — Fri</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M78,170 L250,150"/>
-    </g>
-    <!-- ship -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M276,134 L356,134" marker-end="url(#ah)"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="360" y="104" width="120" height="60" rx="11"/>
-    </g>
-    <text x="420" y="140" text-anchor="middle" class="lbl-b">ship</text>
-    <!-- two different answers -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
-      <path d="M486,134 L560,134" marker-end="url(#ahg)"/>
-    </g>
-    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="566" y="80" width="230" height="52" rx="10" class="f-red"/>
-      <rect x="566" y="150" width="230" height="52" rx="10" class="f-red"/>
-    </g>
-    <text x="681" y="112" text-anchor="middle" class="lbl">Mon: an answer</text>
-    <text x="681" y="182" text-anchor="middle" class="lbl">Mon: a different one</text>
-    <text x="852" y="132" text-anchor="middle" class="lbl-bad">?</text>
-    <text x="852" y="160" text-anchor="middle" class="lbl-g">better?</text>
-    <text x="852" y="184" text-anchor="middle" class="lbl-g">worse?</text>
-    <!-- the fix band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="120" y="240" width="860" height="46" rx="10"/>
-    </g>
-    <text x="550" y="269" text-anchor="middle" class="lbl-g">the fix — a <tspan class="lbl-b">golden set</tspan> + a recorded <tspan class="lbl-b">baseline</tspan>: turn "it looks right" into a number you can defend</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person shrugs with a question mark above their head, next to a measuring scale showing a clear mark and a checkmark.">
+    <image href="../img/decks/m5/title-shrug-scale.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M5·01</div>
@@ -194,56 +161,25 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">The Shrug That Isn't a Change Record</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person shrugs next to a torn, incomplete sheet of paper.">
+    <image href="../img/decks/m5/divider-0-intro-shrug-torn.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M5·02</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">1 · Why "it looks right" is not a test</h2>
+  <h2 class="t">Why "It Looks Right" Isn't a Real Test</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person gives two thumbs up with eyes closed, an unread checklist floating nearby.">
+    <image href="../img/decks/m5/divider-1-blind-approval.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M5·03</div>
 </section>
 
 <section>
   <h2 class="t">"It looks right" is the examiner who improvises the route</h2>
   <p class="s">Grade every candidate on a different route and the pass means nothing.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="At the top, two candidate cars drive two different routes: a loopy cul-de-sac and a busy motorway merge, each stamped seemed fine in gray, with a gray note that you cannot compare, cannot spot a slip, cannot defend. Below, one fixed route is driven by both cars, inked, tagged same route every candidate, and pass is comparable, defensible, repeatable. A band names the point: an eval set is the fixed route, it looks right improvises.">
-    <!-- two improvised routes -->
-    <text x="150" y="40" text-anchor="middle" class="lbl-b">"it looks right" — a different route each time</text>
-    <!-- route A cul-de-sac (red = improvised, ungradeable) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
-      <path d="M70,110 C120,70 200,70 230,110 C255,145 190,165 150,140 C120,122 130,100 160,100"/>
-    </g>
-    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
-      <rect x="60" y="150" width="120" height="34" rx="9" stroke-dasharray="5 5" class="f-red"/>
-    </g>
-    <text x="120" y="173" text-anchor="middle" class="lbl-g">"seemed fine"</text>
-    <text x="150" y="98" text-anchor="middle" class="lbl-g">cul-de-sac</text>
-    <!-- route B motorway (red = improvised, ungradeable) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
-      <path d="M300,120 L470,90 M300,140 L470,110 M300,160 L470,130"/>
-    </g>
-    <g filter="url(#rough)" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
-      <rect x="330" y="150" width="150" height="34" rx="9" stroke-dasharray="5 5" class="f-red"/>
-    </g>
-    <text x="405" y="173" text-anchor="middle" class="lbl-g">"seemed fine"</text>
-    <text x="385" y="82" text-anchor="middle" class="lbl-g">motorway merge, rain</text>
-    <!-- the failure note -->
-    <text x="620" y="120" text-anchor="start" class="lbl-g">can't compare two candidates</text>
-    <text x="620" y="150" text-anchor="start" class="lbl-g">can't tell if standards slipped</text>
-    <text x="620" y="180" text-anchor="start" class="lbl-g">can't defend the pass</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M600,112 L600,188"/>
-    </g>
-    <!-- the fixed route (green = comparable, defensible, repeatable) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round">
-      <path d="M120,255 L560,255 C620,255 620,300 560,300 L160,300"/>
-    </g>
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="80" y="238" width="46" height="30" rx="7" class="f-green"/>
-      <rect x="150" y="285" width="46" height="30" rx="7" class="f-green"/>
-    </g>
-    <text x="360" y="242" text-anchor="middle" class="lbl-b">the FIXED test route — same route, every candidate, every time</text>
-    <text x="720" y="270" text-anchor="start" class="lbl">a pass is <tspan class="lbl-b">comparable</tspan></text>
-    <text x="720" y="300" text-anchor="start" class="lbl">· <tspan class="lbl-b">defensible</tspan> · <tspan class="lbl-b">repeatable</tspan></text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A driving examiner waves vaguely from the passenger seat while two completely different roads fork ahead through the windshield.">
+    <image href="../img/decks/m5/analogy-driving-examiner.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M5·04</div>
 </section>
@@ -282,7 +218,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">2 · The eval pyramid — four ways to grade an answer, cheapest first</h2>
+  <h2 class="t">What Is the Eval Pyramid?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand places a block on top of a growing pyramid built from stacked blocks.">
+    <image href="../img/decks/m5/divider-2-pyramid-build.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M5·06</div>
 </section>
 
@@ -332,7 +271,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">3 · The finding behind this whole design</h2>
+  <h2 class="t">Why Exact-Phrase Assertions Break</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A magnifying glass hovers over a jigsaw puzzle with one cracked piece that does not fit.">
+    <image href="../img/decks/m5/divider-3-magnify-crack.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M5·08</div>
 </section>
 
@@ -374,56 +316,18 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">4 · The two-layer golden set — separate "right pages" from "right answer"</h2>
+  <h2 class="t">Retrieval vs Generation</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Two flat trays stacked apart, each with a different small tag, showing they are separate.">
+    <image href="../img/decks/m5/divider-4-two-trays.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M5·10</div>
 </section>
 
 <section>
   <h2 class="t">Two things must go right — right parcel, and it arrives intact</h2>
   <p class="s">A RAG answer breaks in two places — grade them apart to tell which.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="On the left, a courier stands at a shelf of parcels; the first check asks did we pick the right parcel off the shelf, with a tick on the chosen box, tagged a warehouse problem if wrong. An arrow leads to a doorstep on the right where the parcel arrives; the second check asks did it arrive in good condition, with a gray dashed crushed outline, tagged a handling problem if wrong. A gray note reads customer unhappy alone cannot tell you which team to call. A band reads retrieval is right parcel, generation is arrived intact, grade them apart.">
-    <!-- shelf of parcels -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
-      <rect x="60" y="70" width="180" height="150" rx="6"/>
-      <line x1="60" y1="120" x2="240" y2="120"/>
-      <line x1="60" y1="170" x2="240" y2="170"/>
-    </g>
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="80" y="130" width="46" height="32" rx="5" class="f-green"/>
-    </g>
-    <text x="103" y="152" text-anchor="middle" class="lbl-good">✓</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><rect x="150" y="82" width="40" height="28" rx="5"/><rect x="150" y="182" width="40" height="28" rx="5"/></g>
-    <text x="150" y="248" text-anchor="middle" class="lbl-b">1 · right parcel?</text>
-    <text x="150" y="274" text-anchor="middle" class="lbl-g">warehouse problem if wrong</text>
-    <!-- courier + arrow -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <circle cx="330" cy="120" r="18"/>
-      <path d="M330,138 L330,186 M330,150 L370,166"/>
-    </g>
-    <text x="330" y="90" text-anchor="middle" class="lbl-g">courier</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M400,150 L560,150" marker-end="url(#ah)"/>
-    </g>
-    <text x="480" y="136" text-anchor="middle" class="lbl-g">in transit</text>
-    <!-- doorstep / arrival -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <path d="M600,220 L680,220 L680,120 L780,120 L780,220 L860,220"/>
-    </g>
-    <g filter="url(#rough)" stroke="#c62828" stroke-width="2.4" stroke-dasharray="9 7">
-      <path class="f-red" d="M700,150 L760,150 L756,196 L708,200 Z"/>
-    </g>
-    <text x="732" y="176" text-anchor="middle" class="lbl-bad">crushed?</text>
-    <text x="732" y="248" text-anchor="middle" class="lbl-b">2 · arrived intact?</text>
-    <text x="732" y="274" text-anchor="middle" class="lbl-g">handling problem if wrong</text>
-    <!-- unhappy note -->
-    <text x="960" y="150" text-anchor="middle" class="lbl-g">"customer</text>
-    <text x="960" y="176" text-anchor="middle" class="lbl-g">unhappy"</text>
-    <text x="960" y="210" text-anchor="middle" class="lbl-g">— which team?</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="120" y="304" width="860" height="40" rx="10"/>
-    </g>
-    <text x="550" y="329" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">retrieval</tspan> = right parcel &nbsp;·&nbsp; <tspan class="lbl-b">generation</tspan> = arrived intact &nbsp;·&nbsp; grade them <tspan class="lbl-b">APART</tspan></text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A courier hands a parcel box marked fragile to a person at a doorway, with a warehouse shelf of boxes visible behind.">
+    <image href="../img/decks/m5/analogy-courier-parcel.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M5·11</div>
 </section>
@@ -483,7 +387,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">5 · Designing a golden set that actually discriminates</h2>
+  <h2 class="t">How to Design Golden Questions</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand sorts small blank cards into two separate piles, one neat and larger, one messy and smaller.">
+    <image href="../img/decks/m5/divider-5-sorting-cards.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M5·13</div>
 </section>
 
@@ -548,83 +455,35 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">6 · Prompts as config — version it, test it, roll it back</h2>
+  <h2 class="t">What Does "Prompts as Config" Mean?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand pins a recipe card inside a kitchen cupboard door, a rolling pin and whisk hanging nearby.">
+    <image href="../img/decks/m5/divider-6-pin-recipe.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M5·16</div>
 </section>
 
 <section>
   <h2 class="t">The prompt is a recipe card, not a rule carved into the chef</h2>
   <p class="s">Move the prompt out of the code and it becomes a lever you can un-pull.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="On the left, gray dashed and crossed out: a chef with the prompt carved into their training, tagged edit main dot py, rebuild image, hope. On the right, inked: a recipe card taped in a cupboard reading prompts slash system dot txt, with a smaller v2 card behind it, tagged edit the file, restart, versioned in git, roll back is git checkout. A footline reads A/B system dot txt versus system-v2 dot txt on the same suite, scores move, code untouched.">
-    <!-- left: carved into the chef (old) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <circle cx="150" cy="110" r="26"/>
-      <path d="M150,136 L150,200 M150,150 L110,180 M150,150 L190,180"/>
-    </g>
-    <text x="150" y="72" text-anchor="middle" class="lbl-g">the chef</text>
-    <text x="150" y="230" text-anchor="middle" class="lbl-g">prompt carved into training</text>
-    <!-- cross out -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6" stroke-linecap="round">
-      <path d="M90,80 L215,215"/>
-    </g>
-    <text x="150" y="262" text-anchor="middle" class="lbl-g">edit main.py · rebuild image · hope</text>
-    <!-- divider -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 6">
-      <path d="M370,60 L370,270"/>
-    </g>
-    <!-- right: recipe card (new) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
-      <rect x="640" y="70" width="320" height="150" rx="8"/>
-    </g>
-    <text x="800" y="58" text-anchor="middle" class="lbl-g">cupboard</text>
-    <!-- v2 card behind — blue = the variant being A/B'd -->
-    <g filter="url(#rough)" stroke="#757575" stroke-width="2.2">
-      <rect x="700" y="118" width="230" height="70" rx="9" class="f-blue"/>
-    </g>
-    <text x="900" y="146" text-anchor="middle" class="lbl-g">v2</text>
-    <!-- system.txt card front — green = the versioned lever you control -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="680" y="100" width="230" height="70" rx="9" class="f-green"/>
-    </g>
-    <text x="795" y="132" text-anchor="middle" class="lbl-b">prompts/system.txt</text>
-    <text x="795" y="158" text-anchor="middle" class="lbl-g">the recipe card, taped up</text>
-    <text x="800" y="248" text-anchor="middle" class="lbl-g">edit the file · restart · versioned in git · roll back = git checkout</text>
-    <!-- footline -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="120" y="298" width="860" height="40" rx="10"/>
-    </g>
-    <text x="550" y="323" text-anchor="middle" class="lbl-g">A/B <tspan class="lbl-b">system.txt</tspan> vs <tspan class="lbl-b">system-v2.txt</tspan> on the SAME suite — scores move, code untouched</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand mid-swap between two recipe cards taped inside a kitchen cupboard door, a rolling pin resting below.">
+    <image href="../img/decks/m5/analogy-recipe-card.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M5·17</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">7 · The local judge — a smoke detector, not an examiner</h2>
+  <h2 class="t">What Is an LLM-as-Judge?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A smoke detector mounted on a ceiling next to a small judge's gavel, placed side by side.">
+    <image href="../img/decks/m5/divider-7-gavel-detector.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M5·18</div>
 </section>
 
 <section>
   <h2 class="t">The local judge is a smoke detector — trust it to catch the obvious</h2>
   <p class="s">Same 0.6B model, no cloud key — cheap, always-on, catches the gross failures.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="A large green smoke-detector panel labelled qwen3 0.6b judge: cheap, always-on, no cloud key, catches the gross failures — it ignored the context entirely, a confident bluff on an unanswerable, an empty answer. A green annotation reads: exactly the failures you most need caught automatically, on every change.">
-    <!-- smoke detector — green = the working, always-on grader -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="120" y="52" width="620" height="236" rx="12" class="f-green"/>
-      <circle cx="200" cy="108" r="30" fill="none"/>
-      <circle cx="200" cy="108" r="7" fill="none"/>
-    </g>
-    <text x="440" y="96" text-anchor="middle" class="lbl-b">smoke detector — qwen3:0.6b judge</text>
-    <text x="440" y="126" text-anchor="middle" class="lbl-g">cheap · always-on · no cloud key</text>
-    <text x="170" y="176" text-anchor="start" class="lbl">catches the GROSS failures:</text>
-    <text x="190" y="210" text-anchor="start" class="lbl-g">· ignored the context entirely</text>
-    <text x="190" y="240" text-anchor="start" class="lbl-g">· a confident bluff on an unanswerable</text>
-    <text x="190" y="270" text-anchor="start" class="lbl-g">· an empty answer</text>
-    <!-- payoff card -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="780" y="90" width="280" height="160" rx="12"/></g>
-    <text x="920" y="132" text-anchor="middle" class="lbl-b">why it earns its place</text>
-    <text x="920" y="170" text-anchor="middle" class="lbl-g">the failures you most need</text>
-    <text x="920" y="196" text-anchor="middle" class="lbl-g">caught <tspan class="lbl-b">automatically</tspan>,</text>
-    <text x="920" y="222" text-anchor="middle" class="lbl-g" fill="#2e7d32">on every change</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A smoke detector mounted on a ceiling beeps with sound-wave arcs, a wisp of smoke curling up beneath it.">
+    <image href="../img/decks/m5/analogy-smoke-detector.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M5·19</div>
 </section>
@@ -660,7 +519,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">8 · The baseline ritual — record the number, then beat it</h2>
+  <h2 class="t">How to Build an Eval Baseline</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand presses a wax-seal stamp onto a document, sealing it shut with a ribbon attached.">
+    <image href="../img/decks/m5/divider-8-wax-stamp.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M5·21</div>
 </section>
 
@@ -758,30 +620,66 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 5 &nbsp;·&nbsp; PROMPTS AS CONFIG &amp; THE BASELINE EVAL</p>
   <h2 class="t" style="font-size:2.05em">From "the edit felt better" to "v2 scores three points higher — here is the file"</h2>
   <p class="s">Shipping on a feeling becomes shipping on evidence — three things go with you.</p>
-  <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One: fixed route, an eval set makes a result comparable, defensible, repeatable, not it looks right. Two: grade apart, retrieval versus generation, two numbers, two teams of fixes. Three: prompt equals config, a versioned file you A/B, not code you edit and hope. A footline reads the baseline you record here is the yardstick for the whole course, now open Module 5 Lab.">
-    <!-- row 1 — green = the reliable eval-set discipline -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="56" r="22" class="f-green"/></g>
-    <text x="90" y="65" text-anchor="middle" class="num">1</text>
-    <text x="130" y="50" text-anchor="start" class="lbl-b">FIXED ROUTE</text>
-    <text x="130" y="78" text-anchor="start" class="lbl-g">an eval set makes a result comparable, defensible, repeatable — not "looks right"</text>
-    <!-- row 2 -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="136" r="22" class="f-blue"/></g>
-    <text x="90" y="145" text-anchor="middle" class="num">2</text>
-    <text x="130" y="130" text-anchor="start" class="lbl-b">GRADE APART</text>
-    <text x="130" y="158" text-anchor="start" class="lbl-g">retrieval vs generation — two numbers, two teams of fixes</text>
-    <!-- row 3 -->
-    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="216" r="22" class="f-orange"/></g>
-    <text x="90" y="225" text-anchor="middle" class="num">3</text>
-    <text x="130" y="210" text-anchor="start" class="lbl-b">PROMPT = CONFIG</text>
-    <text x="130" y="238" text-anchor="start" class="lbl-g">a versioned file you A/B, not code you edit and hope</text>
-    <!-- footline -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7">
-      <rect x="80" y="262" width="940" height="34" rx="9"/>
-    </g>
-    <text x="550" y="285" text-anchor="middle" class="lbl-g">the baseline you record here is the <tspan class="lbl-b">yardstick for the whole course</tspan> — now open Module 5 · Lab</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A confident presenter points at a clipboard with three checked-off items, next to a small sealed document with a wax stamp and ribbon.">
+    <image href="../img/decks/m5/closing-presenter-seal.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">Now open <b>Module 5 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
   <div class="pageno">M5·24</div>
+</section>
+
+<section>
+  <h2 class="t">Next: run the golden set, A/B the prompt, record the baseline</h2>
+  <p class="s">Two layers, one ritual — the number the next module has to beat.</p>
+  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: the M4 stack comes back up and the system prompt moves into an externalized file; the golden set is read, four questions including one with no answer; the two layers run, deterministic assertions then the LLM judge; a prompt A/B test runs on the same suite and the scores move; the baseline ritual runs no-RAG versus RAG and commits the result; and the X-Ray gets a new Evals lens turning the results into a live scoreboard.">
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="40" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="65" y="70" width="55" height="55" rx="6"/></g>
+      <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2"><rect x="125" y="55" width="35" height="70" rx="4"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.6"><path d="M133,70 L152,70"/><path d="M133,85 L148,85"/></g>
+      <text x="110" y="196" text-anchor="middle" class="lbl-b">stack back up</text>
+      <text x="110" y="218" text-anchor="middle" class="lbl-sm">prompt as a file</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="220" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="240" y="50" width="90" height="80" rx="6"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.6"><path d="M252,68 L318,68"/><path d="M252,84 L318,84"/><path d="M252,100 L300,100"/></g>
+      <text x="310" y="118" text-anchor="middle" class="lbl-sm">?</text>
+      <text x="290" y="196" text-anchor="middle" class="lbl-b">read the golden set</text>
+      <text x="290" y="218" text-anchor="middle" class="lbl-sm">4 questions, 1 with none</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="400" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="420" y="55" width="55" height="45" rx="6"/></g>
+      <text x="447" y="82" text-anchor="middle" class="lbl-good">&#10003;</text>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="510" cy="95" r="22"/><circle cx="510" cy="95" r="7"/></g>
+      <text x="470" y="196" text-anchor="middle" class="lbl-b">run two layers</text>
+      <text x="470" y="218" text-anchor="middle" class="lbl-sm">assertions, then judge</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="580" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2"><rect x="600" y="55" width="35" height="60" rx="4"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="3 3"><rect x="645" y="55" width="35" height="60" rx="4"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.8"><path d="M690,70 L706,70 L706,100 L722,100" marker-end="url(#ahg)"/></g>
+      <text x="650" y="196" text-anchor="middle" class="lbl-b">prompt A/B</text>
+      <text x="650" y="218" text-anchor="middle" class="lbl-sm">watch scores move</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="760" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><path d="M790,55 A24,24 0 1 1 766,79" marker-end="url(#ahg)"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="3 3"><rect x="850" y="55" width="30" height="24" rx="4"/></g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4"><circle cx="820" cy="110" r="16"/></g>
+      <text x="830" y="196" text-anchor="middle" class="lbl-b">the baseline ritual</text>
+      <text x="830" y="218" text-anchor="middle" class="lbl-sm">no-RAG vs RAG, committed</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="940" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="985" cy="85" r="26"/><circle cx="985" cy="85" r="9"/></g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2"><rect x="1035" y="105" width="14" height="24"/><rect x="1055" y="90" width="14" height="39"/></g>
+      <text x="1010" y="196" text-anchor="middle" class="lbl-b">X-Ray, Evals lens</text>
+      <text x="1010" y="218" text-anchor="middle" class="lbl-sm">a scoreboard, live</text>
+    </g>
+  </svg>
+  <div class="pageno">M5·25</div>
 </section>
 </div></div>
 
@@ -819,7 +717,7 @@ footer, header, hgroup, main, menu, nav, section {
       if(!sec) return;
       var svg = sec.querySelector('svg');
       if(!svg) return;
-      var mh = 58;
+      var mh = sec.classList.contains('divider') ? 80 : 58;
       svg.style.maxHeight = mh + '%';
       var guard = 0;
       while (sec.scrollHeight > sec.clientHeight + 2 && mh > 18 && guard++ < 20){

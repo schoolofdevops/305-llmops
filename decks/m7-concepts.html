@@ -100,7 +100,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -143,31 +144,8 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 7 &nbsp;·&nbsp; SHIP THE MODEL — KITOPS, OCI ARTIFACTS &amp; SIGNING</p>
   <h2 class="t" style="font-size:1.55em">The model has been a loose file — this makes it an artifact you can prove</h2>
   <p class="s" style="font-size:1.15em">During an incident, a loose model file can't say which model it even is.</p>
-  <svg viewBox="0 0 1100 330" role="img" aria-label="A serving box holds one loose file, opsmate-tuned-q8_0.gguf, tagged a filename in a directory. Three unanswered questions float from it: what version, where from, and changed since. A gray dashed band names the fix: file becomes artifact — versioned, addressed, signed.">
-    <!-- serving box with the loose file -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="60" y="86" width="300" height="118" rx="13"/>
-    </g>
-    <text x="210" y="122" text-anchor="middle" class="lbl-b">serving box</text>
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
-      <rect x="90" y="138" width="240" height="46" rx="9"/>
-    </g>
-    <text x="210" y="167" text-anchor="middle" class="lbl-g">opsmate-tuned-q8_0.gguf</text>
-    <text x="210" y="228" text-anchor="middle" class="lbl-g">a filename in a directory</text>
-    <!-- three unanswered questions -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M360,120 L420,96" marker-end="url(#ahg)"/>
-      <path d="M360,145 L420,145" marker-end="url(#ahg)"/>
-      <path d="M360,170 L420,194" marker-end="url(#ahg)"/>
-    </g>
-    <text x="430" y="102" text-anchor="start" class="lbl">what version?</text>
-    <text x="430" y="151" text-anchor="start" class="lbl">where from?</text>
-    <text x="430" y="200" text-anchor="start" class="lbl">changed since?</text>
-    <!-- the fix band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="120" y="262" width="860" height="46" rx="10"/>
-    </g>
-    <text x="550" y="291" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">file → artifact</tspan> &nbsp;·&nbsp; versioned &nbsp;·&nbsp; addressed &nbsp;·&nbsp; signed</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A single loose sheet of paper drifts on the left; on the right a solid wooden crate sits sealed with a ribbon and wax stamp, a hanging tag attached, a curved arrow showing the paper becoming the crate.">
+    <image href="../img/decks/m7/title-file-to-artifact.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M7·01</div>
@@ -179,7 +157,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">1 &middot; Why a filename is not a version &mdash; the courier without a manifest</h2>
+  <h2 class="t">Why a Filename Is Not a Version</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A courier stands holding out a plain box with only a scribbled name tag on it, nothing else identifying what is inside.">
+    <image href="../img/decks/m7/divider-1-courier.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M7·03</div>
 </section>
 
@@ -234,56 +215,17 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">A proper parcel carries a manifest — label, tracking number, seal</h2>
   <p class="s">A parcel that travels carries a label, a tracking number, and a seal.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A green parcel in the centre carries three attached tags, each pointing to what it becomes for a model. Label of what's inside becomes versioned. Tracking number that names this parcel becomes addressed. Wax seal, opened yes or no, becomes signed. A band reads the name is for humans, the manifest is what a chain of hands can trust.">
-    <!-- the parcel with a manifest -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="70" y="120" width="160" height="130" rx="9"/>
-    </g>
-    <text x="150" y="108" text-anchor="middle" class="lbl-b">the parcel</text>
-    <text x="150" y="192" text-anchor="middle" class="lbl-g">+ manifest</text>
-    <!-- three tags -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
-      <path d="M230,150 L300,120" marker-end="url(#ah)"/>
-      <path d="M230,185 L300,185" marker-end="url(#ah)"/>
-      <path d="M230,220 L300,250" marker-end="url(#ah)"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="304" y="92" width="360" height="56" rx="9"/>
-      <rect x="304" y="158" width="360" height="56" rx="9"/>
-      <rect x="304" y="224" width="360" height="56" rx="9"/>
-    </g>
-    <text x="324" y="126" text-anchor="start" class="lbl"><tspan class="lbl-b">label</tspan> — what's inside</text>
-    <text x="324" y="192" text-anchor="start" class="lbl"><tspan class="lbl-b">tracking #</tspan> — names THIS parcel</text>
-    <text x="324" y="258" text-anchor="start" class="lbl"><tspan class="lbl-b">wax seal</tspan> — opened? y/n</text>
-    <!-- becomes -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M664,120 L742,120" marker-end="url(#ahg)"/>
-      <path d="M664,186 L742,186" marker-end="url(#ahg)"/>
-      <path d="M664,252 L742,252" marker-end="url(#ahg)"/>
-    </g>
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="746" y="92" width="300" height="56" rx="9"/>
-    </g>
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="746" y="158" width="300" height="56" rx="9"/>
-    </g>
-    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="746" y="224" width="300" height="56" rx="9"/>
-    </g>
-    <text x="896" y="126" text-anchor="middle" class="lbl-b">VERSIONED</text>
-    <text x="896" y="192" text-anchor="middle" class="lbl-b">ADDRESSED</text>
-    <text x="896" y="258" text-anchor="middle" class="lbl-b">SIGNED</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="150" y="300" width="800" height="44" rx="10"/>
-    </g>
-    <text x="550" y="328" text-anchor="middle" class="lbl-g">the name is for humans — the <tspan class="lbl-b">manifest</tspan> is what a chain of hands can trust</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A well-wrapped parcel shows three features up close: a label patch, a looping tracking tag, and a wax seal with ribbon across the flap.">
+    <image href="../img/decks/m7/analogy-manifest-parcel.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M7·05</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">2 &middot; What a model actually is on disk (one recap, not a re-teach)</h2>
+  <h2 class="t">What a Model Actually Is on Disk</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="An open crate on a table reveals four wrapped bundles of different sizes: one large heavy bundle and three small neat ones beside it.">
+    <image href="../img/decks/m7/divider-2-bundle.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M7·06</div>
 </section>
 
@@ -357,7 +299,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">3 &middot; OCI artifacts and layers &mdash; the shipping container with a manifest</h2>
+  <h2 class="t">What Is an OCI Artifact?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A standardized shipping container is lifted by a dockside gantry crane in a harbor, with a cargo ship and other cranes in the background.">
+    <image href="../img/decks/m7/divider-3-crane-container.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M7·09</div>
 </section>
 
@@ -398,42 +343,17 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Inside the artifact are layers — and the sizes are the whole point</h2>
   <p class="s">Inside are separately-addressed layers — read the sizes, they're the point.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A manifest header names each layer by digest, media type, and size, over three horizontal bars drawn to scale: a long blue model layer of about 610 megabytes, the heavy crate; a tiny green dataset layer of about 16 kilobytes, the golden set; and a tiny green code layer of about 5 kilobytes, the prompts. Because each is separately addressed you can take one crate off the ship. A band reads not one opaque blob, a set of digest-addressed layers.">
-    <!-- outer container -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="40" y="52" width="1020" height="212" rx="13"/>
-    </g>
-    <text x="150" y="82" text-anchor="middle" class="lbl-b">OCI artifact</text>
-    <!-- manifest header -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 6">
-      <rect x="64" y="96" width="972" height="36" rx="8"/>
-    </g>
-    <text x="550" y="121" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">manifest</tspan> — names each layer by digest · media type · size</text>
-    <!-- size bars (to scale) — blue heavy model crate dwarfs the green KB crates -->
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
-      <rect x="64" y="144" width="820" height="40" rx="7"/>
-    </g>
-    <text x="80" y="170" text-anchor="start" class="lbl-b">model layer  ~610 MB</text>
-    <text x="892" y="170" text-anchor="start" class="lbl-g">the heavy crate</text>
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#757575" stroke-width="2.2">
-      <rect x="64" y="192" width="30" height="26" rx="5"/>
-    </g>
-    <text x="104" y="212" text-anchor="start" class="lbl-g">dataset layer ~16 KB — golden set</text>
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#757575" stroke-width="2.2">
-      <rect x="64" y="226" width="20" height="26" rx="5"/>
-    </g>
-    <text x="94" y="246" text-anchor="start" class="lbl-g">code layer ~5 KB — prompts</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="140" y="292" width="820" height="42" rx="10"/>
-    </g>
-    <text x="550" y="319" text-anchor="middle" class="lbl-g">not one opaque blob — a set of <tspan class="lbl-b">digest-addressed layers</tspan></text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="An open shipping container reveals crates of very different sizes inside: one huge heavy crate and two small crates tucked beside it.">
+    <image href="../img/decks/m7/analogy-layers-crates.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M7·11</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">4 &middot; ModelKit and the Kitfile &mdash; a Dockerfile for models</h2>
+  <h2 class="t">What Is a ModelKit? (The Kitfile Explained)</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand-drawn recipe or blueprint card leans against a sealed wooden crate, with a pencil resting beside it.">
+    <image href="../img/decks/m7/divider-4-recipe-crate.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M7·12</div>
 </section>
 
@@ -561,7 +481,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">5 &middot; Push, pull, and the crate you actually want</h2>
+  <h2 class="t">What Is Selective Pull in OCI Artifacts?</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A dockside crane lifts exactly one small crate off a large stack of crates, leaving the rest of the stack undisturbed.">
+    <image href="../img/decks/m7/divider-5-selective-lift.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M7·16</div>
 </section>
 
@@ -611,7 +534,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">6 &middot; Signing &mdash; the wax seal, not the locked box</h2>
+  <h2 class="t">How Model Signing Works (Cosign and Sigstore)</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A close-up of a hand pressing a signet ring into a blob of wax on a ribbon-wrapped letter, the seal impression visible mid-press.">
+    <image href="../img/decks/m7/divider-6-wax-seal.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M7·18</div>
 </section>
 
@@ -756,7 +682,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">7 &middot; Semver for models &mdash; edition numbers on a textbook</h2>
+  <h2 class="t">How to Version Models with Semantic Versioning</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Three stacked textbooks side by side, each visually distinct: a new edition with a different cover, a revised printing with a fresh band, and a corrected reprint with a small corner sticker.">
+    <image href="../img/decks/m7/divider-7-textbook-editions.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M7·22</div>
 </section>
 
@@ -829,7 +758,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">8 &middot; The two-tags story &mdash; the registry records history, not just winners</h2>
+  <h2 class="t">The Two-Tags Pattern &mdash; Versioning a Model That Lost</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Two parcels sit side by side on a shelf: the left one fully sealed with a wax stamp and ribbon, the right one open-flapped and unsealed.">
+    <image href="../img/decks/m7/divider-8-two-parcels.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M7·25</div>
 </section>
 
@@ -896,7 +828,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">9 &middot; The registry options &mdash; Zot here, others in production</h2>
+  <h2 class="t">OCI Registries for Models &mdash; Zot, Harbor, and Hugging Face Hub</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A wide harbor scene shows the same standardized shipping container being loaded by crane onto three different docked ships at separate piers.">
+    <image href="../img/decks/m7/divider-9-harbor-multi.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M7·28</div>
 </section>
 
@@ -958,30 +893,65 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 7 &nbsp;·&nbsp; SHIP THE MODEL — KITOPS, OCI ARTIFACTS &amp; SIGNING</p>
   <h2 class="t" style="font-size:2.05em">The loose file is gone — M8's cluster pulls this signed, versioned kit</h2>
   <p class="s">The file is now an artifact with three properties you can prove.</p>
-  <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One: versioned — semver plus the candidate suffix, read what changed without diffing. Two: addressed — an OCI artifact of layers, digest-addressed, on rails your images already ride. Three: signed — a wax seal verified before deploy, base signed, candidate blocked. Below, an arrow to M8: the cluster pulls opsmate/model 1.0.0, verifies the signature, and serves it. A footline reads the loose file is gone, now open Module 7 Lab.">
-    <!-- row 1 -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>
-    <text x="90" y="51" text-anchor="middle" class="num">1</text>
-    <text x="130" y="36" text-anchor="start" class="lbl-b">VERSIONED</text>
-    <text x="130" y="62" text-anchor="start" class="lbl-g">semver + the -candidate suffix — read what changed without diffing</text>
-    <!-- row 2 -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="108" r="22"/></g>
-    <text x="90" y="117" text-anchor="middle" class="num">2</text>
-    <text x="130" y="102" text-anchor="start" class="lbl-b">ADDRESSED</text>
-    <text x="130" y="128" text-anchor="start" class="lbl-g">an OCI artifact of layers, digest-addressed, on rails your images already ride</text>
-    <!-- row 3 -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="174" r="22"/></g>
-    <text x="90" y="183" text-anchor="middle" class="num">3</text>
-    <text x="130" y="168" text-anchor="start" class="lbl-b">SIGNED</text>
-    <text x="130" y="194" text-anchor="start" class="lbl-g">a wax seal verified before deploy — base signed, candidate blocked</text>
-    <!-- M8 hand-off arrow -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
-      <path d="M130,236 L190,236" marker-end="url(#ah)"/>
-    </g>
-    <text x="600" y="242" text-anchor="middle" class="lbl">→ <tspan class="lbl-b">M8</tspan>: the cluster pulls opsmate/model:1.0.0, verifies the signature, serves it</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="The sealed wooden crate now rests firmly on a loading dock beside a cargo ship gangway, ribbon and wax seal clearly visible, looking settled and arrived.">
+    <image href="../img/decks/m7/closing-crate-arrived.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">the loose file is gone &nbsp;·&nbsp; now open <b>Module 7 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
   <div class="pageno">M7·30</div>
+</section>
+
+<section>
+  <h2 class="t">Next: Pack the Kit, Sign the Base, and Watch the Gate Work</h2>
+  <p class="s">The same command that seals this artifact is the one M8 turns into an admission gate.</p>
+  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: the Zot registry joins the compose stack; the Kitfile is written and packed, hitting the absolute-path error on purpose; both tags are pushed, the base signed and the candidate not; a filtered unpack pulls back just the prompts layer by digest; the base is signed, verified, and the unsigned candidate is blocked by the gate; and the result is read through the Artifacts lens in the X-Ray tool.">
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="40" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.2"><rect x="70" y="75" width="60" height="45" rx="5"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><circle cx="118" cy="83" r="4"/></g>
+      <text x="110" y="196" text-anchor="middle" class="lbl-b">add the registry</text>
+      <text x="110" y="218" text-anchor="middle" class="lbl-sm">Zot joins the stack</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="220" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="65" y="60" width="35" height="50" rx="4"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><path d="M72,72 L92,72"/><path d="M72,82 L92,82"/><path d="M72,92 L85,92"/></g>
+      <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.2"><rect x="110" y="80" width="30" height="30" rx="4"/></g>
+      <text x="290" y="196" text-anchor="middle" class="lbl-b">write and pack the Kitfile</text>
+      <text x="290" y="218" text-anchor="middle" class="lbl-sm">hit the absolute-path error on purpose</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="400" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.2"><rect x="65" y="60" width="35" height="45" rx="4"/></g>
+      <text x="82" y="90" text-anchor="middle" class="lbl-good">&#10003;</text>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><rect x="110" y="60" width="35" height="45" rx="4"/></g>
+      <text x="127" y="90" text-anchor="middle" class="lbl-g">&#10005;</text>
+      <text x="470" y="196" text-anchor="middle" class="lbl-b">push both tags</text>
+      <text x="470" y="218" text-anchor="middle" class="lbl-sm">base signed, candidate not</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="580" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round"><path d="M70,55 L120,55 L120,70"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2"><rect x="106" y="70" width="28" height="24" rx="3"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><rect x="65" y="100" width="30" height="20" rx="3"/><rect x="100" y="105" width="30" height="20" rx="3"/></g>
+      <text x="650" y="196" text-anchor="middle" class="lbl-b">pull just the prompts</text>
+      <text x="650" y="218" text-anchor="middle" class="lbl-sm">selective, by digest</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="760" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="100" cy="80" r="20"/><circle cx="100" cy="80" r="7"/></g>
+      <text x="100" y="112" text-anchor="middle" class="lbl-good">&#10003;</text>
+      <text x="830" y="196" text-anchor="middle" class="lbl-b">sign, verify, gate</text>
+      <text x="830" y="218" text-anchor="middle" class="lbl-sm">unsigned candidate blocked</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="940" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="95" cy="80" r="22"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><path d="M111,96 L128,113"/></g>
+      <text x="1010" y="196" text-anchor="middle" class="lbl-b">read it in X-Ray</text>
+      <text x="1010" y="218" text-anchor="middle" class="lbl-sm">Artifacts lens</text>
+    </g>
+  </svg>
+  <div class="pageno">M7·31</div>
 </section>
 
 </div></div>
@@ -1020,7 +990,7 @@ footer, header, hgroup, main, menu, nav, section {
       if(!sec) return;
       var svg = sec.querySelector('svg');
       if(!svg) return;
-      var mh = 58;
+      var mh = sec.classList.contains('divider') ? 80 : 58;
       svg.style.maxHeight = mh + '%';
       var guard = 0;
       while (sec.scrollHeight > sec.clientHeight + 2 && mh > 18 && guard++ < 20){

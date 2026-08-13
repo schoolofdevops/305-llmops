@@ -100,7 +100,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -143,31 +144,8 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 9 &nbsp;·&nbsp; SERVING PATTERNS — CANARY A MODEL ON QUALITY, NOT CRASHES</p>
   <h2 class="t" style="font-size:1.55em">Two versions, one production — ship without betting the house</h2>
   <p class="s" style="font-size:1.12em">Two versions, one production — and the obvious move breaks expensively.</p>
-  <svg viewBox="0 0 1100 330" role="img" aria-label="A production frame with one door. Two version tags approach it: base 1.0.0, inked, already inside, and candidate, gray, waiting outside. A gray dashed band beneath names the naive move and its cost: swap the tag and every user is on a model only ever measured in staging.">
-    <!-- production frame with one door -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="360" y="60" width="380" height="150" rx="14"/>
-    </g>
-    <text x="550" y="96" text-anchor="middle" class="lbl-b">production</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="480" y="120" width="140" height="72" rx="9"/>
-    </g>
-    <text x="550" y="162" text-anchor="middle" class="lbl">one door</text>
-    <!-- base already inside — signed, serving (green) -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="150" y="104" width="176" height="64" rx="10"/></g>
-    <text x="238" y="132" text-anchor="middle" class="lbl-b">base 1.0.0</text>
-    <text x="238" y="156" text-anchor="middle" class="lbl-g">signed, serving</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M326,136 L474,136" marker-end="url(#ah)"/></g>
-    <!-- candidate waiting — unproven, wants in (orange) -->
-    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="774" y="104" width="176" height="64" rx="10"/></g>
-    <text x="862" y="132" text-anchor="middle" class="lbl">candidate</text>
-    <text x="862" y="156" text-anchor="middle" class="lbl-g">wants in — how?</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M770,136 L626,136" marker-end="url(#ahg)"/></g>
-    <!-- band: the naive move -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="150" y="256" width="800" height="50" rx="10"/>
-    </g>
-    <text x="550" y="287" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">swap the tag</tspan> &nbsp;→&nbsp; every user on a model only ever measured in staging</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Two identical crates on a loading dock approach a single open gate, one crate slightly ahead of the other.">
+    <image href="../img/decks/m9/title-two-versions-one-gate.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M9·01</div>
@@ -175,6 +153,9 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">Why a Staging Pass Isn&rsquo;t Enough</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A rubber stamp presses an approval mark onto a paper, while a small hidden crack peeks out from underneath it.">
+    <image href="../img/decks/m9/divider-0-stamp-hidden-crack.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M9·02</div>
 </section>
 
@@ -217,7 +198,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">1 · The new cook shadowing — one table in ten, and the manager tastes the food</h2>
+  <h2 class="t">The Canary Pattern for Model Rollouts</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A row of plated dishes on a kitchen pass, with a spoon reaching in to taste the one plate set apart from the rest.">
+    <image href="../img/decks/m9/divider-1-plates-taste-test.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M9·04</div>
 </section>
 
@@ -284,7 +268,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">2 · The router and the split — how two versions live behind one address</h2>
+  <h2 class="t">Routing Traffic Between Two Model Versions With nginx</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A railway switch splits a single track into two diverging tracks, one narrower than the other.">
+    <image href="../img/decks/m9/divider-2-rail-switch.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M9·07</div>
 </section>
 
@@ -453,7 +440,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">3 · Reading a split honestly — you cannot judge a coin from three flips</h2>
+  <h2 class="t">Reading a Traffic Split Honestly</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A small stack of three coins all showing heads sits beside a much larger scattered pile of a hundred coins showing a natural mix.">
+    <image href="../img/decks/m9/divider-3-coin-flips.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M9·13</div>
 </section>
 
@@ -497,7 +487,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">4 · The quality gate — the yardstick that rejected it in M6 gets to kill it in production</h2>
+  <h2 class="t">The Quality Gate — Golden Set Decides Promotion or Rollback</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A tollgate arm blocks a path, with a measuring ruler leaning against the gate post beside it.">
+    <image href="../img/decks/m9/divider-4-tollgate-ruler.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M9·15</div>
 </section>
 
@@ -576,7 +569,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">5 · Staged promotion — the new driver does not get the school van on day one</h2>
+  <h2 class="t">Staged Promotion — Climbing the Traffic Ladder</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A plain delivery van and a school van parked side by side, with a small staircase of ascending steps between them.">
+    <image href="../img/decks/m9/divider-5-two-vans-ladder.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M9·18</div>
 </section>
 
@@ -614,7 +610,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">6 · When the router is not enough — KServe, and the frontier</h2>
+  <h2 class="t">Beyond nginx — KServe and Inference-Aware Routing</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A small simple box sits beside a much taller, more elaborate multi-tiered tower with antennas, showing a jump in complexity.">
+    <image href="../img/decks/m9/divider-6-tower-vs-box.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M9·20</div>
 </section>
 
@@ -725,7 +724,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">7 · The decision tree — the one artifact to keep</h2>
+  <h2 class="t">The Serving Decision Tree</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A wooden signpost with four arrows pointing in different directions, planted at a crossroads.">
+    <image href="../img/decks/m9/divider-7-signpost-forks.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M9·24</div>
 </section>
 
@@ -761,7 +763,10 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">8 · Where this leaves OpsMate — and the seam to M10</h2>
+  <h2 class="t">Where This Leaves OpsMate</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A fully open gate with light streaming through, and a small magnifying glass watching over it.">
+    <image href="../img/decks/m9/divider-8-gate-light-eye.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M9·26</div>
 </section>
 
@@ -800,31 +805,61 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 9 &nbsp;·&nbsp; SERVING PATTERNS — CANARY A MODEL ON QUALITY, NOT CRASHES</p>
   <h2 class="t" style="font-size:2.05em">OpsMate v2.0 can change what it serves safely</h2>
   <p class="s">You promote or roll back on data, not the absence of a crash.</p>
-  <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One, a probe cannot taste the food: 1/1 Running is a crash signal, not a quality signal. Two, the golden set kills the canary: the M5 and M6 yardstick decides promotion on data, not crashes. Three, climb the ladder only as far as forced: Deployment to router to KServe to llm-d, the decision tree. Below, an arrow to M10: observability, traces and metrics, so you can canary what you can now observe. A footline reads OpsMate is v2.0, a safe way to change what it serves, now open Module 9 Lab.">
-    <!-- row 1 -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>
-    <text x="90" y="51" text-anchor="middle" class="num">1</text>
-    <text x="130" y="36" text-anchor="start" class="lbl-b">A PROBE CANNOT TASTE THE FOOD</text>
-    <text x="130" y="62" text-anchor="start" class="lbl-g">1/1 Running is a crash signal, not a quality signal</text>
-    <!-- row 2 -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="108" r="22"/></g>
-    <text x="90" y="117" text-anchor="middle" class="num">2</text>
-    <text x="130" y="102" text-anchor="start" class="lbl-b">THE GOLDEN SET KILLS THE CANARY</text>
-    <text x="130" y="128" text-anchor="start" class="lbl-g">the M5/M6 yardstick decides promotion on data, not crashes</text>
-    <!-- row 3 -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="174" r="22"/></g>
-    <text x="90" y="183" text-anchor="middle" class="num">3</text>
-    <text x="130" y="168" text-anchor="start" class="lbl-b">CLIMB THE LADDER ONLY AS FAR AS FORCED</text>
-    <text x="130" y="194" text-anchor="start" class="lbl-g">Deployment → router → KServe → llm-d — the decision tree</text>
-    <!-- M10 hand-off arrow -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
-      <path d="M130,236 L190,236" marker-end="url(#ah)"/>
-    </g>
-    <text x="600" y="242" text-anchor="middle" class="lbl">→ <tspan class="lbl-b">M10</tspan>: observability — traces + metrics, so you can canary what you can now observe</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Two crates sitting just past an open gate, one marked with a checkmark and the other marked with an X.">
+    <image href="../img/decks/m9/closing-two-boxes-check-x.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">OpsMate is <b>v2.0</b> — a safe way to change what it serves &nbsp;·&nbsp; now open <b>Module 9 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
   <div class="pageno">M9·28</div>
 </section>
+<section>
+  <h2 class="t">Next: Watch the Split, Trust the Gate, Climb the Ladder</h2>
+  <p class="s">You promote or roll back on what the golden set says, not on whether the pod stayed up.</p>
+  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: the canary backend and nginx router come up; the response header names which backend answered; the sample-size trap is proven with 20 then 100 requests; the quality gate runs and prints ROLLBACK; the promote ladder is climbed at 10, 50, and 100 percent; and the result is read through the decision tree and the live split in X-Ray.">
+    <g class="fragment" transform="translate(40,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="20" y="75" width="35" height="40" rx="4"/><rect x="85" y="75" width="35" height="40" rx="4"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2"><path d="M55,90 L85,90"/><path d="M70,60 L70,90"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">stand up canary + router</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">nginx in front of two backends</text>
+    </g>
+    <g class="fragment" transform="translate(220,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="45" y="65" width="50" height="35" rx="4"/></g>
+      <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2"><rect x="55" y="105" width="30" height="14" rx="3"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">watch the header</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">X-Served-By names the backend</text>
+    </g>
+    <g class="fragment" transform="translate(400,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="45" cy="90" r="14"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><circle cx="80" cy="75" r="9"/><circle cx="100" cy="75" r="9"/><circle cx="90" cy="95" r="9"/><circle cx="70" cy="100" r="9"/><circle cx="105" cy="100" r="9"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">prove the sample trap</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">20 requests, then 100</text>
+    </g>
+    <g class="fragment" transform="translate(580,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="70" cy="90" r="24"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M50,70 L90,110"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">run the gate</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">ROLLBACK — this candidate lost</text>
+    </g>
+    <g class="fragment" transform="translate(760,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="25" y="100" width="25" height="15" rx="2"/><rect x="58" y="80" width="25" height="35" rx="2"/><rect x="91" y="58" width="25" height="57" rx="2"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">climb the ladder</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">10% then 50% then 100%, measure each rung</text>
+    </g>
+    <g class="fragment" transform="translate(940,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="65" cy="80" r="22"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><path d="M81,96 L98,113"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">read it in X-Ray</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">decision tree + live split</text>
+    </g>
+  </svg>
+  <div class="pageno">M9·29</div>
+</section>
+
 </div></div>
 <script>/* reveal.js 5.x (inlined) */
 /*!
@@ -860,7 +895,7 @@ footer, header, hgroup, main, menu, nav, section {
       if(!sec) return;
       var svg = sec.querySelector('svg');
       if(!svg) return;
-      var mh = 58;
+      var mh = sec.classList.contains('divider') ? 80 : 58;
       svg.style.maxHeight = mh + '%';
       var guard = 0;
       while (sec.scrollHeight > sec.clientHeight + 2 && mh > 18 && guard++ < 20){

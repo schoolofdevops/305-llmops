@@ -100,7 +100,8 @@ footer, header, hgroup, main, menu, nav, section {
   /* subtitle sits BELOW the visual (founder, 2026-07-25) — flex order, no markup change */
   .reveal .kicker{ order:0; } .reveal h2.t{ order:1; } .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider svg{ order:1; }
   .reveal svg{ order:2; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
   .reveal .credit{ order:4; }
@@ -153,31 +154,8 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 8 &nbsp;·&nbsp; SERVING ON KUBERNETES — CAPACITY, THE ARTIFACT CHAIN &amp; PROBES</p>
   <h2 class="t" style="font-size:1.8em">The platform team hands you a namespace and three questions</h2>
   <p class="s" style="font-size:1.12em">Three ordinary questions — and one service that breaks every reflex you have.</p>
-  <svg viewBox="0 0 1100 330" role="img" aria-label="A gray platform-team figure hands a namespace frame across to you. Inside the namespace three question tags float: replicas, memory limit, and probes. A gray dashed band beneath names the one fact that changes every answer: about forty seconds to load 610 megabytes, dead until ready, then fine.">
-    <!-- platform team hands over a namespace -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="92" cy="120" r="26"/></g>
-    <text x="92" y="176" text-anchor="middle" class="lbl-g">platform team</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M126,120 L182,120" marker-end="url(#ah)"/>
-    </g>
-    <!-- the namespace frame with three question tags -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="200" y="52" width="720" height="150" rx="14"/>
-    </g>
-    <text x="560" y="86" text-anchor="middle" class="lbl-b">your namespace</text>
-    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="238" y="108" width="200" height="64" rx="10"/>
-      <rect x="460" y="108" width="200" height="64" rx="10"/>
-      <rect x="682" y="108" width="200" height="64" rx="10"/>
-    </g>
-    <text x="338" y="148" text-anchor="middle" class="lbl">replicas?</text>
-    <text x="560" y="148" text-anchor="middle" class="lbl">memory limit?</text>
-    <text x="782" y="148" text-anchor="middle" class="lbl">probes?</text>
-    <!-- the one fact that changes every answer -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="150" y="256" width="800" height="50" rx="10"/>
-    </g>
-    <text x="550" y="287" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">~40 s to load 610 MB</tspan> &nbsp;→&nbsp; dead until ready, then fine</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="An open doorway with three large question marks floating above it, representing the three numbers the platform team wants before a model server can deploy.">
+    <image href="../img/decks/m8/title-three-questions.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M8·01</div>
@@ -186,6 +164,9 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ DIVIDER · INTRO ═══════════════ -->
 <section class="divider">
   <h2 class="t">Why Every Serving Reflex Needs Re-Deriving</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A compass needle spins past the ordinary directions before settling on a new heading, showing every normal serving reflex has to be re-derived for a model server.">
+    <image href="../img/decks/m8/divider-0-reflex-compass.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M8·02</div>
 </section>
 
@@ -235,7 +216,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ DIVIDER · SECTION 1 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">1 &middot; Capacity first — book the hall before you sign the contract</h2>
+  <h2 class="t">Kubernetes Capacity Planning for a Model Server</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A rolled guest list with tally marks sits beside the open doorway of an empty banquet hall with round tables inside, echoing counting the guests before booking the hall.">
+    <image href="../img/decks/m8/divider-1-wedding-hall.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M8·04</div>
 </section>
 
@@ -405,7 +389,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ DIVIDER · SECTION 2 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">2 &middot; An isolated kubeconfig — a visitor badge, not the master key</h2>
+  <h2 class="t">Isolating Cluster Access With Your Own Kubeconfig</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A small visitor-badge lanyard sits beside a large ornate master key, contrasting a scoped credential with the key that opens every door.">
+    <image href="../img/decks/m8/divider-2-visitor-badge-key.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M8·09</div>
 </section>
 
@@ -465,7 +452,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ DIVIDER · SECTION 3 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">3 &middot; Getting the model into the pod — four patterns, one chosen</h2>
+  <h2 class="t">Getting a Model Into the Pod &mdash; Four Delivery Patterns</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Four conveyor paths each carrying a crate converge on a single pod-shaped box, with one path marked by a checkmark as the chosen route.">
+    <image href="../img/decks/m8/divider-3-four-roads-pod.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M8·11</div>
 </section>
 
@@ -515,7 +505,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ DIVIDER · SECTION 4 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">4 &middot; The artifact chain — the advance man who sets the stage</h2>
+  <h2 class="t">The initContainer Artifact Chain</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A stage-crew roadie sets up a microphone stand on an empty stage before the show, standing in for the initContainer preparing everything before the serving container arrives.">
+    <image href="../img/decks/m8/divider-4-advance-man.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M8·13</div>
 </section>
 
@@ -577,35 +570,8 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">The PVC means a restart is not a re-pull — and a version bump is just a tag</h2>
   <p class="s">The model lives on a PVC, so it survives a restart and a version is just a tag.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, restart is not a re-pull: a PVC crate holds the model, drawn blue and persistent, while the server process cycles above it; a red crossed-out arrow shows the 610 megabyte re-pull that does NOT happen; the initContainer guards — if the GGUF is already there, it skips the pull. Right, a version bump is a tag: the manifest stays fixed while the image tag flips from 1.0.0 to 1.1.0, arrowing to a fresh green deploy. A band reads the PVC keeps the model across restarts, the tag makes the version a deploy-time choice.">
-    <!-- LEFT: restart != re-pull -->
-    <text x="270" y="34" text-anchor="middle" class="lbl-b">RESTART ≠ RE-PULL</text>
-    <!-- server process cycling -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="120" y="56" width="300" height="52" rx="10"/></g>
-    <text x="270" y="88" text-anchor="middle" class="lbl">server process — restarts</text>
-    <!-- PVC persistent (blue) -->
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3"><rect x="120" y="150" width="300" height="72" rx="11"/></g>
-    <text x="270" y="182" text-anchor="middle" class="lbl-b">PVC — the model stays</text>
-    <text x="270" y="208" text-anchor="middle" class="lbl-g">not a throwaway emptyDir</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M270,108 L270,148" marker-end="url(#ahg)"/></g>
-    <!-- crossed-out re-pull (red) -->
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="120" y="244" width="300" height="44" rx="9"/></g>
-    <text x="270" y="271" text-anchor="middle" class="lbl-g">re-pull 610 MB</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M130,282 L410,250"/></g>
-    <text x="270" y="312" text-anchor="middle" class="lbl-g">initContainer guards: already there → skip the pull</text>
-    <!-- RIGHT: version bump = a tag -->
-    <text x="820" y="34" text-anchor="middle" class="lbl-b">VERSION BUMP = A TAG</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="600" y="70" width="200" height="120" rx="11"/></g>
-    <text x="700" y="120" text-anchor="middle" class="lbl-b">the manifest</text>
-    <text x="700" y="150" text-anchor="middle" class="lbl-g">unchanged</text>
-    <!-- tag flips -->
-    <text x="700" y="230" text-anchor="middle" class="lbl-g">tag: <tspan class="lbl-b">1.0.0 → 1.1.0</tspan></text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M804,130 L860,130" marker-end="url(#ah)"/></g>
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="864" y="98" width="196" height="64" rx="11"/></g>
-    <text x="962" y="126" text-anchor="middle" class="lbl-b">new version</text>
-    <text x="962" y="150" text-anchor="middle" class="lbl-g">deployed</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="320" width="800" height="16" rx="8"/></g>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A storage disk sits steadily on a shelf while a restart arrow spins beside it, showing the model staying in place on the volume through a restart.">
+    <image href="../img/decks/m8/analogy-pvc-restart.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M8·15</div>
 </section>
@@ -642,7 +608,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ DIVIDER · SECTION 5 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">5 &middot; The two-paths registry lesson — the wall you will hit on purpose</h2>
+  <h2 class="t">The localhost Trap and the hostAliases Fix</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A brick wall blocks a straight path, with a detour signpost redirecting around it to a door on the other side, standing in for the localhost trap and the hostAliases fix around it.">
+    <image href="../img/decks/m8/divider-5-wall-detour.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M8·17</div>
 </section>
 
@@ -711,7 +680,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ DIVIDER · SECTION 6 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">6 &middot; Probes for a slow starter — the sound-check versus the show-must-go-on check</h2>
+  <h2 class="t">startupProbe, livenessProbe, and readinessProbe Explained</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="An empty stage with a microphone stand under a spotlight and a checklist leaning against it, standing in for the sound-check before the show goes on.">
+    <image href="../img/decks/m8/divider-6-soundcheck-stage.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M8·20</div>
 </section>
 
@@ -869,7 +841,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ DIVIDER · SECTION 7 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">7 &middot; The engine fork — stated honestly, no drama</h2>
+  <h2 class="t">llama-server vs vLLM &mdash; the Engine Fork</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A single road splits into two diverging paths, one plain and one more elaborate, standing in for the honest fork between the llama-server and vLLM engines.">
+    <image href="../img/decks/m8/divider-7-road-fork.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M8·25</div>
 </section>
 
@@ -950,31 +925,62 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="kicker">MODULE 8 &nbsp;·&nbsp; SERVING ON KUBERNETES — CAPACITY, THE ARTIFACT CHAIN &amp; PROBES</p>
   <h2 class="t" style="font-size:2.05em">OpsMate is v2.0 — M9 opens the door to many models</h2>
   <p class="s">OpsMate v2.0: the signed artifact, served by the cluster you sized for it.</p>
-  <svg viewBox="0 0 1100 300" role="img" aria-label="Three numbered takeaways. One, capacity derived: the three-term sum before the manifest, the limit from a worksheet not a template. Two, artifact chain: the initContainer pulls the signed 1.0.0 kit onto a PVC, the manifest unchanged across versions. Three, probes that protect: a startupProbe covers the 40-second load, a lenient liveness guards the steady state. Below, an arrow to M9: many models, one door — a gateway that routes without the client changing, plus autoscaling and GitOps. A footline reads OpsMate is v2.0, served by the cluster, now open Module 8 Lab.">
-    <!-- row 1 -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="42" r="22"/></g>
-    <text x="90" y="51" text-anchor="middle" class="num">1</text>
-    <text x="130" y="36" text-anchor="start" class="lbl-b">CAPACITY DERIVED</text>
-    <text x="130" y="62" text-anchor="start" class="lbl-g">the three-term sum before the manifest — the limit from a worksheet, not a template</text>
-    <!-- row 2 -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="108" r="22"/></g>
-    <text x="90" y="117" text-anchor="middle" class="num">2</text>
-    <text x="130" y="102" text-anchor="start" class="lbl-b">ARTIFACT CHAIN</text>
-    <text x="130" y="128" text-anchor="start" class="lbl-g">the initContainer pulls the signed 1.0.0 kit onto a PVC — the manifest unchanged across versions</text>
-    <!-- row 3 -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="174" r="22"/></g>
-    <text x="90" y="183" text-anchor="middle" class="num">3</text>
-    <text x="130" y="168" text-anchor="start" class="lbl-b">PROBES THAT PROTECT</text>
-    <text x="130" y="194" text-anchor="start" class="lbl-g">a startupProbe covers the 40 s load — a lenient liveness guards the steady state</text>
-    <!-- M9 hand-off arrow -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
-      <path d="M130,236 L190,236" marker-end="url(#ah)"/>
-    </g>
-    <text x="600" y="242" text-anchor="middle" class="lbl">→ <tspan class="lbl-b">M9</tspan>: many models, one door — a gateway that routes without the client changing, + autoscaling + GitOps</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="The same open doorway from the title slide, now with a bold checkmark above it instead of question marks, showing the namespace is filled and serving.">
+    <image href="../img/decks/m8/closing-namespace-served.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">OpsMate is <b>v2.0</b> — served by the cluster &nbsp;·&nbsp; now open <b>Module 8 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
   <div class="pageno">M8·28</div>
 </section>
+<section>
+  <h2 class="t">Next: Derive the Limit, Clear the Wall, and Watch the Pod Come Up</h2>
+  <p class="s">Every number on this manifest comes off a worksheet — none of it is copied.</p>
+  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: a lean KIND cluster spins up with its own isolated kubeconfig; the capacity worksheet derives the memory limit; the registry wall is cleared with hostAliases; the pod comes up as the initContainer carries the signed kit onto the volume; a bad liveness probe is applied on purpose, watched, and undone; and the result is read through the Cluster lens in X-Ray.">
+    <g class="fragment" transform="translate(40,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="35" y="70" width="70" height="50" rx="6"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2"><rect x="52" y="55" width="36" height="18" rx="3"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">spin up the cluster</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">isolated kubeconfig, KIND</text>
+    </g>
+    <g class="fragment" transform="translate(220,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><path d="M35,110 L50,70 L65,95 L80,55 L95,100"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><path d="M30,120 L110,120"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">work the worksheet</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">derive the memory limit</text>
+    </g>
+    <g class="fragment" transform="translate(400,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="25" y="70" width="35" height="45" rx="4"/><rect x="80" y="70" width="35" height="45" rx="4"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M60,92 L80,92" marker-end="url(#ahg)"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">clear the registry wall</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">hostAliases fix</text>
+    </g>
+    <g class="fragment" transform="translate(580,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.2"><rect x="45" y="80" width="50" height="35" rx="4"/></g>
+      <text x="70" y="104" text-anchor="middle" class="lbl-good">&#10003;</text>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">watch the pod come up</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">signed kit onto the volume</text>
+    </g>
+    <g class="fragment" transform="translate(760,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="70" cy="90" r="24"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M50,70 L90,110"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">break it, then fix it</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">bad liveness probe, then undo</text>
+    </g>
+    <g class="fragment" transform="translate(940,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="65" cy="80" r="22"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><path d="M81,96 L98,113"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">read it in X-Ray</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">initContainer vs hostPath timing</text>
+    </g>
+  </svg>
+  <div class="pageno">M8·29</div>
+</section>
+
 </div></div>
 <script>/* reveal.js 5.x (inlined) */
 /*!
@@ -1011,7 +1017,7 @@ footer, header, hgroup, main, menu, nav, section {
       if(!sec) return;
       var svg = sec.querySelector('svg');
       if(!svg) return;
-      var mh = 58;
+      var mh = sec.classList.contains('divider') ? 80 : 58;
       svg.style.maxHeight = mh + '%';
       var guard = 0;
       while (sec.scrollHeight > sec.clientHeight + 2 && mh > 18 && guard++ < 20){

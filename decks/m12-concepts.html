@@ -99,7 +99,8 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:0; font-size:2.2em; max-width:88%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
   .reveal .pageno{ position:absolute; bottom:14px; right:22px; font-size:.6em; color:#bdbdbd; }
@@ -143,28 +144,8 @@ footer, header, hgroup, main, menu, nav, section {
 <section data-auto-animate>
   <p class="kicker">MODULE 12 &nbsp;·&nbsp; GATEWAY, EVALS &amp; GUARDRAILS — TRUST</p>
   <h2 class="t" style="font-size:2.1em">Three weeks on call, no front door</h2>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Three incident cards on a desk: a nightly job looping over a weekend, a promotion that shipped a worse model with no test, and a support transcript with a name and phone leaking into a log. A gray label reads the model was fine, the door was missing.">
-    <!-- looping nightly-job card: orange = caution/in-between incident -->
-    <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><rect x="60" y="66" width="300" height="196" rx="14"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="60" y="66" width="300" height="196" rx="14"/></g>
-    <text x="210" y="102" text-anchor="middle" class="lbl-b">week 1</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M150,170 C150,140 270,140 270,170 C270,200 150,200 150,170" marker-end="url(#ah)"/></g>
-    <text x="210" y="176" text-anchor="middle" class="lbl-g" style="font-size:16px">nightly job</text>
-    <text x="210" y="234" text-anchor="middle" class="lbl-g">loops · shared key</text>
-    <!-- promotion card: red = the untested regression -->
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="400" y="66" width="300" height="196" rx="14"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="400" y="66" width="300" height="196" rx="14"/></g>
-    <text x="550" y="102" text-anchor="middle" class="lbl-b">week 2</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="490" y="140" width="120" height="40" rx="8"/><line x1="550" y1="180" x2="550" y2="212" marker-end="url(#ah)"/></g>
-    <text x="550" y="166" text-anchor="middle" class="lbl-g" style="font-size:16px">promoted</text>
-    <text x="550" y="234" text-anchor="middle" class="lbl-g">worse · untested</text>
-    <!-- PII-leak card: red = the data incident -->
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="740" y="66" width="300" height="196" rx="14"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="740" y="66" width="300" height="196" rx="14"/></g>
-    <text x="890" y="102" text-anchor="middle" class="lbl-b">week 3</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="800" y="140" width="80" height="46" rx="6"/><line x1="880" y1="163" x2="960" y2="163" marker-end="url(#ah)"/><rect x="960" y="146" width="34" height="46" rx="4"/></g>
-    <text x="840" y="169" text-anchor="middle" class="lbl-g" style="font-size:15px">name·ph#</text>
-    <text x="890" y="234" text-anchor="middle" class="lbl-g">into a shared log</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A building facade with a completely empty doorway opening, loose papers blowing through it.">
+    <image href="../img/decks/m12/title-doorless-entrance.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">the model was fine — the door was missing &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M12·01</div>
@@ -173,6 +154,9 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 2 · THE MISSING DOOR HAD FOUR BOLTS ═══════════════ -->
 <section class="divider">
   <h2 class="t">Trust Is Built at the Door</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A solid wooden door being hung on hinges into an empty doorway frame.">
+    <image href="../img/decks/m12/divider-0-door-installing.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M12·02</div>
 </section>
 
@@ -214,7 +198,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 3 · THE HOTEL FRONT DESK (organizing picture) ═══════════════ -->
 <section class="divider">
-  <h2 class="t">1 &middot; The gateway is a hotel front desk — one door, keys, tabs, house rules</h2>
+  <h2 class="t">The Gateway as OpsMate's Front Door</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A hotel reception desk with a bell and a rack of individual room keycards behind it.">
+    <image href="../img/decks/m12/divider-1-hotel-desk.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M12·04</div>
 </section>
 
@@ -285,7 +272,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 4 · VIRTUAL KEYS ARE ROOM KEYCARDS ═══════════════ -->
 <section class="divider">
-  <h2 class="t">2 &middot; Virtual keys are room keycards — identity and a limit, not a master key</h2>
+  <h2 class="t">Virtual Keys — Per-Consumer Identity and Budgets</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A rack of many individual keycards each in its own slot, beside one large ornate master key.">
+    <image href="../img/decks/m12/divider-2-keycard-rack.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M12·07</div>
 </section>
 
@@ -327,7 +317,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 5 · THE $0-COST LIE ═══════════════ -->
 <section class="divider">
-  <h2 class="t">3 &middot; The $0-cost lie — an open-bar tab nobody prices</h2>
+  <h2 class="t">The $0-Cost Lie</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A bar counter lined with bottles, with a completely blank chalkboard price list on the wall.">
+    <image href="../img/decks/m12/divider-3-empty-price-bar.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M12·09</div>
 </section>
 
@@ -425,7 +418,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 8 · CACHING IS THE BARISTA ═══════════════ -->
 <section class="divider">
-  <h2 class="t">4 &middot; Caching is the barista remembering the last order</h2>
+  <h2 class="t">Caching at the Gateway</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="An espresso machine with a cup of coffee already sitting finished beneath the spout.">
+    <image href="../img/decks/m12/divider-4a-espresso-ready.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M12·13</div>
 </section>
 
@@ -460,7 +456,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 9 · FALLBACK IS A SECOND BARISTA ═══════════════ -->
 <section class="divider">
-  <h2 class="t">5 &middot; Fallback is a second barista when the first walks out</h2>
+  <h2 class="t">Fallback at the Gateway</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Two identical espresso machines side by side, one dark and off, the other lit and brewing.">
+    <image href="../img/decks/m12/divider-4b-two-machines-standby.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M12·15</div>
 </section>
 
@@ -494,7 +493,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 10 · EVALS ARE THE BRAKE TEST ═══════════════ -->
 <section class="divider">
-  <h2 class="t">6 &middot; Evals are the brake test before the truck leaves the depot</h2>
+  <h2 class="t">Evals as a Promotion Gate</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A freight truck parked at a depot gate with a brake-testing ramp set up in front of its wheels.">
+    <image href="../img/decks/m12/divider-5-truck-brake-test.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M12·17</div>
 </section>
 
@@ -584,7 +586,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 13 · GUARDRAILS ARE AIRPORT SECURITY ═══════════════ -->
 <section class="divider">
-  <h2 class="t">7 &middot; Guardrails are airport security — misses and false alarms, both real</h2>
+  <h2 class="t">Guardrails as Classifiers</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="An airport security scanner archway with a conveyor belt of bins leading into it, empty of people.">
+    <image href="../img/decks/m12/divider-6-security-scanner.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M12·21</div>
 </section>
 
@@ -792,7 +797,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 20 · THE SPEND LENS ═══════════════ -->
 <section class="divider">
-  <h2 class="t">8 &middot; Reading spend as an operational surface — the Spend lens</h2>
+  <h2 class="t">Reading Spend as an Operational Surface</h2>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="An open ledger book full of rows of figures, with a magnifying glass hovering over one column.">
+    <image href="../img/decks/m12/divider-7-ledger-magnifier.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M12·29</div>
 </section>
 
@@ -834,7 +842,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 21 · CLOSING — OpsMate v3.0, a governed product ═══════════════ -->
 <!-- ═══════════════ SLIDE 22 · SIX THINGS YOU CARRY OUT (closing recap) ═══════════════ -->
 <section class="divider">
-  <h2 class="t">9 &middot; Where this leaves OpsMate — and the hand-off to M13</h2>
+  <h2 class="t">Where This Leaves OpsMate</h2>
   <div class="pageno">M12·31</div>
 </section>
 
@@ -878,26 +886,62 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t" style="font-size:1.85em">You built the door — next, let something walk through it</h2>
   <p class="s">The door you built is the safety envelope for an assistant that can act.</p>
-  <svg viewBox="0 0 1100 300" role="img" aria-label="The six-bolt door now stands open, with a bridge arrow to a small M13 agentic OpsMate stepping through it. A gray band reads the door you built is the safety envelope for an assistant that can act.">
-    <!-- the open door -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="360" y="60" width="230" height="170" rx="10"/></g>
-    <!-- the door panel swung open (angled) -->
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><path d="M360,60 L590,40 L590,250 L360,230 Z"/></g>
-    <text x="475" y="150" text-anchor="middle" class="lbl-b">the door — open</text>
-    <text x="475" y="176" text-anchor="middle" class="lbl-g" style="font-size:15px">keyed · priced · gated · guarded</text>
-    <!-- bridge to M13 stepping through -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><line x1="600" y1="145" x2="740" y2="145" marker-end="url(#ah)"/></g>
-    <text x="670" y="130" text-anchor="middle" class="lbl-g">walks through</text>
-    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="2.8"><rect x="760" y="102" width="220" height="86" rx="10"/></g>
-    <text x="870" y="140" text-anchor="middle" class="lbl-b">M13 · agentic OpsMate</text>
-    <text x="870" y="166" text-anchor="middle" class="lbl-g" style="font-size:15px">it acts — the door keeps it safe</text>
-    <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="200" y="250" width="700" height="26" rx="8"/></g>
-    <text x="550" y="269" text-anchor="middle" class="lbl-g">the door you built is the <tspan class="lbl-b">safety envelope</tspan> for an assistant that can act</text>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="The same building facade from the title, now with a solid front door fully installed and a warm glow through its window.">
+    <image href="../img/decks/m12/closing-solid-door.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">Now open <b>Module 12 · Lab</b>. &nbsp;·&nbsp; next: M13 makes OpsMate act — the door is its safety envelope &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
   <div class="pageno">M12·33</div>
 </section>
+<section>
+  <h2 class="t">Next: Mint the Keys, Trip the Gate, Read the Spend</h2>
+  <p class="s">A real front door — one you built with your own hands, and could defend in an audit.</p>
+  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: LiteLLM and Postgres stand up in front of the host model; virtual keys are minted and the zero-cost lie is caught and priced; caching and fallback are proven with a repeat request and a dead backend; the eval gate wires up and gate.sh runs against baseline.md; masking and injection detection are caught live and red-teamed; and the result is read through the X-Ray Spend lens.">
+    <g class="fragment" transform="translate(40,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.2"><rect x="45" y="65" width="50" height="50" rx="4"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><path d="M55,115 L55,130"/><path d="M85,115 L85,130"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">stand up the gateway</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">LiteLLM + Postgres in front of Ollama</text>
+    </g>
+    <g class="fragment" transform="translate(220,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="30" y="70" width="35" height="50" rx="4"/><rect x="75" y="70" width="35" height="50" rx="4"/></g>
+      <text x="47" y="100" text-anchor="middle" class="lbl-g">0</text>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">mint virtual keys</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">catch the zero-cost lie, price it</text>
+    </g>
+    <g class="fragment" transform="translate(400,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="55" cy="85" r="18"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M85,70 L110,70" marker-end="url(#ahg)"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">prove caching + fallback</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">repeat request, dead backend</text>
+    </g>
+    <g class="fragment" transform="translate(580,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="70" cy="90" r="24"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M70,90 L70,74"/><path d="M70,90 L82,96"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">wire up the eval gate</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">gate.sh against baseline.md</text>
+    </g>
+    <g class="fragment" transform="translate(760,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="45" y="60" width="20" height="50" rx="10"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><circle cx="90" cy="80" r="16"/><path d="M100,90 L112,102"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">catch masking + injection</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">red-team the guarded path</text>
+    </g>
+    <g class="fragment" transform="translate(940,0)">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="65" cy="80" r="22"/></g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><path d="M81,96 L98,113"/></g>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">read the Spend lens</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">who spent what, and from cache</text>
+    </g>
+  </svg>
+  <div class="pageno">M12·34</div>
+</section>
+
 </div></div>
 <script>/* reveal.js 5.x (inlined) */
 /*!
@@ -933,7 +977,7 @@ footer, header, hgroup, main, menu, nav, section {
       if(!sec) return;
       var svg = sec.querySelector('svg');
       if(!svg) return;
-      var mh = 58;
+      var mh = sec.classList.contains('divider') ? 80 : 58;
       svg.style.maxHeight = mh + '%';
       var guard = 0;
       while (sec.scrollHeight > sec.clientHeight + 2 && mh > 18 && guard++ < 20){

@@ -142,7 +142,7 @@ footer, header, hgroup, main, menu, nav, section {
 <div class="reveal"><div class="slides">
 <!-- ═══════════════ SLIDE 1 · TITLE — the reach gap, one step short ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 13 &nbsp;·&nbsp; AGENTIC BRIDGE &amp; CAPSTONE — BEYOND CHAT</p>
+  <p class="kicker">MODULE 13 &nbsp;·&nbsp; TOOL-CALLING AGENTS, MCP &amp; THE CAPSTONE</p>
   <h2 class="t" style="font-size:2.1em">One step short of what you want</h2>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A phone handset lying off the hook beside a computer terminal, a gap between the two.">
     <image href="../img/decks/m13/title-phone-vs-terminal.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
@@ -188,30 +188,30 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 3 · THE LADDER TEAMS ACTUALLY CLIMB ═══════════════ -->
 <section class="divider">
   <h2 class="t">The Agentic Ladder</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A tall wooden ladder leaning against a wall, its rungs suggesting a progression.">
-    <image href="../img/decks/m13/divider-1-four-rung-ladder.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A tall wooden ladder leaning against a wall, its steps suggesting a progression.">
+    <image href="../img/decks/m13/divider-1-four-level-ladder.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M13·04</div>
 </section>
 
 <section>
-  <h2 class="t">"Agentic" is a four-rung ladder</h2>
-  <p class="s">Four rungs, climbed one at a time — this module lands on rung three.</p>
+  <h2 class="t">"Agentic" is a four-level ladder</h2>
+  <p class="s">Four levels, climbed one at a time — this module lands on level three.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A four-step ascending staircase. Step one naive RAG from module four, step two agentic RAG, step three the tool-using agent this module highlighted, and a top step multi-agent labelled 303 drawn dashed as the next course.">
-    <!-- rung 1 -->
+    <!-- level 1 -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="270" width="230" height="60" rx="8"/></g>
     <text x="175" y="298" text-anchor="middle" class="lbl">naive RAG</text>
     <text x="175" y="320" text-anchor="middle" class="lbl-g" style="font-size:14px">M4 · always retrieve</text>
-    <!-- rung 2 -->
+    <!-- level 2 -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="300" y="205" width="230" height="60" rx="8"/></g>
     <text x="415" y="233" text-anchor="middle" class="lbl">agentic RAG</text>
     <text x="415" y="255" text-anchor="middle" class="lbl-g" style="font-size:14px">retrieval is a tool</text>
-    <!-- rung 3: this module, blue = studied -->
+    <!-- level 3: this module, blue = studied -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="540" y="140" width="230" height="60" rx="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="540" y="140" width="230" height="60" rx="8"/></g>
     <text x="655" y="168" text-anchor="middle" class="lbl-b">tool-using</text>
-    <text x="655" y="190" text-anchor="middle" class="lbl-g" style="font-size:14px">rung 3 · this module</text>
-    <!-- rung 4: multi-agent 303, purple + dashed = next course -->
+    <text x="655" y="190" text-anchor="middle" class="lbl-g" style="font-size:14px">level 3 · this module</text>
+    <!-- level 4: multi-agent 303, purple + dashed = next course -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="780" y="75" width="230" height="60" rx="8"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7"><rect x="780" y="75" width="230" height="60" rx="8"/></g>
     <text x="895" y="103" text-anchor="middle" class="lbl-b">multi-agent</text>
@@ -222,10 +222,10 @@ footer, header, hgroup, main, menu, nav, section {
   <div class="pageno">M13·05</div>
 </section>
 
-<!-- ═══════════════ SLIDE 4 · RUNG ONE — NAIVE RAG ALWAYS RETRIEVES ═══════════════ -->
+<!-- ═══════════════ SLIDE 4 · LEVEL ONE — NAIVE RAG ALWAYS RETRIEVES ═══════════════ -->
 <section>
   <h2 class="t">Naive RAG retrieves every single time</h2>
-  <p class="s">Even "2 + 2?" fires a retrieval — the rung up lets the model choose.</p>
+  <p class="s">Even "2 + 2?" fires a retrieval — the level up lets the model choose.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A question two plus two enters a box that always fires an embed then a vector-store lookup unconditionally, drawn in gray as wasted work. A dashed agentic-RAG branch shows the model deciding whether to retrieve at all.">
     <!-- question -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="120" width="150" height="64" rx="10"/></g>
@@ -238,13 +238,13 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="509" y="148" text-anchor="middle" class="lbl-g" style="font-size:16px">vector search</text>
     <text x="509" y="172" text-anchor="middle" class="lbl-g" style="font-size:14px">unconditional</text>
     <text x="400" y="230" text-anchor="middle" class="lbl-g">wasted retrieval — no judgment about <tspan font-style="italic">when</tspan></text>
-    <!-- agentic-RAG branch: blue = the rung up, dashed = you don't build it here -->
+    <!-- agentic-RAG branch: blue = the level up, dashed = you don't build it here -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="700" y="118" width="300" height="68" rx="10"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7"><rect x="700" y="118" width="300" height="68" rx="10"/></g>
     <text x="850" y="148" text-anchor="middle" class="lbl-b">agentic RAG</text>
     <text x="850" y="172" text-anchor="middle" class="lbl-g" style="font-size:15px">the model decides: call — or not</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="594" y1="100" x2="700" y2="130" marker-end="url(#ahg)"/></g>
-    <text x="650" y="92" text-anchor="middle" class="lbl-g" style="font-size:14px">rung up</text>
+    <text x="650" y="92" text-anchor="middle" class="lbl-g" style="font-size:14px">level up</text>
   </svg>
   <div class="pageno">M13·06</div>
 </section>
@@ -283,13 +283,13 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 6 · TWO FLAVORS — A FORM, OR A TOOL CALL ═══════════════ -->
 <section>
   <h2 class="t">Two flavors — the same machinery, two targets</h2>
-  <p class="s">One JSON schema, two targets: shape the whole reply, or shape a call.</p>
+  <p class="s">One JSON schema, two targets: structure the whole reply, or structure a call.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="One JSON-schema source feeds two boxes. Left: a whole-response schema producing an object with namespace, pod, and diagnosis fields. Right: the same machinery producing a tool call with a function name and arguments.">
     <!-- shared source: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="440" y="40" width="220" height="56" rx="10"/></g>
     <text x="550" y="75" text-anchor="middle" class="lbl-b">JSON schema</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="490" y1="96" x2="300" y2="150" marker-end="url(#ahg)"/><line x1="610" y1="96" x2="800" y2="150" marker-end="url(#ahg)"/></g>
-    <!-- left: whole-response schema, blue = data shape studied -->
+    <!-- left: whole-response schema, blue = data format studied -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="70" y="150" width="420" height="150" rx="12"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="150" width="420" height="150" rx="12"/></g>
     <text x="280" y="184" text-anchor="middle" class="lbl-b">structured output</text>
@@ -543,9 +543,9 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 15 · THE USB-C BEAT — A THREE-FIELD RENAME ═══════════════ -->
 <section>
   <h2 class="t">The USB-C beat is a three-field rename</h2>
-  <p class="s">The whole adapter is renaming three fields — MCP shape to OpenAI shape.</p>
-  <svg viewBox="0 0 1100 330" role="img" aria-label="Left card: the MCP tool shape with name, description, and inputSchema. Right card: the OpenAI shape with type function and function name description parameters. Three mapping arrows connect the matching fields through an adapter box drawn green as the trick that lands.">
-    <!-- MCP shape: blue -->
+  <p class="s">The whole adapter is renaming three fields — MCP format to OpenAI format.</p>
+  <svg viewBox="0 0 1100 330" role="img" aria-label="Left card: the MCP tool format with name, description, and inputSchema. Right card: the OpenAI format with type function and function name description parameters. Three mapping arrows connect the matching fields through an adapter box drawn green as the trick that lands.">
+    <!-- MCP format: blue -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="50" y="70" width="330" height="200" rx="12"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="50" y="70" width="330" height="200" rx="12"/></g>
     <text x="215" y="104" text-anchor="middle" class="lbl-b">MCP tool</text>
@@ -556,7 +556,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="470" y="140" width="160" height="60" rx="10"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="470" y="140" width="160" height="60" rx="10"/></g>
     <text x="550" y="176" text-anchor="middle" class="lbl-b">rename</text>
-    <!-- OpenAI shape: neutral -->
+    <!-- OpenAI format: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="720" y="70" width="330" height="200" rx="12"/></g>
     <text x="885" y="104" text-anchor="middle" class="lbl-b">OpenAI function</text>
     <text x="885" y="150" text-anchor="middle" class="lbl-g" style="font-size:16px">function.name</text>
@@ -573,7 +573,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">In production, MCP servers are containers</h2>
   <p class="s">A lab subprocess in production becomes a container — ship it as an image.</p>
-  <svg viewBox="0 0 1100 320" role="img" aria-label="Left: a stdio subprocess script on a laptop, fine for learning, drawn neutral. Right: the same server packaged as a signed container image — versioned, isolated, deployable — drawn blue as the artifact shape.">
+  <svg viewBox="0 0 1100 320" role="img" aria-label="Left: a stdio subprocess script on a laptop, fine for learning, drawn neutral. Right: the same server packaged as a signed container image — versioned, isolated, deployable — drawn blue as the artifact form.">
     <!-- lab: stdio script on a laptop, neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7"><rect x="70" y="80" width="380" height="180" rx="14"/></g>
     <text x="260" y="116" text-anchor="middle" class="lbl-b">in the lab</text>
@@ -583,7 +583,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- arrow -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="450" y1="170" x2="560" y2="170" marker-end="url(#ah)"/></g>
     <text x="505" y="156" text-anchor="middle" class="lbl-g" style="font-size:14px">production</text>
-    <!-- prod: container image, blue = the artifact shape -->
+    <!-- prod: container image, blue = the artifact form -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="580" y="80" width="450" height="180" rx="14"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="580" y="80" width="450" height="180" rx="14"/></g>
     <text x="805" y="116" text-anchor="middle" class="lbl-b">a container image</text>
@@ -854,7 +854,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="The same phone handset and terminal from the title, now connected by a solid coiled cable with no gap remaining.">
     <image href="../img/decks/m13/closing-phone-connected-terminal.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <p class="credit">You've earned your certificate. &nbsp;·&nbsp; The next rung is <b>303-agentops</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
+  <p class="credit">You've earned your certificate. &nbsp;·&nbsp; The next level is <b>303-agentops</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
   <div class="pageno">M13·32</div>
 </section>
 <section>

@@ -141,7 +141,7 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 1 · TITLE ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 9 &nbsp;·&nbsp; SERVING PATTERNS — CANARY A MODEL ON QUALITY, NOT CRASHES</p>
+  <p class="kicker">MODULE 9 &nbsp;·&nbsp; SERVING PATTERNS — CANARY ROUTING, KSERVE &amp; LLM-D</p>
   <h2 class="t" style="font-size:1.55em">Two versions, one production — ship without betting the house</h2>
   <p class="s" style="font-size:1.12em">Two versions, one production — and the obvious move breaks expensively.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="Two identical crates on a loading dock approach a single open gate, one crate slightly ahead of the other.">
@@ -580,16 +580,16 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">The new driver doesn't get the school van on day one</h2>
   <p class="s">Promotion climbs a gated ladder — 10 to 50 to 100 — never a single jump.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="Three ascending rungs of a ladder. Ten percent, the delivery van, cargo not children. Fifty percent, a light passenger route. One hundred percent, the school run, drawn heaviest at the top. Each rung is tagged gate on the golden set. A gray dashed down-arrow beside the ladder reads gate red, pull back a rung or to zero. A small new-driver figure climbs. A band reads staged promotion is a ladder, each rung gated on the golden set, each bounding how many users a bad version reaches.">
-    <!-- rung 1: 10% — tentative (orange) -->
+  <svg viewBox="0 0 1100 350" role="img" aria-label="Three ascending levels of a ladder. Ten percent, the delivery van, cargo not children. Fifty percent, a light passenger route. One hundred percent, the school run, drawn heaviest at the top. Each level is tagged gate on the golden set. A gray dashed down-arrow beside the ladder reads gate red, pull back a level or to zero. A small new-driver figure climbs. A band reads staged promotion is a ladder, each level gated on the golden set, each bounding how many users a bad version reaches.">
+    <!-- level 1: 10% — tentative (orange) -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4"><rect x="90" y="248" width="300" height="64" rx="10"/></g>
     <text x="240" y="278" text-anchor="middle" class="lbl-b">10% · delivery van</text>
     <text x="240" y="302" text-anchor="middle" class="lbl-g">low stakes — cargo, not children</text>
-    <!-- rung 2: 50% — proving (blue) -->
+    <!-- level 2: 50% — proving (blue) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6"><rect x="330" y="158" width="300" height="64" rx="10"/></g>
     <text x="480" y="188" text-anchor="middle" class="lbl-b">50% · passenger route</text>
     <text x="480" y="212" text-anchor="middle" class="lbl-g">held up under real conditions</text>
-    <!-- rung 3: 100% — earned it (green) -->
+    <!-- level 3: 100% — earned it (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="570" y="68" width="300" height="64" rx="10"/></g>
     <text x="720" y="98" text-anchor="middle" class="lbl-b">100% · the school run</text>
     <text x="720" y="122" text-anchor="middle" class="lbl-g">only after it has earned it</text>
@@ -603,7 +603,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- pull-back down-arrow -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7" stroke-linecap="round"><path d="M930,100 C980,160 980,240 930,300" marker-end="url(#ahg)"/></g>
     <text x="1006" y="204" text-anchor="middle" class="lbl-g">gate red →</text>
-    <text x="1006" y="228" text-anchor="middle" class="lbl-g">pull back a rung</text>
+    <text x="1006" y="228" text-anchor="middle" class="lbl-g">pull back a level</text>
     <text x="1006" y="252" text-anchor="middle" class="lbl-g">(or → 0)</text>
   </svg>
   <div class="pageno">M9·19</div>
@@ -735,20 +735,20 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Four patterns, one choice — the decision tree you keep</h2>
   <p class="s">Capability against dependency cost — climb only as far as forced.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A four-rung ladder ascending left to right against a cost axis. Rung one: Deployment plus Service, M8, one version, no extra dependencies. Rung two: router plus canary, M9, two versions, one nginx. Rung three: KServe, a fleet, scale-to-zero, Knative plus dependencies. Rung four: llm-d or Gateway API, cache-aware at scale, the biggest stack. A gray axis beneath reads less capability and less dependency cost on the left, more and more on the right. A band reads a ladder of capability against a ladder of dependency cost, climb only as far as your problem forces you.">
-    <!-- rung 1 — owned, simplest (green) -->
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A four-level ladder ascending left to right against a cost axis. Level one: Deployment plus Service, M8, one version, no extra dependencies. Level two: router plus canary, M9, two versions, one nginx. Level three: KServe, a fleet, scale-to-zero, Knative plus dependencies. Level four: llm-d or Gateway API, cache-aware at scale, the biggest stack. A gray axis beneath reads less capability and less dependency cost on the left, more and more on the right. A band reads a ladder of capability against a ladder of dependency cost, climb only as far as your problem forces you.">
+    <!-- level 1 — owned, simplest (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#757575" stroke-width="2.4"><rect x="40" y="220" width="230" height="70" rx="10"/></g>
     <text x="155" y="252" text-anchor="middle" class="lbl-b">(1) Deployment + Service</text>
     <text x="155" y="276" text-anchor="middle" class="lbl-g">M8 · one version · no deps</text>
-    <!-- rung 2 — owned, this module (green) -->
+    <!-- level 2 — owned, this module (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="290" y="162" width="230" height="70" rx="10"/></g>
     <text x="405" y="194" text-anchor="middle" class="lbl-b">(2) router + canary</text>
     <text x="405" y="218" text-anchor="middle" class="lbl-g">M9 · two versions · one nginx</text>
-    <!-- rung 3 — a step up (blue) -->
+    <!-- level 3 — a step up (blue) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="540" y="104" width="230" height="70" rx="10"/></g>
     <text x="655" y="136" text-anchor="middle" class="lbl-b">(3) KServe</text>
     <text x="655" y="160" text-anchor="middle" class="lbl-g">a fleet · scale-to-zero · Knative</text>
-    <!-- rung 4 — biggest stack, most cost (orange) -->
+    <!-- level 4 — biggest stack, most cost (orange) -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="3"><rect x="790" y="46" width="270" height="70" rx="10"/></g>
     <text x="925" y="78" text-anchor="middle" class="lbl-b">(4) llm-d / Gateway API</text>
     <text x="925" y="102" text-anchor="middle" class="lbl-g">cache-aware at scale · biggest stack</text>
@@ -802,7 +802,7 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 19 · CLOSING ═══════════════ -->
 <section>
-  <p class="kicker">MODULE 9 &nbsp;·&nbsp; SERVING PATTERNS — CANARY A MODEL ON QUALITY, NOT CRASHES</p>
+  <p class="kicker">MODULE 9 &nbsp;·&nbsp; SERVING PATTERNS — CANARY ROUTING, KSERVE &amp; LLM-D</p>
   <h2 class="t" style="font-size:2.05em">OpsMate v2.0 can change what it serves safely</h2>
   <p class="s">You promote or roll back on data, not the absence of a crash.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="Two crates sitting just past an open gate, one marked with a checkmark and the other marked with an X.">
@@ -847,7 +847,7 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="25" y="100" width="25" height="15" rx="2"/><rect x="58" y="80" width="25" height="35" rx="2"/><rect x="91" y="58" width="25" height="57" rx="2"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">climb the ladder</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">10% then 50% then 100%, measure each rung</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">10% then 50% then 100%, measure each level</text>
     </g>
     <g class="fragment" transform="translate(940,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>

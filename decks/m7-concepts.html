@@ -141,7 +141,7 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 1 · TITLE ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 7 &nbsp;·&nbsp; SHIP THE MODEL — KITOPS, OCI ARTIFACTS &amp; SIGNING</p>
+  <p class="kicker">MODULE 7 &nbsp;·&nbsp; MODEL PACKAGING &amp; SIGNING — KITOPS &amp; OCI ARTIFACTS</p>
   <h2 class="t" style="font-size:1.55em">The model has been a loose file — this makes it an artifact you can prove</h2>
   <p class="s" style="font-size:1.15em">During an incident, a loose model file can't say which model it even is.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A single loose sheet of paper drifts on the left; on the right a solid wooden crate sits sealed with a ribbon and wax stamp, a hanging tag attached, a curved arrow showing the paper becoming the crate.">
@@ -360,7 +360,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">The Kitfile is a Dockerfile for models — each section becomes a layer</h2>
   <p class="s">A Kitfile is a Dockerfile for models — each section becomes a layer.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A Kitfile box, the packing list you write, with three labelled arrows: model colon leads to a blue model layer GGUF, datasets colon leads to a green dataset layer golden.yaml, and code colon leads to a green code layer prompts. The three layers converge into kit pack, one OCI artifact, then kit push to a registry. A band reads a plain-text manifest read by pack, the same shape as a Dockerfile.">
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A Kitfile box, the packing list you write, with three labelled arrows: model colon leads to a blue model layer GGUF, datasets colon leads to a green dataset layer golden.yaml, and code colon leads to a green code layer prompts. The three layers converge into kit pack, one OCI artifact, then kit push to a registry. A band reads a plain-text manifest read by pack, the same form as a Dockerfile.">
     <!-- Kitfile -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="36" y="96" width="180" height="150" rx="12"/>
@@ -412,7 +412,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="200" y="292" width="700" height="42" rx="10"/>
     </g>
-    <text x="550" y="319" text-anchor="middle" class="lbl-g">a plain-text manifest read by <tspan class="lbl-b">pack</tspan> — the same shape as a Dockerfile</text>
+    <text x="550" y="319" text-anchor="middle" class="lbl-g">a plain-text manifest read by <tspan class="lbl-b">pack</tspan> — the same form as a Dockerfile</text>
   </svg>
   <div class="pageno">M7·13</div>
 </section>
@@ -692,8 +692,8 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Semver for models reads like textbook editions</h2>
   <p class="s">The version number should tell you what changed without diffing artifacts.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="Three edition rungs. MAJOR, drawn orange, is a new edition where old references break — new base or behaviour shift, an API break, treat as breaking. MINOR, drawn blue, is a revised printing, better within the same edition — a better tune, same interface, re-test. PATCH, drawn green, is a corrected reprint where the words are unchanged — packaging only, drop in blindly. A band reads read the number, know what changed, without diffing the artifacts.">
-    <!-- three rungs — MAJOR caution (orange), MINOR re-test (blue), PATCH drop-in (green) -->
+  <svg viewBox="0 0 1100 350" role="img" aria-label="Three edition levels. MAJOR, drawn orange, is a new edition where old references break — new base or behaviour shift, an API break, treat as breaking. MINOR, drawn blue, is a revised printing, better within the same edition — a better tune, same interface, re-test. PATCH, drawn green, is a corrected reprint where the words are unchanged — packaging only, drop in blindly. A band reads read the number, know what changed, without diffing the artifacts.">
+    <!-- three levels — MAJOR caution (orange), MINOR re-test (blue), PATCH drop-in (green) -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="3">
       <rect x="60" y="64" width="700" height="66" rx="9"/>
     </g>
@@ -890,7 +890,7 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <p class="kicker">MODULE 7 &nbsp;·&nbsp; SHIP THE MODEL — KITOPS, OCI ARTIFACTS &amp; SIGNING</p>
+  <p class="kicker">MODULE 7 &nbsp;·&nbsp; MODEL PACKAGING &amp; SIGNING — KITOPS &amp; OCI ARTIFACTS</p>
   <h2 class="t" style="font-size:2.05em">The loose file is gone — M8's cluster pulls this signed, versioned kit</h2>
   <p class="s">The file is now an artifact with three properties you can prove.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="The sealed wooden crate now rests firmly on a loading dock beside a cargo ship gangway, ribbon and wax seal clearly visible, looking settled and arrived.">

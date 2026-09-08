@@ -119,7 +119,7 @@ footer, header, hgroup, main, menu, nav, section {
   /* muted payoff-annotation text (one or two per slide, never body text) */
   .lbl-good{ fill:var(--good); font-size:19px; font-weight:700; }
   .lbl-bad{ fill:var(--bad); font-size:19px; font-weight:700; }
-  /* pastel fill helpers for SVG shapes — stroke still supplied by the ink/gray group */
+  /* pastel fill helpers for SVG elements — stroke still supplied by the ink/gray group */
   .f-green{ fill:var(--p-green); }
   .f-red{ fill:var(--p-red); }
   .f-blue{ fill:var(--p-blue); }
@@ -169,29 +169,29 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section class="divider">
   <h2 class="t">When Should You Fine-Tune an LLM?</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A person stands at the bottom of a three-rung ladder, looking up, deciding.">
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person stands at the bottom of a three-level ladder, looking up, deciding.">
     <image href="../img/decks/m6/divider-1-ladder.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M6·03</div>
 </section>
 
 <section>
-  <h2 class="t">Climb the decision ladder — three rungs, cheapest first</h2>
+  <h2 class="t">Climb the decision ladder — three levels, cheapest first</h2>
   <p class="s">Prompt edit, then RAG, then fine-tune — each fixes a different kind of problem.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="A three-rung staircase, cheapest at the bottom. Bottom rung, widest and green: prompt edit, minutes, free, reversible, fixes format, tone, refusals, citations. Middle rung, blue: RAG, put the right facts in front, fixes missing knowledge and freshness, M4 and M5. Top rung, orange: fine-tune, hours, data plus compute, fixes behaviour that survives with no prompt and no context.">
-    <!-- rung 1 prompt edit (bottom, widest) — green = the cheap, reach-first rung -->
+  <svg viewBox="0 0 1100 360" role="img" aria-label="A three-level staircase, cheapest at the bottom. Bottom level, widest and green: prompt edit, minutes, free, reversible, fixes format, tone, refusals, citations. Middle level, blue: RAG, put the right facts in front, fixes missing knowledge and freshness, M4 and M5. Top level, orange: fine-tune, hours, data plus compute, fixes behaviour that survives with no prompt and no context.">
+    <!-- level 1 prompt edit (bottom, widest) — green = the cheap, reach-first level -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
       <rect x="70" y="266" width="700" height="66" rx="11" class="f-green"/>
     </g>
     <text x="120" y="298" text-anchor="start" class="lbl-b">1 · PROMPT EDIT</text>
     <text x="120" y="322" text-anchor="start" class="lbl-g">minutes · free · reversible → format, tone, refusals, citations</text>
-    <!-- rung 2 RAG — blue = the knowledge method -->
+    <!-- level 2 RAG — blue = the knowledge method -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="180" y="180" width="620" height="66" rx="11" class="f-blue"/>
     </g>
     <text x="230" y="212" text-anchor="start" class="lbl-b">2 · RAG</text>
     <text x="230" y="236" text-anchor="start" class="lbl-g">put the right facts in front → missing knowledge, freshness (M4/M5)</text>
-    <!-- rung 3 fine-tune (top, protagonist) — orange = the expensive, easy-to-fool-yourself rung -->
+    <!-- level 3 fine-tune (top, protagonist) — orange = the expensive, easy-to-fool-yourself level -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
       <rect x="290" y="94" width="620" height="66" rx="11" class="f-orange"/>
     </g>
@@ -203,8 +203,8 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <h2 class="t">Most "we need to fine-tune" requests are really prompt problems</h2>
-  <p class="s">Climb only when the rung below genuinely can't — you earn the top rung.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="The discipline of the ladder. A big dashed gray back-arrow curves from the top fine-tune rung down to the bottom prompt-edit rung, tagged: most we-need-to-fine-tune requests are prompt problems, something a single line of instructions would fix. A card notes OpsMate earned the top rung: its voice problem survives a prompt edit — the model keeps drifting generic — so fine-tuning is justified. A band reads: climb only when the rung below truly can't, and you earn it, you don't start there.">
+  <p class="s">Climb only when the level below genuinely can't — you earn the top level.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="The discipline of the ladder. A big dashed gray back-arrow curves from the top fine-tune level down to the bottom prompt-edit level, tagged: most we-need-to-fine-tune requests are prompt problems, something a single line of instructions would fix. A card notes OpsMate earned the top level: its voice problem survives a prompt edit — the model keeps drifting generic — so fine-tuning is justified. A band reads: climb only when the level below truly can't, and you earn it, you don't start there.">
     <!-- mini staircase reminder -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="70" y="250" width="300" height="48" rx="9" class="f-green"/>
@@ -229,7 +229,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="910" y="236" text-anchor="middle" class="lbl-g">drifting generic</text>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M70,330 L1040,330"/></g>
-    <text x="555" y="352" text-anchor="middle" class="lbl-g">climb only when the rung below truly can't — <tspan class="lbl-b">you earn the top rung, you don't start there</tspan></text>
+    <text x="555" y="352" text-anchor="middle" class="lbl-g">climb only when the level below truly can't — <tspan class="lbl-b">you earn the top level, you don't start there</tspan></text>
   </svg>
   <div class="pageno">M6·05</div>
 </section>
@@ -502,8 +502,8 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <h2 class="t">Read the loss curve — a healthy curve flattens, a diving one is overfitting</h2>
-  <p class="s">Loss is the model's surprise at the next token — two shapes to tell apart.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="A gray definition line reads loss equals how surprised the model is at the next token, from the Module 1 vocabulary. Below it, two panels, each a sketched loss curve on axes. Left, inked and labelled healthy: a curve falling from about 5.0 and then flattening toward about 0.7, tagged falls then flattens, more steps buy little, stop here, the real run's shape. Right, gray-dashed and labelled suspicious: a curve diving toward zero on a tiny set, tagged keeps dropping to zero equals overfit, memorizing not learning, aces training but fails the real questions. A band reads: train a few epochs and stop — you want it to generalize, not memorize.">
+  <p class="s">Loss is the model's surprise at the next token — two patterns to tell apart.</p>
+  <svg viewBox="0 0 1100 350" role="img" aria-label="A gray definition line reads loss equals how surprised the model is at the next token, from the Module 1 vocabulary. Below it, two panels, each a sketched loss curve on axes. Left, inked and labelled healthy: a curve falling from about 5.0 and then flattening toward about 0.7, tagged falls then flattens, more steps buy little, stop here, the real run's pattern. Right, gray-dashed and labelled suspicious: a curve diving toward zero on a tiny set, tagged keeps dropping to zero equals overfit, memorizing not learning, aces training but fails the real questions. A band reads: train a few epochs and stop — you want it to generalize, not memorize.">
     <!-- definition annotation (M1 vocabulary) -->
     <text x="550" y="28" text-anchor="middle" class="lbl-g">loss = how surprised the model is at the next token (M1)</text>
     <!-- left panel HEALTHY -->
@@ -517,7 +517,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="118" y="110" text-anchor="start" class="lbl-g">~5.0</text>
     <text x="452" y="252" text-anchor="start" class="lbl-g">~0.7</text>
     <text x="300" y="300" text-anchor="middle" class="lbl-g">falls then flattens → more steps buy little · STOP</text>
-    <text x="300" y="324" text-anchor="middle" class="lbl-g">(the real run's shape)</text>
+    <text x="300" y="324" text-anchor="middle" class="lbl-g">(the real run's pattern)</text>
     <!-- right panel SUSPICIOUS -->
     <text x="820" y="60" text-anchor="middle" class="lbl-bad">SUSPICIOUS</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">

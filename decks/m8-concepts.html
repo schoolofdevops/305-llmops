@@ -453,7 +453,7 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ DIVIDER · SECTION 3 ═══════════════ -->
 <section class="divider">
   <h2 class="t">Getting a Model Into the Pod &mdash; Four Delivery Patterns</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Four conveyor paths each carrying a crate converge on a single pod-shaped box, with one path marked by a checkmark as the chosen route.">
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Four conveyor paths each carrying a crate converge on a single box representing a pod, with one path marked by a checkmark as the chosen route.">
     <image href="../img/decks/m8/divider-3-four-roads-pod.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M8·11</div>
@@ -852,13 +852,13 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">The engine fork, stated honestly — same plumbing, two images</h2>
   <p class="s">The <code>/v1</code> contract holds the client stable, so the engine is just image and args.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="Two engine panels share a spine down the middle. The shared column reads same PVC, same initContainer chain, same probe shape, same slash v1 contract. Left, llama-server for arm64 8 gigabyte, marked chosen, tagged validated: 1 of 1 Running, 1.76 gibibytes, in budget. Right, vLLM, the production engine, tagged GPU is its home, the CPU build crashes on the arm64 VM kernel per M3, so it is taught line by line and validated on x86, cloud, plus a recorded demo. A gray note between them reads differ ONLY in image and args. A band reads swapping the engine is an image-and-args change, not a manifest rewrite — the slash v1 contract holds the client stable.">
-    <!-- shared spine in the middle — the common plumbing (blue) -->
+  <svg viewBox="0 0 1100 350" role="img" aria-label="Two engine panels share a column down the middle. The shared column reads same PVC, same initContainer chain, same probe design, same slash v1 contract. Left, llama-server for arm64 8 gigabyte, marked chosen, tagged validated: 1 of 1 Running, 1.76 gibibytes, in budget. Right, vLLM, the production engine, tagged GPU is its home, the CPU build crashes on the arm64 VM kernel per M3, so it is taught line by line and validated on x86, cloud, plus a recorded demo. A gray note between them reads differ ONLY in image and args. A band reads swapping the engine is an image-and-args change, not a manifest rewrite — the slash v1 contract holds the client stable.">
+    <!-- shared column in the middle — the common plumbing (blue) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="410" y="52" width="280" height="200" rx="12"/></g>
     <text x="550" y="84" text-anchor="middle" class="lbl-b">shared</text>
     <text x="550" y="118" text-anchor="middle" class="lbl-sm">same PVC</text>
     <text x="550" y="148" text-anchor="middle" class="lbl-sm">same initContainer chain</text>
-    <text x="550" y="178" text-anchor="middle" class="lbl-sm">same probe shape</text>
+    <text x="550" y="178" text-anchor="middle" class="lbl-sm">same probe design</text>
     <text x="550" y="208" text-anchor="middle" class="lbl-sm">same /v1 contract</text>
     <text x="550" y="238" text-anchor="middle" class="lbl-g">differ ONLY in image + args</text>
     <!-- LEFT: llama-server — the chosen, validated engine (green) -->
@@ -887,12 +887,12 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 18 · GPU SURVEY ═══════════════ -->
 <section>
-  <h2 class="t">On real GPUs the shape holds — the numbers do not</h2>
+  <h2 class="t">On real GPUs the pattern holds — the numbers do not</h2>
   <p class="s">The plumbing transfers unchanged; only the capacity math moves to VRAM.</p>
-  <svg viewBox="0 0 1100 330" role="img" aria-label="A hub-and-spoke. The centre box reads same shape: artifact chain, PVC, probes, initContainer, tagged transfers unchanged, it's Kubernetes plumbing. Three gray spokes to what changes on a GPU: budget VRAM, not host RAM; vLLM pre-allocates a GPU-memory fraction, not a growing RAM KV; and more than one card means tensor parallelism, a new manifest term. A gray footline reads the three-term sum is still the mental model — weights plus runtime plus KV — but the ceiling and levers change. A band reads the pattern is portable, the numbers are not — derive the box, don't paste the values.">
+  <svg viewBox="0 0 1100 330" role="img" aria-label="A hub-and-spoke. The centre box reads same pattern: artifact chain, PVC, probes, initContainer, tagged transfers unchanged, it's Kubernetes plumbing. Three gray spokes to what changes on a GPU: budget VRAM, not host RAM; vLLM pre-allocates a GPU-memory fraction, not a growing RAM KV; and more than one card means tensor parallelism, a new manifest term. A gray footline reads the three-term sum is still the mental model — weights plus runtime plus KV — but the ceiling and levers change. A band reads the pattern is portable, the numbers are not — derive the box, don't paste the values.">
     <!-- centre hub — the portable pattern that transfers unchanged (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="380" y="118" width="340" height="94" rx="12"/></g>
-    <text x="550" y="152" text-anchor="middle" class="lbl-b">same shape</text>
+    <text x="550" y="152" text-anchor="middle" class="lbl-b">same pattern</text>
     <text x="550" y="180" text-anchor="middle" class="lbl-sm">artifact chain · PVC · probes · initContainer</text>
     <text x="550" y="204" text-anchor="middle" class="lbl-g">transfers unchanged — it's K8s plumbing</text>
     <!-- spokes -->

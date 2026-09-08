@@ -207,7 +207,7 @@
 
       <div class="readout" id="readout">
         <div class="rrow"><span class="rl">TTFT <small>time to first token</small></span><span class="rv ttft" id="ttftV">—</span></div>
-        <div class="rrow"><span class="rl">TPOT <small>time per output token</small></span><span class="rv" id="tpotV">—</span></div>
+        <div class="rrow"><span class="rl">ITL <small>inter-token latency, formerly TPOT</small></span><span class="rv" id="itlV">—</span></div>
         <div class="rrow"><span class="rl">total time</span><span class="rv total" id="totalV">—</span></div>
         <div class="rrow"><span class="rl">decode share <small>of total</small></span><span class="rv" id="decShareV">—</span></div>
         <div class="rrow"><span class="rl">KV cache <small>prompt+output</small></span><span class="rv" id="kvV">—</span></div>
@@ -267,15 +267,15 @@
 
   /* ------------------------------------------------------------------ model
      A request = prefill (one pass over the prompt) + decode (one token at a time).
-     Illustrative timing model, calibrated to the course host's shape:
+     Illustrative timing model, calibrated to the course host's pattern:
        prefill_ms  = PREFILL_PER_TOK * promptLen   (processed together, but the
                      wall-clock still grows with prompt length — compute-bound)
        ttft        = prefill_ms  (first token appears when prefill finishes)
-       decode_ms   = TPOT * outLen
+       decode_ms   = ITL * outLen
        total       = prefill_ms + decode_ms
      KV cache holds one slot per token, prompt + output, capped by ctxLimit. */
   var PREFILL_PER_TOK=0.42;   /* ms per prompt token (illustrative) */
-  var TPOT=4.0;               /* ms per output token (illustrative; host is ~3-5) */
+  var ITL=4.0;                /* ms per output token, inter-token latency (illustrative; host is ~3-5) */
 
   var DEFAULTS={promptLen:64, outLen:96, ctxLimit:512};
   var S={
@@ -317,13 +317,13 @@
   function compute(p,o){
     p=(p==null?S.promptLen:p); o=(o==null?S.outLen:o);
     var prefillMs=PREFILL_PER_TOK*p;
-    var decodeMs=TPOT*o;
+    var decodeMs=ITL*o;
     var total=prefillMs+decodeMs;
     var kv=p+o;
     return {
       promptLen:p, outLen:o,
       prefillMs:prefillMs, decodeMs:decodeMs, total:total,
-      ttft:prefillMs, tpot:o>0?TPOT:0,
+      ttft:prefillMs, itl:o>0?ITL:0,
       decodeShare: total>0?decodeMs/total:0,
       kv:kv, overflow: kv>S.ctxLimit,
       allowedOut: Math.max(0, S.ctxLimit-p)
@@ -361,7 +361,7 @@
     $('decodeMsLbl').textContent='—'; $('kvMsLbl').textContent='—';
     $('kvPrompt').style.width='0%'; $('kvDecode').style.width='0%'; $('kvDecode').style.left='0%';
     $('kvOver').style.width='0%'; $('overflow').classList.remove('on');
-    ['ttftV','tpotV','totalV','decShareV','kvV'].forEach(function(id){$(id).textContent='—';$(id).classList.remove('warnv')});
+    ['ttftV','itlV','totalV','decShareV','kvV'].forEach(function(id){$(id).textContent='—';$(id).classList.remove('warnv')});
   }
 
   /* place the context-limit marker (always reflects current slider) */
@@ -449,9 +449,9 @@
   }
 
   function finishRun(r,instant){
-    $('decodeMsLbl').textContent=fmtMs(r.decodeMs)+' ('+r.outLen+'×TPOT)';
-    logEv('decode','decode',r.outLen+' tokens one at a time · '+r.tpot.toFixed(1)+' ms/token · '+fmtMs(r.decodeMs));
-    $('tpotV').textContent=r.tpot.toFixed(1)+' ms';
+    $('decodeMsLbl').textContent=fmtMs(r.decodeMs)+' ('+r.outLen+'×ITL)';
+    logEv('decode','decode',r.outLen+' tokens one at a time · '+r.itl.toFixed(1)+' ms/token · '+fmtMs(r.decodeMs));
+    $('itlV').textContent=r.itl.toFixed(1)+' ms';
     $('totalV').textContent=fmtMs(r.total);
     var pct=Math.round(r.decodeShare*100);
     $('decShareV').textContent=pct+'%';
@@ -550,7 +550,7 @@
     run:function(){run(true)},              /* instant path for tests */
     compute:compute,
     isRunning:function(){return running},
-    consts:{PREFILL_PER_TOK:PREFILL_PER_TOK,TPOT:TPOT,DEFAULTS:DEFAULTS}
+    consts:{PREFILL_PER_TOK:PREFILL_PER_TOK,ITL:ITL,DEFAULTS:DEFAULTS}
   };
 })();
 </script>

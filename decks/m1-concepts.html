@@ -1137,7 +1137,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Decode writes your answer one token at a time</h2>
   <p class="s">Each token depends on the one before it — memory-bandwidth-bound.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="Decode emits tokens one after another in a serial chain, revealed one token at a time, memory-bandwidth-bound, which is where TPOT comes from.">
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Decode emits tokens one after another in a serial chain, revealed one token at a time, memory-bandwidth-bound, which is where ITL comes from.">
     <!-- step tag -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
       <rect x="420" y="30" width="260" height="46" rx="9"/>
@@ -1190,15 +1190,15 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="140" y="356" width="820" height="34" rx="10"/>
     </g>
-    <text x="550" y="378" text-anchor="middle" class="lbl-g">decode is where TPOT comes from — the steady pace after the first word</text>
+    <text x="550" y="378" text-anchor="middle" class="lbl-g">decode is where ITL comes from — the steady pace after the first word</text>
   </svg>
   <div class="pageno">M1·26</div>
 </section>
 
 <section>
-  <h2 class="t">TPOT — the steady drip that follows</h2>
-  <p class="s">The pace of words after that — set by your answer length.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the streams-back stage lit. Reply chips arrive one after another at a steady beat, the drip labelled TPOT, driven by decode and answer length.">
+  <h2 class="t">ITL — the steady drip that follows</h2>
+  <p class="s">The pace of words after that — also called TPOT in older tools.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the streams-back stage lit. Reply chips arrive one after another at a steady beat, the drip labelled ITL, driven by decode and answer length.">
     <!-- journey strip: streams back lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
       <rect x="30"  y="16" width="150" height="48" rx="9"/>
@@ -1254,7 +1254,7 @@ footer, header, hgroup, main, menu, nav, section {
         <rect x="720" y="160" width="150" height="60" rx="9"/>
       </g>
       <text x="795" y="196" text-anchor="middle" class="lbl-sm">…</text>
-      <text x="440" y="150" text-anchor="middle" class="lbl-b" style="font-size:22px">TPOT, TPOT, TPOT…</text>
+      <text x="440" y="150" text-anchor="middle" class="lbl-b" style="font-size:22px">ITL, ITL, ITL…</text>
 
       <!-- brace under the drip -->
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
@@ -1263,7 +1263,7 @@ footer, header, hgroup, main, menu, nav, section {
         <path d="M870,246 L870,232"/>
         <path d="M575,246 L575,264" marker-end="url(#ah)"/>
       </g>
-      <text x="575" y="292" text-anchor="middle" class="lbl-g">TPOT = decode · the steady beat, one token at a time</text>
+      <text x="575" y="292" text-anchor="middle" class="lbl-g">ITL = decode · the steady beat, one token at a time (formerly called TPOT)</text>
     </g>
 
     <!-- payoff band -->
@@ -1454,7 +1454,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Read the bill, the latency, the capacity off the trip</h2>
   <p class="s">The three questions from the opening are three stops on one journey.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="The journey strip once more, with three gray callouts hanging off it: tokenize answers the bill, read-versus-write answers the latency as TTFT and TPOT, and the KV cache answers the capacity.">
+  <svg viewBox="0 0 1100 380" role="img" aria-label="The journey strip once more, with three gray callouts hanging off it: tokenize answers the bill, read-versus-write answers the latency as TTFT and ITL, and the KV cache answers the capacity.">
     <!-- the strip, whole, all inked -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
       <rect x="40"  y="70" width="180" height="86" rx="12"/>
@@ -1493,7 +1493,7 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="470" y="304" width="370" height="66" rx="10"/>
     </g>
     <text x="655" y="334" text-anchor="middle" class="lbl-b">the latency</text>
-    <text x="655" y="360" text-anchor="middle" class="lbl-g">TTFT to start · TPOT to finish</text>
+    <text x="655" y="360" text-anchor="middle" class="lbl-g">TTFT to start · ITL to finish</text>
     <!-- callout: streams back / cache -> the capacity -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M970,158 L970,208" marker-end="url(#ahg)"/>
@@ -1550,9 +1550,9 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <p class="kicker">MODULE 1 &nbsp;·&nbsp; TAKEAWAYS</p>
-  <h2 class="t" style="font-size:2.0em">Three numbers you carry into the lab</h2>
-  <svg viewBox="0 0 1100 320" role="img" aria-label="Three numbered takeaways: tokens are the billing and capacity unit, TTFT versus TPOT is the wait to start versus the rhythm of the answer, and KV cache math is per-token cost times tokens times users.">
-    <!-- three carried numbers, each in its deck-consistent pastel: tokens (blue) · TTFT/TPOT (orange) · KV math (green) -->
+  <h2 class="t" style="font-size:2.0em">What you carry into the lab</h2>
+  <svg viewBox="0 0 1100 320" role="img" aria-label="Three numbered takeaways: tokens are the billing and capacity unit, TTFT versus ITL is the wait to start versus the rhythm of the answer, and KV cache math is per-token cost times tokens times users.">
+    <!-- three carried numbers, each in its deck-consistent pastel: tokens (blue) · TTFT/ITL (orange) · KV math (green) -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
       <circle cx="120" cy="70" r="30"/>
     </g>
@@ -1569,7 +1569,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <g class="lbl-b" text-anchor="start">
       <text x="180" y="64">Tokens</text>
-      <text x="180" y="154">TTFT vs TPOT</text>
+      <text x="180" y="154">TTFT vs ITL</text>
       <text x="180" y="244">KV cache math</text>
     </g>
     <g class="lbl-g" text-anchor="start">

@@ -1159,7 +1159,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">A 200-token answer is 200 forward passes</h2>
   <p class="s">Every predicted token means re-reading everything before it.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="A predict-append-loop-back cycle repeats, counting up to two hundred trips for a two hundred token answer, each trip re-reading everything before it, which is where the runtime cost lives.">
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A predict-append-loop-back cycle repeats, counting up to two hundred trips for a two hundred token answer, each pass re-reading everything before it, which is where the cost comes from.">
     <!-- journey strip: model lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
       <rect x="30"  y="16" width="150" height="48" rx="9"/>
@@ -1211,7 +1211,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="140" y="336" width="820" height="42" rx="10"/>
     </g>
-    <text x="550" y="363" text-anchor="middle" class="lbl-g">a 200-token answer is 200 trips round this loop — this is where the runtime cost lives</text>
+    <text x="550" y="363" text-anchor="middle" class="lbl-g">a 200-token answer is 200 passes round this loop — this is where the cost comes from</text>
   </svg>
   <div class="pageno">M1·25</div>
 </section>

@@ -143,7 +143,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section data-auto-animate>
   <p class="kicker">MODULE 1</p>
   <h2 class="t" style="font-size:2.2em">How LLMs Work?</h2>
-  <p class="s" style="font-size:1.05em">Tokens, context, generation and the KV cache &mdash; what an LLM does at runtime, and what it costs.</p>
+  <p class="s" style="font-size:1.05em">Tokens, context, generation and the KV cache &mdash; and what each one costs.</p>
   <svg viewBox="0 0 1100 420" role="img" aria-label="A sketched laptop with a strip of token chips rising out of the screen, standing for a reply streaming back one word-piece at a time.">
     <!-- screen -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -236,7 +236,7 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <h2 class="t">Three questions this module answers</h2>
-  <p class="s">Why the bill moved, why the assistant is slow, and how many users fit on one box.</p>
+  <p class="s">Why the bill moved, why it is slow, and how many users fit on one box.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="Illustration: an engineer stands worried between three alarm gauges labelled bill up, slow, and how many users, all buzzing with jagged alert marks.">
     <image href="../img/decks/m1/opening-scenario.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
@@ -880,7 +880,7 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <h2 class="t">Inside one forward pass</h2>
-  <p class="s">tokens &rarr; embeddings &rarr; attention &rarr; next token, for every single token produced.</p>
+  <p class="s">tokens → embeddings → attention → next token, for every token produced.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="A four-stage pipeline: all tokens so far become embeddings, attention lets each position look back at earlier ones, the next token is predicted, and it is appended before the pass runs again.">
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -1582,7 +1582,7 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <h2 class="t">Two kinds of slow &mdash; high TTFT and high ITL</h2>
-  <p class="s">&ldquo;Slow&rdquo; is two different faults with two different fixes. Ask which one first.</p>
+  <p class="s">“Slow” is two different faults with two different fixes. Ask which one first.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="A decision split. A slow assistant divides into slow to start, which points at prompt length and the prefill phase and is measured by TTFT, and slow to finish, which points at answer length and the decode phase and is measured by ITL.">
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="400" y="26" width="300" height="70" rx="10"/>

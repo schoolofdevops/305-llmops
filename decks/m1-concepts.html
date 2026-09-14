@@ -99,7 +99,9 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal .slides section.fullbleed .pageno{ z-index:2; }
 
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:2.1em; max-width:80%; }
+  .reveal .slides section.divider p.s{ order:3; font-size:1em; max-width:70%; text-align:center; margin-top:4px; }
+  .reveal p.recap{ order:4; font-size:0.72em; color:var(--ink); margin-top:10px; max-width:92%; align-self:center; }
   .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
@@ -140,8 +142,8 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 1 &nbsp;·&nbsp; HOW LLMS WORK</p>
-  <h2 class="t" style="font-size:1.8em">From your key press to the streamed reply</h2>
-  <p class="s" style="font-size:1.2em">What happens between your key press and the first word back.</p>
+  <h2 class="t" style="font-size:1.45em">Tokens, Context, Generation and the KV Cache</h2>
+  <p class="s" style="font-size:1.05em">What an LLM actually does at runtime, and what it costs.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A hand presses Enter on a laptop keyboard as small reply word-chips burst upward from the screen.">
     <image href="../img/decks/m1/title-key-press.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
@@ -204,7 +206,8 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">What Are Tokens? &mdash; you pay per word-piece, not per idea</h2>
+  <h2 class="t">Tokens</h2>
+  <p class="s">the unit a model reads and bills on</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A receipt machine prints a strip of blank jigsaw-puzzle word-piece chips instead of prices.">
     <image href="../img/decks/m1/divider-1-tokens.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
@@ -212,7 +215,7 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">You pay per word-piece, not per idea</h2>
+  <h2 class="t">A token is a word piece, not a word</h2>
   <p class="s">Your text is chopped into dictionary pieces before the model sees it.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the tokenize stage lit. The question why is my internet disconnecting repeatedly goes into a BPE tokenizer and comes out as eight token chips, with disconnect and ing boxed together to show one word split into two pieces, giving a token count of eight.">
     <!-- journey strip: tokenize lit -->
@@ -301,8 +304,8 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">A telegram counter bills pieces, not meaning</h2>
-  <p class="s">Same idea, very different cost — because the counter bills pieces.</p>
+  <h2 class="t">Analogy &mdash; a telegram bills per piece, not per idea</h2>
+  <p class="s">Same idea, very different cost, because the counter bills pieces.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="An old-fashioned telegram office: a clerk counts words on a form with a tally counter while a worried customer waits at the counter beside a PER WORD sign.">
     <image href="../img/decks/m1/analogy-tokens-telegram.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
@@ -310,17 +313,79 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">A fixed window is a suitcase that will not zip</h2>
-  <p class="s">Every token you add is one more thing that has to fit.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A person sits on an overstuffed suitcase straining to zip it shut, clothes spilling out the sides.">
-    <image href="../img/decks/m1/context-window-suitcase.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <h2 class="t">Token count varies by language and by code</h2>
+  <p class="s">Roughly the same length on screen. Not the same length to the model.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Three rows comparing one instruction in English, Hindi and code. English is 44 characters and 8 tokens, Hindi is 48 characters and 46 tokens, and the code line is 51 characters and 15 tokens, measured with the Qwen3 tokenizer.">
+    <g class="fragment">
+      <text x="60" y="86" class="lbl-b" style="font-size:20px">English</text>
+      <text x="60" y="116" class="lbl-sm">"Why is my internet disconnecting repeatedly?"</text>
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="520" y="76" width="104" height="48" rx="8"/>
+      </g>
+      <text x="572" y="110" text-anchor="middle" class="lbl-b" style="font-size:30px">8</text>
+      <text x="640" y="110" class="lbl-g">tokens &middot; 44 characters</text>
+    </g>
+
+    <g class="fragment">
+      <text x="60" y="198" class="lbl-b" style="font-size:20px">Hindi</text>
+      <text x="60" y="228" class="lbl-sm" style="font-family:'Noto Sans Devanagari','Patrick Hand',sans-serif">"&#2350;&#2375;&#2352;&#2366; &#2311;&#2306;&#2335;&#2352;&#2344;&#2375;&#2335; &#2348;&#2366;&#2352;-&#2348;&#2366;&#2352; &#2337;&#2367;&#2360;&#2381;&#2325;&#2344;&#2375;&#2325;&#2381;&#2335; &#2325;&#2381;&#2351;&#2379;&#2306; &#2361;&#2379; &#2352;&#2361;&#2366; &#2361;&#2376;?"</text>
+      <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="520" y="188" width="104" height="48" rx="8"/>
+      </g>
+      <text x="572" y="222" text-anchor="middle" class="lbl-b" style="font-size:30px">46</text>
+      <text x="640" y="222" class="lbl-g">tokens &middot; 48 characters</text>
+    </g>
+
+    <g class="fragment">
+      <text x="60" y="310" class="lbl-b" style="font-size:20px">Code</text>
+      <text x="60" y="340" class="lbl-sm">for f in glob.glob("*.log"): process(f, retry=True)</text>
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="520" y="300" width="104" height="48" rx="8"/>
+      </g>
+      <text x="572" y="334" text-anchor="middle" class="lbl-b" style="font-size:30px">15</text>
+      <text x="640" y="334" class="lbl-g">tokens &middot; 51 characters</text>
+    </g>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 5">
+        <rect x="510" y="66" width="124" height="292" rx="10"/>
+      </g>
+      <text x="880" y="290" text-anchor="middle" class="lbl-b" style="font-size:21px">same question, 5.75&times; the tokens</text>
+    </g>
   </svg>
+  <p class="recap fragment">Count in tokens, never in words. Next: Context Window &mdash; the budget those tokens are spent against.</p>
   <div class="pageno">M1·08</div>
 </section>
 
+<section class="divider">
+  <h2 class="t">Context Window</h2>
+  <p class="s">the fixed token budget per request</p>
+  <svg viewBox="0 0 900 380" role="img" aria-label="A fixed-width bar partly filled with token chips, closed off by a hard wall at its right edge.">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="120" y="150" width="660" height="86" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8">
+      <rect x="132" y="162" width="46" height="62" rx="7"/>
+      <rect x="184" y="162" width="46" height="62" rx="7"/>
+      <rect x="236" y="162" width="46" height="62" rx="7"/>
+      <rect x="288" y="162" width="46" height="62" rx="7"/>
+      <rect x="340" y="162" width="46" height="62" rx="7"/>
+      <rect x="392" y="162" width="46" height="62" rx="7"/>
+      <rect x="444" y="162" width="46" height="62" rx="7"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="5" stroke-linecap="round">
+      <path d="M780,138 L780,248"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M840,193 L800,193" marker-end="url(#ahg)"/>
+    </g>
+  </svg>
+  <div class="pageno">M1·09</div>
+</section>
+
 <section>
-  <h2 class="t">Every token also eats a fixed window</h2>
-  <p class="s">The context window is a hard budget — not a meter you can overrun.</p>
+  <h2 class="t">Prompt and answer share one fixed context window</h2>
+  <p class="s">The context window is a hard budget, not a meter you can overrun.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the tokenize stage lit. A fixed-width context-window bar fills left to right with blue token chips; a shorter prompt leaves room to spare, while a longer prompt fills the bar and spills past a red overflow edge marked context limit, showing tokens are a bounded budget not just a meter.">
     <!-- journey strip: tokenize lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -410,29 +475,100 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="379" text-anchor="middle" class="lbl-g">a longer prompt costs more <em>and</em> fills the window faster — the same feature, written loose, hits the limit twice as fast</text>
   </svg>
-  <div class="pageno">M1·09</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">How LLMs Use Autoregression to Generate Text</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="An old typewriter with a single letter block flying toward the page mid-type.">
-    <image href="../img/decks/m1/divider-2-model.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
   <div class="pageno">M1·10</div>
 </section>
 
 <section>
-  <h2 class="t">Three kinds of model, three different jobs</h2>
-  <p class="s">Understanding, translating, and writing are not the same work.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Three characters: a librarian filing books, a translator between two flags, and a storyteller improvising by a fire.">
-    <image href="../img/decks/m1/three-kinds-professions.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <h2 class="t">Analogy &mdash; a suitcase with a fixed capacity</h2>
+  <p class="s">Every token you add is one more thing that has to fit.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person sits on an overstuffed suitcase straining to zip it shut, clothes spilling out the sides.">
+    <image href="../img/decks/m1/context-window-suitcase.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M1·11</div>
 </section>
 
 <section>
-  <h2 class="t">Encoder-only reads and turns text into numbers</h2>
-  <p class="s">No writing here — just text becoming numbers you can search.</p>
+  <h2 class="t">Spending the context budget &mdash; a worked example</h2>
+  <p class="s">Every part of the request competes for the same fixed window.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Two context-window bars. In the first, a 4096-token window holds a system prompt, retrieved documents, the question and reserved answer space. In the second the retrieved documents have grown, so the reserved answer space is squeezed and the request overflows the limit.">
+    <g class="fragment">
+      <text x="60" y="80" class="lbl-b" style="font-size:20px">a 4,096-token window, spent sensibly</text>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+        <rect x="60" y="94" width="980" height="66" rx="9"/>
+      </g>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2">
+        <rect x="68"  y="102" width="130" height="50" rx="6" fill="#e1d5e7"/>
+        <rect x="204" y="102" width="420" height="50" rx="6" fill="#dae8fc"/>
+        <rect x="630" y="102" width="90"  height="50" rx="6" fill="#ffe6cc"/>
+        <rect x="726" y="102" width="306" height="50" rx="6" fill="#d5e8d4"/>
+      </g>
+      <g class="lbl-sm" text-anchor="middle">
+        <text x="133" y="133">system 320</text>
+        <text x="414" y="133">retrieved documents 1,700</text>
+        <text x="675" y="133">ask 60</text>
+        <text x="879" y="133">answer reserve 2,016</text>
+      </g>
+    </g>
+
+    <g class="fragment">
+      <text x="60" y="238" class="lbl-b" style="font-size:20px">the same window after the document set grew</text>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+        <rect x="60" y="252" width="980" height="66" rx="9"/>
+      </g>
+      <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2">
+        <rect x="68"  y="260" width="130" height="50" rx="6" fill="#e1d5e7"/>
+        <rect x="204" y="260" width="700" height="50" rx="6" fill="#dae8fc"/>
+        <rect x="910" y="260" width="90"  height="50" rx="6" fill="#ffe6cc"/>
+        <rect x="1006" y="260" width="26" height="50" rx="6" fill="#f8cecc"/>
+      </g>
+      <g class="lbl-sm" text-anchor="middle">
+        <text x="133" y="291">system 320</text>
+        <text x="554" y="291">retrieved documents 3,100</text>
+        <text x="955" y="291">ask 60</text>
+      </g>
+    </g>
+
+    <g class="fragment">
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+        <path d="M1019,330 L1019,352"/>
+      </g>
+      <text x="550" y="382" text-anchor="middle" class="lbl-b" style="font-size:20px">616 tokens left to answer in &mdash; the reply gets truncated, and nobody changed the code</text>
+    </g>
+  </svg>
+  <p class="recap fragment">Next: Model Families &mdash; what kind of model is reading this window.</p>
+  <div class="pageno">M1·12</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">Model Families</h2>
+  <p class="s">encoder-only, encoder-decoder, decoder-only</p>
+  <svg viewBox="0 0 900 380" role="img" aria-label="Three sketched boxes side by side, numbered one, two and three, the third drawn with a heavier outline.">
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="90" y="150" width="190" height="96" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="355" y="150" width="190" height="96" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3.2">
+      <rect x="620" y="150" width="190" height="96" rx="10"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M185,262 L185,292"/>
+      <path d="M450,262 L450,292"/>
+      <path d="M715,262 L715,292"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle">
+      <text x="185" y="316">1</text>
+      <text x="450" y="316">2</text>
+      <text x="715" y="316">3</text>
+    </g>
+  </svg>
+  <div class="pageno">M1·13</div>
+</section>
+
+<section>
+  <h2 class="t">Encoder-only &mdash; text in, numbers out</h2>
+  <p class="s">No generation. Text becomes a vector you can search and compare.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. Text in goes through an encoder and comes out the other side as a list of numbers you can search and compare, labelled embeddings, BERT, you meet these in Module 4.">
     <!-- journey strip: model lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -493,11 +629,11 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="344" text-anchor="middle" class="lbl-g">no generation, no reply — the classic example is BERT · these are the embedding models you meet in Module 4</text>
   </svg>
-  <div class="pageno">M1·12</div>
+  <div class="pageno">M1·14</div>
 </section>
 
 <section>
-  <h2 class="t">Encoder-decoder reads one language, writes another</h2>
+  <h2 class="t">Encoder-decoder &mdash; read one text, write a different one</h2>
   <p class="s">Read the whole input, then generate a different kind of output.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. English text in goes through an encoder, then a decoder, and comes out the other side as French text out, labelled translation, T5.">
     <!-- journey strip: model lit -->
@@ -569,12 +705,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="344" text-anchor="middle" class="lbl-g">translation is the textbook case — read one piece of text, transform it into another · T5 is the classic example</text>
   </svg>
-  <div class="pageno">M1·13</div>
+  <div class="pageno">M1·15</div>
 </section>
 
 <section>
-  <h2 class="t">Decoder-only just keeps generating the next piece</h2>
-  <p class="s">Every chat model works this way — ChatGPT included.</p>
+  <h2 class="t">Decoder-only &mdash; predict the next token, then loop</h2>
+  <p class="s">Every chat model works this way, ChatGPT included.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model-reads stage lit. A decoder-only box, marked you are here, feeds its own next token back into itself in a loop, over and over, labelled every chat model including ChatGPT.">
     <!-- journey strip: model lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -628,11 +764,248 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="379" text-anchor="middle" class="lbl-g">this is every chat model you've ever used — and the kind this course builds from here on</text>
   </svg>
-  <div class="pageno">M1·14</div>
+  <div class="pageno">M1·16</div>
 </section>
 
 <section>
-  <h2 class="t">One token, then look back and write the next</h2>
+  <h2 class="t">Analogy &mdash; three specialists, three different jobs</h2>
+  <p class="s">Understanding, translating, and writing are not the same work.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Three characters: a librarian filing books, a translator between two flags, and a storyteller improvising by a fire.">
+    <image href="../img/decks/m1/three-kinds-professions.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <p class="recap fragment">Next: Embeddings and Attention &mdash; what happens inside one of those passes.</p>
+  <div class="pageno">M1·17</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">Embeddings and Attention</h2>
+  <p class="s">how text becomes numbers the model can compare</p>
+  <svg viewBox="0 0 900 380" role="img" aria-label="A token box turning into a short column of numbers, with a later box curving an arrow back to it.">
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="110" y="160" width="150" height="80" rx="10"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M268,200 L338,200" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 5">
+      <rect x="350" y="150" width="180" height="100" rx="10"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle">
+      <text x="440" y="186">0.21</text>
+      <text x="440" y="212">-1.04</text>
+      <text x="440" y="238">0.77</text>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="640" y="160" width="150" height="80" rx="10"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
+      <path d="M700,150 C660,80 430,80 400,142" marker-end="url(#ah)"/>
+    </g>
+  </svg>
+  <div class="pageno">M1·18</div>
+</section>
+
+<section>
+  <h2 class="t">Inside one forward pass</h2>
+  <p class="s">tokens &rarr; embeddings &rarr; attention &rarr; next token, for every single token produced.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A four-stage pipeline: all tokens so far become embeddings, attention lets each position look back at earlier ones, the next token is predicted, and it is appended before the pass runs again.">
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+        <rect x="50" y="140" width="200" height="96" rx="10"/>
+      </g>
+      <text x="150" y="182" text-anchor="middle" class="lbl-b" style="font-size:21px">all tokens</text>
+      <text x="150" y="210" text-anchor="middle" class="lbl-b" style="font-size:21px">so far</text>
+    </g>
+
+    <g class="fragment">
+      <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+        <path d="M258,188 L296,188" marker-end="url(#ahg)"/>
+      </g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8">
+        <rect x="306" y="140" width="210" height="96" rx="10"/>
+      </g>
+      <text x="411" y="178" text-anchor="middle" class="lbl-b" style="font-size:21px">embeddings</text>
+      <text x="411" y="208" text-anchor="middle" class="lbl-sm">each token becomes a vector</text>
+    </g>
+
+    <g class="fragment">
+      <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+        <path d="M524,188 L562,188" marker-end="url(#ahg)"/>
+      </g>
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.8">
+        <rect x="572" y="140" width="210" height="96" rx="10"/>
+      </g>
+      <text x="677" y="178" text-anchor="middle" class="lbl-b" style="font-size:21px">attention</text>
+      <text x="677" y="208" text-anchor="middle" class="lbl-sm">each position looks back</text>
+    </g>
+
+    <g class="fragment">
+      <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+        <path d="M790,188 L828,188" marker-end="url(#ahg)"/>
+      </g>
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
+        <rect x="838" y="140" width="212" height="96" rx="10"/>
+      </g>
+      <text x="944" y="178" text-anchor="middle" class="lbl-b" style="font-size:21px">next token</text>
+      <text x="944" y="208" text-anchor="middle" class="lbl-sm">one token, not a sentence</text>
+    </g>
+
+    <g class="fragment">
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="6 6" stroke-linecap="round">
+        <path d="M944,244 L944,318 L150,318 L150,246" marker-end="url(#ah)"/>
+      </g>
+      <text x="547" y="350" text-anchor="middle" class="lbl-b" style="font-size:20px">append it, and run the whole pass again</text>
+    </g>
+  </svg>
+  <div class="pageno">M1·19</div>
+</section>
+
+<section>
+  <h2 class="t">A token becomes a vector &mdash; the embedding</h2>
+  <p class="s">Each token turns into a list of numbers the model can do maths on.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. The token pod becomes an embedding, a list of example numbers, shown as a large worked example.">
+    <!-- journey strip: model lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="315" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
+
+    <!-- kind tag -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
+      <rect x="440" y="88" width="220" height="46" rx="9"/>
+    </g>
+    <text x="550" y="117" text-anchor="middle" class="lbl-b">step 1 · embedding</text>
+
+    <!-- the token, large -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="90" y="160" width="200" height="90" rx="12"/>
+    </g>
+    <text x="190" y="212" text-anchor="middle" class="lbl-b" style="font-size:24px">pod</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M298,205 L360,205" marker-end="url(#ah)"/>
+    </g>
+
+    <!-- the vector, large -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2">
+      <rect x="372" y="172" width="130" height="66" rx="8"/>
+      <rect x="514" y="172" width="130" height="66" rx="8"/>
+      <rect x="656" y="172" width="130" height="66" rx="8"/>
+      <rect x="798" y="172" width="130" height="66" rx="8"/>
+      <rect x="940" y="172" width="120" height="66" rx="8"/>
+    </g>
+    <g class="lbl" text-anchor="middle" style="font-size:19px">
+      <text x="437" y="212">0.42</text>
+      <text x="579" y="212">-0.18</text>
+      <text x="721" y="212">0.91</text>
+      <text x="863" y="212">0.05</text>
+      <text x="1000" y="212">…</text>
+    </g>
+    <text x="700" y="270" text-anchor="middle" class="lbl-g">a list of numbers — a point in the model's meaning-space</text>
+    <text x="700" y="300" text-anchor="middle" class="lbl-g">similar tokens end up close together, with similar numbers</text>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="336" width="820" height="42" rx="10"/>
+    </g>
+    <text x="550" y="363" text-anchor="middle" class="lbl-g">every token gets one of these before anything else happens — this is what the model actually computes on</text>
+  </svg>
+  <div class="pageno">M1·20</div>
+</section>
+
+<section>
+  <h2 class="t">Attention &mdash; how a token resolves what it refers to</h2>
+  <p class="s">Each position looks back at earlier tokens and pulls in what matters.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. A sentence strip shows the token it highlighted, with a dashed arrow attending back across earlier tokens to pod, resolving what it refers to.">
+    <!-- journey strip: model lit -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <rect x="30"  y="16" width="150" height="48" rx="9"/>
+      <rect x="195" y="16" width="150" height="48" rx="9"/>
+      <rect x="690" y="16" width="150" height="48" rx="9"/>
+      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
+      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
+      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
+      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="360" y="12" width="315" height="56" rx="9"/>
+    </g>
+    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
+      <text x="105" y="45">you type</text>
+      <text x="270" y="45">tokenize</text>
+      <text x="765" y="45">streams back</text>
+    </g>
+    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
+
+    <!-- kind tag -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
+      <rect x="430" y="88" width="240" height="46" rx="9"/>
+    </g>
+    <text x="550" y="117" text-anchor="middle" class="lbl-b">step 2 · attention</text>
+
+    <!-- the sentence strip, large -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="60"  y="168" width="160" height="60" rx="8"/>
+      <rect x="240" y="168" width="220" height="60" rx="8"/>
+      <rect x="480" y="168" width="220" height="60" rx="8"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="720" y="168" width="140" height="60" rx="8"/>
+    </g>
+    <g class="lbl" text-anchor="middle" style="font-size:19px">
+      <text x="140" y="204">…pod</text>
+      <text x="350" y="204">crashed</text>
+      <text x="590" y="204">because</text>
+    </g>
+    <text x="790" y="204" text-anchor="middle" class="lbl-b" style="font-size:22px">it</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M232,198 L248,198" marker-end="url(#ahg)"/>
+      <path d="M472,198 L488,198" marker-end="url(#ahg)"/>
+      <path d="M712,198 L728,198" marker-end="url(#ahg)"/>
+    </g>
+
+    <!-- attention arrow: "it" looks all the way back to "pod" -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7" stroke-linecap="round">
+      <path d="M760,236 C 760,320 140,320 140,236" marker-end="url(#ah)"/>
+    </g>
+    <text x="450" y="304" text-anchor="middle" class="lbl-g">"it" attends back — and finds "pod"</text>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="336" width="820" height="42" rx="10"/>
+    </g>
+    <text x="550" y="363" text-anchor="middle" class="lbl-g">who does "it" refer to, ten tokens back? — this is how the model tracks context across the whole answer</text>
+  </svg>
+  <p class="recap fragment">Next: Autoregressive Generation &mdash; the loop that runs this pass over and over.</p>
+  <div class="pageno">M1·21</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">Autoregressive Generation</h2>
+  <p class="s">one token per forward pass</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="An old typewriter with a single letter block flying toward the page mid-type.">
+    <image href="../img/decks/m1/divider-2-model.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M1·22</div>
+</section>
+
+<section>
+  <h2 class="t">Each token is one forward pass over every previous token</h2>
   <p class="s">Predict one token, append it, then re-read everything to get the next.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. All tokens so far become embeddings, attention looks back across them, the model predicts the next token and appends it, then a dashed arrow loops back to the start to do it all again.">
     <!-- journey strip: model lit -->
@@ -698,163 +1071,20 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="560" y="332" text-anchor="middle" class="lbl-g">append, then loop again — autoregressive, always looking back</text>
     </g>
   </svg>
-  <div class="pageno">M1·15</div>
+  <div class="pageno">M1·23</div>
 </section>
 
 <section>
-  <h2 class="t">Read the whole line, say one word, read it again</h2>
+  <h2 class="t">Analogy &mdash; reading the whole line back before each new word</h2>
   <p class="s">Every new word is a fresh read of everything said up to that point.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A bookish person plays a word-at-a-time guessing game, reading a strip of word cards and thinking before pointing to the next one, books stacked beside them.">
     <image href="../img/decks/m1/analogy-autoregressive-wordgame.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M1·16</div>
+  <div class="pageno">M1·24</div>
 </section>
 
 <section>
-  <h2 class="t">A token becomes a list of numbers</h2>
-  <p class="s">This is the embedding — a point in the model's meaning-space.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. The token pod becomes an embedding, a list of example numbers, shown as a large worked example.">
-    <!-- journey strip: model lit -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
-      <rect x="30"  y="16" width="150" height="48" rx="9"/>
-      <rect x="195" y="16" width="150" height="48" rx="9"/>
-      <rect x="690" y="16" width="150" height="48" rx="9"/>
-      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
-      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
-      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
-      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="360" y="12" width="315" height="56" rx="9"/>
-    </g>
-    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
-      <text x="105" y="45">you type</text>
-      <text x="270" y="45">tokenize</text>
-      <text x="765" y="45">streams back</text>
-    </g>
-    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
-
-    <!-- kind tag -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
-      <rect x="440" y="88" width="220" height="46" rx="9"/>
-    </g>
-    <text x="550" y="117" text-anchor="middle" class="lbl-b">step 1 · embedding</text>
-
-    <!-- the token, large -->
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="90" y="160" width="200" height="90" rx="12"/>
-    </g>
-    <text x="190" y="212" text-anchor="middle" class="lbl-b" style="font-size:24px">pod</text>
-
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M298,205 L360,205" marker-end="url(#ah)"/>
-    </g>
-
-    <!-- the vector, large -->
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2">
-      <rect x="372" y="172" width="130" height="66" rx="8"/>
-      <rect x="514" y="172" width="130" height="66" rx="8"/>
-      <rect x="656" y="172" width="130" height="66" rx="8"/>
-      <rect x="798" y="172" width="130" height="66" rx="8"/>
-      <rect x="940" y="172" width="120" height="66" rx="8"/>
-    </g>
-    <g class="lbl" text-anchor="middle" style="font-size:19px">
-      <text x="437" y="212">0.42</text>
-      <text x="579" y="212">-0.18</text>
-      <text x="721" y="212">0.91</text>
-      <text x="863" y="212">0.05</text>
-      <text x="1000" y="212">…</text>
-    </g>
-    <text x="700" y="270" text-anchor="middle" class="lbl-g">a list of numbers — a point in the model's meaning-space</text>
-    <text x="700" y="300" text-anchor="middle" class="lbl-g">similar tokens end up close together, with similar numbers</text>
-
-    <!-- payoff band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="140" y="336" width="820" height="42" rx="10"/>
-    </g>
-    <text x="550" y="363" text-anchor="middle" class="lbl-g">every token gets one of these before anything else happens — this is what the model actually computes on</text>
-  </svg>
-  <div class="pageno">M1·17</div>
-</section>
-
-<section>
-  <h2 class="t">"It" looks back and finds "pod"</h2>
-  <p class="s">This is attention — deciding what to pull in from earlier.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the model stage lit. A sentence strip shows the token it highlighted, with a dashed arrow attending back across earlier tokens to pod, resolving what it refers to.">
-    <!-- journey strip: model lit -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
-      <rect x="30"  y="16" width="150" height="48" rx="9"/>
-      <rect x="195" y="16" width="150" height="48" rx="9"/>
-      <rect x="690" y="16" width="150" height="48" rx="9"/>
-      <path d="M182,40 L193,40" marker-end="url(#ahg)"/>
-      <path d="M347,40 L358,40" marker-end="url(#ahg)"/>
-      <path d="M512,40 L523,40" marker-end="url(#ahg)"/>
-      <path d="M677,40 L688,40" marker-end="url(#ahg)"/>
-    </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="360" y="12" width="315" height="56" rx="9"/>
-    </g>
-    <g class="lbl-g" text-anchor="middle" style="font-size:15px">
-      <text x="105" y="45">you type</text>
-      <text x="270" y="45">tokenize</text>
-      <text x="765" y="45">streams back</text>
-    </g>
-    <text x="517" y="45" text-anchor="middle" class="lbl-b" style="font-size:19px">model reads &amp; writes</text>
-
-    <!-- kind tag -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
-      <rect x="430" y="88" width="240" height="46" rx="9"/>
-    </g>
-    <text x="550" y="117" text-anchor="middle" class="lbl-b">step 2 · attention</text>
-
-    <!-- the sentence strip, large -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
-      <rect x="60"  y="168" width="160" height="60" rx="8"/>
-      <rect x="240" y="168" width="220" height="60" rx="8"/>
-      <rect x="480" y="168" width="220" height="60" rx="8"/>
-    </g>
-    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="720" y="168" width="140" height="60" rx="8"/>
-    </g>
-    <g class="lbl" text-anchor="middle" style="font-size:19px">
-      <text x="140" y="204">…pod</text>
-      <text x="350" y="204">crashed</text>
-      <text x="590" y="204">because</text>
-    </g>
-    <text x="790" y="204" text-anchor="middle" class="lbl-b" style="font-size:22px">it</text>
-
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
-      <path d="M232,198 L248,198" marker-end="url(#ahg)"/>
-      <path d="M472,198 L488,198" marker-end="url(#ahg)"/>
-      <path d="M712,198 L728,198" marker-end="url(#ahg)"/>
-    </g>
-
-    <!-- attention arrow: "it" looks all the way back to "pod" -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7" stroke-linecap="round">
-      <path d="M760,236 C 760,320 140,320 140,236" marker-end="url(#ah)"/>
-    </g>
-    <text x="450" y="304" text-anchor="middle" class="lbl-g">"it" attends back — and finds "pod"</text>
-
-    <!-- payoff band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="140" y="336" width="820" height="42" rx="10"/>
-    </g>
-    <text x="550" y="363" text-anchor="middle" class="lbl-g">who does "it" refer to, ten tokens back? — this is how the model tracks context across the whole answer</text>
-  </svg>
-  <div class="pageno">M1·18</div>
-</section>
-
-<section>
-  <h2 class="t">Every trip round the loop costs the same effort</h2>
-  <p class="s">One token, one full trip — over and over again.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A small token character runs inside a spinning hamster wheel, sweating from the repeated effort.">
-    <image href="../img/decks/m1/loop-cost-hamsterwheel.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M1·19</div>
-</section>
-
-<section>
-  <h2 class="t">Two hundred tokens, two hundred trips round this loop</h2>
+  <h2 class="t">A 200-token answer is 200 forward passes</h2>
   <p class="s">Every predicted token means re-reading everything before it.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="A predict-append-loop-back cycle repeats, counting up to two hundred trips for a two hundred token answer, each trip re-reading everything before it, which is where the runtime cost lives.">
     <!-- journey strip: model lit -->
@@ -910,11 +1140,11 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="363" text-anchor="middle" class="lbl-g">a 200-token answer is 200 trips round this loop — this is where the runtime cost lives</text>
   </svg>
-  <div class="pageno">M1·20</div>
+  <div class="pageno">M1·25</div>
 </section>
 
 <section>
-  <h2 class="t">Read everything at once, then write one piece at a time</h2>
+  <h2 class="t">Two phases &mdash; read the prompt at once, write the answer serially</h2>
   <p class="s">Read the whole prompt in one go, then write the answer piece by piece.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with model-reads and model-writes both lit. Two linked panels: phase one reads the prompt, all pieces in one go; phase two writes the answer, one piece at a time, streamed.">
     <!-- journey strip: reads + writes lit -->
@@ -1001,29 +1231,22 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="820" y="320" text-anchor="middle" class="lbl-g">one, then the next, then the next</text>
     </g>
   </svg>
-  <div class="pageno">M1·21</div>
+  <p class="recap fragment">Next: Prefill and Decode &mdash; the two phases that loop splits into.</p>
+  <div class="pageno">M1·26</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">Prefill vs Decode Explained &mdash; two very different phases</h2>
+  <h2 class="t">Prefill and Decode</h2>
+  <p class="s">two phases, two different bottlenecks</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A stopwatch split down the middle, one side a fast motion blur, the other side slow deliberate ticks.">
     <image href="../img/decks/m1/divider-3-prefill-decode.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M1·22</div>
+  <div class="pageno">M1·27</div>
 </section>
 
 <section>
-  <h2 class="t">Reading the paper is one job; writing is another</h2>
-  <p class="s">Read the question paper in one pass; write the answer slowly, by hand.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Split scene: a student quickly reads a whole exam paper in one glance on the left, then writes an answer slowly on the right.">
-    <image href="../img/decks/m1/analogy-prefill-decode-exam.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M1·23</div>
-</section>
-
-<section>
-  <h2 class="t">Prefill reads your whole prompt in one pass</h2>
-  <p class="s">All prompt tokens, processed together — compute-bound.</p>
+  <h2 class="t">Prefill &mdash; all prompt tokens processed together, compute-bound</h2>
+  <p class="s">The whole prompt is already there, so it is processed in one parallel pass.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Prefill processes all prompt tokens together in one parallel block, compute-bound, which is where TTFT comes from.">
     <!-- step tag -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
@@ -1060,12 +1283,82 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="378" text-anchor="middle" class="lbl-g">prefill is where TTFT comes from — the wait to your first word</text>
   </svg>
-  <div class="pageno">M1·24</div>
+  <div class="pageno">M1·28</div>
 </section>
 
 <section>
-  <h2 class="t">TTFT — the wait before the first word</h2>
-  <p class="s">The wait to the first word — set by your prompt length.</p>
+  <h2 class="t">Decode &mdash; one token per pass, memory-bandwidth-bound</h2>
+  <p class="s">Each token depends on the one before it, so it cannot go parallel.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Decode emits tokens one after another in a serial chain, revealed one token at a time, memory-bandwidth-bound, which is where ITL comes from.">
+    <!-- step tag -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
+      <rect x="420" y="30" width="260" height="46" rx="9"/>
+    </g>
+    <text x="550" y="59" text-anchor="middle" class="lbl-b">phase 2 · decode</text>
+
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="80" y="110" width="940" height="150" rx="12"/>
+    </g>
+    <text x="550" y="152" text-anchor="middle" class="lbl-b" style="font-size:22px">write the answer</text>
+
+    <!-- serial chain: token -> token -> token -> …, revealed one fragment per token -->
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="130" y="186" width="130" height="56" rx="8"/>
+      </g>
+      <text x="195" y="221" text-anchor="middle" class="lbl-b">tok</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+        <path d="M266,214 L326,214" marker-end="url(#ah)"/>
+      </g>
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="336" y="186" width="130" height="56" rx="8"/>
+      </g>
+      <text x="401" y="221" text-anchor="middle" class="lbl-b">tok</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+        <path d="M472,214 L532,214" marker-end="url(#ah)"/>
+      </g>
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="542" y="186" width="130" height="56" rx="8"/>
+      </g>
+      <text x="607" y="221" text-anchor="middle" class="lbl-b">tok</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+        <path d="M678,214 L738,214" marker-end="url(#ah)"/>
+      </g>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 6">
+        <rect x="748" y="186" width="130" height="56" rx="8"/>
+      </g>
+      <text x="813" y="221" text-anchor="middle" class="lbl-sm">…</text>
+      <text x="550" y="300" text-anchor="middle" class="lbl-g" style="font-size:20px">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
+      <text x="550" y="332" text-anchor="middle" class="lbl-g">the limit here is moving weights + working notes through memory, every step</text>
+    </g>
+
+    <!-- payoff band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="140" y="356" width="820" height="34" rx="10"/>
+    </g>
+    <text x="550" y="378" text-anchor="middle" class="lbl-g">decode is where ITL comes from — the steady pace after the first word</text>
+  </svg>
+  <div class="pageno">M1·29</div>
+</section>
+
+<section>
+  <h2 class="t">Analogy &mdash; reading an exam paper versus writing the answer</h2>
+  <p class="s">Read the question paper in one pass; write the answer slowly, by hand.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Split scene: a student quickly reads a whole exam paper in one glance on the left, then writes an answer slowly on the right.">
+    <image href="../img/decks/m1/analogy-prefill-decode-exam.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M1·30</div>
+</section>
+
+<section>
+  <h2 class="t">TTFT &mdash; time to first token, set by prompt length</h2>
+  <p class="s">The wait from hitting send to the first word appearing.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the streams-back stage lit. A large stopwatch marks the wait before the first reply chip appears, labelled TTFT, driven by prefill and prompt length.">
     <!-- journey strip: streams back lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -1131,73 +1424,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="363" text-anchor="middle" class="lbl-g">a longer prompt means a longer prefill — which means a longer wait before anything appears</text>
   </svg>
-  <div class="pageno">M1·25</div>
+  <div class="pageno">M1·31</div>
 </section>
 
 <section>
-  <h2 class="t">Decode writes your answer one token at a time</h2>
-  <p class="s">Each token depends on the one before it — memory-bandwidth-bound.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="Decode emits tokens one after another in a serial chain, revealed one token at a time, memory-bandwidth-bound, which is where ITL comes from.">
-    <!-- step tag -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="4 5">
-      <rect x="420" y="30" width="260" height="46" rx="9"/>
-    </g>
-    <text x="550" y="59" text-anchor="middle" class="lbl-b">phase 2 · decode</text>
-
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="80" y="110" width="940" height="150" rx="12"/>
-    </g>
-    <text x="550" y="152" text-anchor="middle" class="lbl-b" style="font-size:22px">write the answer</text>
-
-    <!-- serial chain: token -> token -> token -> …, revealed one fragment per token -->
-    <g class="fragment">
-      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="130" y="186" width="130" height="56" rx="8"/>
-      </g>
-      <text x="195" y="221" text-anchor="middle" class="lbl-b">tok</text>
-    </g>
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M266,214 L326,214" marker-end="url(#ah)"/>
-      </g>
-      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="336" y="186" width="130" height="56" rx="8"/>
-      </g>
-      <text x="401" y="221" text-anchor="middle" class="lbl-b">tok</text>
-    </g>
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M472,214 L532,214" marker-end="url(#ah)"/>
-      </g>
-      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
-        <rect x="542" y="186" width="130" height="56" rx="8"/>
-      </g>
-      <text x="607" y="221" text-anchor="middle" class="lbl-b">tok</text>
-    </g>
-    <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-        <path d="M678,214 L738,214" marker-end="url(#ah)"/>
-      </g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 6">
-        <rect x="748" y="186" width="130" height="56" rx="8"/>
-      </g>
-      <text x="813" y="221" text-anchor="middle" class="lbl-sm">…</text>
-      <text x="550" y="300" text-anchor="middle" class="lbl-g" style="font-size:20px">one after another — <tspan font-weight="700">bandwidth-bound</tspan></text>
-      <text x="550" y="332" text-anchor="middle" class="lbl-g">the limit here is moving weights + working notes through memory, every step</text>
-    </g>
-
-    <!-- payoff band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="140" y="356" width="820" height="34" rx="10"/>
-    </g>
-    <text x="550" y="378" text-anchor="middle" class="lbl-g">decode is where ITL comes from — the steady pace after the first word</text>
-  </svg>
-  <div class="pageno">M1·26</div>
-</section>
-
-<section>
-  <h2 class="t">ITL — the steady drip that follows</h2>
-  <p class="s">The pace of words after that — also called TPOT in older tools.</p>
+  <h2 class="t">ITL &mdash; inter-token latency, set by answer length</h2>
+  <p class="s">The pace of words after the first one. Older tools call this TPOT.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Journey strip with the streams-back stage lit. Reply chips arrive one after another at a steady beat, the drip labelled ITL, driven by decode and answer length.">
     <!-- journey strip: streams back lit -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
@@ -1272,28 +1504,67 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="363" text-anchor="middle" class="lbl-g">a longer answer means more decode steps — which means a longer total time, even if TTFT was fast</text>
   </svg>
-  <div class="pageno">M1·27</div>
+  <div class="pageno">M1·32</div>
+</section>
+
+<section>
+  <h2 class="t">Two kinds of slow &mdash; high TTFT and high ITL</h2>
+  <p class="s">&ldquo;Slow&rdquo; is two different faults with two different fixes. Ask which one first.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A decision split. A slow assistant divides into slow to start, which points at prompt length and the prefill phase and is measured by TTFT, and slow to finish, which points at answer length and the decode phase and is measured by ITL.">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="400" y="26" width="300" height="70" rx="10"/>
+    </g>
+    <text x="550" y="70" text-anchor="middle" class="lbl-b" style="font-size:22px">"the assistant is slow"</text>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M470,100 L300,142" marker-end="url(#ahg)"/>
+      <path d="M630,100 L800,142" marker-end="url(#ahg)"/>
+    </g>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.8">
+        <rect x="70" y="150" width="440" height="72" rx="10"/>
+      </g>
+      <text x="290" y="196" text-anchor="middle" class="lbl-b" style="font-size:22px">slow to START</text>
+      <text x="290" y="252" text-anchor="middle" class="lbl">high TTFT &rarr; long prompt &rarr; prefill</text>
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="70" y="276" width="440" height="72" rx="10"/>
+      </g>
+      <text x="290" y="304" text-anchor="middle" class="lbl-sm">fix the prompt: trim the system prompt,</text>
+      <text x="290" y="330" text-anchor="middle" class="lbl-sm">send fewer documents, cache the fixed prefix</text>
+    </g>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.8">
+        <rect x="590" y="150" width="440" height="72" rx="10"/>
+      </g>
+      <text x="810" y="196" text-anchor="middle" class="lbl-b" style="font-size:22px">slow to FINISH</text>
+      <text x="810" y="252" text-anchor="middle" class="lbl">high ITL &rarr; long answer &rarr; decode</text>
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="590" y="276" width="440" height="72" rx="10"/>
+      </g>
+      <text x="810" y="304" text-anchor="middle" class="lbl-sm">fix the answer: cap output length,</text>
+      <text x="810" y="330" text-anchor="middle" class="lbl-sm">turn thinking off, get more memory bandwidth</text>
+    </g>
+
+    <g class="fragment">
+      <text x="550" y="386" text-anchor="middle" class="lbl-b" style="font-size:20px">&ldquo;Slow&rdquo; on its own is not a measurement. TTFT or ITL is.</text>
+    </g>
+  </svg>
+  <p class="recap fragment">Next: KV Cache &mdash; what keeps decode at a steady rhythm, and what it costs you in memory.</p>
+  <div class="pageno">M1·33</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">What Is KV Cache? &mdash; the notes the model keeps so it never re-reads</h2>
+  <h2 class="t">KV Cache</h2>
+  <p class="s">cached attention state, and what it costs in memory</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A hand pins a fresh note onto a wall already covered in blank sticky notes.">
     <image href="../img/decks/m1/divider-4-kvcache.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M1·28</div>
+  <div class="pageno">M1·34</div>
 </section>
 
 <section>
-  <h2 class="t">The KV cache is rough work — computed once, kept</h2>
-  <p class="s">Each token's key and value are worked out once, then read — never redone.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A student works out a sum in the margin of an exam answer sheet, then later points back at that same margin note while answering a different question, a curved arrow connecting them.">
-    <image href="../img/decks/m1/analogy-kvcache-margin.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M1·29</div>
-</section>
-
-<section>
-  <h2 class="t">The KV cache grows one fixed step per token</h2>
+  <h2 class="t">KV cache grows by a fixed block per token and stays resident</h2>
   <p class="s">Every new token adds one more fixed-size block, and it stays.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="The KV cache grows by one fixed-size block for every token in the request, prompt and answer together, and every block stays in memory for as long as the request is being processed.">
     <text x="550" y="70" text-anchor="middle" class="lbl-b" style="font-size:20px">the rough work takes space, right?</text>
@@ -1341,12 +1612,21 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="363" text-anchor="middle" class="lbl-g">and every block stays in memory for as long as the request is being processed</text>
   </svg>
-  <div class="pageno">M1·30</div>
+  <div class="pageno">M1·35</div>
 </section>
 
 <section>
-  <h2 class="t">112 KiB, times 8,192 tokens, times 10 users</h2>
-  <p class="s">Three numbers you look up or choose — multiplied.</p>
+  <h2 class="t">Analogy &mdash; working notes kept in the margin, never recomputed</h2>
+  <p class="s">Each token's key and value are worked out once, then read, never redone.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A student works out a sum in the margin of an exam answer sheet, then later points back at that same margin note while answering a different question, a curved arrow connecting them.">
+    <image href="../img/decks/m1/analogy-kvcache-margin.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M1·36</div>
+</section>
+
+<section>
+  <h2 class="t">KV memory = per-token cost &times; context length &times; concurrent requests</h2>
+  <p class="s">Three numbers you look up or choose, multiplied.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="A worked example: 112 kibibytes per token, times an 8192-token request, equals 896 mebibytes for one request; times 10 concurrent requests equals 8.75 gibibytes of total KV memory.">
     <g class="fragment">
       <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6">
@@ -1386,12 +1666,12 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="550" y="352" text-anchor="middle" class="lbl-b" style="font-size:24px">= 8.75 GiB of KV memory</text>
     </g>
   </svg>
-  <div class="pageno">M1·31</div>
+  <div class="pageno">M1·37</div>
 </section>
 
 <section>
-  <h2 class="t">A 16 GB box, 1.2 GB of weights — how many users fit?</h2>
-  <p class="s">Whatever's left over, divided by one request's cost.</p>
+  <h2 class="t">Capacity = (box memory &minus; weights) &divide; KV cost per request</h2>
+  <p class="s">Whatever is left over, divided by one request's cost.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="A 16 gibibyte box holds 1.2 gibibytes of fixed model weights, leaving about 14.8 gibibytes of KV budget; divided by 896 mebibytes for one 8192-token request, about 16 users fit at once.">
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="60" y="60" width="440" height="270" rx="12"/>
@@ -1439,20 +1719,41 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="378" text-anchor="middle" class="lbl-g">not a guess — an actual calculation, on paper, before you provision anything</text>
   </svg>
-  <div class="pageno">M1·32</div>
+  <p class="recap fragment">KV per request &asymp; per-token cost &times; tokens; &times; concurrency for the box. In M8 this is the pod memory limit you set; in M11 it is what the autoscaler watches.</p>
+  <div class="pageno">M1·38</div>
 </section>
 
-<section>
-  <h2 class="t">One request, looked at three different ways</h2>
-  <p class="s">The bill, the latency, and the capacity were never separate.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A person holds up three magnifying glasses over one sheet of paper, each revealing a different icon - a dollar sign, a stopwatch, and a small crowd.">
-    <image href="../img/decks/m1/synthesis-three-lenses.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+<section class="divider">
+  <h2 class="t">Cost, Latency and Capacity</h2>
+  <p class="s">reading all three off one request</p>
+  <svg viewBox="0 0 900 380" role="img" aria-label="Three sketched gauges side by side: a stack of billing slips, a stopwatch, and a box with capacity marks.">
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="120" y="196" width="150" height="26" rx="6"/>
+      <rect x="120" y="166" width="150" height="26" rx="6"/>
+      <rect x="120" y="136" width="150" height="26" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <circle cx="450" cy="180" r="60"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M450,180 L450,140"/>
+      <path d="M450,180 L478,196"/>
+      <path d="M436,110 L464,110"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="630" y="126" width="170" height="110" rx="10"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M660,236 L660,264"/>
+      <path d="M715,236 L715,264"/>
+      <path d="M770,236 L770,264"/>
+    </g>
   </svg>
-  <div class="pageno">M1·33</div>
+  <div class="pageno">M1·39</div>
 </section>
 
 <section>
-  <h2 class="t">Read the bill, the latency, the capacity off the trip</h2>
+  <h2 class="t">Where the bill, the latency and the memory each come from</h2>
   <p class="s">The three questions from the opening are three stops on one journey.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="The journey strip once more, with three gray callouts hanging off it: tokenize answers the bill, read-versus-write answers the latency as TTFT and ITL, and the KV cache answers the capacity.">
     <!-- the strip, whole, all inked -->
@@ -1504,12 +1805,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="242" text-anchor="middle" class="lbl-b">the capacity</text>
     <text x="935" y="268" text-anchor="middle" class="lbl-g">the KV budget sum</text>
   </svg>
-  <div class="pageno">M1·34</div>
+  <div class="pageno">M1·40</div>
 </section>
 
 <section>
-  <h2 class="t">94/6 or 3/97 — the split flips with the request</h2>
-  <p class="s">Same box, opposite split — measured live on the course model, <code>qwen3:0.6b</code>.</p>
+  <h2 class="t">The prefill/decode split flips with the request</h2>
+  <p class="s">Same box, opposite split &mdash; measured live on the course model, <code>qwen3:0.6b</code>.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="Left: a big prompt with a one-word answer is about ninety-four percent prefill and six percent decode. Right: a short prompt with a long answer is about three percent prefill and ninety-seven percent decode.">
     <!-- LEFT: prefill-heavy -->
     <text x="290" y="90" text-anchor="middle" class="lbl-b">big prompt · one-word answer</text>
@@ -1545,7 +1846,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="316" text-anchor="middle" class="lbl-g">the phase that dominates is set by the kind of request — not by "the model"</text>
   </svg>
-  <div class="pageno">M1·35</div>
+  <div class="pageno">M1·41</div>
 </section>
 
 <section>
@@ -1579,11 +1880,11 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 1 · Lab</b> — you'll measure the split and print the KV table on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M1·36</div>
+  <div class="pageno">M1·42</div>
 </section>
 
 <section>
-  <h2 class="t">No GPU, one laptop, two real measurements</h2>
+  <h2 class="t">What the lab measures on your own machine</h2>
   <p class="s">You will run both instrumented phases yourself, live.</p>
   <svg viewBox="0 0 940 260" role="img" aria-label="A row of five icons revealed one at a time: the tokenizer runs live across English, Hindi, and code; one request goes through the OpenAI-compatible API; prefill and decode are timed as two separate instrumented runs; thinking mode's cost is measured; and the LLM Stack X-Ray watches a real request split into its two phases live.">
     <g class="fragment">
@@ -1626,7 +1927,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="830" y="218" text-anchor="middle" class="lbl-sm">watch it split</text>
     </g>
   </svg>
-  <div class="pageno">M1·37</div>
+  <div class="pageno">M1·43</div>
 </section>
 
 </div></div>

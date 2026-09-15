@@ -144,30 +144,59 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 1 · TITLE ═══════════════ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 7 &nbsp;·&nbsp; MODEL PACKAGING &amp; SIGNING — KITOPS &amp; OCI ARTIFACTS</p>
-  <h2 class="t" style="font-size:1.55em">The model has been a loose file — this makes it an artifact you can prove</h2>
-  <p class="s" style="font-size:1.15em">During an incident, a loose model file can't say which model it even is.</p>
+  <h2 class="t" style="font-size:1.55em">How Do You Ship an LLM You Can Prove?</h2>
+  <p class="s" style="font-size:1.15em">OCI artifacts, ModelKits, signing, and versioning.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A single loose sheet of paper drifts on the left; on the right a solid wooden crate sits sealed with a ribbon and wax stamp, a hanging tag attached, a curved arrow showing the paper becoming the crate.">
     <image href="../img/decks/m7/title-file-to-artifact.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
-  <div class="pageno">M7·01</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">The Three Questions a Loose File Cannot Answer</h2>
-  <div class="pageno">M7·02</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">Why a Filename Is Not a Version</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A courier stands holding out a plain box with only a scribbled name tag on it, nothing else identifying what is inside.">
-    <image href="../img/decks/m7/divider-1-courier.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M7·03</div>
+  <div class="pageno">M7&middot;01</div>
 </section>
 
 <section>
-  <h2 class="t">A name on the side is trustworthy only in your own hands</h2>
+  <h2 class="t">What will you learn?</h2>
+  <p class="s">Five concepts, from a loose file to a signed, versioned artifact.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A numbered contents list of the module's 5 concepts: packaging, modelkits, signing, versioning, registries.">
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="56" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="83" text-anchor="middle" class="lbl-b" style="font-size:20px">1</text>
+    <text x="320" y="83" class="lbl-b" style="font-size:23px">Packaging</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="124" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="151" text-anchor="middle" class="lbl-b" style="font-size:20px">2</text>
+    <text x="320" y="151" class="lbl-b" style="font-size:23px">ModelKits</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="192" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="219" text-anchor="middle" class="lbl-b" style="font-size:20px">3</text>
+    <text x="320" y="219" class="lbl-b" style="font-size:23px">Signing</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="260" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="287" text-anchor="middle" class="lbl-b" style="font-size:20px">4</text>
+    <text x="320" y="287" class="lbl-b" style="font-size:23px">Versioning</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="328" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="355" text-anchor="middle" class="lbl-b" style="font-size:20px">5</text>
+    <text x="320" y="355" class="lbl-b" style="font-size:23px">Registries</text>
+  </svg>
+  <div class="pageno">M7&middot;02</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">Packaging</h2>
+  <p class="s">why a loose model file cannot answer the questions that matter</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A courier stands holding out a plain box with only a scribbled name tag on it, nothing else identifying what is inside.">
+    <image href="../img/decks/m7/divider-1-courier.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M7&middot;03</div>
+</section>
+
+<section>
+  <h2 class="t">A name on the box proves nothing</h2>
   <p class="s">A name scrawled on a box means nothing the moment it leaves your hands.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A single parcel labelled Gourav's box, drawn red, leaves your hands and passes through a chain of hands: build, registry, deploy, rollback. Question marks hang over every handoff. A band reads a name is for you, holding it — every handoff after that is a place you can no longer say what you are serving.">
     <!-- the parcel, name only -->
@@ -211,29 +240,21 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="316" text-anchor="middle" class="lbl-g">a <tspan class="lbl-b">name</tspan> works for exactly one person — you, holding the box</text>
   </svg>
-  <div class="pageno">M7·04</div>
+  <div class="pageno">M7&middot;04</div>
 </section>
 
 <section>
-  <h2 class="t">A proper parcel carries a manifest — label, tracking number, seal</h2>
+  <h2 class="t">Analogy &mdash; a parcel with a manifest</h2>
   <p class="s">A parcel that travels carries a label, a tracking number, and a seal.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A well-wrapped parcel shows three features up close: a label patch, a looping tracking tag, and a wax seal with ribbon across the flap.">
     <image href="../img/decks/m7/analogy-manifest-parcel.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M7·05</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">What a Model Actually Is on Disk</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="An open crate on a table reveals four wrapped bundles of different sizes: one large heavy bundle and three small neat ones beside it.">
-    <image href="../img/decks/m7/divider-2-bundle.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M7·06</div>
+  <div class="pageno">M7&middot;05</div>
 </section>
 
 <section>
-  <h2 class="t">A model on disk is a bundle, not one thing — a recap from M2</h2>
-  <p class="s">A callback from M2: "the model" is four files that only mean something together.</p>
+  <h2 class="t">An LLM on disk is a bundle</h2>
+  <p class="s">It is four files that only mean anything together. A callback to Module 2.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A big outer box labelled the model equals one bundle holds four inner boxes: weights, drawn blue, the bulk of the bytes; tokenizer; config; and chat template. A gray note reads GGUF is one file, safetensors is a directory, same bundle.">
     <!-- outer bundle box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -258,12 +279,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- note -->
     <text x="550" y="298" text-anchor="middle" class="lbl-g">GGUF = one file &nbsp;·&nbsp; safetensors = a directory — same bundle</text>
   </svg>
-  <div class="pageno">M7·07</div>
+  <div class="pageno">M7&middot;06</div>
 </section>
 
 <section>
-  <h2 class="t">Ship the whole bundle plus what was true about it</h2>
-  <p class="s">Ship the whole bundle — plus the prompts and eval set that were true about it.</p>
+  <h2 class="t">Ship the bundle, and the evidence</h2>
+  <p class="s">Ship the prompts it expects and the eval set it was weighed on, alongside it.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The bundle box on the left, drawn blue, gains two green crates: plus prompts, and plus the golden eval set. An arrow leads to the payoff: anyone who pulls it can re-run the measurement instead of trusting a number in a report. A band reads carrying its own eval set is an audit trail made physical.">
     <!-- the bundle -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8">
@@ -297,20 +318,22 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="314" text-anchor="middle" class="lbl-g">a model that carries its own eval set is an <tspan class="lbl-b">audit trail made physical</tspan></text>
   </svg>
-  <div class="pageno">M7·08</div>
+  <p class="recap fragment">Next: ModelKits &mdash; the format that carries all of that as one addressable artifact.</p>
+  <div class="pageno">M7&middot;07</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">What Is an OCI Artifact?</h2>
+  <h2 class="t">ModelKits</h2>
+  <p class="s">an LLM as a layered OCI artifact, and the Kitfile that builds it</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A standardized shipping container is lifted by a dockside gantry crane in a harbor, with a cargo ship and other cranes in the background.">
     <image href="../img/decks/m7/divider-3-crane-container.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M7·09</div>
+  <div class="pageno">M7&middot;08</div>
 </section>
 
 <section>
-  <h2 class="t">You do not need a new system — OCI already ships anything</h2>
-  <p class="s">A model as an OCI artifact rides the exact same rails your images already do.</p>
+  <h2 class="t">OCI already ships anything</h2>
+  <p class="s">A model as an OCI artifact rides the same rails your images already do.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A standardized shipping container labelled your model, as an OCI artifact, sits on rails that carry it from a truck to a train to a ship to a crane — the same rails your container images already ride. Three shared rails are named: same registries, same push and pull, same digests. A band reads you are not inventing a distribution system, you are putting the model in the container everyone already moves.">
     <!-- the shipping container -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
@@ -339,29 +362,21 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="292" text-anchor="middle" class="lbl-g">not a new distribution system — the <tspan class="lbl-b">container everyone already knows how to move</tspan></text>
   </svg>
-  <div class="pageno">M7·10</div>
+  <div class="pageno">M7&middot;09</div>
 </section>
 
 <section>
-  <h2 class="t">Inside the artifact are layers — and the sizes are the whole point</h2>
-  <p class="s">Inside are separately-addressed layers — read the sizes, they're the point.</p>
+  <h2 class="t">Inside are layers, and sizes matter</h2>
+  <p class="s">Each layer is addressed separately. Read the sizes, because they are the point.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="An open shipping container reveals crates of very different sizes inside: one huge heavy crate and two small crates tucked beside it.">
     <image href="../img/decks/m7/analogy-layers-crates.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M7·11</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">What Is a ModelKit? (The Kitfile Explained)</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand-drawn recipe or blueprint card leans against a sealed wooden crate, with a pencil resting beside it.">
-    <image href="../img/decks/m7/divider-4-recipe-crate.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M7·12</div>
+  <div class="pageno">M7&middot;10</div>
 </section>
 
 <section>
-  <h2 class="t">The Kitfile is a Dockerfile for models — each section becomes a layer</h2>
-  <p class="s">A Kitfile is a Dockerfile for models — each section becomes a layer.</p>
+  <h2 class="t">A Kitfile is a Dockerfile for models</h2>
+  <p class="s">Each section of it becomes one layer of the artifact.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A Kitfile box, the packing list you write, with three labelled arrows: model colon leads to a blue model layer GGUF, datasets colon leads to a green dataset layer golden.yaml, and code colon leads to a green code layer prompts. The three layers converge into kit pack, one OCI artifact, then kit push to a registry. A band reads a plain-text manifest read by pack, the same form as a Dockerfile.">
     <!-- Kitfile -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -416,12 +431,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">a plain-text manifest read by <tspan class="lbl-b">pack</tspan> — the same form as a Dockerfile</text>
   </svg>
-  <div class="pageno">M7·13</div>
+  <div class="pageno">M7&middot;11</div>
 </section>
 
 <section>
-  <h2 class="t">The concept is durable — the tool is a current, reasonable choice</h2>
-  <p class="s">Adopt the idea firmly; the tool is a current, reasonable choice, not forever.</p>
+  <h2 class="t">The concept is durable, tools are not</h2>
+  <p class="s">Adopt the idea firmly. The tool is a current, reasonable choice, not forever.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two layers separated. On top, drawn blue and solid, the durable concept: a model as a layered, versioned OCI artifact, tagged vendor-neutral, the bet. Below it, drawn orange and dashed, the current tooling: KitOps, CNCF Sandbox, early-stage, and ModelPack standardizing the media types, tagged a reasonable choice, not a permanent commitment. A band reads adopt the idea firmly, hold the tool loosely.">
     <!-- the durable concept -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
@@ -446,12 +461,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="317" text-anchor="middle" class="lbl-g">adopt the <tspan class="lbl-b">idea</tspan> firmly, hold the <tspan class="lbl-b">tool</tspan> loosely</text>
   </svg>
-  <div class="pageno">M7·14</div>
+  <div class="pageno">M7&middot;12</div>
 </section>
 
 <section>
-  <h2 class="t">Every path in a Kitfile is relative — absolute paths are rejected</h2>
-  <p class="s">An absolute path only exists on your machine — so kit pack rejects it.</p>
+  <h2 class="t">Every path in a Kitfile is relative</h2>
+  <p class="s">An absolute path only exists on your machine, so kit pack rejects it.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two Kitfile paths compared. On the left, drawn red and crossed out, an absolute path slash Users slash you slash models, tagged only exists on your machine, kit pack rejects it. On the right, drawn green, a relative path dot slash models slash model.gguf, tagged resolves against the pack context, travels anywhere. A band reads reading the error once is how you remember the rule.">
     <!-- absolute path, rejected -->
     <text x="270" y="42" text-anchor="middle" class="lbl-b">ABSOLUTE</text>
@@ -479,20 +494,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="306" text-anchor="middle" class="lbl-g">you hit the error on purpose — <tspan class="lbl-b">reading it once is how you remember the rule</tspan></text>
   </svg>
-  <div class="pageno">M7·15</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">What Is Selective Pull in OCI Artifacts?</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A dockside crane lifts exactly one small crate off a large stack of crates, leaving the rest of the stack undisturbed.">
-    <image href="../img/decks/m7/divider-5-selective-lift.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M7·16</div>
+  <div class="pageno">M7&middot;13</div>
 </section>
 
 <section>
-  <h2 class="t">Selective pull — take one crate off the ship, not the whole thing</h2>
-  <p class="s">Layers are digest-addressed — fetch the prompts without the weights.</p>
+  <h2 class="t">Selective pull takes one layer</h2>
+  <p class="s">Layers are digest-addressed, so you can fetch the prompts without the weights.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A registry cylinder holds the three-layer artifact. A kit unpack with filter code arrow pulls down only a small green prompts folder of about 5 kilobytes, while the 610 megabyte weights layer stays on the registry, tagged left behind. A struck-through gray arrow shows the naive download-the-model path moving all 610 megabytes, crossed out and tagged what you did not have to do. A band reads each layer is digest-addressed, fetch exactly the crate you want.">
     <!-- registry cylinder -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -532,20 +539,22 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">each layer is <tspan class="lbl-b">digest-addressed</tspan> → fetch exactly the crate you want</text>
   </svg>
-  <div class="pageno">M7·17</div>
+  <p class="recap fragment">Next: Signing &mdash; proving who built the artifact, and that nobody changed it.</p>
+  <div class="pageno">M7&middot;14</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">How Model Signing Works (Cosign and Sigstore)</h2>
+  <h2 class="t">Signing</h2>
+  <p class="s">proving who built it and that nobody changed it since</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A close-up of a hand pressing a signet ring into a blob of wax on a ribbon-wrapped letter, the seal impression visible mid-press.">
     <image href="../img/decks/m7/divider-6-wax-seal.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M7·18</div>
+  <div class="pageno">M7&middot;15</div>
 </section>
 
 <section>
-  <h2 class="t">The wax seal proves origin, not quality — tamper-evidence, not secrecy</h2>
-  <p class="s">A seal doesn't hide the letter — it proves who sealed it and that it's unopened.</p>
+  <h2 class="t">Analogy &mdash; a wax seal, not a lock</h2>
+  <p class="s">It does not hide the letter. It proves who sealed it, and that it is unopened.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A readable letter is pressed with a signet ring, leaving a purple wax seal. Two proof tags float off the seal: authenticity, sealed by the ring holder, and integrity, unopened since. A gray note reads readable — tamper-evidence, not secrecy; a signed model is not encrypted, anyone can pull it; it proves origin, not quality. A band reads break the seal and it cannot re-form without the ring.">
     <!-- letter + ring + seal -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -584,12 +593,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="312" text-anchor="middle" class="lbl-g">break the seal and it <tspan class="lbl-b">cannot re-form without the ring</tspan></text>
   </svg>
-  <div class="pageno">M7·19</div>
+  <div class="pageno">M7&middot;16</div>
 </section>
 
 <section>
-  <h2 class="t">Sign the digest, never the tag — a tag is a label someone can move</h2>
-  <p class="s">A tag is a label someone can move; a digest is the bytes — sign the digest.</p>
+  <h2 class="t">Sign the digest, never the tag</h2>
+  <p class="s">A tag is a label somebody can move. A digest is the bytes themselves.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two boxes compared. On the left, drawn green, a digest sha256 acbf is the bytes, a cryptographic hash that cannot point anywhere else, tagged sign THIS. On the right, drawn red and dashed, a tag 1.0.0 is a movable label someone can re-point tomorrow, tagged never sign a tag. Below, the Cosign flow: generate-key-pair makes the keys, cosign sign seals by digest, cosign verify checks the seal; keep the private key secret. A band reads always sign and verify by digest.">
     <!-- digest, green, sign this -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
@@ -625,12 +634,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="334" text-anchor="middle" class="lbl-g">a signature vouches for <tspan class="lbl-b">these exact bytes</tspan> — always sign and verify by digest</text>
   </svg>
-  <div class="pageno">M7·20</div>
+  <div class="pageno">M7&middot;17</div>
 </section>
 
 <section>
-  <h2 class="t">A seal nobody checks is decoration — verify before you run</h2>
-  <p class="s">A seal is only useful if something downstream verifies before it runs.</p>
+  <h2 class="t">A seal nobody checks is decoration</h2>
+  <p class="s">A signature is only useful if something downstream verifies before it runs.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A model artifact plus its digest flows into cosign verify with the public key, then into a diamond asking are the bytes unchanged and signed by the key holder. A yes arrow leads to a green deploy. A no or no-signature arrow leads to a red refuse to deploy, tagged the whole point. A gray note under the gate reads wired into OpsMate's preflight now, a Kubernetes admission policy in M8. A band reads a seal nobody checks is decoration, verify before you run.">
     <!-- artifact -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -680,19 +689,21 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="313" text-anchor="middle" class="lbl-g">a seal nobody checks is <tspan class="lbl-b">decoration</tspan> — verify before you run</text>
   </svg>
-  <div class="pageno">M7·21</div>
+  <p class="recap fragment">Next: Versioning &mdash; naming releases, and recording the build that lost.</p>
+  <div class="pageno">M7&middot;18</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">How to Version Models with Semantic Versioning</h2>
+  <h2 class="t">Versioning</h2>
+  <p class="s">semantic versions for models, and recording the one that lost</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="Three stacked textbooks side by side, each visually distinct: a new edition with a different cover, a revised printing with a fresh band, and a corrected reprint with a small corner sticker.">
     <image href="../img/decks/m7/divider-7-textbook-editions.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M7·22</div>
+  <div class="pageno">M7&middot;19</div>
 </section>
 
 <section>
-  <h2 class="t">Semver for models reads like textbook editions</h2>
+  <h2 class="t">Semver reads like book editions</h2>
   <p class="s">The version number should tell you what changed without diffing artifacts.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Three edition levels. MAJOR, drawn orange, is a new edition where old references break — new base or behaviour shift, an API break, treat as breaking. MINOR, drawn blue, is a revised printing, better within the same edition — a better tune, same interface, re-test. PATCH, drawn green, is a corrected reprint where the words are unchanged — packaging only, drop in blindly. A band reads read the number, know what changed, without diffing the artifacts.">
     <!-- three levels — MAJOR caution (orange), MINOR re-test (blue), PATCH drop-in (green) -->
@@ -723,12 +734,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="328" text-anchor="middle" class="lbl-g">read the number, know what changed — <tspan class="lbl-b">without diffing the artifacts</tspan></text>
   </svg>
-  <div class="pageno">M7·23</div>
+  <div class="pageno">M7&middot;20</div>
 </section>
 
 <section>
-  <h2 class="t">The -candidate suffix names a build that is real but not promoted</h2>
-  <p class="s">A candidate is real, packaged, and pushed — but not promoted to the release.</p>
+  <h2 class="t">A candidate is real but not promoted</h2>
+  <p class="s">It is packaged, pushed and addressable, and it is not the release.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A number line from a candidate to a release. On the left, drawn purple, 1.0.0-candidate: real, packaged, pushed, addressable — but NOT promoted. An arrow labelled promote leads right to a green 1.0.0, the release that ships. A gray note reads a candidate is a version you can point at and measure without it being what ships. A band reads the -candidate suffix is the hinge of this module's story.">
     <!-- candidate -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3">
@@ -756,19 +767,11 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="313" text-anchor="middle" class="lbl-g">the <tspan class="lbl-b">-candidate</tspan> suffix is the hinge of this module's story</text>
   </svg>
-  <div class="pageno">M7·24</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">The Two-Tags Pattern &mdash; Versioning a Model That Lost</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Two parcels sit side by side on a shelf: the left one fully sealed with a wax stamp and ribbon, the right one open-flapped and unsealed.">
-    <image href="../img/decks/m7/divider-8-two-parcels.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M7·25</div>
+  <div class="pageno">M7&middot;21</div>
 </section>
 
 <section>
-  <h2 class="t">The M6 tune lost — so push both, as two tags of one repository</h2>
+  <h2 class="t">The tune lost, so push both tags</h2>
   <p class="s">Delete it and lose the record, or leave it lying about and risk serving it.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Inside one frame labelled opsmate/model, one repository, two tags. On the left, drawn green, 1.0.0, the base Qwen, the baseline holder that serves, signed, leading to gate deploys. On the right, drawn red and dashed, 1.0.0-candidate, the M6 tuned model, measured, lost, recorded, not signed on purpose, leading to gate blocked so it cannot be served by accident.">
     <!-- repo frame -->
@@ -799,12 +802,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="810" y="236" text-anchor="middle" class="lbl-g">gate: BLOCKED — can't serve by accident</text>
   </svg>
-  <div class="pageno">M7·26</div>
+  <div class="pageno">M7&middot;22</div>
 </section>
 
 <section>
-  <h2 class="t">The registry records history, not just winners</h2>
-  <p class="s">"Did we ever try tuning this?" is a kit list, not a Slack search.</p>
+  <h2 class="t">The registry records history</h2>
+  <p class="s">“Did we ever try tuning this?” becomes a kit list, not a chat search.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Both tags carry the same golden set, so the comparison is reproducible from the artifacts, not a claim in a document. A month later, the question did-we-ever-try-tuning-this is answered by kit list, which shows the candidate with the eval set it was weighed on and the fact it was never signed — an audit trail made of artifacts instead of memory. The winner and the honest loss, both on the shelf.">
     <!-- same golden set bridges both -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="60" width="380" height="70" rx="11"/></g>
@@ -826,20 +829,22 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="306" width="800" height="40" rx="10"/></g>
     <text x="550" y="332" text-anchor="middle" class="lbl-g">an audit trail made of <tspan class="lbl-b">artifacts, not memory</tspan> — the winner and the honest loss, both on the shelf</text>
   </svg>
-  <div class="pageno">M7·27</div>
+  <p class="recap fragment">Next: Registries &mdash; where this artifact actually lives.</p>
+  <div class="pageno">M7&middot;23</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">OCI Registries for Models &mdash; Zot, Harbor, and Hugging Face Hub</h2>
+  <h2 class="t">Registries</h2>
+  <p class="s">where the artifact lives, in this lab and in production</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A wide harbor scene shows the same standardized shipping container being loaded by crane onto three different docked ships at separate piers.">
     <image href="../img/decks/m7/divider-9-harbor-multi.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M7·28</div>
+  <div class="pageno">M7&middot;24</div>
 </section>
 
 <section>
-  <h2 class="t">Zot here, Harbor and ECR and HF in production — address changes, not format</h2>
-  <p class="s">Swap the registry and your artifact is unchanged — only its address moves.</p>
+  <h2 class="t">Swap the registry, not the artifact</h2>
+  <p class="s">Change the registry and your artifact is unchanged. Only its address moves.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A hub-and-spoke. At the center, drawn blue, your OCI artifact, unchanged. Four spokes lead to registries: Zot, drawn green, the lab choice, seconds, no cloud, CNCF, tagged here; Harbor, self-hosted enterprise with RBAC, scanning, and signing policy; Artifactory, ECR, and GHCR, managed registries where your images already live; and Hugging Face Hub, git-LFS-based, the odd one out, where base models start. A band reads packaged as OCI, so moving registries is a change of address, not format.">
     <!-- center hub — the artifact under study (blue) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3">
@@ -888,23 +893,23 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="333" text-anchor="middle" class="lbl-g">packaged as OCI → moving registries is a change of <tspan class="lbl-b">address, not format</tspan></text>
   </svg>
-  <div class="pageno">M7·29</div>
+  <div class="pageno">M7&middot;25</div>
 </section>
 
 <section>
   <p class="kicker">MODULE 7 &nbsp;·&nbsp; MODEL PACKAGING &amp; SIGNING — KITOPS &amp; OCI ARTIFACTS</p>
-  <h2 class="t" style="font-size:2.05em">The loose file is gone — M8's cluster pulls this signed, versioned kit</h2>
+  <h2 class="t" style="font-size:2.05em">What you carry into the lab</h2>
   <p class="s">The file is now an artifact with three properties you can prove.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="The sealed wooden crate now rests firmly on a loading dock beside a cargo ship gangway, ribbon and wax seal clearly visible, looking settled and arrived.">
     <image href="../img/decks/m7/closing-crate-arrived.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">the loose file is gone &nbsp;·&nbsp; now open <b>Module 7 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M7·30</div>
+  <div class="pageno">M7&middot;26</div>
 </section>
 
 <section>
-  <h2 class="t">Next: Pack the Kit, Sign the Base, and Watch the Gate Work</h2>
-  <p class="s">The same command that seals this artifact is the one M8 turns into an admission gate.</p>
+  <h2 class="t">What you will do as part of the lab</h2>
+  <p class="s">Pack the kit, sign the base, and watch the gate refuse an unsigned artifact.</p>
   <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: the Zot registry joins the compose stack; the Kitfile is written and packed, hitting the absolute-path error on purpose; both tags are pushed, the base signed and the candidate not; a filtered unpack pulls back just the prompts layer by digest; the base is signed, verified, and the unsigned candidate is blocked by the gate; and the result is read through the Artifacts lens in the X-Ray tool.">
         <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="40" y="30" width="140" height="140" rx="12"/></g>
@@ -953,7 +958,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="1010" y="218" text-anchor="middle" class="lbl-sm">Artifacts lens</text>
     </g>
   </svg>
-  <div class="pageno">M7·31</div>
+  <div class="pageno">M7&middot;27</div>
 </section>
 
 </div></div>

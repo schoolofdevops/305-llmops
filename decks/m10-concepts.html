@@ -145,36 +145,60 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 1 · TITLE — Monday-desk scene ═══════════════ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 10 &nbsp;·&nbsp; OBSERVABILITY — SEEING THE PLATFORM</p>
-  <h2 class="t" style="font-size:2.1em">Monday: no evidence, three questions</h2>
+  <h2 class="t" style="font-size:2.1em">How Do You See Inside a Platform?</h2>
+  <p class="s">Metrics, traces, and the numbers that actually describe a model service.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A desk calendar page with three large question marks floating above it.">
     <image href="../img/decks/m10/title-calendar-three-questions.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">you can <b>FEEL</b> the system · you cannot <b>SEE</b> it &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
-  <div class="pageno">M10·01</div>
+  <div class="pageno">M10&middot;01</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · INTRO ═══════════════ -->
-<section class="divider">
-  <h2 class="t">Feel the system, or see it?</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A room shown half in shadow and half brightly lit by a hanging lamp, with a wall switch on the boundary.">
-    <image href="../img/decks/m10/divider-0-lamp-half-lit.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+<section>
+  <h2 class="t">What will you learn?</h2>
+  <p class="s">Five concepts, from two instruments to a platform you can see.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A numbered contents list of the module's 5 concepts: metrics and traces, model metrics, scraping and dashboards, tracing, where opsmate stands.">
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="56" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="83" text-anchor="middle" class="lbl-b" style="font-size:20px">1</text>
+    <text x="320" y="83" class="lbl-b" style="font-size:23px">Metrics and Traces</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="124" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="151" text-anchor="middle" class="lbl-b" style="font-size:20px">2</text>
+    <text x="320" y="151" class="lbl-b" style="font-size:23px">Model Metrics</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="192" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="219" text-anchor="middle" class="lbl-b" style="font-size:20px">3</text>
+    <text x="320" y="219" class="lbl-b" style="font-size:23px">Scraping and Dashboards</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="260" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="287" text-anchor="middle" class="lbl-b" style="font-size:20px">4</text>
+    <text x="320" y="287" class="lbl-b" style="font-size:23px">Tracing</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="328" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="355" text-anchor="middle" class="lbl-b" style="font-size:20px">5</text>
+    <text x="320" y="355" class="lbl-b" style="font-size:23px">Where OpsMate Stands</text>
   </svg>
-  <div class="pageno">M10·02</div>
+  <div class="pageno">M10&middot;02</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 1 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">Metrics vs Traces — Two Instruments for Model Observability</h2>
+  <h2 class="t">Metrics and Traces</h2>
+  <p class="s">two instruments, and why one of them is never enough</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A hospital ward chart clipboard sits beside a thick case-file folder, both on a small table.">
     <image href="../img/decks/m10/divider-1-wardchart-casefile.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M10·03</div>
+  <div class="pageno">M10&middot;03</div>
 </section>
 
-<!-- ═══════════════ SLIDE 2 · THE WARD CHART (scene, build A) ═══════════════ -->
 <section>
-  <h2 class="t">The ward chart</h2>
-  <p class="s">State over time, every patient at once — but never one bad afternoon.</p>
+  <h2 class="t">Analogy &mdash; the ward chart</h2>
+  <p class="s">Vitals over time, for every patient. That is what metrics give you.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A ward chart drawn as a clipboard at the foot of a bed, showing three vitals lines trending over time with tick-marks for sampling. Behind it, a bracket spans several tiny beds, labelled every patient.">
     <!-- clipboard body: pastel blue fill = the data being studied -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="300" y="70" width="500" height="240" rx="14"/></g>
@@ -196,13 +220,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="950" y="186" text-anchor="middle" class="lbl-b">= METRICS</text>
     <text x="950" y="212" text-anchor="middle" class="lbl-g" style="font-size:15px">Prometheus + Grafana</text>
   </svg>
-  <div class="pageno">M10·04</div>
+  <div class="pageno">M10&middot;04</div>
 </section>
 
-<!-- ═══════════════ SLIDE 3 · THE CASE FILE (scene, build B) ═══════════════ -->
 <section>
-  <h2 class="t">The case file</h2>
-  <p class="s">One episode, every step timestamped — so you see where the delay was.</p>
+  <h2 class="t">Analogy &mdash; the case file</h2>
+  <p class="s">One patient, minute by minute. That is what a trace gives you.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A case file drawn as an open folder holding one patient's timestamped step-list down a vertical timeline: admitted 2:04, bloods 2:11, consultant 2:40, imaging 3:05. A magnifying glass hovers over the 2:40 row, where the delay was.">
     <!-- folder: pastel blue fill = the data being studied -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><path d="M250,90 L470,90 L500,120 L820,120 L820,320 L250,320 Z"/></g>
@@ -225,13 +248,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="950" y="216" text-anchor="middle" class="lbl-b">= TRACES</text>
     <text x="950" y="242" text-anchor="middle" class="lbl-g" style="font-size:15px">OpenTelemetry + Phoenix</text>
   </svg>
-  <div class="pageno">M10·05</div>
+  <div class="pageno">M10&middot;05</div>
 </section>
 
-<!-- ═══════════════ SLIDE 4 · YOU NEED BOTH (scene, build C) ═══════════════ -->
 <section>
   <h2 class="t">You need both</h2>
-  <p class="s">Metrics are the ward chart, traces the case file — carry both.</p>
+  <p class="s">The whole ward is not one request, and one request is not the whole ward.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The two instruments side by side and joined under one bracket: a small clipboard tagged metrics for the whole ward, a not-equals sign, and a small folder tagged traces for one request. A bracket over both reads BOTH — neither substitutes for the other.">
     <!-- clipboard (left): pastel blue fill -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="120" y="120" width="230" height="150" rx="12"/></g>
@@ -251,22 +273,22 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M150,84 C150,60 1000,60 1000,84"/></g>
     <text x="575" y="52" text-anchor="middle" class="lbl-b" style="font-size:26px">BOTH</text>
   </svg>
-  <div class="pageno">M10·06</div>
+  <p class="recap fragment">Next: Model Metrics &mdash; the specific numbers a model service needs you to watch.</p>
+  <div class="pageno">M10&middot;06</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 2 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">The Model Metric Model — Two Latencies and a Queue</h2>
+  <h2 class="t">Model Metrics</h2>
+  <p class="s">two latencies and a queue, rather than one average</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="Two identical stopwatches sit beside a short row of small queue tickets.">
     <image href="../img/decks/m10/divider-2-stopwatches-queue.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M10·07</div>
+  <div class="pageno">M10&middot;07</div>
 </section>
 
-<!-- ═══════════════ SLIDE 5 · TWO STOPWATCHES (scene) ═══════════════ -->
 <section>
   <h2 class="t">Two stopwatches, not one</h2>
-  <p class="s">Not how slow — slow to start (prefill) or slow to finish (decode)?</p>
+  <p class="s">Prefill gives you TTFT and decode gives you ITL. Module 1, instrumented.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A request drawn as an envelope travelling left to right through two phase-boxes, each with its own stopwatch: prefill (read prompt) with a stopwatch labelled TTFT, then decode (write answer) with a stopwatch labelled ITL. A scroll feeds prefill; output tokens drip from decode.">
     <!-- phase boxes: pastel blue fills = the two things being measured -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="190" y="110" width="290" height="130" rx="14"/><rect x="560" y="110" width="290" height="130" rx="14"/></g>
@@ -295,13 +317,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- dripping output tokens -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="895" cy="150" r="7"/><circle cx="930" cy="176" r="7"/><circle cx="895" cy="200" r="7"/></g>
   </svg>
-  <div class="pageno">M10·08</div>
+  <div class="pageno">M10&middot;08</div>
 </section>
 
-<!-- ═══════════════ SLIDE 6 · THE QUEUE (scene) ═══════════════ -->
 <section>
   <h2 class="t">A third stopwatch: the queue</h2>
-  <p class="s">Both phase clocks fine yet it feels slow? The request is waiting, not slow.</p>
+  <p class="s">Requests that are deferred are not slow. They have not started yet.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The queue drawn as a line of envelopes waiting at a closed door labelled requests_deferred waiting, with one envelope through the door labelled requests_processing now. The two phase-boxes sit small behind. A note reads phase clocks fine yet a long line means waiting, not slow.">
     <!-- waiting envelopes: red fill = full/waiting; the one working now: green fill = healthy -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="120" y="200" width="54" height="36" rx="5"/><rect x="190" y="200" width="54" height="36" rx="5"/><rect x="260" y="200" width="54" height="36" rx="5"/><rect x="330" y="200" width="54" height="36" rx="5"/></g>
@@ -331,22 +352,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="760" y="270" width="300" height="44" rx="10"/></g>
     <text x="910" y="298" text-anchor="middle" class="lbl-g">not slow — <tspan class="lbl-b">WAITING</tspan></text>
   </svg>
-  <div class="pageno">M10·09</div>
+  <div class="pageno">M10&middot;09</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 3 ═══════════════ -->
-<section class="divider">
-  <h2 class="t">Why One P50 Is a Lie for a Model Service</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A kitchen counter with a clock above it on the left, and a waiter's serving tray on a stand with a second clock above it on the right.">
-    <image href="../img/decks/m10/divider-3-kitchen-waiter-clocks.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M10·10</div>
-</section>
-
-<!-- ═══════════════ SLIDE 7 · ONE CLOCK OVER THE DOOR (scene, P50 build A) ═══════════════ -->
 <section>
-  <h2 class="t">One clock over the door</h2>
-  <p class="s">One door-to-door number blends kitchen and waiter — opposites look identical.</p>
+  <h2 class="t">One clock over the door blends both</h2>
+  <p class="s">Door-to-door time cannot tell you whether the kitchen or the waiter was slow.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A restaurant storefront with a single big stopwatch mounted over the door, a diner walking in one side and out the other. Inside, faintly drawn, a kitchen and a waiter — both hidden behind that one door-to-door number, which is drawn dashed to signal distrust.">
     <!-- the single door-to-door clock is the number to distrust: red fill behind it -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><circle cx="550" cy="150" r="26"/></g>
@@ -369,13 +380,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="326" text-anchor="middle" class="lbl-g">blends both</text>
     <text x="640" y="120" text-anchor="start" class="lbl-bad">distrust this</text>
   </svg>
-  <div class="pageno">M10·11</div>
+  <div class="pageno">M10&middot;10</div>
 </section>
 
-<!-- ═══════════════ SLIDE 8 · KITCHEN + WAITER CLOCKS (scene, P50 build B) ═══════════════ -->
 <section>
-  <h2 class="t">Kitchen clock AND waiter clock</h2>
-  <p class="s">Kitchen clock is TTFT, waiter clock is ITL — two SLOs, never one.</p>
+  <h2 class="t">Kitchen clock and waiter clock</h2>
+  <p class="s">Measure the two phases separately, and set their targets separately.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The same restaurant split into two zones, each with its own clock: a kitchen with a clock tagged equals prefill TTFT, and a waiter carrying a plate with a clock tagged equals decode ITL. The single over-the-door clock is crossed out with a rough diagonal stroke.">
     <!-- two separate clocks = the right approach: green fills on both zones -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="90" y="110" width="380" height="170" rx="12"/><rect x="630" y="110" width="380" height="170" rx="12"/></g>
@@ -402,13 +412,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="524" y1="92" x2="576" y2="48"/></g>
     <text x="600" y="76" text-anchor="start" class="lbl-g" style="font-size:15px">set separately</text>
   </svg>
-  <div class="pageno">M10·12</div>
+  <div class="pageno">M10&middot;11</div>
 </section>
 
-<!-- ═══════════════ SLIDE 9 · TWO HUMPS UNDER ONE LINE (scene, P50 build C) ═══════════════ -->
 <section>
   <h2 class="t">Two humps, one average</h2>
-  <p class="s">P50 sits green among the short ones — watch the tail, not the median.</p>
+  <p class="s">Short requests pass the P50 while the long tail quietly misses the target.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A hand-drawn latency distribution: a tall cluster of short-request dots on the left with a P50 marker sitting among them, and a few long-request dots stranded far right in the tail, each tagged SLO failed. A single straight average line is drawn through, hiding the two humps.">
     <!-- axis -->
     <g fill="none" stroke="#757575" stroke-width="2.2"><line x1="90" y1="270" x2="1030" y2="270"/></g>
@@ -431,19 +440,19 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- single average line hiding it (drawn last, faint) -->
     <g fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="10 8"><line x1="120" y1="235" x2="1000" y2="235"/></g>
   </svg>
-  <div class="pageno">M10·13</div>
+  <p class="recap fragment">Next: Scraping and Dashboards &mdash; getting those numbers out of the pod and onto a wall.</p>
+  <div class="pageno">M10&middot;12</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 4 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">Scraping Model Metrics on Kubernetes</h2>
-  <div class="pageno">M10·14</div>
+  <h2 class="t">Scraping and Dashboards</h2>
+  <p class="s">pulling the numbers in, and putting them on one wall</p>
+  <div class="pageno">M10&middot;13</div>
 </section>
 
-<!-- ═══════════════ SLIDE 10 · PUMP THE POD (scene) ═══════════════ -->
 <section>
-  <h2 class="t">Pump the pod every 5s</h2>
-  <p class="s">Prometheus scrapes one target every 5s — the skill is which families matter.</p>
+  <h2 class="t">Pump the pod every 5 seconds</h2>
+  <p class="s">Prometheus pulls /metrics from the model pod. One target, one interval.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The scrape drawn as a pump with a hose reaching into a pod labelled opsmate-model 8080 slash metrics, pulling little number-tags up the hose into the Prometheus box. A 5s tick sits on the pump handle.">
     <!-- pod being scraped = the data source: blue fill -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="80" y="150" width="230" height="140" rx="14"/></g>
@@ -469,13 +478,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="790" y="234" text-anchor="middle" class="lbl-b">Prometheus</text>
     <text x="790" y="264" text-anchor="middle" class="lbl-g">one target</text>
   </svg>
-  <div class="pageno">M10·15</div>
+  <div class="pageno">M10&middot;14</div>
 </section>
 
-<!-- ═══════════════ SLIDE 11 · REACH PAST UP (scene) ═══════════════ -->
 <section>
-  <h2 class="t">Reach past <code>up</code></h2>
-  <p class="s"><code>up</code> says alive, not healthy — reach for the families that matter.</p>
+  <h2 class="t">Reach past up</h2>
+  <p class="s">That the process is alive says nothing about whether the model is healthy.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two gauges on a shelf. A dusty gray gauge labelled up and http_requests_total is passed over — process alive, says nothing about the model. A hand reaches instead for an inked gauge labelled requests_deferred and tokens per second — is the model healthy.">
     <!-- the gauge reached for = the right/healthy choice: green fill -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><circle cx="770" cy="180" r="80"/></g>
@@ -499,22 +507,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1010" y="150" text-anchor="end" class="lbl-g" style="font-size:15px">phase timings</text>
     <text x="1010" y="174" text-anchor="end" class="lbl-g" style="font-size:15px">queue gauges</text>
   </svg>
-  <div class="pageno">M10·16</div>
+  <div class="pageno">M10&middot;15</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 5 ═══════════════ -->
-<section class="divider">
-  <h2 class="t">Dashboards as Shared Truth</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A large wall-mounted dashboard covered in round gauges and dials, mounted in a public hallway.">
-    <image href="../img/decks/m10/divider-5-wall-dashboard.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M10·17</div>
-</section>
-
-<!-- ═══════════════ SLIDE 12 · THE WALL (scene) ═══════════════ -->
 <section>
   <h2 class="t">One wall, one shared fact</h2>
-  <p class="s">The dashboard is where a number becomes a shared fact, not a story.</p>
+  <p class="s">A dashboard is where the on-call, the PM and finance look at the same number.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A Grafana wall drawn as a wall of five mini-panels: a decode tokens-per-second line, a prompt-rate line, a climbing requests_deferred gauge, a token-counters bar, and an in-flight number. Three stick figures — PM, finance, on-call — point at the same climbing panel.">
     <!-- panel fills: neutral data panels blue, the climbing deferred panel red = full/bad -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="384" y="70" width="200" height="86" rx="8"/><rect x="600" y="70" width="200" height="86" rx="8"/><rect x="384" y="188" width="200" height="70" rx="8"/><rect x="600" y="188" width="200" height="70" rx="8"/></g>
@@ -544,22 +542,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="220" y="300" text-anchor="middle" class="lbl-g" style="font-size:14px">on-call</text>
     <text x="710" y="308" text-anchor="middle" class="lbl-g">checked-in</text>
   </svg>
-  <div class="pageno">M10·18</div>
+  <p class="recap fragment">Next: Tracing &mdash; following one single request all the way through.</p>
+  <div class="pageno">M10&middot;16</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 6 ═══════════════ -->
 <section class="divider">
-  <h2 class="t">Tracing a Request — Spans and Waterfalls</h2>
+  <h2 class="t">Tracing</h2>
+  <p class="s">one request end to end, and what not to record</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="An open case-file folder with a cascading staircase of timestamped entry tabs flowing down like a waterfall.">
     <image href="../img/decks/m10/divider-6-casefile-waterfall.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M10·19</div>
+  <div class="pageno">M10&middot;17</div>
 </section>
 
-<!-- ═══════════════ SLIDE 13 · THE TRACE WATERFALL (scene, fragments) ═══════════════ -->
 <section>
-  <h2 class="t">Where did the 11s go?</h2>
-  <p class="s">Read the waterfall: retrieve is not it, generate holds the time and the cost.</p>
+  <h2 class="t">Where did the 11 seconds go?</h2>
+  <p class="s">Retrieval took 0.04 seconds. Generation took 9.1. Now you know where to look.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The trace drawn as a staircase of three bars. A wide top bar ask at 9.2 seconds; nested beneath, a tiny retrieve bar at 0.04 seconds, and a long generate bar at 9.1 seconds carrying a price tag of 500 tokens. A magnifying glass on generate and a faint tag reading prefill plus decode inside.">
     <!-- ask bar (always): blue fill = the whole request being studied -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="90" y="70" width="920" height="54" rx="8"/></g>
@@ -588,21 +586,12 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="520" y="316" text-anchor="middle" class="lbl-g">M1 phases</text>
     </g>
   </svg>
-  <div class="pageno">M10·20</div>
-</section>
-
-<!-- ═══════════════ SLIDE 14 · PIN THE SEMCONV (a moving standard) ═══════════════ -->
-<section class="divider">
-  <h2 class="t">Pinning Semantic Conventions in Traces</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A wooden signpost planted in loose shifting sand, anchored firmly by a large metal peg through its base.">
-    <image href="../img/decks/m10/divider-7-signpost-anchor.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M10·21</div>
+  <div class="pageno">M10&middot;18</div>
 </section>
 
 <section>
-  <h2 class="t">Pin the names, or your traces shift underneath you</h2>
-  <p class="s">The GenAI semconv is still moving — pin the versions you build against.</p>
+  <h2 class="t">Pin the names in your spans</h2>
+  <p class="s">Pin the conventions, or your traces change meaning underneath you.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="On the left, a settled set of span-attribute names that Phoenix reads, shown as a tidy blue card. In the middle, the OpenTelemetry GenAI semantic conventions drawn as a shifting orange signpost whose labels are sliding, marked still changing. On the right, a requirements.txt file with a padlock pinning the versions, so the names on the left stay steady — a green holds steady payoff.">
     <!-- LEFT: the names Phoenix reads (settled data, blue) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="50" y="70" width="300" height="200" rx="11"/></g>
@@ -634,22 +623,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#2e7d32" stroke-width="2.8" stroke-linecap="round"><path d="M748,156 C560,300 360,300 200,278" marker-end="url(#ah)"/></g>
     <text x="470" y="322" text-anchor="middle" class="lbl-good">pinned = the trace structure holds steady</text>
   </svg>
-  <div class="pageno">M10·22</div>
+  <div class="pageno">M10&middot;19</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 7 ═══════════════ -->
-<section class="divider">
-  <h2 class="t">Token Usage on the Span — Turning Traces Into a Bill</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A small mechanical receipt machine with a long paper receipt unspooling out of it.">
-    <image href="../img/decks/m10/divider-8-receipt-machine.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M10·23</div>
-</section>
-
-<!-- ═══════════════ SLIDE 15 · THE BILL RIDES ON THE SPAN (scene) ═══════════════ -->
 <section>
   <h2 class="t">The bill rides on the span</h2>
-  <p class="s">Sum token_count.total across a day's traces — that is your bill.</p>
+  <p class="s">Token counts on the span turn a trace into cost, by user and by endpoint.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The generate span with a usage receipt dropping onto it as llm.token_count, an arrow to a stack of traces, then to a hand-drawn invoice reading sum of tokens equals the bill. Three slice-tags fan off the bill: by user, by endpoint, by prompt length.">
     <!-- generate span = the data: blue fill -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="60" y="150" width="200" height="54" rx="8"/></g>
@@ -676,22 +655,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- receipt lifted onto the span as this attribute -->
     <text x="160" y="46" text-anchor="middle" class="lbl-g" style="font-size:14px">llm.token_count</text>
   </svg>
-  <div class="pageno">M10·24</div>
+  <div class="pageno">M10&middot;20</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 8 ═══════════════ -->
-<section class="divider">
-  <h2 class="t">What Not to Log — Deciding What Belongs in a Trace</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="An open register book resting on a front desk, with a closed door visible behind it.">
-    <image href="../img/decks/m10/divider-9-register-closed-door.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M10·25</div>
-</section>
-
-<!-- ═══════════════ SLIDE 16 · THE REGISTER (scene) ═══════════════ -->
 <section>
   <h2 class="t">The visit, not the confession</h2>
-  <p class="s">input.value holds the full question in every trace — keep or redact, but choose.</p>
+  <p class="s">Record that the call happened and how long it took. Not what was said.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A reception desk with an open register listing journey rows: arrived 2:04, saw Dr Rao, retrieved 3 docs, 9.2 seconds. Behind a closed door, a speech bubble reading input.value equals the question is crossed out — the whispered confession that must not be copied into the register. An arrow from the bubble to the register is blocked.">
     <!-- register / ledger = the record of what may be kept: purple fill -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><path d="M80,90 L400,90 L400,300 L80,300 Z"/></g>
@@ -712,22 +681,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="490" y1="150" x2="530" y2="196"/><line x1="530" y1="150" x2="490" y2="196"/></g>
     <text x="510" y="232" text-anchor="middle" class="lbl-b">NOT logged</text>
   </svg>
-  <div class="pageno">M10·26</div>
+  <div class="pageno">M10&middot;21</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 9 ═══════════════ -->
-<section class="divider">
-  <h2 class="t">The Service-Link Crash — A Real Kubernetes Failure</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A wall socket built for one kind of plug, with a completely different plug jammed into it and small spark marks around the mismatch.">
-    <image href="../img/decks/m10/divider-10-mismatched-plug.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M10·27</div>
-</section>
-
-<!-- ═══════════════ SLIDE 17 · SERVICE-LINK CRASH (exhibit) ═══════════════ -->
 <section>
-  <h2 class="t">Two labels, one name</h2>
-  <p class="s">K8s injects PHOENIX_PORT as tcp://…; Phoenix wants an integer, so it crashes.</p>
+  <h2 class="t">Two labels, one name, one crash</h2>
+  <p class="s">A real Kubernetes failure: service links injected a name the app read as a port.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A crashed phoenix pod tipped over with a CrashLoopBackOff tag. Two labels tug on one name-tag PHOENIX_PORT — one reading tcp injected by Kubernetes, the other reading wants an integer from Phoenix — with a jagged clash-mark where they meet. Two fix-chips below: set PHOENIX_PORT to 6006, or enableServiceLinks false.">
     <!-- crashed pod = the failure: red fill -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none" transform="rotate(-8 200 180)"><rect x="90" y="130" width="220" height="120" rx="14"/></g>
@@ -755,22 +714,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="970" y="149" text-anchor="middle" class="lbl-sm">PHOENIX_PORT: "6006"</text>
     <text x="970" y="211" text-anchor="middle" class="lbl-sm">enableServiceLinks: false</text>
   </svg>
-  <div class="pageno">M10·28</div>
+  <p class="recap fragment">Next: what all of this leaves OpsMate able to do.</p>
+  <div class="pageno">M10&middot;22</div>
 </section>
 
-<!-- ═══════════════ DIVIDER · SECTION 10 ═══════════════ -->
 <section class="divider">
   <h2 class="t">Where OpsMate Stands</h2>
+  <p class="s">what you can see now, and what Module 11 does with it</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A single large open eye watches over a small server rack silhouette below it.">
     <image href="../img/decks/m10/divider-11-eye-watching.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M10·29</div>
+  <div class="pageno">M10&middot;23</div>
 </section>
 
-<!-- ═══════════════ SLIDE 18 · GAUGE DRIVES THE DIAL (scene) ═══════════════ -->
 <section>
   <h2 class="t">The gauge drives the dial</h2>
-  <p class="s">You cannot autoscale what you cannot measure — in M11 the gauge drives replicas.</p>
+  <p class="s">The queue depth you can now read is what the autoscaler acts on next.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The M11 bridge drawn as a control mechanism: a requests_deferred gauge with a climbing needle, a belt linkage connecting it to a replica dial that turns from one to two to three engines. An eye labelled watch today sits by the gauge; the linkage, labelled M11 act, drives the dial. A feedback curl reads queue builds add engine, drains remove engine.">
     <!-- deferred gauge = the queue building signal: red fill -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><circle cx="220" cy="180" r="90"/></g>
@@ -794,22 +753,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="900" y="150" text-anchor="start" class="lbl-g" style="font-size:16px">builds → + engine</text>
     <text x="900" y="212" text-anchor="start" class="lbl-g" style="font-size:16px">drains → − engine</text>
   </svg>
-  <div class="pageno">M10·30</div>
+  <div class="pageno">M10&middot;24</div>
 </section>
 
-<!-- ═══════════════ SLIDE 19 · CLOSING — three icons + bridge ═══════════════ -->
 <section>
   <p class="kicker">MODULE 10 &nbsp;·&nbsp; OBSERVABILITY — SEEING THE PLATFORM</p>
-  <h2 class="t" style="font-size:2.0em">OpsMate can finally be seen</h2>
+  <h2 class="t" style="font-size:2.0em">What you carry into the lab</h2>
   <svg viewBox="0 0 1600 900" role="img" aria-label="The same desk calendar page from the title, now with a single bold checkmark above it instead of question marks.">
     <image href="../img/decks/m10/closing-calendar-checkmark.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">OpsMate is <b>v2.5, part one</b> — the platform you can finally see &nbsp;·&nbsp; now open <b>Module 10 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M10·31</div>
+  <div class="pageno">M10&middot;25</div>
 </section>
+
 <section>
-  <h2 class="t">Next: Watch the Wall, Fix the Crash, Read the Trace</h2>
-  <p class="s">By the time you finish, you can see how it runs, what it costs, and where every second goes.</p>
+  <h2 class="t">What you will do as part of the lab</h2>
+  <p class="s">Watch the wall move, fix a real crash, and read a trace end to end.</p>
   <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: Prometheus and the Grafana dashboard deploy as a real artifact; the wall shows the deferred gauge climbing while throughput holds; the service-link crash is hit on purpose, read, and fixed; a request's trace opens showing retrieve, generate, and token counts; mixed load is driven so the median stays green while per-phase numbers show the truth; and the result is read through X-Ray, deciding whether to keep or redact the prompt.">
     <g class="fragment" transform="translate(40,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
@@ -851,7 +810,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">decide keep or redact</text>
     </g>
   </svg>
-  <div class="pageno">M10·32</div>
+  <div class="pageno">M10&middot;26</div>
 </section>
 
 </div></div>

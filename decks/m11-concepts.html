@@ -145,34 +145,65 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 1 · TITLE — two incidents, one week ═══════════════ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 11 &nbsp;·&nbsp; AUTOSCALING &amp; GITOPS</p>
-  <h2 class="t" style="font-size:2.1em">Two incidents, one week</h2>
+  <h2 class="t" style="font-size:2.1em">How Do You Scale and Promote Safely?</h2>
+  <p class="s">A real scaling signal, and a model version that lives in git.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A desk calendar with two incident-flag markers pinned on two different days.">
     <image href="../img/decks/m11/title-calendar-two-incidents.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">a surge that never scaled &nbsp;·&nbsp; a promotion nobody could verify &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
-  <div class="pageno">M11·01</div>
+  <div class="pageno">M11&middot;01</div>
 </section>
 
-<section class="divider">
-  <h2 class="t">The Two Jobs — A Real Signal, and a Version in Git</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A round dial gauge sits beside a small git-branch icon made of connected circles.">
-    <image href="../img/decks/m11/divider-0-gauge-git-icon.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+<section>
+  <h2 class="t">What will you learn?</h2>
+  <p class="s">Six concepts, from a real scaling signal to a governed promotion.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A numbered contents list of the module's 6 concepts: the scaling signal, keda, cold starts, gitops, the promotion lie, training as a pipeline step.">
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="70" y="60" width="40" height="40" rx="8"/>
+    </g>
+    <text x="90" y="87" text-anchor="middle" class="lbl-b" style="font-size:20px">1</text>
+    <text x="130" y="87" class="lbl-b" style="font-size:23px">The Scaling Signal</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="70" y="138" width="40" height="40" rx="8"/>
+    </g>
+    <text x="90" y="165" text-anchor="middle" class="lbl-b" style="font-size:20px">2</text>
+    <text x="130" y="165" class="lbl-b" style="font-size:23px">KEDA</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="70" y="216" width="40" height="40" rx="8"/>
+    </g>
+    <text x="90" y="243" text-anchor="middle" class="lbl-b" style="font-size:20px">3</text>
+    <text x="130" y="243" class="lbl-b" style="font-size:23px">Cold Starts</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="580" y="60" width="40" height="40" rx="8"/>
+    </g>
+    <text x="600" y="87" text-anchor="middle" class="lbl-b" style="font-size:20px">4</text>
+    <text x="640" y="87" class="lbl-b" style="font-size:23px">GitOps</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="580" y="138" width="40" height="40" rx="8"/>
+    </g>
+    <text x="600" y="165" text-anchor="middle" class="lbl-b" style="font-size:20px">5</text>
+    <text x="640" y="165" class="lbl-b" style="font-size:23px">The Promotion Lie</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="580" y="216" width="40" height="40" rx="8"/>
+    </g>
+    <text x="600" y="243" text-anchor="middle" class="lbl-b" style="font-size:20px">6</text>
+    <text x="640" y="243" class="lbl-b" style="font-size:23px">Training as a Pipeline Step</text>
   </svg>
-  <div class="pageno">M11·02</div>
+  <div class="pageno">M11&middot;02</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">Why CPU Percent Is the Wrong Signal for Autoscaling an LLM Server</h2>
+  <h2 class="t">The Scaling Signal</h2>
+  <p class="s">why CPU percent is the wrong number for a model server</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A busy kitchen pass window with steam rising sits beside a velvet-rope queue line leading to a host stand.">
     <image href="../img/decks/m11/divider-1-kitchen-noise-queue-line.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M11·03</div>
+  <div class="pageno">M11&middot;03</div>
 </section>
 
-<!-- ═══════════════ SLIDE 2 · DON'T LISTEN TO THE KITCHEN (restaurant, build A) ═══════════════ -->
 <section>
-  <h2 class="t">Don't judge the room by the kitchen</h2>
-  <p class="s">Kitchen noise tells you how hard the cooks work — not how many people wait.</p>
+  <h2 class="t">Analogy &mdash; judge the room, not kitchen</h2>
+  <p class="s">A loud kitchen means work is happening. It does not mean the room is full.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A cook stands outside a restaurant listening to a loud kitchen — pots and a fryer drawn, an ear icon over the kitchen — while the dining room behind is half empty with two empty tables.">
     <!-- kitchen: orange fill = the misleading signal (caution) -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><rect x="90" y="90" width="330" height="200" rx="14"/></g>
@@ -193,13 +224,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><circle cx="650" cy="180" r="12"/></g>
     <text x="785" y="278" text-anchor="middle" class="lbl-g">half empty</text>
   </svg>
-  <div class="pageno">M11·04</div>
+  <div class="pageno">M11&middot;04</div>
 </section>
 
-<!-- ═══════════════ SLIDE 3 · ONE REQUEST PINS ONE CORE (mechanism, fragments) ═══════════════ -->
 <section>
-  <h2 class="t">One request pins one core; the next one just waits</h2>
-  <p class="s">Decode pins one core; a request with no free slot parks and burns nothing.</p>
+  <h2 class="t">One request pins one core</h2>
+  <p class="s">The next request parks and waits, burning roughly no CPU at all.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="One request drives a single CPU core drawn hot in orange. A second request arrives, finds no free slot, and parks in a red waiting box tagged roughly zero percent CPU — it is doing nothing yet.">
     <!-- request 1 -> one hot core (always) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="80" y="60" width="150" height="54" rx="10"/></g>
@@ -227,13 +257,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5"><path d="M760,60 C800,60 800,258 760,258"/></g>
     <text x="820" y="164" text-anchor="middle" class="lbl-g">one core per<tspan x="820" dy="26">in-flight request</tspan></text>
   </svg>
-  <div class="pageno">M11·05</div>
+  <div class="pageno">M11&middot;05</div>
 </section>
 
-<!-- ═══════════════ SLIDE 4 · CPU FLAT WHILE QUEUE GROWS (the surge) ═══════════════ -->
 <section>
-  <h2 class="t">CPU stayed flat exactly when you were in trouble</h2>
-  <p class="s">The autoscaler did what you told it — you told it to watch the wrong signal.</p>
+  <h2 class="t">CPU stayed flat while you drowned</h2>
+  <p class="s">Queue depth climbed 40 percent and the node average did not move.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A flat CPU line pinned at forty percent, drawn gray and dashed to signal distrust, sits over a growing red queue of waiting requests. A crossed-out HPA chip reads no scale.">
     <!-- axes -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><line x1="120" y1="60" x2="120" y2="270"/><line x1="120" y1="270" x2="720" y2="270"/></g>
@@ -251,13 +280,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="915" y="194" text-anchor="middle" class="lbl-g">"nothing to do"</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="800" y1="210" x2="1030" y2="130"/></g>
   </svg>
-  <div class="pageno">M11·06</div>
+  <div class="pageno">M11&middot;06</div>
 </section>
 
-<!-- ═══════════════ SLIDE 5 · SCALE ON THE QUEUE (restaurant, build B — the turn) ═══════════════ -->
 <section>
   <h2 class="t">Look at the queue at the door</h2>
-  <p class="s">Queue depth is the signal that maps to user pain — and it climbed all along.</p>
+  <p class="s">The number that actually says you need another replica.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The maitre d' now looks at the queue at the door — a line of waiting people drawn in blue — with a gauge tagged requests deferred whose needle climbs into the red. The kitchen from the earlier scene is grayed out behind.">
     <!-- grayed kitchen behind -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5"><rect x="60" y="70" width="200" height="150" rx="12"/></g>
@@ -276,21 +304,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="910" y="256" text-anchor="middle" class="lbl-b">requests_deferred</text>
     <text x="975" y="130" text-anchor="middle" class="lbl-good">watch this</text>
   </svg>
-  <div class="pageno">M11·07</div>
+  <p class="recap fragment">Next: KEDA &mdash; the controller that actually acts on that queue.</p>
+  <div class="pageno">M11&middot;07</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">KEDA — Scaling on the Queue, Not the CPU</h2>
+  <h2 class="t">KEDA</h2>
+  <p class="s">scaling on the queue rather than on the CPU</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A restaurant host stand beside a door swinging open to reveal a second dining room set up inside.">
     <image href="../img/decks/m11/divider-2-maitred-second-room.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M11·08</div>
+  <div class="pageno">M11&middot;08</div>
 </section>
 
-<!-- ═══════════════ SLIDE 6 · KEDA IS THE MAÎTRE D' ═══════════════ -->
 <section>
-  <h2 class="t">KEDA is the maître d' who opens the second room</h2>
-  <p class="s">Queue forms, open a room; queue drains, close it — the whole control loop.</p>
+  <h2 class="t">Analogy &mdash; the maitre d&rsquo; opens a room</h2>
+  <p class="s">The queue builds, so a second room opens. It drains, so the room closes.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A maitre d' figure labelled KEDA in purple stands with a hand on a second dining-room door, watching a queue gauge. A loop arrow reads queue builds opens the room, drains closes it.">
     <!-- maître d' = KEDA: purple fill = control -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="90" y="90" width="200" height="180" rx="14"/></g>
@@ -310,13 +339,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1000" y="150" text-anchor="middle" class="lbl-g" style="font-size:16px">builds ↦<tspan x="1000" dy="24">open</tspan></text>
     <text x="1000" y="222" text-anchor="middle" class="lbl-g" style="font-size:16px">drains ↦<tspan x="1000" dy="24">close</tspan></text>
   </svg>
-  <div class="pageno">M11·09</div>
+  <div class="pageno">M11&middot;09</div>
 </section>
 
-<!-- ═══════════════ SLIDE 7 · KEDA READS PROMETHEUS DIRECTLY ═══════════════ -->
 <section>
-  <h2 class="t">Hand KEDA the query — no adapter in the middle</h2>
-  <p class="s">Hand KEDA the query and a threshold — no adapter rule language in between.</p>
+  <h2 class="t">Hand KEDA the query directly</h2>
+  <p class="s">It reads your Prometheus query. No metrics adapter in the middle.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Top path in green: KEDA sends one query, sum of requests deferred, straight to Prometheus. Bottom path, crossed out in red and dashed: the old chain of HPA to prometheus-adapter to metric rules to Prometheus.">
     <!-- green clean path -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="80" y="70" width="150" height="66" rx="12"/></g>
@@ -337,13 +365,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="80" y1="288" x2="740" y2="212"/></g>
     <text x="900" y="256" text-anchor="middle" class="lbl-g">no rule<tspan x="900" dy="26">language</tspan></text>
   </svg>
-  <div class="pageno">M11·10</div>
+  <div class="pageno">M11&middot;10</div>
 </section>
 
-<!-- ═══════════════ SLIDE 8 · ONE OBJECT YOU WRITE, ONE IT BUILDS (fragments) ═══════════════ -->
 <section>
-  <h2 class="t">You write a ScaledObject; KEDA builds the HPA</h2>
-  <p class="s">You write one object; KEDA generates and manages a real HPA beside it.</p>
+  <h2 class="t">You write a ScaledObject</h2>
+  <p class="s">And KEDA generates the HPA underneath it, which is a real one you can read.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A ScaledObject box in purple that you write. A KEDA-generates arrow reveals a keda-hpa-opsmate-model box in blue, which in turn drives the Deployment. The generated HPA and the deployment appear on reveal.">
     <!-- ScaledObject you write: purple = control object (always) -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="80" y="120" width="230" height="100" rx="14"/></g>
@@ -366,13 +393,12 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="975" y="176" text-anchor="middle" class="lbl">Deployment</text>
     </g>
   </svg>
-  <div class="pageno">M11·11</div>
+  <div class="pageno">M11&middot;11</div>
 </section>
 
-<!-- ═══════════════ SLIDE 9 · OPEN THE ROOM, THEN CLOSE IT (1→2→1) ═══════════════ -->
 <section>
-  <h2 class="t">Open the room, then close it again — 1 → 2 → 1</h2>
-  <p class="s">More than two parked requests per replica, and KEDA adds the second engine.</p>
+  <h2 class="t">Open the room, then close it again</h2>
+  <p class="s">One to two and back to one, driven by a queue depth you chose.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A queue gauge with a threshold line at two; when the queue crosses it an up-arrow adds an engine, taking a dial from one to two. When the queue drains, a down-arrow returns the dial to one, drawn green as the healthy resting state.">
     <!-- queue gauge with threshold at 2 -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><line x1="100" y1="80" x2="100" y2="280"/><line x1="100" y1="280" x2="300" y2="280"/></g>
@@ -401,21 +427,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="980" y="178" text-anchor="middle" class="lbl-b">1</text>
     <text x="980" y="248" text-anchor="middle" class="lbl-good">back to rest</text>
   </svg>
-  <div class="pageno">M11·12</div>
+  <p class="recap fragment">Next: Cold Starts &mdash; and why the bottom of that scale range is not zero.</p>
+  <div class="pageno">M11&middot;12</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">Scale-to-Zero and the Cold Start You Cannot Ignore</h2>
+  <h2 class="t">Cold Starts</h2>
+  <p class="s">why scale-to-zero is a trap for a model server</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A large industrial oven sits dark and cold beside a tall standing clock showing a long wait.">
     <image href="../img/decks/m11/divider-3-cold-oven-clock.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M11·13</div>
+  <div class="pageno">M11&middot;13</div>
 </section>
 
-<!-- ═══════════════ SLIDE 10 · SCALE-TO-ZERO IS A TRAP HERE ═══════════════ -->
 <section>
-  <h2 class="t">Scale-to-zero is a trap for a model server</h2>
-  <p class="s">A web pod restarts in seconds; a model's cold start is minutes of weight load.</p>
+  <h2 class="t">Scale-to-zero is a trap here</h2>
+  <p class="s">A web pod comes back in seconds. A model pod loads weights for minutes.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two stopwatches. A stateless web pod comes back in seconds, drawn green. A model pod comes back in minutes, drawn red, because a large weights-into-memory load bar sits behind it. A yawning first user waits.">
     <!-- web pod: seconds, green -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><circle cx="220" cy="130" r="60"/><line x1="220" y1="130" x2="220" y2="88"/><line x1="220" y1="70" x2="220" y2="58"/></g>
@@ -435,13 +462,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="820" y="244" text-anchor="middle" class="lbl-b">model pod</text>
     <text x="770" y="304" text-anchor="middle" class="lbl-bad">back in minutes</text>
   </svg>
-  <div class="pageno">M11·14</div>
+  <div class="pageno">M11&middot;14</div>
 </section>
 
-<!-- ═══════════════ SLIDE 11 · WARM FOR INTERACTIVE, SLEEP FOR BATCH ═══════════════ -->
 <section>
-  <h2 class="t">Sleep the batch endpoint; keep interactive warm</h2>
-  <p class="s">Scale-to-zero suits batch; an interactive service keeps at least one warm.</p>
+  <h2 class="t">Sleep batch, keep interactive warm</h2>
+  <p class="s">A cold minute is fine for a batch endpoint, and not for a person waiting.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. On the left, a batch or rare endpoint allowed to scale to min zero, drawn green with a sleeping engine and a note that a cold minute is fine. On the right, interactive OpsMate at min one, drawn blue with one engine kept lit.">
     <!-- left panel: batch min 0 = green -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="70" y="70" width="440" height="220" rx="14"/></g>
@@ -462,21 +488,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M930,170 C934,160 946,160 950,170 C954,180 940,192 940,200 M940,150 L940,142"/></g>
     <text x="810" y="264" text-anchor="middle" class="lbl-g">keep one warm</text>
   </svg>
-  <div class="pageno">M11·15</div>
+  <div class="pageno">M11&middot;15</div>
 </section>
 
-<section class="divider">
-  <h2 class="t">The Presence-Cache — Why the Second Engine Comes Up Fast</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Two identical mechanical engine blocks sit side by side, both already warm.">
-    <image href="../img/decks/m11/divider-4-two-engines-warm.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M11·16</div>
-</section>
-
-<!-- ═══════════════ SLIDE 12 · THE SECOND ENGINE SKIPS THE UNPACK (presence-cache) ═══════════════ -->
 <section>
-  <h2 class="t">The second engine skips the unpack — a feature</h2>
-  <p class="s">Pod two sees the model already on the PVC and skips straight to serving.</p>
+  <h2 class="t">The second engine skips the unpack</h2>
+  <p class="s">The model is already on the volume, so replica two serves almost at once.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The first pod's init unpacks the ModelKit onto a full PVC disk. The second pod's init looks at the PVC, sees it already filled, and a green skip-unpack arrow jumps straight to serving, with a log chip reading model already present on PVC, skipping unpack.">
     <!-- pod 1 unpacks -> PVC -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="70" width="150" height="70" rx="12"/></g>
@@ -503,21 +520,22 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="640" y="210" width="430" height="56" rx="8"/></g>
     <text x="855" y="244" text-anchor="middle" class="lbl-g" style="font-size:16px">"model already present on PVC — skipping unpack"</text>
   </svg>
-  <div class="pageno">M11·17</div>
+  <p class="recap fragment">Next: GitOps &mdash; making the version you serve a fact anybody can check.</p>
+  <div class="pageno">M11&middot;16</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">GitOps — Making the Model Version a Fact, Not a Sentence</h2>
+  <h2 class="t">GitOps</h2>
+  <p class="s">making the model version a fact rather than a sentence</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A large warehouse door with a signed, sealed document pinned to it, crates visible inside.">
     <image href="../img/decks/m11/divider-5-warehouse-signed-door.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M11·18</div>
+  <div class="pageno">M11&middot;17</div>
 </section>
 
-<!-- ═══════════════ SLIDE 13 · THE MANIFEST ON THE DOOR DECIDES (warehouse) ═══════════════ -->
 <section>
-  <h2 class="t">The manifest on the door decides what's inside</h2>
-  <p class="s">The signed manifest on the door decides what's inside — not the last crate in.</p>
+  <h2 class="t">Analogy &mdash; the manifest on the door</h2>
+  <p class="s">The paper decides what is inside, and the building has to match it.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A bonded warehouse with a signed manifest pinned to its door, drawn purple as the source of truth. A worker carrying a crate is turned away with a note reading not you. An arrow reads the paper decides, the building is made to match.">
     <!-- warehouse -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M300,140 L560,140 L560,300 L300,300 Z"/><path d="M300,140 L430,80 L560,140"/><rect x="400" y="200" width="70" height="100" rx="4"/></g>
@@ -536,13 +554,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><path d="M600,300 C520,340 460,320 470,306" marker-end="url(#ah)"/></g>
     <text x="850" y="180" text-anchor="middle" class="lbl-g">paper decides,<tspan x="850" dy="26">building matches</tspan></text>
   </svg>
-  <div class="pageno">M11·19</div>
+  <div class="pageno">M11&middot;18</div>
 </section>
 
-<!-- ═══════════════ SLIDE 14 · THE MODEL VERSION IS ON THE MANIFEST (GitOps loop) ═══════════════ -->
 <section>
-  <h2 class="t">The model version is a line on the manifest</h2>
-  <p class="s">Which signed ModelKit tag serves is a line in git that Argo keeps true.</p>
+  <h2 class="t">The model version is one line</h2>
+  <p class="s">A tag in an environment repository, watched by Argo CD.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A GitOps loop: you open a PR that bumps the kit tag into gitea, the env repo. Argo CD watches, reconciles, and points the cluster at the new tag, whose init unpacks into a per-tag directory on the PVC. The kit-tag line is highlighted blue on the manifest.">
     <!-- you -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="90" cy="110" r="22"/><line x1="90" y1="132" x2="90" y2="170"/></g>
@@ -573,13 +590,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="820" y="250" width="250" height="56" rx="10"/></g>
     <text x="945" y="284" text-anchor="middle" class="lbl-g" style="font-size:16px">PVC · per-tag dir</text>
   </svg>
-  <div class="pageno">M11·20</div>
+  <div class="pageno">M11&middot;19</div>
 </section>
 
-<!-- ═══════════════ SLIDE 15 · PROMOTE IS A PULL REQUEST ═══════════════ -->
 <section>
   <h2 class="t">Promotion becomes a pull request</h2>
-  <p class="s">"Promote" stops being a ticket sentence and becomes a reviewable diff.</p>
+  <p class="s">Reviewable, attributable, and with a timestamp somebody can point at.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A diff card showing minus one point zero point zero and plus one point zero point zero dash candidate, the plus line drawn green, merging into the env repo. Beside it, a crossed-out change ticket that merely said promoted, drawn red and dashed.">
     <!-- diff card -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="90" y="70" width="420" height="180" rx="14"/></g>
@@ -601,21 +617,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="940" y="138" text-anchor="middle" class="lbl-g" style="font-size:16px">ticket: "promoted"</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><line x1="850" y1="210" x2="1030" y2="110"/></g>
   </svg>
-  <div class="pageno">M11·21</div>
-</section>
-
-<!-- ═══════════════ SLIDE 16 · ROLL BACK WITH GIT REVERT ═══════════════ -->
-<section class="divider">
-  <h2 class="t">Roll Back With a Revert</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A road with a large U-turn sign looping back toward an earlier point.">
-    <image href="../img/decks/m11/divider-6-uturn-road.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M11·22</div>
+  <div class="pageno">M11&middot;20</div>
 </section>
 
 <section>
-  <h2 class="t">Roll back with <code>git revert</code>; "what's serving?" is <code>git log</code></h2>
-  <p class="s">Rollback is a revert, and "what's serving?" is a git log you can check.</p>
+  <h2 class="t">Roll back with git revert</h2>
+  <p class="s">And “what is serving right now?” becomes a git log, not a guess.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="The GitOps loop run backward: git revert flows into gitea, Argo reconciles, and the cluster returns to one point zero point zero. A magnifier over git log answers the question what is serving, drawn green as a checkable truth.">
     <!-- git revert -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="70" y="120" width="180" height="70" rx="12"/></g>
@@ -637,13 +644,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><circle cx="800" cy="255" r="22"/><line x1="816" y1="271" x2="840" y2="295"/></g>
     <text x="900" y="262" text-anchor="middle" class="lbl-good">checkable</text>
   </svg>
-  <div class="pageno">M11·23</div>
+  <div class="pageno">M11&middot;21</div>
 </section>
 
-<!-- ═══════════════ SLIDE 17 · POLL OR POKE ═══════════════ -->
 <section>
   <h2 class="t">Wait for the poll, or poke it</h2>
-  <p class="s">Argo polls git about every three minutes — wait, or poke it to reconcile now.</p>
+  <p class="s">The default poll is about three minutes. A refresh annotation reconciles now.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A slow three-minute poll clock drawn orange beside a fast refresh-annotation poke drawn blue that triggers reconcile now. A note reads poll versus webhook is latency versus plumbing.">
     <!-- poll clock: orange = caution/in-between -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><circle cx="230" cy="150" r="80"/></g>
@@ -662,21 +668,22 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- note -->
     <text x="730" y="248" text-anchor="middle" class="lbl-g">poll vs webhook = latency vs plumbing</text>
   </svg>
-  <div class="pageno">M11·24</div>
+  <p class="recap fragment">Next: The Promotion Lie &mdash; a real failure where the tag moved and the bytes did not.</p>
+  <div class="pageno">M11&middot;22</div>
 </section>
 
 <section class="divider">
   <h2 class="t">The Promotion Lie</h2>
+  <p class="s">when the tag changes and the bytes do not</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A completely full glass jar with a fresh label being pressed on over an old peeled-off label, the jar untouched underneath.">
     <image href="../img/decks/m11/divider-7-jar-swapped-label.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M11·25</div>
+  <div class="pageno">M11&middot;23</div>
 </section>
 
-<!-- ═══════════════ SLIDE 18 · THE PROMOTION LIE (full jar) ═══════════════ -->
 <section>
-  <h2 class="t">The promotion lie — a label swapped on a full jar</h2>
-  <p class="s">Everything goes green, but the label changed and the contents did not.</p>
+  <h2 class="t">A label swapped on a full jar</h2>
+  <p class="s">The init guard saw a GGUF already there, skipped the unpack, served old bytes.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A jar labelled candidate on the outside but still full of the old batch inside, the label merely swapped. A green deploy-check chip lies beside it as the misleading pass. The init guard is drawn seeing a model and skipping the unpack.">
     <!-- jar with swapped label -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M300,90 L420,90 L420,110 L440,130 L440,290 L280,290 L280,130 L300,110 Z"/></g>
@@ -698,13 +705,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="905" y="196" text-anchor="middle" class="lbl-g" style="font-size:16px">"saw a GGUF → skip"</text>
     <text x="905" y="226" text-anchor="middle" class="lbl-g" style="font-size:15px">a model ≠ the right model</text>
   </svg>
-  <div class="pageno">M11·26</div>
+  <div class="pageno">M11&middot;24</div>
 </section>
 
-<!-- ═══════════════ SLIDE 19 · MAKE THE TAG PART OF THE PATH ═══════════════ -->
 <section>
   <h2 class="t">Make the tag part of the path</h2>
-  <p class="s">Give each tag its own directory, and the candidate's guard finds it empty.</p>
+  <p class="s">One directory per tag, so a new tag cannot be satisfied by old bytes.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A single shared slash-model directory crossed out in red, replaced by two per-tag directories: one point zero point zero drawn full and green, and one point zero point zero dash candidate drawn empty and now unpacking. The tag is threaded through guard, unpack, and the minus-m flag.">
     <!-- shared dir crossed out: red -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="90" y="130" width="240" height="80" rx="10"/></g>
@@ -728,13 +734,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="935" y="182" text-anchor="middle" class="lbl-g" style="font-size:16px">guard · unpack</text>
     <text x="935" y="210" text-anchor="middle" class="lbl-g" style="font-size:16px">server -m flag</text>
   </svg>
-  <div class="pageno">M11·27</div>
+  <div class="pageno">M11&middot;25</div>
 </section>
 
-<!-- ═══════════════ SLIDE 20 · VERSIONED CACHE MAKES ROLLBACK FREE ═══════════════ -->
 <section>
-  <h2 class="t">The same cache makes rollback nearly free</h2>
-  <p class="s">The old directory is still on disk, so a reverted tag is Ready in seconds.</p>
+  <h2 class="t">The same cache makes rollback cheap</h2>
+  <p class="s">The previous tag is still on disk, so reverting comes back in seconds.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="git revert sets the tag back to one point zero point zero. The one point zero point zero directory is still on disk from before, drawn green and present, so init skips the unpack and the engine is Ready in seconds.">
     <!-- git revert -> 1.0.0 -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="70" y="120" width="200" height="70" rx="12"/></g>
@@ -755,21 +760,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="815" y="180" text-anchor="middle" class="lbl-g" style="font-size:15px">Ready</text>
     <text x="1000" y="166" text-anchor="middle" class="lbl-good">seconds</text>
   </svg>
-  <div class="pageno">M11·28</div>
+  <p class="recap fragment">Next: Training as a Pipeline Step &mdash; sharing one node without taking the cluster down.</p>
+  <div class="pageno">M11&middot;26</div>
 </section>
 
 <section class="divider">
   <h2 class="t">Training as a Pipeline Step</h2>
+  <p class="s">sharing one node between training and serving</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A home fuse box with one breaker tripped, sitting beside a plugged-in space heater.">
     <image href="../img/decks/m11/divider-8-fusebox-heater.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M11·29</div>
+  <div class="pageno">M11&middot;27</div>
 </section>
 
-<!-- ═══════════════ SLIDE 21 · CAP THE SPACE HEATER (circuit breaker = control-plane protection) ═══════════════ -->
 <section>
-  <h2 class="t">Cap the space heater — a CPU limit is control-plane protection</h2>
-  <p class="s">A CPU limit caps the training pod so it can't starve the shared control plane.</p>
+  <h2 class="t">Cap the space heater</h2>
+  <p class="s">A CPU limit on the training pod is control-plane protection, not tidiness.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A training pod drawn as a space heater on the node's shared circuit with the control plane. A circuit breaker labelled limits cpu equals two sits between them in green, tripping before a brownout so the training pod is slow but can never starve the control plane.">
     <!-- shared node circuit -->
     <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="90" y1="90" x2="1010" y2="90"/></g>
@@ -789,13 +795,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="770" y="250" text-anchor="middle" class="lbl-g">must not starve</text>
     <text x="770" y="300" text-anchor="middle" class="lbl-g">kubectl needs it alive</text>
   </svg>
-  <div class="pageno">M11·30</div>
+  <div class="pageno">M11&middot;28</div>
 </section>
 
-<!-- ═══════════════ SLIDE 22 · DRAIN SERVING FIRST (paused-replicas → 0) ═══════════════ -->
 <section>
-  <h2 class="t">Drain serving first — the pause lever, turned all the way to zero</h2>
-  <p class="s">KEDA's pause annotation, set to 0, becomes your get-out-of-the-way lever.</p>
+  <h2 class="t">Drain serving first</h2>
+  <p class="s">Turn the pause lever all the way to zero before the trainer starts.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A paused-replicas zero switch pins the model server down to zero replicas, and observability is scaled to zero as well, leaving the node clear for the training pod, which sits under its green CPU breaker from the previous slide.">
     <!-- model server pinned to zero (purple switch) -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="120" y="110" width="340" height="70" rx="10"/></g>
@@ -814,22 +819,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="800" y="205" text-anchor="middle" class="lbl-g">nothing but the training pod,</text>
     <text x="800" y="232" text-anchor="middle" class="lbl-g">running under its CPU cap</text>
   </svg>
-  <div class="pageno">M11·31</div>
+  <div class="pageno">M11&middot;29</div>
 </section>
 
-<!-- ═══════════════ SLIDE 23 · CLOSING — OpsMate v2.5, operated ═══════════════ -->
 <section>
   <p class="kicker">MODULE 11 &nbsp;·&nbsp; AUTOSCALING &amp; GITOPS</p>
-  <h2 class="t" style="font-size:1.9em">OpsMate v2.5 — operated like a platform</h2>
+  <h2 class="t" style="font-size:1.9em">What you carry into the lab</h2>
   <svg viewBox="0 0 1600 900" role="img" aria-label="The same desk calendar from the title, now with both incident flags replaced by checkmarks.">
     <image href="../img/decks/m11/closing-calendar-two-checks.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">Now open <b>Module 11 · Lab</b>. &nbsp;·&nbsp; next: M12 puts a governed gateway on the door &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M11·32</div>
+  <div class="pageno">M11&middot;30</div>
 </section>
+
 <section>
-  <h2 class="t">Next: Scale on the Queue, Catch the Lie, Cap the Trainer</h2>
-  <p class="s">Autoscale on a signal you can defend, and a model version that is a fact, not a sentence.</p>
+  <h2 class="t">What you will do as part of the lab</h2>
+  <p class="s">Scale on the queue, catch the promotion lie, and cap the trainer.</p>
   <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: a ScaledObject wires up and KEDA builds the HPA behind it; the deployment scales from one replica to two and back to one; a promotion merges green but is caught still serving the old model; the presence-cache is versioned per tag and the promotion is redone for real; rollback proves nearly instant because the old version never left the volume; and the training pipeline runs as a capped Argo Workflow with serving drained first.">
     <g class="fragment" transform="translate(40,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
@@ -874,7 +879,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">Argo Workflow, capped, serving drained</text>
     </g>
   </svg>
-  <div class="pageno">M11·33</div>
+  <div class="pageno">M11&middot;31</div>
 </section>
 
 </div></div>

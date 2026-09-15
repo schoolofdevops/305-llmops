@@ -145,26 +145,65 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ═══════════════ SLIDE 1 · TITLE — the reach gap, one step short ═══════════════ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 13 &nbsp;·&nbsp; TOOL-CALLING AGENTS, MCP &amp; THE CAPSTONE</p>
-  <h2 class="t" style="font-size:2.1em">One step short of what you want</h2>
+  <h2 class="t" style="font-size:2.1em">How Do You Make an LLM Take Action?</h2>
+  <p class="s">Structured outputs, tool calling, MCP, and an agent the door still bounds.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A phone handset lying off the hook beside a computer terminal, a gap between the two.">
     <image href="../img/decks/m13/title-phone-vs-terminal.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">it knows the playbook — it cannot see the field &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
-  <div class="pageno">M13·01</div>
-</section>
-
-<!-- ═══════════════ SLIDE 2 · KNOWLEDGE VS REACH ═══════════════ -->
-<section class="divider">
-  <h2 class="t">From Answering to Acting</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A speech bubble morphs into a mechanical gear and lever.">
-    <image href="../img/decks/m13/divider-0-bubble-to-gear.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M13·02</div>
+  <div class="pageno">M13&middot;01</div>
 </section>
 
 <section>
-  <h2 class="t">The gap is not knowledge — it is reach</h2>
-  <p class="s">On the phone vs. at your terminal — the gap is reach, not knowledge.</p>
+  <h2 class="t">What will you learn?</h2>
+  <p class="s">Six concepts, from answering to acting, safely.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A numbered contents list of the module's 6 concepts: the agentic ladder, structured outputs, tool calling, mcp, the guarded agent, the capstone.">
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="70" y="60" width="40" height="40" rx="8"/>
+    </g>
+    <text x="90" y="87" text-anchor="middle" class="lbl-b" style="font-size:20px">1</text>
+    <text x="130" y="87" class="lbl-b" style="font-size:23px">The Agentic Ladder</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="70" y="138" width="40" height="40" rx="8"/>
+    </g>
+    <text x="90" y="165" text-anchor="middle" class="lbl-b" style="font-size:20px">2</text>
+    <text x="130" y="165" class="lbl-b" style="font-size:23px">Structured Outputs</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="70" y="216" width="40" height="40" rx="8"/>
+    </g>
+    <text x="90" y="243" text-anchor="middle" class="lbl-b" style="font-size:20px">3</text>
+    <text x="130" y="243" class="lbl-b" style="font-size:23px">Tool Calling</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="580" y="60" width="40" height="40" rx="8"/>
+    </g>
+    <text x="600" y="87" text-anchor="middle" class="lbl-b" style="font-size:20px">4</text>
+    <text x="640" y="87" class="lbl-b" style="font-size:23px">MCP</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="580" y="138" width="40" height="40" rx="8"/>
+    </g>
+    <text x="600" y="165" text-anchor="middle" class="lbl-b" style="font-size:20px">5</text>
+    <text x="640" y="165" class="lbl-b" style="font-size:23px">The Guarded Agent</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="580" y="216" width="40" height="40" rx="8"/>
+    </g>
+    <text x="600" y="243" text-anchor="middle" class="lbl-b" style="font-size:20px">6</text>
+    <text x="640" y="243" class="lbl-b" style="font-size:23px">The Capstone</text>
+  </svg>
+  <div class="pageno">M13&middot;02</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">The Agentic Ladder</h2>
+  <p class="s">four levels, and which one you actually need</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A tall wooden ladder leaning against a wall, its steps suggesting a progression.">
+    <image href="../img/decks/m13/divider-1-four-level-ladder.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M13&middot;03</div>
+</section>
+
+<section>
+  <h2 class="t">The gap is reach, not knowledge</h2>
+  <p class="s">It can read the runbook to you. It cannot see the live state of your cluster.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels. Left: a colleague on a phone reading a runbook, describing steps from a distance. Right: a colleague standing at your terminal seeing the live pod state. A center label reads the gap is reach.">
     <!-- left: colleague on the phone (limited reach): neutral/gray -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="60" y="80" width="410" height="220" rx="14"/></g>
@@ -184,21 +223,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="180" text-anchor="middle" class="lbl-b">the gap</text>
     <text x="550" y="210" text-anchor="middle" class="lbl-b">= reach</text>
   </svg>
-  <div class="pageno">M13·03</div>
-</section>
-
-<!-- ═══════════════ SLIDE 3 · THE LADDER TEAMS ACTUALLY CLIMB ═══════════════ -->
-<section class="divider">
-  <h2 class="t">The Agentic Ladder</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A tall wooden ladder leaning against a wall, its steps suggesting a progression.">
-    <image href="../img/decks/m13/divider-1-four-level-ladder.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M13·04</div>
+  <div class="pageno">M13&middot;04</div>
 </section>
 
 <section>
-  <h2 class="t">"Agentic" is a four-level ladder</h2>
-  <p class="s">Four levels, climbed one at a time — this module lands on level three.</p>
+  <h2 class="t">Agentic is a four-level ladder</h2>
+  <p class="s">Naive RAG, then agentic RAG, then tool use, then a planning loop.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A four-step ascending staircase. Step one naive RAG from module four, step two agentic RAG, step three the tool-using agent this module highlighted, and a top step multi-agent labelled 303 drawn dashed as the next course.">
     <!-- level 1 -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="270" width="230" height="60" rx="8"/></g>
@@ -221,13 +251,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- climb arrow -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><path d="M110,268 C110,235 300,235 300,205" marker-end="url(#ahg)"/><path d="M350,203 C350,170 540,170 540,140" marker-end="url(#ahg)"/><path d="M590,138 C590,105 780,105 780,75" marker-end="url(#ahg)"/></g>
   </svg>
-  <div class="pageno">M13·05</div>
+  <div class="pageno">M13&middot;05</div>
 </section>
 
-<!-- ═══════════════ SLIDE 4 · LEVEL ONE — NAIVE RAG ALWAYS RETRIEVES ═══════════════ -->
 <section>
-  <h2 class="t">Naive RAG retrieves every single time</h2>
-  <p class="s">Even "2 + 2?" fires a retrieval — the level up lets the model choose.</p>
+  <h2 class="t">Naive RAG retrieves every time</h2>
+  <p class="s">Even when the question needs no runbook at all. Retrieval is unconditional.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A question two plus two enters a box that always fires an embed then a vector-store lookup unconditionally, drawn in gray as wasted work. A dashed agentic-RAG branch shows the model deciding whether to retrieve at all.">
     <!-- question -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="120" width="150" height="64" rx="10"/></g>
@@ -248,21 +277,22 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="594" y1="100" x2="700" y2="130" marker-end="url(#ahg)"/></g>
     <text x="650" y="92" text-anchor="middle" class="lbl-g" style="font-size:14px">level up</text>
   </svg>
-  <div class="pageno">M13·06</div>
+  <p class="recap fragment">Next: Structured Outputs &mdash; getting a reply your code can actually parse.</p>
+  <div class="pageno">M13&middot;06</div>
 </section>
 
-<!-- ═══════════════ SLIDE 5 · STRUCTURED OUTPUT = THE JUNIOR WITH A CHECKLIST ═══════════════ -->
 <section class="divider">
   <h2 class="t">Structured Outputs</h2>
+  <p class="s">getting a filled-in form back instead of a paragraph</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A clipboard holding a form with three empty blank boxes, a pencil resting beside it.">
     <image href="../img/decks/m13/divider-2-form-three-blanks.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M13·07</div>
+  <div class="pageno">M13&middot;07</div>
 </section>
 
 <section>
-  <h2 class="t">Structured output is a junior with a checklist</h2>
-  <p class="s">Ask an open question, get speculation; hand over a form, get fields.</p>
+  <h2 class="t">Analogy &mdash; a junior with a checklist</h2>
+  <p class="s">An open question gets speculation. A form gets the fields you asked for.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels. Left: an open question about payments produces a rambling paragraph of speculation, unusable. Right: a filled checklist form with namespace, pod, and checked fields, tidy and actionable.">
     <!-- left: open question → rambling prose, gray = unusable -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="60" y="70" width="420" height="240" rx="14"/></g>
@@ -279,13 +309,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="680" y="212" text-anchor="start" class="lbl-g" style="font-size:16px">pod: payments-api</text>
     <text x="680" y="266" text-anchor="start" class="lbl-g" style="font-size:16px">checked: prev logs, deps</text>
   </svg>
-  <div class="pageno">M13·08</div>
+  <div class="pageno">M13&middot;08</div>
 </section>
 
-<!-- ═══════════════ SLIDE 6 · TWO FLAVORS — A FORM, OR A TOOL CALL ═══════════════ -->
 <section>
-  <h2 class="t">Two flavors — the same machinery, two targets</h2>
-  <p class="s">One JSON schema, two targets: structure the whole reply, or structure a call.</p>
+  <h2 class="t">Two flavours, same machinery</h2>
+  <p class="s">A JSON schema constrains the whole reply. A tool schema constrains one call.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="One JSON-schema source feeds two boxes. Left: a whole-response schema producing an object with namespace, pod, and diagnosis fields. Right: the same machinery producing a tool call with a function name and arguments.">
     <!-- shared source: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="440" y="40" width="220" height="56" rx="10"/></g>
@@ -306,13 +335,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="820" y="228" text-anchor="middle" class="lbl-g" style="font-size:15px">call( name, arguments )</text>
     <text x="820" y="264" text-anchor="middle" class="lbl-g" style="font-size:15px">which function · which args</text>
   </svg>
-  <div class="pageno">M13·09</div>
+  <div class="pageno">M13&middot;09</div>
 </section>
 
-<!-- ═══════════════ SLIDE 7 · WHY IT COMES FIRST — EVERY ARROW READS MODEL OUTPUT ═══════════════ -->
 <section>
-  <h2 class="t">Every arrow in the loop reads model output</h2>
-  <p class="s">Every arrow is code parsing the model — make each one a json.loads.</p>
+  <h2 class="t">Every arrow reads model output</h2>
+  <p class="s">Each step in the loop parses what the LLM produced, so the format has to hold.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A four-node cycle: model decides, code executes, model reads result, repeat. Each arrow is labelled json.loads in green as a reliable hop, with one arrow showing a crossed-out fragile-parser alternative in red.">
     <!-- four nodes in a cycle -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="450" y="30" width="200" height="66" rx="10"/><rect x="820" y="130" width="200" height="66" rx="10"/><rect x="450" y="240" width="200" height="66" rx="10"/><rect x="80" y="130" width="200" height="66" rx="10"/></g>
@@ -331,21 +359,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="170" text-anchor="middle" class="lbl-g" style="font-size:15px">as reliable as the</text>
     <text x="550" y="192" text-anchor="middle" class="lbl-g" style="font-size:15px">least-structured hop</text>
   </svg>
-  <div class="pageno">M13·10</div>
+  <p class="recap fragment">Next: Tool Calling &mdash; letting the LLM ask for something to be run.</p>
+  <div class="pageno">M13&middot;10</div>
 </section>
 
-<!-- ═══════════════ SLIDE 8 · TOOL CALLING — THE MODEL EMITS A REQUEST, YOU HONOR IT ═══════════════ -->
 <section class="divider">
   <h2 class="t">Tool Calling</h2>
+  <p class="s">the LLM asks, and your code decides</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="An old push-button telephone handset with a circular looping arrow beside the earpiece.">
     <image href="../img/decks/m13/divider-3-phone-loop-arrow.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M13·11</div>
+  <div class="pageno">M13&middot;11</div>
 </section>
 
 <section>
-  <h2 class="t">The model asks to run — the orchestrator decides</h2>
-  <p class="s">The model only asks; your code runs it and hands the result back.</p>
+  <h2 class="t">The LLM asks, you decide</h2>
+  <p class="s">It returns a tool_calls finish reason. Your orchestrator chooses to run it.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="Model turn emits a tool_calls array in blue, the orchestrator in purple decides whether and how to run the real function, appends a role tool result message, and the model reads it next turn to call again or answer.">
     <!-- model turn -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="120" width="180" height="80" rx="10"/></g>
@@ -369,13 +398,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><path d="M880,150 C960,120 960,70 500,70 C260,70 150,90 130,116" marker-end="url(#ah)"/></g>
     <text x="540" y="60" text-anchor="middle" class="lbl-g" style="font-size:15px">next turn: call again — or answer</text>
   </svg>
-  <div class="pageno">M13·12</div>
+  <div class="pageno">M13&middot;12</div>
 </section>
 
-<!-- ═══════════════ SLIDE 9 · A 0.6B MODEL TOOL-CALLS COMPETENTLY ═══════════════ -->
 <section>
-  <h2 class="t">Even a 0.6B model tool-calls competently</h2>
-  <p class="s">Not a big-model trick — the 0.6B model picks the right tool and args.</p>
+  <h2 class="t">Even a 0.6B LLM tool-calls</h2>
+  <p class="s">The small course model picks correctly from a two-tool menu.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A small model box labelled qwen3 0.6b faces a two-item tool menu, get_pod_status and get_pod_logs. It points at the right one with the right arguments, drawn green as the correct pick.">
     <!-- small model: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="80" y="110" width="220" height="100" rx="12"/></g>
@@ -395,13 +423,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><path d="M300,150 C420,150 460,145 558,144" marker-end="url(#ah)"/></g>
     <text x="430" y="130" text-anchor="middle" class="lbl-good" style="font-size:16px">right tool, right args</text>
   </svg>
-  <div class="pageno">M13·13</div>
+  <div class="pageno">M13&middot;13</div>
 </section>
 
-<!-- ═══════════════ SLIDE 10 · THREE NEW COSTS — AND THE LOOP IS THE LIVE ONE ═══════════════ -->
 <section>
-  <h2 class="t">Three new costs — and the loop is the live one</h2>
-  <p class="s">Serial latency, per-turn cost, and the live one — the looping menu.</p>
+  <h2 class="t">Three new costs, one of them live</h2>
+  <p class="s">Latency stacks, every turn is billed, and the loop is the one that bites.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Three panels. Left: stacked serial latency hops in orange. Middle: a tally reading four billed turns. Right: a phone-menu loop where a request cycles back to the same menu, drawn red as the live failure mode.">
     <!-- latency stacks: orange = caution -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="none"><rect x="40" y="70" width="300" height="230" rx="12"/></g>
@@ -431,13 +458,12 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="880" y="252" text-anchor="middle" class="lbl-bad" style="font-size:15px">same menu again — stuck</text>
     </g>
   </svg>
-  <div class="pageno">M13·14</div>
+  <div class="pageno">M13&middot;14</div>
 </section>
 
-<!-- ═══════════════ SLIDE 11 · WHY THE LOOP HAPPENS — THE TOOL IS STILL ON OFFER ═══════════════ -->
 <section>
-  <h2 class="t">A loop is the tool still being a legal move</h2>
-  <p class="s">Not a bad prompt — the tool is still a legal move, so it gets picked.</p>
+  <h2 class="t">A loop is a legal move</h2>
+  <p class="s">Calling the tool again is still allowed, so the LLM can keep choosing it.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A model with a set of legal moves. The call-tool move is still present in the action space, drawn blue as still legal, with a red arrow looping back showing the model keeps choosing it.">
     <!-- action space box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="120" y="60" width="500" height="220" rx="14"/></g>
@@ -455,13 +481,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.8"><path d="M640,227 C780,227 800,140 700,120 C640,108 660,180 636,215" marker-end="url(#ah)"/></g>
     <text x="830" y="180" text-anchor="middle" class="lbl-bad">keeps choosing it</text>
   </svg>
-  <div class="pageno">M13·15</div>
+  <div class="pageno">M13&middot;15</div>
 </section>
 
-<!-- ═══════════════ SLIDE 12 · THE FIX — OMIT THE TOOLS ON THE ANSWER TURN ═══════════════ -->
 <section>
-  <h2 class="t">Fix the loop by taking away the option</h2>
-  <p class="s">Omit the tools so answering is the only move — "none" gets dropped.</p>
+  <h2 class="t">Fix the loop by removing the option</h2>
+  <p class="s">Take the tool out of the action space for the final turn.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="Two panels. Left: a tool_choice none request arriving at the gateway and being silently dropped, drawn red. Right: the answer turn sent with no tools in the request, so the model can only answer, drawn green as the loop broken.">
     <!-- left: tool_choice none dropped, red -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="70" width="440" height="220" rx="14"/></g>
@@ -485,21 +510,22 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="820" y="256" text-anchor="middle" class="lbl-good">loop broken — survives translation</text>
     </g>
   </svg>
-  <div class="pageno">M13·16</div>
+  <p class="recap fragment">Next: MCP &mdash; the standard way to expose those tools once.</p>
+  <div class="pageno">M13&middot;16</div>
 </section>
 
-<!-- ═══════════════ SLIDE 13 · MCP IS THE USB-C OF TOOLS ═══════════════ -->
 <section class="divider">
-  <h2 class="t">MCP — The USB-C Port for Tools</h2>
+  <h2 class="t">MCP</h2>
+  <p class="s">one port for tools, and what it actually is underneath</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A single USB-C connector with a phone, camera, and laptop all connected to it.">
     <image href="../img/decks/m13/divider-4-usbc-many-devices.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M13·17</div>
+  <div class="pageno">M13&middot;17</div>
 </section>
 
 <section>
   <h2 class="t">MCP is the USB-C port for tools</h2>
-  <p class="s">Describe the tool once through the standard — any client plugs in.</p>
+  <p class="s">Expose the inspector once, and any client can use it.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="One MCP tool, the Kubernetes inspector, with a single USB-C-style connector at a shared port. Three different clients — OpsMate, the 303 agent, and a third-party client — all plug into the same port.">
     <!-- the one tool + shared port: blue = the shared standard studied -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="60" y="120" width="260" height="110" rx="12"/></g>
@@ -517,13 +543,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><path d="M366,168 C500,150 520,100 638,90" marker-end="url(#ahg)"/><path d="M366,175 C520,175 520,175 638,175" marker-end="url(#ahg)"/><path d="M366,182 C500,200 520,250 638,260" marker-end="url(#ahg)"/></g>
     <text x="500" y="150" text-anchor="middle" class="lbl-g" style="font-size:15px">any client plugs in</text>
   </svg>
-  <div class="pageno">M13·18</div>
+  <div class="pageno">M13&middot;18</div>
 </section>
 
-<!-- ═══════════════ SLIDE 14 · MCP IS MECHANICALLY SMALL — JSON-RPC OVER STDIO ═══════════════ -->
 <section>
   <h2 class="t">MCP is smaller than its reputation</h2>
-  <p class="s">JSON-RPC over stdio, and three methods carry the whole interaction.</p>
+  <p class="s">A subprocess over stdio, an initialize handshake, and a list of capabilities.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A client and an MCP server connected as a stdio subprocess exchanging one JSON message per line. Three labelled hops carry the protocol: initialize the handshake, tools/list which returns name description and inputSchema, and tools/call which runs a named tool.">
     <!-- client + server as stdio subprocess -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="120" width="170" height="80" rx="10"/><rect x="870" y="120" width="170" height="80" rx="10"/></g>
@@ -539,13 +564,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="545" y="230" text-anchor="middle" class="lbl">tools/call &nbsp;·&nbsp; run a named tool</text>
     <text x="545" y="290" text-anchor="middle" class="lbl-g" style="font-size:15px">one JSON message per line</text>
   </svg>
-  <div class="pageno">M13·19</div>
+  <div class="pageno">M13&middot;19</div>
 </section>
 
-<!-- ═══════════════ SLIDE 15 · THE USB-C BEAT — A THREE-FIELD RENAME ═══════════════ -->
 <section>
-  <h2 class="t">The USB-C beat is a three-field rename</h2>
-  <p class="s">The whole adapter is renaming three fields — MCP format to OpenAI format.</p>
+  <h2 class="t">The port is a three-field rename</h2>
+  <p class="s">Name, description and input schema map onto an OpenAI function definition.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="Left card: the MCP tool format with name, description, and inputSchema. Right card: the OpenAI format with type function and function name description parameters. Three mapping arrows connect the matching fields through an adapter box drawn green as the trick that lands.">
     <!-- MCP format: blue -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="50" y="70" width="330" height="200" rx="12"/></g>
@@ -568,13 +592,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><path d="M380,148 C430,148 440,160 468,164"/><path d="M632,170 C680,178 690,188 718,190" marker-end="url(#ahg)"/></g>
     <text x="550" y="240" text-anchor="middle" class="lbl-good" style="font-size:16px">a rename of three fields</text>
   </svg>
-  <div class="pageno">M13·20</div>
+  <div class="pageno">M13&middot;20</div>
 </section>
 
-<!-- ═══════════════ SLIDE 16 · SERVERS AS CONTAINERS — THE PRODUCTION NOTE ═══════════════ -->
 <section>
-  <h2 class="t">In production, MCP servers are containers</h2>
-  <p class="s">A lab subprocess in production becomes a container — ship it as an image.</p>
+  <h2 class="t">In production, servers are containers</h2>
+  <p class="s">A versioned image, not a script on somebody's laptop.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="Left: a stdio subprocess script on a laptop, fine for learning, drawn neutral. Right: the same server packaged as a signed container image — versioned, isolated, deployable — drawn blue as the artifact form.">
     <!-- lab: stdio script on a laptop, neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7"><rect x="70" y="80" width="380" height="180" rx="14"/></g>
@@ -594,21 +617,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="810" y="190" text-anchor="middle" class="lbl-g" style="font-size:15px">isolated</text>
     <text x="940" y="190" text-anchor="middle" class="lbl-g" style="font-size:14px">deployable</text>
   </svg>
-  <div class="pageno">M13·21</div>
+  <p class="recap fragment">Next: The Guarded Agent &mdash; keeping all of this inside the door from Module 12.</p>
+  <div class="pageno">M13&middot;21</div>
 </section>
 
-<!-- ═══════════════ SLIDE 17 · EVERY TURN GOES THROUGH THE M12 DOOR ═══════════════ -->
 <section class="divider">
   <h2 class="t">The Guarded Agent</h2>
+  <p class="s">every turn going through the door you built in Module 12</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A visitor-badge lanyard with a small padlock icon printed on its face.">
     <image href="../img/decks/m13/divider-5-badge-padlock.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M13·22</div>
+  <div class="pageno">M13&middot;22</div>
 </section>
 
 <section>
-  <h2 class="t">Every agent turn goes through the M12 door</h2>
-  <p class="s">An agent that can act is the last thing you want holding a master key.</p>
+  <h2 class="t">Every turn goes through the gateway</h2>
+  <p class="s">The agent is a client like any other, so the keys and guards still apply.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="An orchestrator box holds turn one decide with tools, then execute via MCP, then the answer turn with tools omitted. Both model turns route through the M12 gateway drawn purple as control. The MCP execution reaches a live KIND cluster, and spend rows flow to the X-Ray lens.">
     <!-- orchestrator box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="50" y="60" width="500" height="240" rx="14"/></g>
@@ -633,13 +657,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="975" y="130" text-anchor="middle" class="lbl-g" style="font-size:14px">Spend lens</text>
     <text x="975" y="152" text-anchor="middle" class="lbl-g" style="font-size:13px">turns as rows</text>
   </svg>
-  <div class="pageno">M13·23</div>
+  <div class="pageno">M13&middot;23</div>
 </section>
 
-<!-- ═══════════════ SLIDE 18 · READ-ONLY IS THE VISITOR BADGE — THE VERB IS ABSENT ═══════════════ -->
 <section>
-  <h2 class="t">Read-only is the visitor badge — the verb is absent</h2>
-  <p class="s">It can't delete, patch, or scale — that verb was never built at all.</p>
+  <h2 class="t">Read-only is the visitor badge</h2>
+  <p class="s">It can get status and logs. Delete, patch and scale are simply not offered.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A visitor badge opens two read doors, get_pod_status and get_pod_logs, drawn green as safe to open. The delete, patch, and scale doors are drawn as not present at all — greyed and crossed as absent, not merely locked.">
     <!-- visitor badge -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="130" width="180" height="110" rx="12"/><circle cx="100" cy="170" r="12"/></g>
@@ -659,13 +682,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="530" y="292" text-anchor="middle" class="lbl-g" style="font-size:14px">no such verb in the server</text>
     <text x="880" y="266" text-anchor="middle" class="lbl-g" style="font-size:16px">absent, not disabled</text>
   </svg>
-  <div class="pageno">M13·24</div>
+  <div class="pageno">M13&middot;24</div>
 </section>
 
-<!-- ═══════════════ SLIDE 19 · SPEND IS AGENT COST — A LOOP IS A ROW COUNT ═══════════════ -->
 <section>
   <h2 class="t">A loop is a row count you can see</h2>
-  <p class="s">The M12 spend log now answers a new question: is this agent looping?</p>
+  <p class="s">Two turns for one question is normal. Twelve rows is a loop, in the spend log.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="The X-Ray Spend lens with per-turn rows. A healthy agent shows two rows in green. A runaway agent shows fifteen rows for one question in red, the loop made visible in the ledger.">
     <!-- healthy agent: green, 2 rows -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="60" y="70" width="440" height="220" rx="14"/></g>
@@ -682,21 +704,22 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="1.8"><line x1="640" y1="130" x2="1000" y2="130"/><line x1="640" y1="152" x2="1000" y2="152"/><line x1="640" y1="174" x2="1000" y2="174"/><line x1="640" y1="196" x2="1000" y2="196"/><line x1="640" y1="218" x2="1000" y2="218"/><line x1="640" y1="240" x2="1000" y2="240"/></g>
     <text x="820" y="278" text-anchor="middle" class="lbl-bad">15 rows for one question</text>
   </svg>
-  <div class="pageno">M13·25</div>
+  <p class="recap fragment">Next: The Capstone &mdash; the whole course lifecycle, driven once.</p>
+  <div class="pageno">M13&middot;25</div>
 </section>
 
-<!-- ═══════════════ SLIDE 20 · THE CAPSTONE — THE FULL ROUTE, ONE DRIVE ═══════════════ -->
 <section class="divider">
   <h2 class="t">The Capstone</h2>
+  <p class="s">the whole lifecycle, driven once, end to end</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A single winding road stretching from a starting flag to a distant finish, passing several checkpoint markers.">
     <image href="../img/decks/m13/divider-6-road-checkpoints.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M13·26</div>
+  <div class="pageno">M13&middot;26</div>
 </section>
 
 <section>
-  <h2 class="t">The capstone is the whole route, one drive</h2>
-  <p class="s">No new skills — chain the ones you have, end to end, without stalling.</p>
+  <h2 class="t">The whole route, in one drive</h2>
+  <p class="s">Synthesize, tune, pack, sign, promote, gate and serve, with you driving.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="A left-to-right lifecycle chain: a new cache-eviction runbook, synthesize Q&amp;A from M6, LoRA fine-tune v1.2, convert to GGUF, kit pack and sign 1.2.0 from M7, gate.sh from M12, a PR bumping the tag from M11, Argo sync, and verify serving. An examiner-in-the-passenger-seat motif sits over it.">
     <!-- BASE: the runbook arrives + the examiner framing (blue = the run being studied) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="30" y="130" width="120" height="66" rx="9"/></g>
@@ -751,13 +774,12 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="1000" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">verify · M11</text>
     </g>
   </svg>
-  <div class="pageno">M13·27</div>
+  <div class="pageno">M13&middot;27</div>
 </section>
 
-<!-- ═══════════════ SLIDE 21 · THE GATE MUST HOLD THE FLOOR — OR BLOCK ═══════════════ -->
 <section>
-  <h2 class="t">The gate must hold the floor — or BLOCK</h2>
-  <p class="s">Refusing a regression is the lifecycle working — BLOCK is a pass here.</p>
+  <h2 class="t">The gate must hold the floor</h2>
+  <p class="s">The Module 6 model did not beat the baseline, and the gate has to say so.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="gate.sh runs the candidate v1.2 against the committed baseline floor. A fork: holds the floor leads to a PR and promotion in green; below the floor leads to BLOCK with no promotion in red.">
     <!-- gate.sh + baseline floor -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="120" width="220" height="90" rx="12"/></g>
@@ -781,22 +803,13 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.8"><path d="M280,180 C400,200 440,220 558,225" marker-end="url(#ah)"/></g>
     </g>
   </svg>
-  <div class="pageno">M13·28</div>
-</section>
-
-<!-- ═══════════════ SLIDE 22 · CLOSING 1/3 — PORTFOLIO + SKILL MAP ═══════════════ -->
-<section class="divider">
-  <h2 class="t">Course Close</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A checkered finish flag planted at the end of a road, with a signpost arrow pointing further onward beyond it.">
-    <image href="../img/decks/m13/divider-7-signpost-beyond-finish.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M13·29</div>
+  <div class="pageno">M13&middot;28</div>
 </section>
 
 <section>
   <p class="kicker">MODULE 13 &nbsp;·&nbsp; COURSE CLOSE — OPSMATE v0.1 → v3.5</p>
-  <h2 class="t" style="font-size:1.7em">The proof you walk away with — a portfolio and a rising arc</h2>
-  <p class="s">Evidence, not a certificate — and the whole climb in one staircase.</p>
+  <h2 class="t" style="font-size:1.7em">A portfolio and a rising arc</h2>
+  <p class="s">OpsMate from v0.1 to v3.5, with evidence at every version.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A rising staircase from OpsMate v0.1 local up to v3.5 the agent, module bands on each step, rising from blue to green at the top, captioned local to RAG to tuned to served to gateway to agent. Beside it a portfolio-repo box of six assembled artifacts annotated evidence, not a certificate.">
     <!-- staircase: OpsMate v0.1 → v3.5, blue rising to green -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="40" y="270" width="90" height="34" rx="6"/><rect x="130" y="238" width="90" height="66" rx="6"/><rect x="220" y="206" width="90" height="98" rx="6"/><rect x="310" y="174" width="90" height="130" rx="6"/></g>
@@ -818,14 +831,13 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="860" y="192" text-anchor="middle" class="lbl-g" style="font-size:13px">+ eval report</text>
     <text x="860" y="220" text-anchor="middle" class="lbl-good" style="font-size:14px">evidence, not a certificate</text>
   </svg>
-  <div class="pageno">M13·30</div>
+  <div class="pageno">M13&middot;29</div>
 </section>
 
-<!-- ═══════════════ SLIDE 23 · CLOSING 2/3 — THE EDGE → 303 ═══════════════ -->
 <section>
   <p class="kicker">MODULE 13 &nbsp;·&nbsp; THE EDGE — WHERE 303 PICKS UP</p>
-  <h2 class="t" style="font-size:1.7em">The edge you did not cross — where 303 picks up</h2>
-  <p class="s">Your read-only agent is the bridge to the next course.</p>
+  <h2 class="t" style="font-size:1.7em">The edge you did not cross</h2>
+  <p class="s">Read-only, on purpose, and where the next course picks up.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="A single read-only agent figure sits on a dashed boundary line, an arrow crossing to a purple 303 panel holding four markers beyond the edge — multi-agent, sandboxing, trajectory evals, memory.">
     <!-- the read-only agent at the boundary (the bridge) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="70" y="120" width="230" height="96" rx="10"/></g>
@@ -846,22 +858,22 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="815" y="224" text-anchor="middle" class="lbl-g" style="font-size:13px">a chat eval grades an answer;</text>
     <text x="815" y="246" text-anchor="middle" class="lbl-g" style="font-size:13px">an agent eval grades a path</text>
   </svg>
-  <div class="pageno">M13·31</div>
+  <div class="pageno">M13&middot;30</div>
 </section>
 
-<!-- ═══════════════ SLIDE 24 · CLOSING 3/3 — OPEN THE LAB + CERTIFICATE ═══════════════ -->
 <section>
   <p class="kicker">MODULE 13 &nbsp;·&nbsp; ULTIMATE LLMOPS BOOTCAMP</p>
-  <h2 class="t" style="font-size:1.7em">Open the lab, and go operate the thing you built</h2>
+  <h2 class="t" style="font-size:1.7em">What you carry out of this course</h2>
   <svg viewBox="0 0 1600 900" role="img" aria-label="The same phone handset and terminal from the title, now connected by a solid coiled cable with no gap remaining.">
     <image href="../img/decks/m13/closing-phone-connected-terminal.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">You've earned your certificate. &nbsp;·&nbsp; The next level is <b>303-agentops</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M13·32</div>
+  <div class="pageno">M13&middot;31</div>
 </section>
+
 <section>
-  <h2 class="t">Next: Drive the Agent, Run the Lifecycle, Build the Portfolio</h2>
-  <p class="s">Thirteen modules. One platform. Built and measured, end to end.</p>
+  <h2 class="t">What you will do as part of the lab</h2>
+  <p class="s">Drive MCP by hand, watch the agent pick a tool, and run the full lifecycle.</p>
   <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: MCP is driven by hand with three JSON-RPC calls; the agent picks the right tool off its two-tool menu; the loop is triggered on purpose and fixed by removing the tools, not tool_choice; the full capstone lifecycle runs in one take from synthesis to serving; the gate is read, holding the floor or blocking, both proving the lifecycle works; and the portfolio piece is assembled from the platform actually built.">
     <g class="fragment" transform="translate(40,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
@@ -905,7 +917,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">the platform you actually built</text>
     </g>
   </svg>
-  <div class="pageno">M13·33</div>
+  <div class="pageno">M13&middot;32</div>
 </section>
 
 </div></div>

@@ -186,8 +186,8 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <h2 class="t">What will you learn?</h2>
-  <p class="s">Four concepts, from picking an engine to running it.</p>
-  <svg viewBox="0 0 1100 400" role="img" aria-label="A numbered contents list of the module's 4 concepts: choosing an engine, the three engines, throughput mechanisms, the course serving stack.">
+  <p class="s">Five concepts, from picking an engine to running it.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A numbered contents list of the module's 5 concepts: choosing an engine, the three engines, batching and caching, pagedattention, the course serving stack.">
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
       <rect x="250" y="56" width="40" height="40" rx="8"/>
     </g>
@@ -202,12 +202,17 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="250" y="192" width="40" height="40" rx="8"/>
     </g>
     <text x="270" y="219" text-anchor="middle" class="lbl-b" style="font-size:20px">3</text>
-    <text x="320" y="219" class="lbl-b" style="font-size:23px">Throughput Mechanisms</text>
+    <text x="320" y="219" class="lbl-b" style="font-size:23px">Batching and Caching</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
       <rect x="250" y="260" width="40" height="40" rx="8"/>
     </g>
     <text x="270" y="287" text-anchor="middle" class="lbl-b" style="font-size:20px">4</text>
-    <text x="320" y="287" class="lbl-b" style="font-size:23px">The Course Serving Stack</text>
+    <text x="320" y="287" class="lbl-b" style="font-size:23px">PagedAttention</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="328" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="355" text-anchor="middle" class="lbl-b" style="font-size:20px">5</text>
+    <text x="320" y="355" class="lbl-b" style="font-size:23px">The Course Serving Stack</text>
   </svg>
   <div class="pageno">M3&middot;02</div>
 </section>
@@ -477,21 +482,12 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section class="divider">
-  <h2 class="t">Throughput Mechanisms</h2>
-  <p class="s">how one box ends up serving many users at once</p>
+  <h2 class="t">Batching and Caching</h2>
+  <p class="s">keeping the box busy, and never redoing the same work</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A cutaway of a multi-floor building showing an elevator shaft with the lift car mid-shaft between floors.">
     <image href="../img/decks/m3/divider-4-elevator-lift.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M3&middot;14</div>
-</section>
-
-<section>
-  <h2 class="t">Analogy &mdash; the lift that waits to fill</h2>
-  <p class="s">Static batching will not move till full, and will not stop till all are done.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A packed elevator with its doors closed and full of riders, while one more rider waits outside with arms crossed.">
-    <image href="../img/decks/m3/analogy-static-lift.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M3&middot;15</div>
 </section>
 
 <section>
@@ -500,38 +496,16 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="A modern elevator mid-motion with doors open, one rider stepping out while another steps in at the same moment.">
     <image href="../img/decks/m3/analogy-continuous-lift.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
+  <div class="pageno">M3&middot;15</div>
+</section>
+
+<section>
+  <h2 class="t">Analogy &mdash; the lift that waits to fill</h2>
+  <p class="s">Static batching will not move till full, and will not stop till all are done.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A packed elevator with its doors closed and full of riders, while one more rider waits outside with arms crossed.">
+    <image href="../img/decks/m3/analogy-static-lift.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
   <div class="pageno">M3&middot;16</div>
-</section>
-
-<section>
-  <h2 class="t">One long shelf wastes memory twice</h2>
-  <p class="s">Reserve for the maximum, and you over-reserve and fragment at the same time.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Contiguous KV cache, drawn large. A reader holds one long shelf, mostly empty: a small blue used slice at the start, the rest a red band reserved to the maximum and wasted. Below it a dashed red box shows a gap too small for anyone, labelled fragmentation. A gray band reads: each request reserves one continuous block sized to its maximum possible length — over-reserving and fragmentation both cap how many fit.">
-    <!-- long shelf mostly empty (reserved-to-MAX waste = red; used slice = blue KV data) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="120" y="46" width="860" height="150" rx="12"/></g>
-    <text x="550" y="84" text-anchor="middle" class="lbl-b">contiguous KV — one long plank, sized to the MAX</text>
-    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.6"><rect x="160" y="112" width="760" height="60" rx="6"/></g>
-    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2"><rect x="168" y="120" width="150" height="44" rx="4"/></g>
-    <text x="243" y="148" text-anchor="middle" class="lbl-sm">in use</text>
-    <text x="640" y="148" text-anchor="middle" class="lbl-g" fill="#c62828">reserved to MAX — mostly wasted</text>
-    <!-- fragmentation gap (unusable = red) -->
-    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="160" y="234" width="200" height="60" rx="6"/></g>
-    <text x="260" y="270" text-anchor="middle" class="lbl-g">unusable gap</text>
-    <text x="600" y="270" text-anchor="middle" class="lbl-g">gaps too small for anyone = <tspan fill="#c62828">fragmentation</tspan></text>
-    <!-- reason band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="230" y="316" width="640" height="40" rx="10"/></g>
-    <text x="550" y="343" text-anchor="middle" class="lbl-g">over-reserve + fragment = far fewer concurrent requests per box</text>
-  </svg>
-  <div class="pageno">M3&middot;17</div>
-</section>
-
-<section>
-  <h2 class="t">PagedAttention hands out small blocks</h2>
-  <p class="s">Blocks taken on demand, a block table to find them, and no guessing.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A librarian hands a numbered key to a visitor in front of a wall of numbered library storage cubbies.">
-    <image href="../img/decks/m3/analogy-library-cubbies.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M3&middot;18</div>
 </section>
 
 <section>
@@ -572,7 +546,156 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="348" text-anchor="middle" class="lbl-g">the response reports <tspan class="lbl-b">cached_tokens</tspan> — prefill you did not pay for</text>
   </svg>
   <p class="recap fragment">Next: The Course Serving Stack &mdash; the compose file this course grows from here.</p>
+  <p class="recap fragment">Next: PagedAttention &mdash; the same idea applied to the memory the KV cache sits in.</p>
+  <div class="pageno">M3&middot;17</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">PagedAttention</h2>
+  <p class="s">small blocks on demand, instead of one long reservation</p>
+  <svg viewBox="0 0 900 380" role="img" aria-label="A grid of small numbered pigeonholes, some filled and some empty, beside a short list that records which holes belong to one reader.">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="180" y="90" width="300" height="200" rx="8"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2">
+      <path d="M180,140 L480,140"/><path d="M180,190 L480,190"/><path d="M180,240 L480,240"/>
+      <path d="M280,90 L280,290"/><path d="M380,90 L380,290"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2">
+      <rect x="190" y="100" width="80" height="30" rx="5"/>
+      <rect x="390" y="150" width="80" height="30" rx="5"/>
+      <rect x="290" y="200" width="80" height="30" rx="5"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="4 5">
+      <rect x="560" y="120" width="150" height="140" rx="8"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2">
+      <path d="M580,160 L690,160"/><path d="M580,196 L690,196"/><path d="M580,232 L690,232"/>
+    </g>
+  </svg>
+  <div class="pageno">M3&middot;18</div>
+</section>
+
+<section>
+  <h2 class="t">One long reservation wastes twice</h2>
+  <p class="s">Reserve for the maximum, and you over-reserve and fragment at the same time.</p>
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Contiguous KV cache, drawn large. A reader holds one long shelf, mostly empty: a small blue used slice at the start, the rest a red band reserved to the maximum and wasted. Below it a dashed red box shows a gap too small for anyone, labelled fragmentation. A gray band reads: each request reserves one continuous block sized to its maximum possible length — over-reserving and fragmentation both cap how many fit.">
+    <!-- long shelf mostly empty (reserved-to-MAX waste = red; used slice = blue KV data) -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6"><rect x="120" y="46" width="860" height="150" rx="12"/></g>
+    <text x="550" y="84" text-anchor="middle" class="lbl-b">contiguous KV — one long plank, sized to the MAX</text>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.6"><rect x="160" y="112" width="760" height="60" rx="6"/></g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#757575" stroke-width="2"><rect x="168" y="120" width="150" height="44" rx="4"/></g>
+    <text x="243" y="148" text-anchor="middle" class="lbl-sm">in use</text>
+    <text x="640" y="148" text-anchor="middle" class="lbl-g" fill="#c62828">reserved to MAX — mostly wasted</text>
+    <!-- fragmentation gap (unusable = red) -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="160" y="234" width="200" height="60" rx="6"/></g>
+    <text x="260" y="270" text-anchor="middle" class="lbl-g">unusable gap</text>
+    <text x="600" y="270" text-anchor="middle" class="lbl-g">gaps too small for anyone = <tspan fill="#c62828">fragmentation</tspan></text>
+    <!-- reason band -->
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="9 7"><rect x="230" y="316" width="640" height="40" rx="10"/></g>
+    <text x="550" y="343" text-anchor="middle" class="lbl-g">over-reserve + fragment = far fewer concurrent requests per box</text>
+  </svg>
   <div class="pageno">M3&middot;19</div>
+</section>
+
+<section>
+  <h2 class="t">The KV is split into fixed blocks</h2>
+  <p class="s">Blocks are taken as the request grows, and a table records which ones it holds.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="One request's tokens fill fixed-size blocks that sit in scattered positions in memory, while a block table lists the block numbers that belong to that request in order.">
+    <text x="60" y="66" class="lbl-b" style="font-size:21px">one request, growing</text>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="60" y="88" width="120" height="52" rx="8"/>
+        <rect x="192" y="88" width="120" height="52" rx="8"/>
+        <rect x="324" y="88" width="120" height="52" rx="8"/>
+      </g>
+      <g class="lbl-sm" text-anchor="middle">
+        <text x="120" y="119">tokens 1&ndash;16</text><text x="252" y="119">17&ndash;32</text><text x="384" y="119">33&ndash;48</text>
+      </g>
+      <text x="470" y="119" class="lbl-g">each one a fixed-size block</text>
+    </g>
+
+    <g class="fragment">
+      <text x="60" y="196" class="lbl-b" style="font-size:21px">where they actually sit in memory</text>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="60" y="212" width="700" height="120" rx="8"/>
+      </g>
+      <g fill="none" stroke="#757575" stroke-width="1.8">
+        <path d="M160,212 L160,332"/><path d="M260,212 L260,332"/><path d="M360,212 L360,332"/>
+        <path d="M460,212 L460,332"/><path d="M560,212 L560,332"/><path d="M660,212 L660,332"/>
+      </g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2">
+        <rect x="72" y="236" width="76" height="34" rx="6"/>
+        <rect x="372" y="276" width="76" height="34" rx="6"/>
+        <rect x="572" y="236" width="76" height="34" rx="6"/>
+      </g>
+      <g class="lbl-sm" text-anchor="middle">
+        <text x="110" y="259">#3</text><text x="410" y="299">#17</text><text x="610" y="259">#42</text>
+      </g>
+      <text x="790" y="240" class="lbl-g">no need to be</text>
+      <text x="790" y="266" class="lbl-g">next to each other</text>
+    </g>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
+        <rect x="790" y="292" width="250" height="56" rx="8"/>
+      </g>
+      <text x="915" y="316" text-anchor="middle" class="lbl-b" style="font-size:19px">block table</text>
+      <text x="915" y="340" text-anchor="middle" class="lbl-sm">3 &rarr; 17 &rarr; 42, in order</text>
+      <text x="60" y="380" class="lbl-b" style="font-size:20px">take a block only when it is needed &mdash; nothing is reserved ahead</text>
+    </g>
+  </svg>
+  <div class="pageno">M3&middot;20</div>
+</section>
+
+<section>
+  <h2 class="t">Analogy &mdash; numbered cubbies</h2>
+  <p class="s">Not one long shelf per reader. Small numbered holes, handed out as needed.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A librarian hands a numbered key to a visitor in front of a wall of numbered library storage cubbies.">
+    <image href="../img/decks/m3/analogy-library-cubbies.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M3&middot;21</div>
+</section>
+
+<section>
+  <h2 class="t">The waste, in one request</h2>
+  <p class="s">The same request, reserved to the maximum against taken block by block.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A worked comparison. Reserving 4096 tokens at 112 kibibytes per token holds 448 mebibytes, while the request actually uses 512 tokens, or 56 mebibytes, so seven-eighths of the reservation is idle. With paging only the 56 mebibytes is held.">
+    <g class="fragment">
+      <text x="60" y="80" class="lbl-b" style="font-size:21px">reserve to the max</text>
+      <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="60" y="96" width="820" height="56" rx="8"/>
+      </g>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2">
+        <rect x="68" y="104" width="100" height="40" rx="6"/>
+      </g>
+      <text x="118" y="130" text-anchor="middle" class="lbl-sm">in use</text>
+      <text x="520" y="130" text-anchor="middle" class="lbl-sm">reserved and idle</text>
+      <text x="900" y="130" class="lbl-g">448 MiB held</text>
+    </g>
+
+    <g class="fragment">
+      <text x="60" y="212" class="lbl-b" style="font-size:21px">take blocks as you grow</text>
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
+        <rect x="60" y="228" width="100" height="56" rx="8"/>
+      </g>
+      <text x="110" y="262" text-anchor="middle" class="lbl-sm">in use</text>
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 6">
+        <rect x="172" y="228" width="708" height="56" rx="8"/>
+      </g>
+      <text x="526" y="262" text-anchor="middle" class="lbl-g">free for other requests</text>
+      <text x="900" y="262" class="lbl-g">56 MiB held</text>
+    </g>
+
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
+        <rect x="180" y="316" width="740" height="60" rx="10"/>
+      </g>
+      <text x="550" y="342" text-anchor="middle" class="lbl-b" style="font-size:21px">4,096 &times; 112 KiB = 448 MiB reserved &middot; 512 tokens actually used = 56 MiB</text>
+      <text x="550" y="366" text-anchor="middle" class="lbl-b" style="font-size:20px">seven-eighths of that reservation was doing nothing</text>
+    </g>
+  </svg>
+  <div class="pageno">M3&middot;22</div>
 </section>
 
 <section class="divider">
@@ -581,7 +704,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="A hand writes on a blank sheet of paper that morphs into a small stack of connected building blocks.">
     <image href="../img/decks/m3/divider-7-compose-stack.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M3&middot;20</div>
+  <div class="pageno">M3&middot;23</div>
 </section>
 
 <section>
@@ -602,7 +725,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="120" y="278" width="860" height="46" rx="10"/></g>
     <text x="550" y="307" text-anchor="middle" class="lbl-g">one service now → grows one per module → full system (M13) · make up / make down carry the whole way</text>
   </svg>
-  <div class="pageno">M3&middot;21</div>
+  <div class="pageno">M3&middot;24</div>
 </section>
 
 <section>
@@ -627,7 +750,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- tag -->
     <text x="550" y="298" text-anchor="middle" class="lbl-g">11 llamacpp:* families exposed (measured on the real llama-server)</text>
   </svg>
-  <div class="pageno">M3&middot;22</div>
+  <div class="pageno">M3&middot;25</div>
 </section>
 
 <section>
@@ -660,7 +783,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="210" y="290" width="680" height="44" rx="10"/></g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">a CPU image being present for your arch ≠ it works on your host</text>
   </svg>
-  <div class="pageno">M3&middot;23</div>
+  <div class="pageno">M3&middot;26</div>
 </section>
 
 <section>
@@ -687,7 +810,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="560" y="272" class="lbl-g" text-anchor="start">one /v1 API — swap engines under an unchanged client</text>
   </svg>
   <p class="credit">Now open <b>Module 3 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M3&middot;24</div>
+  <div class="pageno">M3&middot;27</div>
 </section>
 
 <section>
@@ -732,7 +855,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="830" y="218" text-anchor="middle" class="lbl-sm">numbers move, live</text>
     </g>
   </svg>
-  <div class="pageno">M3&middot;25</div>
+  <div class="pageno">M3&middot;28</div>
 </section>
 
 </div></div>

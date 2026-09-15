@@ -92,7 +92,9 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:2.1em; max-width:80%; }
+  .reveal .slides section.divider p.s{ order:3; font-size:1em; max-width:70%; text-align:center; margin-top:4px; }
+  .reveal p.recap{ order:4; font-size:0.72em; color:var(--ink); margin-top:10px; max-width:92%; align-self:center; }
   .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
@@ -203,7 +205,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="130" y="182" text-anchor="middle" class="lbl-b">a model</text>
     <text x="130" y="208" text-anchor="middle" class="lbl-g">to serve</text>
     <!-- Q1 (decision node = purple) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M222,185 L290,185" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M222,185 L290,185" marker-end="url(#ah)"/></g>
     <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.8"><rect x="298" y="150" width="180" height="70" rx="11"/></g>
     <text x="388" y="192" text-anchor="middle" class="lbl-b">dev or prod?</text>
     <!-- dev branch -> Ollama (blue) -->
@@ -335,7 +337,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="683" y="172" text-anchor="middle" class="lbl-b">OpenAI-compatible</text>
     <text x="683" y="202" text-anchor="middle" class="lbl-g">/v1 · one API</text>
     <!-- client (unchanged = blue) -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M820,180 L900,180" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M820,180 L900,180" marker-end="url(#ah)"/></g>
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8"><rect x="908" y="146" width="170" height="68" rx="11"/></g>
     <text x="993" y="182" text-anchor="middle" class="lbl-b">client</text>
     <text x="993" y="130" text-anchor="middle" class="lbl-g">unchanged</text>
@@ -503,7 +505,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="380" y="75" text-anchor="middle" class="lbl">system prompt · · · · · ·</text>
       <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6"><rect x="620" y="46" width="104" height="44" rx="7"/></g>
       <text x="672" y="75" text-anchor="middle" class="lbl-sm">new line</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M732,68 L800,68" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M732,68 L800,68" marker-end="url(#ah)"/></g>
       <text x="900" y="62" text-anchor="middle" class="lbl-g">prefill ALL</text>
       <text x="900" y="90" text-anchor="middle" class="lbl-g">keep KV of prefix</text>
       <text x="900" y="122" text-anchor="middle" class="lbl-sm" fill="#757575">cached_tokens: 0  (cold call)</text>
@@ -519,7 +521,7 @@ footer, header, hgroup, main, menu, nav, section {
       <!-- new line inked (real prefill = blue) -->
       <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8"><rect x="620" y="190" width="104" height="44" rx="7"/></g>
       <text x="672" y="219" text-anchor="middle" class="lbl-sm">new line</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M732,212 L800,212" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M732,212 L800,212" marker-end="url(#ah)"/></g>
       <text x="900" y="216" text-anchor="middle" class="lbl-g">only the new line</text>
       <text x="900" y="244" text-anchor="middle" class="lbl-g">gets real prefill</text>
       <text x="900" y="276" text-anchor="middle" class="lbl-sm" fill="#2e7d32">cached_tokens: 42  (repeat)</text>

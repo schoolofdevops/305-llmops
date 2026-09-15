@@ -100,7 +100,9 @@ footer, header, hgroup, main, menu, nav, section {
   /* subtitle sits BELOW the visual (founder, 2026-07-25) — flex order, no markup change */
   .reveal .kicker{ order:0; } .reveal h2.t{ order:1; } .reveal .slides section:first-of-type svg{ min-height:32%; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:2.1em; max-width:80%; }
+  .reveal .slides section.divider p.s{ order:3; font-size:1em; max-width:70%; text-align:center; margin-top:4px; }
+  .reveal p.recap{ order:4; font-size:0.72em; color:var(--ink); margin-top:10px; max-width:92%; align-self:center; }
   .reveal .slides section.divider svg{ order:1; }
   .reveal svg{ order:2; }
   .reveal p.s{ order:3; font-size:0.95em; color:var(--gray); margin:0; }
@@ -192,7 +194,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M84,214 L386,74"/></g>
     <text x="235" y="252" text-anchor="middle" class="lbl-g">make down — brought <tspan class="lbl-b">DOWN</tspan></text>
     <!-- arrow across -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M414,140 L470,140" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M414,140 L470,140" marker-end="url(#ah)"/></g>
     <!-- RIGHT: KIND cluster coming up (green) -->
     <text x="835" y="34" text-anchor="middle" class="lbl-b">KIND CLUSTER</text>
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
@@ -205,7 +207,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="360" y="264" width="380" height="52" rx="10"/></g>
     <text x="550" y="288" text-anchor="middle" class="lbl-b">registry (M7) — stays UP</text>
     <text x="550" y="309" text-anchor="middle" class="lbl-g">the model source the cluster pulls from</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M550,270 L550,232" marker-end="url(#ahg)"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M550,270 L550,232" marker-end="url(#ahg)"/></g>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="150" y="322" width="800" height="16" rx="8"/>
@@ -254,7 +256,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="726" y="90" text-anchor="middle" class="lbl-sm">guests ×</text>
     <text x="726" y="122" text-anchor="middle" class="lbl-sm">plates each ×</text>
     <text x="726" y="154" text-anchor="middle" class="lbl-sm">space per table</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
       <path d="M828,127 L888,127" marker-end="url(#ah)"/>
     </g>
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3">
@@ -343,7 +345,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="70" y="290" text-anchor="start" class="lbl-b">40960 × 1  ≈ 4.5 GiB</text>
     <text x="70" y="314" text-anchor="start" class="lbl-g">one request at max context alone — configure the ctx you NEED, not the max the card advertises</text>
     <!-- budget line -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="4 6" stroke-linecap="round"><path d="M640,64 L640,262"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="4 6" stroke-linecap="round"><path d="M640,64 L640,262"/></g>
     <text x="648" y="60" text-anchor="start" class="lbl-g">the box fills</text>
   </svg>
   <div class="pageno">M8·07</div>
@@ -369,7 +371,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <!-- fragment 2: replica count -->
     <g class="fragment" data-fragment-index="2">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M310,170 L500,170" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M310,170 L500,170" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="504" y="138" width="556" height="64" rx="10"/></g>
       <text x="530" y="166" text-anchor="start" class="lbl-b">replica count</text>
       <text x="530" y="190" text-anchor="start" class="lbl-g">= 1 until concurrency outgrows one pod's KV budget → then add one (M9)</text>
@@ -431,7 +433,7 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="672" y="108" width="120" height="70" rx="9"/>
     </g>
     <text x="732" y="150" text-anchor="middle" class="lbl-b">badge</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
       <path d="M794,142 L850,142" marker-end="url(#ah)"/>
     </g>
     <!-- one door — the only cluster the badge reaches (green) -->
@@ -489,7 +491,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="100" y="274" text-anchor="start" class="lbl">object store at runtime</text>
     <text x="100" y="298" text-anchor="start" class="lbl-g">startup network-bound &nbsp;·&nbsp; rollout: change the object key &nbsp;·&nbsp; needs creds + egress</text>
     <!-- axis -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M120,324 L980,324"/>
     </g>
     <text x="160" y="316" text-anchor="start" class="lbl-g">← pay at build time</text>
@@ -520,7 +522,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- advance man sets the stage, artist waits (static scene, top) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><circle cx="120" cy="52" r="20"/></g>
     <text x="120" y="94" text-anchor="middle" class="lbl-g">advance man</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M150,52 L206,52" marker-end="url(#ahg)"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M150,52 L206,52" marker-end="url(#ahg)"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="212" y="30" width="120" height="46" rx="8"/></g>
     <text x="272" y="59" text-anchor="middle" class="lbl-sm">the stage</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="392" cy="52" r="20"/></g>
@@ -537,7 +539,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="135" y="218" text-anchor="middle" class="lbl-g">(the M7 registry)</text>
     </g>
     <g class="fragment" data-fragment-index="2">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M240,183 L300,183" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M240,183 L300,183" marker-end="url(#ah)"/></g>
       <text x="270" y="172" text-anchor="middle" class="lbl-g">kit unpack</text>
       <text x="270" y="220" text-anchor="middle" class="lbl-g">--filter=model</text>
       <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3"><rect x="304" y="140" width="196" height="86" rx="11"/></g>
@@ -545,7 +547,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="402" y="196" text-anchor="middle" class="lbl-g">the advance man</text>
     </g>
     <g class="fragment" data-fragment-index="3">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M500,183 L560,183" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M500,183 L560,183" marker-end="url(#ah)"/></g>
       <text x="530" y="172" text-anchor="middle" class="lbl-g">writes the GGUF</text>
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3"><rect x="564" y="140" width="196" height="86" rx="11"/></g>
       <text x="662" y="172" text-anchor="middle" class="lbl-b">PVC</text>
@@ -553,7 +555,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="662" y="218" text-anchor="middle" class="lbl-g">in the cluster</text>
     </g>
     <g class="fragment" data-fragment-index="4">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M760,183 L820,183" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M760,183 L820,183" marker-end="url(#ah)"/></g>
       <text x="790" y="172" text-anchor="middle" class="lbl-g">mounted</text>
       <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="824" y="140" width="240" height="86" rx="11"/></g>
       <text x="944" y="172" text-anchor="middle" class="lbl-b">llama-server</text>
@@ -585,7 +587,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="128" width="190" height="72" rx="11"/></g>
     <text x="135" y="160" text-anchor="middle" class="lbl-b">signed kit</text>
     <text x="135" y="184" text-anchor="middle" class="lbl-g">1.0.0</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M230,164 L286,164" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M230,164 L286,164" marker-end="url(#ah)"/></g>
     <!-- admission gate (purple, control) -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3"><path d="M290,164 L420,104 L550,164 L420,224 Z"/></g>
     <text x="420" y="158" text-anchor="middle" class="lbl-sm">admission policy:</text>
@@ -627,7 +629,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="70" y="72" width="330" height="56" rx="10"/></g>
     <text x="235" y="96" text-anchor="middle" class="lbl">containerd mirror</text>
     <text x="235" y="118" text-anchor="middle" class="lbl-g">localhost:5100 → host Zot</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M400,100 L1000,100" marker-end="url(#ahg)"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M400,100 L1000,100" marker-end="url(#ahg)"/></g>
     <text x="700" y="90" text-anchor="middle" class="lbl-g">IMAGE pulls only ✓</text>
     <!-- pod on the node -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="150" width="910" height="112" rx="11"/></g>
@@ -635,7 +637,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- the failing row: localhost fails -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="120" y="196" width="360" height="48" rx="9"/></g>
     <text x="300" y="225" text-anchor="middle" class="lbl-sm">initContainer HTTP → localhost:5100</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M480,220 L560,220" marker-end="url(#ahg)"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M480,220 L560,220" marker-end="url(#ahg)"/></g>
     <g filter="url(#rough)" fill="var(--p-red)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="566" y="192" width="360" height="56" rx="9"/></g>
     <text x="746" y="216" text-anchor="middle" class="lbl-g">✗ nothing here</text>
     <text x="746" y="238" text-anchor="middle" class="lbl-g">localhost = the POD itself</text>
@@ -659,7 +661,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- working row: registry.local works -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="56" y="104" width="360" height="48" rx="9"/></g>
     <text x="236" y="133" text-anchor="middle" class="lbl-sm">initContainer HTTP → registry.local:5100</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M416,128 L500,128" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M416,128 L500,128" marker-end="url(#ah)"/></g>
     <text x="620" y="120" text-anchor="middle" class="lbl-g">hostAliases resolves →</text>
     <!-- host Zot target (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="820" y="90" width="230" height="76" rx="11"/></g>
@@ -725,19 +727,19 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- pod starts -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="30" y="70" width="130" height="56" rx="10"/></g>
     <text x="95" y="104" text-anchor="middle" class="lbl">pod starts</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M160,98 L216,98" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M160,98 L216,98" marker-end="url(#ah)"/></g>
     <!-- startupProbe (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="3"><rect x="220" y="62" width="270" height="72" rx="11"/></g>
     <text x="355" y="92" text-anchor="middle" class="lbl-b">startupProbe</text>
     <text x="355" y="116" text-anchor="middle" class="lbl-g">runs during load ONLY</text>
     <!-- holds off -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M355,134 L355,180" marker-end="url(#ahg)"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round"><path d="M355,134 L355,180" marker-end="url(#ahg)"/></g>
     <text x="448" y="162" text-anchor="middle" class="lbl-g">holds off →</text>
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="220" y="188" width="270" height="60" rx="10"/></g>
     <text x="355" y="214" text-anchor="middle" class="lbl-g">readiness + liveness</text>
     <text x="355" y="236" text-anchor="middle" class="lbl-g">DO NOT run yet</text>
     <!-- green after 40s -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M490,98 L586,98" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M490,98 L586,98" marker-end="url(#ah)"/></g>
     <text x="538" y="86" text-anchor="middle" class="lbl-g">/health green ~40 s</text>
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8"><rect x="590" y="62" width="270" height="72" rx="11"/></g>
     <text x="725" y="92" text-anchor="middle" class="lbl-b">model loaded</text>
@@ -762,20 +764,20 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="165" y="162" text-anchor="middle" class="lbl-g">web service — not this</text>
     <!-- fragment 1: fires during load -->
     <g class="fragment" data-fragment-index="1">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M290,80 L360,80" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M290,80 L360,80" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="364" y="44" width="270" height="72" rx="10"/></g>
       <text x="499" y="74" text-anchor="middle" class="lbl">fires during the 40 s load</text>
       <text x="499" y="98" text-anchor="middle" class="lbl-g">/health not up yet</text>
     </g>
     <!-- fragment 2: declared dead -->
     <g class="fragment" data-fragment-index="2">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M634,80 L704,80" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M634,80 L704,80" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="708" y="44" width="252" height="72" rx="10"/></g>
       <text x="834" y="82" text-anchor="middle" class="lbl">container declared dead</text>
     </g>
     <!-- fragment 3: restart loads from scratch -->
     <g class="fragment" data-fragment-index="3">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M834,116 L834,168" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M834,116 L834,168" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="2.4"><rect x="700" y="172" width="268" height="66" rx="10"/></g>
       <text x="834" y="200" text-anchor="middle" class="lbl">restart: load AGAIN</text>
       <text x="834" y="224" text-anchor="middle" class="lbl-g">from scratch</text>
@@ -867,7 +869,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="205" y="134" text-anchor="middle" class="lbl-g">arm64 / 8 GB — CHOSEN</text>
     <text x="205" y="172" text-anchor="middle" class="lbl-sm">validated: 1/1 Running</text>
     <text x="205" y="200" text-anchor="middle" class="lbl-sm">1.76 GiB · in budget</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M370,152 L406,152" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M370,152 L406,152" marker-end="url(#ah)"/></g>
     <!-- RIGHT: vLLM — production engine, crashes on the lab's arm64 (orange caution) -->
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="730" y="72" width="330" height="160" rx="12"/></g>
     <text x="895" y="106" text-anchor="middle" class="lbl-b">vLLM</text>
@@ -875,7 +877,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="895" y="168" text-anchor="middle" class="lbl-sm">GPU is its home · CPU build</text>
     <text x="895" y="192" text-anchor="middle" class="lbl-sm">crashes on the arm64 kernel (M3)</text>
     <text x="895" y="218" text-anchor="middle" class="lbl-g">→ taught line-by-line, validated x86/cloud + demo</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M694,152 L726,152" marker-end="url(#ahg)"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M694,152 L726,152" marker-end="url(#ahg)"/></g>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="90" y="296" width="920" height="42" rx="10"/>
@@ -945,14 +947,14 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="fragment" transform="translate(220,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><path d="M35,110 L50,70 L65,95 L80,55 L95,100"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><path d="M30,120 L110,120"/></g>
+      <g fill="none" stroke="#757575" stroke-width="2"><path d="M30,120 L110,120"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">work the worksheet</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">derive the memory limit</text>
     </g>
     <g class="fragment" transform="translate(400,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="25" y="70" width="35" height="45" rx="4"/><rect x="80" y="70" width="35" height="45" rx="4"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M60,92 L80,92" marker-end="url(#ahg)"/></g>
+      <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M60,92 L80,92" marker-end="url(#ahg)"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">clear the registry wall</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">hostAliases fix</text>
     </g>

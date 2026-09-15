@@ -100,7 +100,9 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:2.1em; max-width:80%; }
+  .reveal .slides section.divider p.s{ order:3; font-size:1em; max-width:70%; text-align:center; margin-top:4px; }
+  .reveal p.recap{ order:4; font-size:0.72em; color:var(--ink); margin-top:10px; max-width:92%; align-self:center; }
   .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
@@ -235,12 +237,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><rect x="40" y="120" width="230" height="70" rx="11" class="f-blue"/></g>
     <text x="155" y="150" text-anchor="middle" class="lbl-b">"payments 500s"</text>
     <text x="155" y="176" text-anchor="middle" class="lbl-g">one sentence</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M274,155 L330,155" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M274,155 L330,155" marker-end="url(#ah)"/></g>
     <!-- embedding model -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="334" y="120" width="180" height="70" rx="11"/></g>
     <text x="424" y="150" text-anchor="middle" class="lbl-b">embedding model</text>
     <text x="424" y="176" text-anchor="middle" class="lbl-g">nomic-embed-text</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M518,155 L566,155" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M518,155 L566,155" marker-end="url(#ah)"/></g>
     <!-- the 768-cell vector -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
       <rect x="574" y="126" width="30" height="58" rx="4" class="f-blue"/><rect x="608" y="126" width="30" height="58" rx="4" class="f-blue"/>
@@ -250,7 +252,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="716" y="162" text-anchor="middle" class="lbl-b">…</text>
     <text x="740" y="112" text-anchor="middle" class="lbl-g">768 numbers</text>
     <!-- lands as a dot on the map -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M814,155 L872,155" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M814,155 L872,155" marker-end="url(#ah)"/></g>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="880" y="96" width="180" height="140" rx="12"/></g>
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6"><circle cx="960" cy="166" r="12" class="f-blue"/></g>
     <text x="970" y="126" text-anchor="middle" class="lbl-g">a point on</text>
@@ -267,8 +269,8 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">You don't memorise a cutoff — you read the distances and compare them.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A gray ruler runs from zero on the left, labelled identical meaning, toward larger on the right. Below it, two rows. An inked winning row shows the query five-hundred errors matching the payments runbook at distance about 0.45, noted as a semantic hit with zero shared words. A gray dashed row shows an off-topic query where every distance is high and none clearly wins. A band explains you read distances: a clear winner versus none is a good versus bad retrieval.">
     <!-- ruler -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round"><path d="M90,70 L1010,70" marker-end="url(#ahg)"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><path d="M90,60 L90,80"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round"><path d="M90,70 L1010,70" marker-end="url(#ahg)"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2"><path d="M90,60 L90,80"/></g>
     <text x="90" y="46" text-anchor="middle" class="lbl-b">0</text>
     <text x="150" y="102" text-anchor="start" class="lbl-g">identical meaning</text>
     <text x="1000" y="46" text-anchor="end" class="lbl-g">larger = less related</text>
@@ -403,17 +405,17 @@ footer, header, hgroup, main, menu, nav, section {
       <!-- runbooks -->
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="72" width="150" height="70" rx="10"/></g>
       <text x="145" y="114" text-anchor="middle" class="lbl-b">runbooks</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M224,107 L286,107" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M224,107 L286,107" marker-end="url(#ah)"/></g>
       <!-- chunk -->
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="294" y="72" width="150" height="70" rx="10"/></g>
       <text x="369" y="106" text-anchor="middle" class="lbl-b">chunk</text>
       <text x="369" y="130" text-anchor="middle" class="lbl-g">by section</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M448,107 L510,107" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M448,107 L510,107" marker-end="url(#ah)"/></g>
       <!-- embed -->
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="518" y="72" width="150" height="70" rx="10"/></g>
       <text x="593" y="106" text-anchor="middle" class="lbl-b">embed</text>
       <text x="593" y="130" text-anchor="middle" class="lbl-g">→ a vector</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M672,107 L734,107" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M672,107 L734,107" marker-end="url(#ah)"/></g>
       <!-- vector DB (cylinder) — blue = the data store -->
       <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
         <path class="f-blue" d="M760,80 a70,16 0 0 0 140,0 a70,16 0 0 0 -140,0 v54 a70,16 0 0 0 140,0 v-54"/>
@@ -428,12 +430,12 @@ footer, header, hgroup, main, menu, nav, section {
       <!-- question -->
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="70" y="222" width="150" height="66" rx="10"/></g>
       <text x="145" y="260" text-anchor="middle" class="lbl-b">question</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M224,255 L286,255" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M224,255 L286,255" marker-end="url(#ah)"/></g>
       <!-- embed q -->
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="294" y="222" width="150" height="66" rx="10"/></g>
       <text x="369" y="252" text-anchor="middle" class="lbl-b">embed</text>
       <text x="369" y="276" text-anchor="middle" class="lbl-g">the question</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M448,255 L510,255" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M448,255 L510,255" marker-end="url(#ah)"/></g>
       <!-- retrieve -->
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="518" y="222" width="150" height="66" rx="10"/></g>
       <text x="593" y="252" text-anchor="middle" class="lbl-b">retrieve</text>
@@ -441,12 +443,12 @@ footer, header, hgroup, main, menu, nav, section {
       <!-- DB feeds retrieve (up-arrow) -->
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="5 5"><path d="M830,140 C830,180 620,190 600,218" marker-end="url(#ahg)"/></g>
       <text x="720" y="176" text-anchor="middle" class="lbl-g">nearest chunks</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M672,255 L734,255" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M672,255 L734,255" marker-end="url(#ah)"/></g>
       <!-- generate -->
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="742" y="222" width="150" height="66" rx="10"/></g>
       <text x="817" y="252" text-anchor="middle" class="lbl-b">generate</text>
       <text x="817" y="276" text-anchor="middle" class="lbl-g">from the chunks</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M896,255 L946,255" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M896,255 L946,255" marker-end="url(#ah)"/></g>
       <text x="1000" y="248" text-anchor="middle" class="lbl-good">grounded</text>
       <text x="1000" y="272" text-anchor="middle" class="lbl-g">answer + sources</text>
     </g>
@@ -614,12 +616,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- user -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><circle cx="70" cy="150" r="20"/><path d="M70,170 L70,220"/></g>
     <text x="70" y="252" text-anchor="middle" class="lbl-g">on-call</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M96,150 L150,150" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M96,150 L150,150" marker-end="url(#ah)"/></g>
     <!-- ui -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="158" y="112" width="160" height="76" rx="11"/></g>
     <text x="238" y="146" text-anchor="middle" class="lbl-b">ui</text>
     <text x="238" y="172" text-anchor="middle" class="lbl-g">Streamlit :8501</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M320,150 L372,150" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round"><path d="M320,150 L372,150" marker-end="url(#ah)"/></g>
     <text x="346" y="138" text-anchor="middle" class="lbl-g">/ask</text>
     <!-- app box (contains Chroma) — purple = the control/orchestration layer that owns RAG -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3"><rect x="380" y="70" width="300" height="200" rx="13" class="f-purple"/></g>
@@ -707,7 +709,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="220" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><rect x="240" y="55" width="60" height="76" rx="6"/><rect x="248" y="48" width="60" height="76" rx="6"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M318,88 L346,88" marker-end="url(#ahg)"/></g>
+      <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M318,88 L346,88" marker-end="url(#ahg)"/></g>
       <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2"><rect x="352" y="108" width="14" height="24"/><rect x="372" y="90" width="14" height="42"/><rect x="392" y="70" width="14" height="62"/></g>
       <text x="290" y="196" text-anchor="middle" class="lbl-b">ingest the corpus</text>
       <text x="290" y="218" text-anchor="middle" class="lbl-sm">watch counts climb</text>

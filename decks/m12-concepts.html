@@ -99,7 +99,9 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:2.1em; max-width:80%; }
+  .reveal .slides section.divider p.s{ order:3; font-size:1em; max-width:70%; text-align:center; margin-top:4px; }
+  .reveal p.recap{ order:4; font-size:0.72em; color:var(--ink); margin-top:10px; max-width:92%; align-self:center; }
   .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
@@ -245,24 +247,24 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="30" y="110" width="150" height="70" rx="10"/></g>
     <text x="105" y="142" text-anchor="middle" class="lbl">key check</text>
     <text x="105" y="166" text-anchor="middle" class="lbl-g" style="font-size:15px">whose tab?</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="180" y1="145" x2="220" y2="145" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="180" y1="145" x2="220" y2="145" marker-end="url(#ah)"/></g>
     <!-- pre-call guardrails: blue = the box being studied, the ordering point -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="222" y="104" width="180" height="82" rx="10"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="222" y="104" width="180" height="82" rx="10"/></g>
     <text x="312" y="138" text-anchor="middle" class="lbl-b">pre-call guard</text>
     <text x="312" y="164" text-anchor="middle" class="lbl-g" style="font-size:15px">PII mask · injection</text>
     <text x="312" y="96" text-anchor="middle" class="lbl-good">before the model</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="402" y1="145" x2="442" y2="145" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="402" y1="145" x2="442" y2="145" marker-end="url(#ah)"/></g>
     <!-- route+cache+fallback: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="444" y="110" width="170" height="70" rx="10"/></g>
     <text x="529" y="142" text-anchor="middle" class="lbl" style="font-size:19px">route</text>
     <text x="529" y="166" text-anchor="middle" class="lbl-g" style="font-size:15px">cache · fallback</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="614" y1="145" x2="654" y2="145" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="614" y1="145" x2="654" y2="145" marker-end="url(#ah)"/></g>
     <!-- spend accounting: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="656" y="110" width="150" height="70" rx="10"/></g>
     <text x="731" y="142" text-anchor="middle" class="lbl">account</text>
     <text x="731" y="166" text-anchor="middle" class="lbl-g" style="font-size:15px">on the tab</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="806" y1="145" x2="846" y2="145" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="806" y1="145" x2="846" y2="145" marker-end="url(#ah)"/></g>
     <!-- model: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7"><rect x="848" y="110" width="140" height="70" rx="10"/></g>
     <text x="918" y="150" text-anchor="middle" class="lbl">model</text>
@@ -347,7 +349,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="795" y="240" text-anchor="middle" class="lbl-g" style="font-size:15px">after 3 calls</text>
     <!-- budget gate wide open: neutral outline -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><path d="M920,110 L920,210"/><path d="M1000,110 L1000,210"/></g>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="920" y1="160" x2="1000" y2="160" marker-end="url(#ahg)"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2"><line x1="920" y1="160" x2="1000" y2="160" marker-end="url(#ahg)"/></g>
     <text x="960" y="240" text-anchor="middle" class="lbl-g" style="font-size:15px">gate never fires</text>
   </svg>
   <div class="pageno">M12·10</div>
@@ -369,7 +371,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- the tab ticking up: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="300" y="90" width="260" height="180" rx="10"/></g>
     <text x="430" y="122" text-anchor="middle" class="lbl-b">the tab</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="325" y1="150" x2="535" y2="150"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2"><line x1="325" y1="150" x2="535" y2="150"/></g>
     <text x="345" y="180" text-anchor="start" class="lbl-g" style="font-size:16px">call 1 → $0.02</text>
     <text x="345" y="216" text-anchor="start" class="lbl-g" style="font-size:16px">call 2 → over!</text>
     <!-- fragment: budget gate slams shut on call 2 -->
@@ -378,10 +380,10 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="620" y="110" width="120" height="140" rx="10"/><line x1="620" y1="180" x2="740" y2="180"/></g>
       <text x="680" y="152" text-anchor="middle" class="lbl-b">gate</text>
       <text x="680" y="220" text-anchor="middle" class="lbl-b">SHUT</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="560" y1="180" x2="616" y2="180" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="560" y1="180" x2="616" y2="180" marker-end="url(#ah)"/></g>
       <text x="880" y="176" text-anchor="middle" class="lbl-good" style="font-size:20px">Budget has been</text>
       <text x="880" y="204" text-anchor="middle" class="lbl-good" style="font-size:20px">exceeded!</text>
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="742" y1="180" x2="778" y2="180" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="742" y1="180" x2="778" y2="180" marker-end="url(#ah)"/></g>
     </g>
   </svg>
   <div class="pageno">M12·11</div>
@@ -393,7 +395,7 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">Qwen3 thinks before it answers, and you're billed for the hidden tokens too.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="An iceberg. Above the waterline, the three visible words GATEWAY OK. Below the waterline, a large hidden block of reasoning tokens, and a usage meter reading one hundred twenty-three.">
     <!-- waterline -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><line x1="60" y1="130" x2="720" y2="130"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><line x1="60" y1="130" x2="720" y2="130"/></g>
     <text x="90" y="122" text-anchor="start" class="lbl-g" style="font-size:15px">you see ↑</text>
     <text x="90" y="152" text-anchor="start" class="lbl-g" style="font-size:15px">you're billed ↓</text>
     <!-- visible tip: neutral, small -->
@@ -474,7 +476,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="185" y="156" text-anchor="middle" class="lbl-g" style="font-size:15px">dead address</text>
     <text x="185" y="184" text-anchor="middle" class="lbl-bad">nothing listening</text>
     <!-- primary fails, retry to substitute -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="300" y1="150" x2="400" y2="150" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="300" y1="150" x2="400" y2="150" marker-end="url(#ah)"/></g>
     <text x="350" y="138" text-anchor="middle" class="lbl-g" style="font-size:15px">retry</text>
     <!-- second barista serves: green = still get a drink -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="410" y="90" width="230" height="120" rx="12"/></g>
@@ -508,7 +510,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="60" y="130" width="170" height="80" rx="10"/></g>
     <text x="145" y="164" text-anchor="middle" class="lbl" style="font-size:19px">M11 PR</text>
     <text x="145" y="190" text-anchor="middle" class="lbl-g" style="font-size:15px">bump kit tag</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="230" y1="170" x2="290" y2="170" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="230" y1="170" x2="290" y2="170" marker-end="url(#ah)"/></g>
     <!-- the truck: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="300" y="120" width="150" height="70" rx="8"/><rect x="450" y="140" width="60" height="50" rx="6"/><circle cx="340" cy="200" r="16"/><circle cx="470" cy="200" r="16"/></g>
     <text x="375" y="164" text-anchor="middle" class="lbl">candidate</text>
@@ -540,7 +542,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="175" y="182" text-anchor="middle" class="lbl-g" style="font-size:15px">M5 golden set (versioned)</text>
     <text x="175" y="210" text-anchor="middle" class="lbl-g" style="font-size:15px">→ the assistant /ask · deterministic</text>
     <!-- exit-code fork -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="290" y1="175" x2="360" y2="175" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="290" y1="175" x2="360" y2="175" marker-end="url(#ah)"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><path d="M370,175 L430,135 M370,175 L430,215"/><circle cx="365" cy="175" r="8"/></g>
     <text x="360" y="130" text-anchor="middle" class="lbl-g" style="font-size:15px">vs baseline floor = 8</text>
     <!-- exit 0 -> proceeds: green -->
@@ -600,7 +602,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- the scanner belt: neutral -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="360" y="130" width="200" height="120" rx="10"/></g>
     <text x="460" y="120" text-anchor="middle" class="lbl-b">the scanner</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="120" y1="200" x2="360" y2="200"/><line x1="560" y1="200" x2="980" y2="200"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2"><line x1="120" y1="200" x2="360" y2="200"/><line x1="560" y1="200" x2="980" y2="200"/></g>
     <!-- false negative: real threat sails through, red -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><path d="M620,176 L668,176 L668,152 L692,152 L692,176 L740,176 L740,220 L620,220 Z"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><path d="M620,176 L668,176 L668,152 L692,152 L692,176 L740,176 L740,220 L620,220 Z"/></g>
@@ -630,13 +632,13 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="50" y="120" width="200" height="90" rx="10"/></g>
     <text x="150" y="152" text-anchor="middle" class="lbl-g" style="font-size:16px">raw request</text>
     <text x="150" y="182" text-anchor="middle" class="lbl-g" style="font-size:15px">name · phone</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="250" y1="165" x2="300" y2="165" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="250" y1="165" x2="300" y2="165" marker-end="url(#ah)"/></g>
     <!-- Presidio analyzer+anonymizer: neutral, the pre-call stage -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="305" y="105" width="230" height="120" rx="12"/></g>
     <text x="420" y="140" text-anchor="middle" class="lbl-b">Presidio · pre-call</text>
     <text x="420" y="170" text-anchor="middle" class="lbl-g" style="font-size:15px">analyzer → anonymizer</text>
     <text x="420" y="200" text-anchor="middle" class="lbl-g" style="font-size:15px">rewrite entities</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="535" y1="165" x2="585" y2="165" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="535" y1="165" x2="585" y2="165" marker-end="url(#ah)"/></g>
     <!-- masked placeholders: green = scrubbed before exposure -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="590" y="115" width="240" height="100" rx="10"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="590" y="115" width="240" height="100" rx="10"/></g>
@@ -688,12 +690,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="120" width="230" height="80" rx="10"/></g>
     <text x="175" y="152" text-anchor="middle" class="lbl-g" style="font-size:16px">"check ticket</text>
     <text x="175" y="180" text-anchor="middle" class="lbl">4491"</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="290" y1="160" x2="360" y2="160" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="290" y1="160" x2="360" y2="160" marker-end="url(#ah)"/></g>
     <!-- the over-firing guardrail: neutral box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="365" y="115" width="220" height="90" rx="12"/></g>
     <text x="475" y="150" text-anchor="middle" class="lbl-b">guardrail over-fires</text>
     <text x="475" y="180" text-anchor="middle" class="lbl-g" style="font-size:15px">4491 → &lt;DATE_TIME&gt;</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="585" y1="160" x2="655" y2="160" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="585" y1="160" x2="655" y2="160" marker-end="url(#ah)"/></g>
     <!-- corrupted: red = false positive corrupting ops data -->
     <g filter="url(#rough)" fill="var(--p-red)" stroke="none"><rect x="660" y="115" width="240" height="90" rx="12"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="660" y="115" width="240" height="90" rx="12"/></g>
@@ -754,7 +756,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M475,240 C475,270 430,272 430,296"/><path d="M420,296 L440,296"/></g>
     <text x="475" y="216" text-anchor="middle" class="lbl-bad">unplugged · no-op</text>
     <!-- roped-off lane markers -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><line x1="120" y1="175" x2="360" y2="175"/><line x1="590" y1="175" x2="980" y2="175"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><line x1="120" y1="175" x2="360" y2="175"/><line x1="590" y1="175" x2="980" y2="175"/></g>
     <!-- bags sailing through unscanned: neutral bags, red context -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="150" y="150" width="60" height="46" rx="6"/><rect x="700" y="150" width="60" height="46" rx="6"/><line x1="620" y1="175" x2="695" y2="175" marker-end="url(#ah)"/></g>
     <text x="180" y="228" text-anchor="middle" class="lbl-g" style="font-size:15px">bag</text>
@@ -774,7 +776,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="50" y="120" width="180" height="90" rx="12"/></g>
     <text x="140" y="158" text-anchor="middle" class="lbl-b">attack set</text>
     <text x="140" y="186" text-anchor="middle" class="lbl-g" style="font-size:15px">scripted · replayed</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="230" y1="165" x2="290" y2="165" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="230" y1="165" x2="290" y2="165" marker-end="url(#ah)"/></g>
     <text x="260" y="152" text-anchor="middle" class="lbl-g" style="font-size:14px">guarded path</text>
     <!-- results ledger -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="300" y="70" width="500" height="200" rx="12"/></g>
@@ -788,7 +790,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="690" y="200" text-anchor="start" class="lbl-bad" style="font-size:16px">not fully</text>
     <text x="550" y="244" text-anchor="middle" class="lbl-g" style="font-size:15px">poisoned runbook rides in through retrieval, not the prompt</text>
     <!-- the honest read -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="800" y1="170" x2="860" y2="170" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="800" y1="170" x2="860" y2="170" marker-end="url(#ah)"/></g>
     <text x="960" y="150" text-anchor="middle" class="lbl-g">find the blind</text>
     <text x="960" y="178" text-anchor="middle" class="lbl-g">spots first</text>
   </svg>
@@ -817,7 +819,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="250" y="130" width="150" height="70" rx="10"/></g>
     <text x="325" y="162" text-anchor="middle" class="lbl-g" style="font-size:15px">proxy</text>
     <text x="325" y="188" text-anchor="middle" class="lbl-g" style="font-size:15px">key stays server-side</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="200" y1="165" x2="248" y2="165" marker-end="url(#ah)"/><line x1="400" y1="165" x2="448" y2="165" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="200" y1="165" x2="248" y2="165" marker-end="url(#ah)"/><line x1="400" y1="165" x2="448" y2="165" marker-end="url(#ah)"/></g>
     <!-- the lens: blue = the data surface -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="450" y="80" width="440" height="180" rx="12"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="450" y="80" width="440" height="180" rx="12"/></g>
@@ -832,7 +834,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- token sparkline -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><path d="M720,150 L745,135 L770,158 L795,128 L820,146 L845,120"/></g>
     <!-- who was that answered -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="890" y1="170" x2="940" y2="170" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="890" y1="170" x2="940" y2="170" marker-end="url(#ah)"/></g>
     <text x="1000" y="150" text-anchor="middle" class="lbl-good">a row,</text>
     <text x="1000" y="178" text-anchor="middle" class="lbl-good">not a shrug</text>
   </svg>
@@ -913,7 +915,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="fragment" transform="translate(400,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="55" cy="85" r="18"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M85,70 L110,70" marker-end="url(#ahg)"/></g>
+      <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M85,70 L110,70" marker-end="url(#ahg)"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">prove caching + fallback</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">repeat request, dead backend</text>
     </g>

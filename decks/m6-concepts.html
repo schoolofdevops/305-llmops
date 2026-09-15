@@ -100,7 +100,9 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:2.1em; max-width:80%; }
+  .reveal .slides section.divider p.s{ order:3; font-size:1em; max-width:70%; text-align:center; margin-top:4px; }
+  .reveal p.recap{ order:4; font-size:0.72em; color:var(--ink); margin-top:10px; max-width:92%; align-self:center; }
   .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
@@ -228,7 +230,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="910" y="212" text-anchor="middle" class="lbl-g">a prompt edit — it keeps</text>
     <text x="910" y="236" text-anchor="middle" class="lbl-g">drifting generic</text>
     <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M70,330 L1040,330"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M70,330 L1040,330"/></g>
     <text x="555" y="352" text-anchor="middle" class="lbl-g">climb only when the level below truly can't — <tspan class="lbl-b">you earn the top level, you don't start there</tspan></text>
   </svg>
   <div class="pageno">M6·05</div>
@@ -282,7 +284,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="820" y="292" text-anchor="middle" class="lbl-g">M7 versions it as v1.0</text>
     </g>
     <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M120,330 L1040,330"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M120,330 L1040,330"/></g>
     <text x="580" y="352" text-anchor="middle" class="lbl-g">train <tspan class="lbl-b">0.19% of the model</tspan> — the rest stays frozen</text>
   </svg>
   <div class="pageno">M6·08</div>
@@ -398,7 +400,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="40" y="120" width="150" height="72" rx="11"/></g>
     <text x="115" y="152" text-anchor="middle" class="lbl-g">generated</text>
     <text x="115" y="176" text-anchor="middle" class="lbl-g">Q&amp;A pairs</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M190,156 L242,156" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M190,156 L242,156" marker-end="url(#ah)"/></g>
     <!-- filter (protagonist) — green = the gate that decides data quality -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
       <rect x="246" y="110" width="260" height="92" rx="12" class="f-green"/>
@@ -407,7 +409,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="376" y="170" text-anchor="middle" class="lbl-g">length · format · dedupe ·</text>
     <text x="376" y="192" text-anchor="middle" class="lbl-g">grounded-in-section</text>
     <!-- reject drop-off — the garbage kept out -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round">
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round">
       <path d="M376,202 L376,254" marker-end="url(#ahg)"/>
     </g>
     <g filter="url(#rough)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5">
@@ -416,7 +418,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="376" y="288" text-anchor="middle" class="lbl-g">rejects.jsonl — logged with reasons</text>
     <text x="376" y="308" text-anchor="middle" class="lbl-g">(read the garbage you kept out)</text>
     <!-- split -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M506,156 L558,156" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M506,156 L558,156" marker-end="url(#ah)"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="562" y="116" width="200" height="80" rx="11"/></g>
     <text x="662" y="148" text-anchor="middle" class="lbl-b">SPLIT</text>
     <text x="662" y="174" text-anchor="middle" class="lbl-g">train.jsonl + eval slice</text>
@@ -448,7 +450,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="74" text-anchor="middle" class="lbl-b">corpus/*.md — the runbooks</text>
     <!-- boundary wall -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="4 6">
+    <g fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="4 6">
       <path d="M550,110 L550,300"/>
     </g>
     <!-- left lane: synthesizer -->
@@ -460,7 +462,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="200" y="182" text-anchor="middle" class="lbl-b">SYNTHESIZER</text>
     <text x="200" y="208" text-anchor="middle" class="lbl-g">reads corpus ONLY</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M200,226 L200,266" marker-end="url(#ah)"/>
     </g>
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.6">
@@ -579,7 +581,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="150" y="142" text-anchor="middle" class="lbl-b">merged model</text>
     <text x="150" y="168" text-anchor="middle" class="lbl-g">(base + adapter)</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M250,150 L306,150" marker-end="url(#ah)"/>
     </g>
     <!-- convert -->
@@ -589,7 +591,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="435" y="134" text-anchor="middle" class="lbl-b">convert_hf_to_gguf</text>
     <text x="435" y="162" text-anchor="middle" class="lbl">→ q8_0</text>
     <text x="435" y="186" text-anchor="middle" class="lbl-g">~14 s</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M560,150 L616,150" marker-end="url(#ah)"/>
     </g>
     <!-- the shelf holding two files -->
@@ -608,7 +610,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="936" y="172" text-anchor="middle" class="lbl-b">opsmate-tuned</text>
     <text x="936" y="196" text-anchor="middle" class="lbl">.gguf · v1.0</text>
     <!-- footline -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M50,282 L1050,282"/>
     </g>
     <text x="550" y="308" text-anchor="middle" class="lbl-g">it's a normal model now — convert it the way <tspan class="lbl-b">M3</tspan> taught, and drop it beside the base</text>
@@ -632,7 +634,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="320" y="200" text-anchor="middle" class="lbl-b">model service (llama-server)</text>
     <text x="320" y="228" text-anchor="middle" class="lbl-g">serves whichever GGUF it's pointed at</text>
     <!-- the env var pointer -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M510,206 L610,206" marker-end="url(#ah)"/>
     </g>
     <text x="700" y="112" text-anchor="middle" class="lbl-b">MODEL_GGUF</text>
@@ -653,7 +655,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="850" y="220" text-anchor="start" class="lbl-g">→ restart the model</text>
     <text x="850" y="248" text-anchor="start" class="lbl-g">service · nothing else moves</text>
     <!-- band -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M60,300 L1040,300"/>
     </g>
     <text x="550" y="324" text-anchor="middle" class="lbl-g">the <tspan class="lbl-b">OpenAI-compatible endpoint never changed</tspan> — that's why a model you trained drops in where the base was</text>
@@ -766,7 +768,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="180" y="208" text-anchor="middle" class="lbl-sm">tuned GGUF (q8_0)</text>
     <text x="180" y="252" text-anchor="middle" class="lbl-sm">training logs (step/loss)</text>
     <!-- arrow to M7 -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M310,180 L376,180" marker-end="url(#ah)"/>
     </g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -774,7 +776,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="470" y="178" text-anchor="middle" class="lbl-b">M7 · package</text>
     <text x="470" y="204" text-anchor="middle" class="lbl-g">+ sign</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M560,180 L626,180" marker-end="url(#ah)"/>
     </g>
     <!-- registry shelf -->
@@ -839,7 +841,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="580" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2"><rect x="600" y="60" width="35" height="55" rx="4"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M645,88 L672,88" marker-end="url(#ahg)"/></g>
+      <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M645,88 L672,88" marker-end="url(#ahg)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="678" y="60" width="35" height="55" rx="4"/></g>
       <text x="650" y="196" text-anchor="middle" class="lbl-b">merge, convert, swap</text>
       <text x="650" y="218" text-anchor="middle" class="lbl-sm">one env var, one restart</text>

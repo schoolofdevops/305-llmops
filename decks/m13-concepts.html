@@ -99,7 +99,9 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:2.1em; max-width:80%; }
+  .reveal .slides section.divider p.s{ order:3; font-size:1em; max-width:70%; text-align:center; margin-top:4px; }
+  .reveal p.recap{ order:4; font-size:0.72em; color:var(--ink); margin-top:10px; max-width:92%; align-self:center; }
   .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
@@ -169,7 +171,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="265" y="116" text-anchor="middle" class="lbl-b">on the phone</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><circle cx="150" cy="185" r="30"/><rect x="120" y="150" width="20" height="40" rx="6"/></g>
     <text x="150" y="250" text-anchor="middle" class="lbl-g" style="font-size:15px">reads the runbook</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><line x1="230" y1="185" x2="330" y2="185" marker-end="url(#ahg)"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.2"><line x1="230" y1="185" x2="330" y2="185" marker-end="url(#ahg)"/></g>
     <text x="395" y="180" text-anchor="middle" class="lbl-g" style="font-size:15px">talks you</text>
     <text x="395" y="204" text-anchor="middle" class="lbl-g" style="font-size:15px">through it</text>
     <!-- right: colleague at your terminal (sees live state): blue = the thing being studied -->
@@ -581,7 +583,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="260" y="182" text-anchor="middle" class="lbl-g" style="font-size:16px">stdio subprocess</text>
     <text x="260" y="206" text-anchor="middle" class="lbl-g" style="font-size:14px">a script on a laptop</text>
     <!-- arrow -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="450" y1="170" x2="560" y2="170" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="450" y1="170" x2="560" y2="170" marker-end="url(#ah)"/></g>
     <text x="505" y="156" text-anchor="middle" class="lbl-g" style="font-size:14px">production</text>
     <!-- prod: container image, blue = the artifact form -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="580" y="80" width="450" height="180" rx="14"/></g>
@@ -705,14 +707,14 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="82" text-anchor="middle" class="lbl-g" style="font-size:16px">examiner in the passenger seat</text>
     <!-- fragment 1 — narration "Synthesize from the corpus" -->
     <g class="fragment" data-fragment-index="1">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="150" y1="163" x2="178" y2="163" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="150" y1="163" x2="178" y2="163" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="180" y="130" width="120" height="66" rx="9"/></g>
       <text x="240" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">synthesize</text>
       <text x="240" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M6</text>
     </g>
     <!-- fragment 2 — narration "Tune under the smoke profile" -->
     <g class="fragment" data-fragment-index="2">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="300" y1="163" x2="328" y2="163" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="300" y1="163" x2="328" y2="163" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="330" y="130" width="120" height="66" rx="9"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="330" y="130" width="120" height="66" rx="9"/></g>
       <text x="390" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">fine-tune</text>
@@ -720,14 +722,14 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <!-- fragment 3 — narration "Merge and convert to a GGUF" -->
     <g class="fragment" data-fragment-index="3">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="450" y1="163" x2="478" y2="163" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="450" y1="163" x2="478" y2="163" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="480" y="130" width="120" height="66" rx="9"/></g>
       <text x="540" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">→ GGUF</text>
       <text x="540" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M6</text>
     </g>
     <!-- fragment 4 — narration "Pack and sign as version one-point-two" -->
     <g class="fragment" data-fragment-index="4">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="600" y1="163" x2="628" y2="163" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="600" y1="163" x2="628" y2="163" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="630" y="130" width="120" height="66" rx="9"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="630" y="130" width="120" height="66" rx="9"/></g>
       <text x="690" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">pack+sign</text>
@@ -735,14 +737,14 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <!-- fragment 5 — narration "Run it through gate.sh" -->
     <g class="fragment" data-fragment-index="5">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="750" y1="163" x2="778" y2="163" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="750" y1="163" x2="778" y2="163" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="780" y="130" width="120" height="66" rx="9"/></g>
       <text x="840" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">gate.sh</text>
       <text x="840" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M12</text>
     </g>
     <!-- fragment 6 — lead-out to the gate slide: "PR bumps the tag, Argo syncs, verify serving" -->
     <g class="fragment" data-fragment-index="6">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="900" y1="163" x2="928" y2="163" marker-end="url(#ah)"/></g>
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="900" y1="163" x2="928" y2="163" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="930" y="130" width="140" height="66" rx="9"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="930" y="130" width="140" height="66" rx="9"/></g>
       <text x="1000" y="158" text-anchor="middle" class="lbl-g" style="font-size:13px">PR → Argo</text>
@@ -831,10 +833,10 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="185" y="156" text-anchor="middle" class="lbl-b">your read-only agent</text>
     <text x="185" y="184" text-anchor="middle" class="lbl-g" style="font-size:13px">the bridge to what's next</text>
     <!-- the dashed boundary line (the edge of the map) -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><line x1="470" y1="46" x2="470" y2="290"/></g>
+    <g fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><line x1="470" y1="46" x2="470" y2="290"/></g>
     <text x="470" y="312" text-anchor="middle" class="lbl-g" style="font-size:13px">the edge of the map</text>
     <!-- crossing arrow -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="300" y1="168" x2="600" y2="168" marker-end="url(#ah)"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6"><line x1="300" y1="168" x2="600" y2="168" marker-end="url(#ah)"/></g>
     <!-- the 303 edge panel: purple = next course/meta -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="610" y="70" width="410" height="196" rx="10"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 7"><rect x="610" y="70" width="410" height="196" rx="10"/></g>
@@ -871,14 +873,14 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="fragment" transform="translate(220,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.2"><circle cx="55" cy="85" r="18"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M78,85 L110,85" marker-end="url(#ahg)"/></g>
+      <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M78,85 L110,85" marker-end="url(#ahg)"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">watch the agent pick a tool</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">0.6B model, two-tool menu</text>
     </g>
     <g class="fragment" transform="translate(400,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round"><path d="M100,60 A25,25 0 1 1 75,60" marker-end="url(#ah)"/></g>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M40,110 L60,110"/></g>
+      <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M40,110 L60,110"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">trigger the loop, then fix it</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">remove the tools, not tool_choice</text>
     </g>

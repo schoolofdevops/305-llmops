@@ -100,7 +100,9 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:2.1em; max-width:80%; }
+  .reveal .slides section.divider p.s{ order:3; font-size:1em; max-width:70%; text-align:center; margin-top:4px; }
+  .reveal p.recap{ order:4; font-size:0.72em; color:var(--ink); margin-top:10px; max-width:92%; align-self:center; }
   .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
@@ -177,7 +179,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="160" y="86" text-anchor="middle" class="lbl-b">"Gourav's box"</text>
     <text x="160" y="252" text-anchor="middle" class="lbl-g">a name, nothing else</text>
     <!-- leaves your hands into a chain of hands -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M260,150 L322,150" marker-end="url(#ah)"/>
     </g>
     <text x="292" y="138" text-anchor="middle" class="lbl-g">leaves your hands</text>
@@ -192,7 +194,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="587" y="156" text-anchor="middle" class="lbl">registry</text>
     <text x="773" y="156" text-anchor="middle" class="lbl">deploy</text>
     <text x="959" y="156" text-anchor="middle" class="lbl">rollback</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
       <path d="M476,150 L508,150" marker-end="url(#ahg)"/>
       <path d="M662,150 L694,150" marker-end="url(#ahg)"/>
       <path d="M848,150 L880,150" marker-end="url(#ahg)"/>
@@ -280,7 +282,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="486" y="222" text-anchor="middle" class="lbl">the golden eval set</text>
     <text x="486" y="76" text-anchor="middle" class="lbl-g">what was true ABOUT this model</text>
     <!-- payoff -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M606,171 L676,171" marker-end="url(#ah)"/>
     </g>
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.8">
@@ -317,7 +319,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="210" y="118" text-anchor="middle" class="lbl-b">your model</text>
     <text x="210" y="146" text-anchor="middle" class="lbl-g">as an OCI artifact</text>
     <!-- on rails -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M360,125 L470,125" marker-end="url(#ah)"/>
     </g>
     <!-- three shared rails -->
@@ -400,7 +402,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="703" y="170" text-anchor="middle" class="lbl-b">kit pack</text>
     <text x="703" y="196" text-anchor="middle" class="lbl-g">→ one OCI artifact</text>
     <!-- push to registry -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M798,175 L858,175" marker-end="url(#ah)"/>
     </g>
     <text x="828" y="162" text-anchor="middle" class="lbl-sm">kit push</text>
@@ -501,7 +503,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="220" y="162" text-anchor="middle" class="lbl-g">dataset ~16 KB</text>
     <text x="220" y="194" text-anchor="middle" class="lbl-g">prompts ~5 KB</text>
     <!-- selective pull -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
       <path d="M330,148 L470,148" marker-end="url(#ah)"/>
     </g>
     <text x="400" y="134" text-anchor="middle" class="lbl-sm">kit unpack --filter=code</text>
@@ -515,7 +517,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="820" y="140" text-anchor="middle" class="lbl-g">stay on the registry</text>
     <text x="820" y="168" text-anchor="middle" class="lbl-sm">← left behind</text>
     <!-- struck-through naive path -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round">
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round">
       <path d="M330,214 L700,214"/>
     </g>
     <text x="514" y="240" text-anchor="middle" class="lbl-g">"download the model" — all 610 MB</text>
@@ -559,7 +561,7 @@ footer, header, hgroup, main, menu, nav, section {
       <circle cx="316" cy="160" r="30"/>
     </g>
     <text x="316" y="214" text-anchor="middle" class="lbl-sm">signet ring</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
       <path d="M348,160 L392,160" marker-end="url(#ah)"/>
     </g>
     <!-- wax seal -->
@@ -612,7 +614,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="255" y="244" text-anchor="middle" class="lbl">generate-key-pair</text>
     <text x="550" y="244" text-anchor="middle" class="lbl">cosign sign (by digest)</text>
     <text x="845" y="244" text-anchor="middle" class="lbl">cosign verify</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
       <path d="M390,238 L411,238" marker-end="url(#ah)"/>
       <path d="M685,238 L706,238" marker-end="url(#ah)"/>
     </g>
@@ -637,7 +639,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="126" y="142" text-anchor="middle" class="lbl-b">model artifact</text>
     <text x="126" y="167" text-anchor="middle" class="lbl-g">+ its digest</text>
     <!-- verify -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M216,147 L266,147" marker-end="url(#ah)"/>
     </g>
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="2.8">
@@ -736,7 +738,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="270" y="166" text-anchor="middle" class="lbl-g">real · packaged · pushed · addressable</text>
     <text x="270" y="196" text-anchor="middle" class="lbl-g">but NOT promoted</text>
     <!-- promote arrow -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
       <path d="M470,161 L620,161" marker-end="url(#ah)"/>
     </g>
     <text x="545" y="146" text-anchor="middle" class="lbl-sm">promote</text>
@@ -812,7 +814,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="840" y="92" text-anchor="middle" class="lbl-b">1.0.0-candidate — lost</text>
     <text x="840" y="118" text-anchor="middle" class="lbl-g">the SAME golden set</text>
     <!-- bridge -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round"><path d="M450,95 L650,95"/></g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round"><path d="M450,95 L650,95"/></g>
     <text x="550" y="86" text-anchor="middle" class="lbl-g">same set</text>
     <text x="550" y="160" text-anchor="middle" class="lbl-g">both carry the set they were weighed on → the comparison is <tspan class="lbl-b">reproducible from the artifacts</tspan></text>
     <!-- kit list terminal -->

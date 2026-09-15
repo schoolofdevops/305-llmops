@@ -237,13 +237,33 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">An LLM is mostly weights</h2>
   <p class="s">The parameter count is fixed. The bytes per parameter are your choice.</p>
-  <svg viewBox="0 0 1100 380" role="img" aria-label="A blue box holds 751.63 million numbers, labelled parameter count, fixed by the model. An arrow points to three chips showing the precision choice: FP16 spends two bytes per number, Q8 one byte, Q4 half a byte. A dashed band reads: same numbers, fewer bytes each.">
+  <svg viewBox="0 0 1100 380" role="img" aria-label="The model name qwen3 colon 0.6b is written out with the 0.6b part boxed and an arrow running down from it, showing that this part of the name is the parameter count. A blue box below holds 751.63 million numbers the LLM learnt in training, labelled as the parameters, also called the weights, with the count fixed. An arrow points to three chips showing the precision choice: FP16 spends two bytes per number, Q8 one byte, Q4 half a byte. A dashed band reads: same numbers, fewer bytes each.">
+    <!-- where the 0.6b in the name comes from -->
+    <text x="60" y="58" text-anchor="start" class="lbl-b" style="font-size:26px">qwen3:</text>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="152" y="28" width="92" height="42" rx="8"/>
+    </g>
+    <text x="198" y="58" text-anchor="middle" class="lbl-b" style="font-size:26px">0.6b</text>
+    <text x="264" y="58" text-anchor="start" class="lbl-g">this part tells you how many numbers are inside</text>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M198,74 L198,104" marker-end="url(#ahg)"/>
+    </g>
+
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
       <rect x="60" y="110" width="330" height="150" rx="14"/>
     </g>
-    <text x="225" y="170" text-anchor="middle" class="lbl-b">751.63M</text>
-    <text x="225" y="204" text-anchor="middle" class="lbl-g">numbers the model learned</text>
-    <text x="225" y="300" text-anchor="middle" class="lbl-b">parameter count — fixed</text>
+    <text x="225" y="146" text-anchor="middle" class="lbl-b" style="font-size:26px">751.63M numbers</text>
+    <!-- what those numbers actually look like -->
+    <g class="lbl-sm" text-anchor="middle" style="font-size:15px">
+      <text x="104" y="180">0.42</text><text x="164" y="180">-0.18</text><text x="224" y="180">0.91</text>
+      <text x="284" y="180">0.05</text><text x="344" y="180">-0.73</text>
+      <text x="104" y="208">-0.26</text><text x="164" y="208">0.88</text><text x="224" y="208">0.13</text>
+      <text x="284" y="208">-0.47</text><text x="344" y="208">0.60</text>
+      <text x="104" y="236">0.31</text><text x="164" y="236">-0.95</text><text x="224" y="236">0.07</text>
+      <text x="284" y="236">0.54</text><text x="344" y="236">&hellip;</text>
+    </g>
+    <text x="225" y="300" text-anchor="middle" class="lbl-b">these numbers are the parameters</text>
+    <text x="225" y="330" text-anchor="middle" class="lbl-g">also called the weights &middot; the count is fixed</text>
 
     <g class="fragment">
       <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">

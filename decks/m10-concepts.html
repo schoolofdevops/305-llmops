@@ -144,13 +144,65 @@ footer, header, hgroup, main, menu, nav, section {
 <div class="reveal"><div class="slides">
 <!-- ═══════════════ SLIDE 1 · TITLE — Monday-desk scene ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 10 &nbsp;·&nbsp; OBSERVABILITY — SEEING THE PLATFORM</p>
-  <h2 class="t" style="font-size:2.1em">Observability for LLM Platforms</h2>
-  <p class="s">Metrics, traces, and the numbers that describe a model service.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A desk calendar page with three large question marks floating above it.">
-    <image href="../img/decks/m10/title-calendar-three-questions.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 10</p>
+  <h2 class="t" style="font-size:1.9em">Observability for LLM Platforms</h2>
+  <p class="s" style="font-size:1.05em">Metrics, traces, and the numbers that describe a model service.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="A pod's metrics endpoint is scraped onto a dashboard wall carrying a latency line, a climbing queue of bars, and a distribution with two humps each marked by a cut line; beside the wall a trace breaks one request into three bars, where a tiny retrieve span sits above a generate span that runs almost the whole width.">
+    <!-- the pod, and the endpoint it exposes -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
+      <rect x="48" y="140" width="134" height="142" rx="11"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="160" y="188" width="42" height="46" rx="6"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M210,211 L256,211" marker-end="url(#ahg)"/>
+      <path d="M216,182 L228,182"/><path d="M236,182 L248,182"/>
+    </g>
+    <!-- the wall everybody argues in front of -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="264" y="94" width="444" height="232" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="284" y="114" width="194" height="90" rx="6"/>
+      <rect x="494" y="114" width="194" height="90" rx="6"/>
+      <rect x="284" y="216" width="404" height="94" rx="6"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M296,188 L326,170 L356,178 L386,148 L416,156 L446,126 L466,132"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2">
+      <rect x="514" y="172" width="28" height="22" rx="3"/>
+      <rect x="554" y="156" width="28" height="38" rx="3"/>
+      <rect x="594" y="138" width="28" height="56" rx="3"/>
+      <rect x="634" y="122" width="28" height="72" rx="3"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M296,294 C314,294 322,232 344,232 C366,232 374,294 392,294 L456,294 C482,294 492,262 522,262 C552,262 562,294 588,294 L676,294"/>
+      <path d="M294,294 L678,294"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 6">
+      <path d="M344,232 L344,300"/>
+      <path d="M522,262 L522,300"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M714,210 L744,210" marker-end="url(#ahg)"/>
+    </g>
+    <!-- one request, broken into where its seconds actually went -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="752" y="108" width="316" height="204" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="774" y="140" width="272" height="30" rx="5"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="774" y="192" width="28" height="30" rx="5"/>
+    </g>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="814" y="244" width="232" height="30" rx="5"/>
+    </g>
   </svg>
-  <p class="credit">you can <b>FEEL</b> the system · you cannot <b>SEE</b> it &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M10&middot;01</div>
 </section>
 

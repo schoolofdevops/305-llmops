@@ -151,13 +151,77 @@ footer, header, hgroup, main, menu, nav, section {
 <div class="reveal"><div class="slides">
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 6 &nbsp;·&nbsp; FINE-TUNING — SYNTHETIC DATA, LoRA &amp; QLoRA</p>
-  <h2 class="t" style="font-size:1.55em">Fine-Tuning with LoRA and Synthetic Data</h2>
-  <p class="s" style="font-size:1.15em">When to tune, how it fits on a laptop, and an honest verdict.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A robot assistant stands between a faint crossed-out generic speech bubble and a bold checked speech bubble matching a clipboard beside it.">
-    <image href="../img/decks/m6/title-robot-voice.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 6</p>
+  <h2 class="t" style="font-size:1.62em">Fine-Tuning with LoRA and Synthetic Data</h2>
+  <p class="s" style="font-size:1.05em">When to tune, how it fits on a laptop, and an honest verdict.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="Generated question-and-answer cards drop through a funnel that keeps only some of them; the survivors train two thin adapter matrices bolted onto a padlocked, frozen base LLM; and the result is weighed as two bars, where the tuned bar comes out shorter than the baseline it had to beat.">
+    <!-- synthetic pairs, and the filter that decides what survives -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="62" y="92" width="58" height="30" rx="5"/>
+      <rect x="128" y="92" width="58" height="30" rx="5"/>
+      <rect x="194" y="92" width="58" height="30" rx="5"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M91,128 L91,142"/><path d="M157,128 L157,142"/><path d="M223,128 L223,142"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+      <polygon points="62,148 252,148 184,212 130,212"/>
+      <rect x="140" y="210" width="34" height="26" rx="4"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M157,240 L157,254"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="96" y="258" width="58" height="30" rx="5"/>
+      <rect x="162" y="258" width="58" height="30" rx="5"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M232,272 L302,232" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the frozen base, and the thin adapters bolted onto it -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
+      <rect x="312" y="116" width="200" height="192" rx="12"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="380" y="204" width="64" height="54" rx="8"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M396,204 L396,186 Q396,164 412,164 Q428,164 428,186 L428,204"/>
+      <path d="M412,222 L412,242"/>
+      <path d="M512,178 L534,178"/>
+      <path d="M512,272 L534,272"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.4">
+      <circle cx="412" cy="222" r="6"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="536" y="124" width="36" height="112" rx="5"/>
+      <rect x="536" y="254" width="120" height="36" rx="5"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M554,244 L554,250"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M668,212 L734,212" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the honest verdict: weighed against the number it had to beat -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="742" y="106" width="302" height="204" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="800" y="168" width="66" height="114" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="918" y="218" width="66" height="64" rx="4"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M770,284 L1016,284"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M878,176 L906,212" marker-end="url(#ahg)"/>
+    </g>
   </svg>
-  <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M6&middot;01</div>
 </section>
 

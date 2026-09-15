@@ -153,13 +153,84 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 1 · TITLE ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 8 &nbsp;·&nbsp; SERVING ON KUBERNETES — CAPACITY, THE ARTIFACT CHAIN &amp; PROBES</p>
-  <h2 class="t" style="font-size:1.8em">Serving on Kubernetes</h2>
-  <p class="s" style="font-size:1.12em">Capacity, the artifact chain, and probes that suit a slow loader.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="An open doorway with three large question marks floating above it, representing the three numbers the platform team wants before a model server can deploy.">
-    <image href="../img/decks/m8/title-three-questions.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 8</p>
+  <h2 class="t" style="font-size:1.9em">Serving on Kubernetes</h2>
+  <p class="s" style="font-size:1.05em">Capacity, the artifact chain, and probes that suit a slow loader.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="A signed crate is pulled by an init container that runs to completion and writes the model onto a persistent volume; only then does the pod start, holding a memory stack of fixed weights, fixed runtime buffers, and a KV cache with an arrow showing it growing; beside the pod a timeline shows one long startup window before the repeating health checks begin.">
+    <!-- the signed artifact from the registry -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="46" y="158" width="122" height="102" rx="8"/>
+    </g>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4">
+      <circle cx="166" cy="252" r="19"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M192,204 L232,204" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the init container: it finishes before the main one starts -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="240" y="154" width="112" height="110" rx="9"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M266,208 L284,226 L326,184"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M362,204 L404,204" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the volume the model now lives on, so a restart is not a re-pull -->
+    <g filter="url(#rough)" fill="#ffffff" stroke="none">
+      <rect x="412" y="166" width="100" height="86"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M412,166 L412,252"/><path d="M512,166 L512,252"/>
+      <path d="M412,252 A50,15 0 0 0 512,252"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.6">
+      <ellipse cx="462" cy="166" rx="50" ry="15"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M524,204 L566,204" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the pod, sized from a sum: two fixed terms and one that grows -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="574" y="98" width="258" height="222" rx="12"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="600" y="222" width="92" height="76" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="600" y="186" width="92" height="30" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="600" y="130" width="92" height="50" rx="4"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M712,174 L712,126" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="748" y="178" width="58" height="64" rx="8"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M806,196 L832,196"/><path d="M806,224 L832,224"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M842,204 L876,204" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the probe timeline: one long load, and only then the repeating checks -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="888" y="186" width="88" height="34" rx="5"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M888,234 L1062,234"/>
+      <path d="M888,228 L888,240"/><path d="M976,228 L976,240"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M990,204 L998,212 L1010,194"/>
+      <path d="M1016,204 L1024,212 L1036,194"/>
+      <path d="M1042,204 L1050,212 L1062,194"/>
+    </g>
   </svg>
-  <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M8&middot;01</div>
 </section>
 

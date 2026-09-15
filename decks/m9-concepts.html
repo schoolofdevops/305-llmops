@@ -143,13 +143,74 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 1 · TITLE ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 9 &nbsp;·&nbsp; SERVING PATTERNS — CANARY ROUTING, KSERVE &amp; LLM-D</p>
-  <h2 class="t" style="font-size:1.55em">Serving Patterns and Canary Rollouts</h2>
-  <p class="s" style="font-size:1.12em">Routing, a quality gate, and staged promotion.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Two identical crates on a loading dock approach a single open gate, one crate slightly ahead of the other.">
-    <image href="../img/decks/m9/title-two-versions-one-gate.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 9</p>
+  <h2 class="t" style="font-size:1.9em">Serving Patterns and Canary Rollouts</h2>
+  <p class="s" style="font-size:1.05em">Routing, a quality gate, and staged promotion.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="Several sketched users reach one router that splits requests between two backends — a thick arrow to the proven base and a thin one to a canary drawn as a dashed outline — both are then run past a gate that can answer with a tick or with a cross, and beyond it a three-step ladder climbs from a small first step to a full one.">
+    <!-- the people whose requests get split -->
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <circle cx="72" cy="118" r="15"/><path d="M72,133 L72,168"/><path d="M57,184 L72,168 L87,184"/>
+      <circle cx="72" cy="208" r="15"/><path d="M72,223 L72,258"/><path d="M57,274 L72,258 L87,274"/>
+      <circle cx="72" cy="298" r="15"/><path d="M72,313 L72,348"/><path d="M57,364 L72,348 L87,364"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 6">
+      <path d="M100,146 L168,196"/>
+      <path d="M100,236 L168,220"/>
+      <path d="M100,326 L168,246"/>
+    </g>
+    <!-- one router, deciding per request -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
+      <rect x="176" y="166" width="112" height="106" rx="10"/>
+    </g>
+    <!-- most of the traffic to the proven base, a sliver to the canary -->
+    <g fill="none" stroke="#757575" stroke-width="5.5" stroke-linecap="round">
+      <path d="M298,196 L366,168" marker-end="url(#ahg)"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="1.8" stroke-linecap="round">
+      <path d="M298,246 L366,286" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="378" y="122" width="142" height="86" rx="9"/>
+    </g>
+    <g fill="none" stroke="#2e7d32" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M400,166 L414,180 L444,148"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6" stroke-dasharray="9 6">
+      <rect x="378" y="250" width="142" height="86" rx="9"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M530,166 L588,200" marker-end="url(#ahg)"/>
+      <path d="M530,292 L588,264" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the gate: it is allowed to answer either way -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="598" y="162" width="148" height="140" rx="10"/>
+    </g>
+    <g fill="none" stroke="#2e7d32" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M624,204 L638,218 L668,184"/>
+    </g>
+    <g fill="none" stroke="#c62828" stroke-width="3.4" stroke-linecap="round">
+      <path d="M624,250 L656,282"/><path d="M656,250 L624,282"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M756,232 L790,232" marker-end="url(#ahg)"/>
+    </g>
+    <!-- promotion climbs in steps, with the gate run at every level -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="800" y="268" width="76" height="44" rx="4"/>
+      <rect x="884" y="216" width="76" height="96" rx="4"/>
+      <rect x="968" y="148" width="76" height="164" rx="4"/>
+    </g>
+    <g fill="none" stroke="#2e7d32" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M826,252 L834,260 L850,240"/>
+      <path d="M910,200 L918,208 L934,188"/>
+      <path d="M994,132 L1002,140 L1018,120"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+      <path d="M788,314 L1056,314"/>
+    </g>
   </svg>
-  <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M9&middot;01</div>
 </section>
 

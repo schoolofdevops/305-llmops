@@ -144,13 +144,68 @@ footer, header, hgroup, main, menu, nav, section {
 <div class="reveal"><div class="slides">
 <!-- ═══════════════ SLIDE 1 · TITLE — two incidents, one week ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 11 &nbsp;·&nbsp; AUTOSCALING &amp; GITOPS</p>
-  <h2 class="t" style="font-size:2.1em">Autoscaling and GitOps</h2>
-  <p class="s">A real scaling signal, and a model version that lives in git.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A desk calendar with two incident-flag markers pinned on two different days.">
-    <image href="../img/decks/m11/title-calendar-two-incidents.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 11</p>
+  <h2 class="t" style="font-size:1.9em">Autoscaling and GitOps</h2>
+  <p class="s" style="font-size:1.05em">A real scaling signal, and a model version that lives in git.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="A queue of bars climbing at the door feeds a controller that opens a second pod and stands ready to open a third, drawn as a dashed outline; below it a line of commits carries a one-line manifest card into a sync controller, whose arrow turns upward into those same pods.">
+    <!-- the queue at the door — the signal you actually scale on -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="58" y="158" width="30" height="42" rx="3"/>
+      <rect x="98" y="128" width="30" height="72" rx="3"/>
+      <rect x="138" y="98" width="30" height="102" rx="3"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M52,202 L176,202"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M190,150 L248,150" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the controller that watches it -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
+      <rect x="258" y="94" width="142" height="110" rx="10"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M414,150 L472,150" marker-end="url(#ahg)"/>
+    </g>
+    <!-- one replica, a second opened, a third it may still open -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="482" y="94" width="122" height="110" rx="10"/>
+      <rect x="622" y="94" width="122" height="110" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="762" y="94" width="122" height="110" rx="10"/>
+    </g>
+    <!-- the version, living in a history anybody can read -->
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M68,332 L404,332"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
+      <circle cx="120" cy="332" r="16"/>
+      <circle cx="236" cy="332" r="16"/>
+      <circle cx="352" cy="332" r="16"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="304" y="252" width="96" height="50" rx="6"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M320,278 L384,278"/>
+      <path d="M352,304 L352,314"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M424,332 L478,332" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the controller that keeps the cluster matching it -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="3">
+      <rect x="486" y="280" width="138" height="104" rx="10"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M528,346 A30,30 0 1 1 566,354" marker-end="url(#ah)"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M636,332 L690,332 L690,218" marker-end="url(#ahg)"/>
+    </g>
   </svg>
-  <p class="credit">a surge that never scaled &nbsp;·&nbsp; a promotion nobody could verify &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M11&middot;01</div>
 </section>
 

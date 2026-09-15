@@ -151,13 +151,92 @@ footer, header, hgroup, main, menu, nav, section {
 <div class="reveal"><div class="slides">
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 5 &nbsp;·&nbsp; PROMPTS AS CONFIG &amp; THE BASELINE EVAL</p>
-  <h2 class="t" style="font-size:1.55em">Prompts as Config and the Baseline Eval</h2>
-  <p class="s" style="font-size:1.2em">Golden questions, two grading layers, and a number you commit.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A person shrugs with a question mark above their head, next to a measuring scale showing a clear mark and a checkmark.">
-    <image href="../img/decks/m5/title-shrug-scale.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 5</p>
+  <h2 class="t" style="font-size:1.9em">Prompts as Config and the Baseline Eval</h2>
+  <p class="s" style="font-size:1.05em">Golden questions, two grading layers, and a number you commit.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="Three sketched question cards, the last one marked apart, feed into an LLM box; its answers pass through two graders — a checklist of ticks and a balance scale — and the verdict is written as a partly filled score bar on a card pinned to a version history.">
+    <!-- the golden set: three questions, the last one has no answer in the corpus -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="58" y="96" width="142" height="58" rx="8"/>
+      <rect x="58" y="176" width="142" height="58" rx="8"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="58" y="256" width="142" height="58" rx="8"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M78,120 L180,120"/><path d="M78,138 L146,138"/>
+      <path d="M78,200 L180,200"/><path d="M78,218 L146,218"/>
+      <path d="M78,280 L180,280"/><path d="M78,298 L146,298"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M212,205 L256,205" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the LLM under test -->
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
+      <rect x="264" y="148" width="122" height="122" rx="12"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M394,186 L446,142" marker-end="url(#ahg)"/>
+      <path d="M394,232 L446,286" marker-end="url(#ahg)"/>
+    </g>
+    <!-- layer one: deterministic assertions -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="454" y="90" width="196" height="100" rx="10"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M480,120 L492,132 L514,108"/>
+      <path d="M480,152 L492,164 L514,140"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M532,122 L626,122"/><path d="M532,154 L626,154"/>
+    </g>
+    <!-- layer two: an LLM judge, weighing -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="454" y="236" width="196" height="100" rx="10"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-linecap="round">
+      <path d="M552,258 L552,318"/>
+      <path d="M506,272 L598,268"/>
+      <path d="M506,272 L506,292"/><path d="M598,268 L598,288"/>
+      <path d="M486,292 Q506,316 526,292"/><path d="M578,288 Q598,312 618,288"/>
+      <path d="M526,318 L578,318"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M658,140 L714,186" marker-end="url(#ahg)"/>
+      <path d="M658,286 L714,234" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the committed baseline: a score, written down -->
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="722" y="118" width="204" height="184" rx="10"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M748,152 L900,152"/><path d="M748,174 L856,174"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="748" y="198" width="152" height="36" rx="7"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="none">
+      <rect x="752" y="202" width="60" height="28" rx="5"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M750,266 L762,278 L784,254"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M800,270 L900,270"/>
+    </g>
+    <!-- pinned into the version history -->
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M934,210 L980,210" marker-end="url(#ahg)"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="5 7">
+      <path d="M1016,108 L1016,190"/>
+      <path d="M1016,232 L1016,314"/>
+    </g>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.6">
+      <circle cx="1016" cy="211" r="15"/>
+    </g>
   </svg>
-  <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M5&middot;01</div>
 </section>
 

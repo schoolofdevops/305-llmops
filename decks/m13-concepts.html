@@ -144,13 +144,79 @@ footer, header, hgroup, main, menu, nav, section {
 <div class="reveal"><div class="slides">
 <!-- ═══════════════ SLIDE 1 · TITLE — the reach gap, one step short ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 13 &nbsp;·&nbsp; TOOL-CALLING AGENTS, MCP &amp; THE CAPSTONE</p>
-  <h2 class="t" style="font-size:2.1em">Tool-Calling Agents and MCP</h2>
-  <p class="s">Structured outputs, tool calling, and an agent the door still bounds.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A phone handset lying off the hook beside a computer terminal, a gap between the two.">
-    <image href="../img/decks/m13/title-phone-vs-terminal.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 13</p>
+  <h2 class="t" style="font-size:1.9em">Tool-Calling Agents and MCP</h2>
+  <p class="s" style="font-size:1.05em">Structured outputs, tool calling, and an agent the door still bounds.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="Inside a door frame, an LLM hands a filled-in form card to a block of code that can answer with a tick or with a cross; that code reaches out through a port to a menu of exactly two tools, which ask a cluster for what it looks like and read the answer back, while a return line carries the result all the way round to the LLM again.">
+    <!-- the door from the previous module still bounds every turn -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3.4">
+      <rect x="44" y="74" width="562" height="282" rx="14"/>
+    </g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="3">
+      <rect x="76" y="114" width="150" height="142" rx="11"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M240,158 L292,158" marker-end="url(#ahg)"/>
+    </g>
+    <!-- it does not answer in prose, it fills in a form -->
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="300" y="108" width="134" height="100" rx="7"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M314,132 L348,132"/><path d="M314,158 L348,158"/><path d="M314,184 L348,184"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8">
+      <rect x="358" y="124" width="62" height="16" rx="3"/>
+      <rect x="358" y="150" width="62" height="16" rx="3"/>
+      <rect x="358" y="176" width="62" height="16" rx="3"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M444,158 L488,158" marker-end="url(#ahg)"/>
+    </g>
+    <!-- your code, not the LLM, decides whether it runs -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="496" y="114" width="96" height="142" rx="9"/>
+    </g>
+    <g fill="none" stroke="#2e7d32" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M512,164 L522,174 L548,146"/>
+    </g>
+    <g fill="none" stroke="#c62828" stroke-width="3.2" stroke-linecap="round">
+      <path d="M514,204 L546,234"/><path d="M546,204 L514,234"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M544,270 L544,308 L152,308 L152,264" marker-end="url(#ahg)"/>
+      <path d="M596,182 L644,182" marker-end="url(#ahg)"/>
+    </g>
+    <!-- one port, so the tools are exposed once -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="652" y="148" width="58" height="76" rx="11"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M666,148 L666,128"/><path d="M696,148 L696,128"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M718,186 L762,186" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the whole menu: two verbs, and the rest are simply not there -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="770" y="122" width="132" height="56" rx="7"/>
+      <rect x="770" y="194" width="132" height="56" rx="7"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M912,166 L956,166" marker-end="url(#ahg)"/>
+      <path d="M956,214 L912,214" marker-end="url(#ahg)"/>
+    </g>
+    <!-- it can look at the cluster, and that is all -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="964" y="112" width="104" height="152" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="982" y="132" width="68" height="32" rx="4"/>
+      <rect x="982" y="172" width="68" height="32" rx="4"/>
+      <rect x="982" y="212" width="68" height="32" rx="4"/>
+    </g>
   </svg>
-  <p class="credit">it knows the playbook — it cannot see the field &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M13&middot;01</div>
 </section>
 

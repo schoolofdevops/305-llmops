@@ -144,13 +144,88 @@ footer, header, hgroup, main, menu, nav, section {
 <div class="reveal"><div class="slides">
 <!-- ═══════════════ SLIDE 1 · TITLE — three weeks, no front door ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 12 &nbsp;·&nbsp; AI GATEWAY, EVAL GATES &amp; GUARDRAILS</p>
-  <h2 class="t" style="font-size:2.1em">AI Gateway, Eval Gates and Guardrails</h2>
-  <p class="s">A front door, virtual keys, and spend you can read.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A building facade with a completely empty doorway opening, loose papers blowing through it.">
-    <image href="../img/decks/m12/title-doorless-entrance.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 12</p>
+  <h2 class="t" style="font-size:1.9em">AI Gateway, Eval Gates and Guardrails</h2>
+  <p class="s" style="font-size:1.05em">A front door, virtual keys, and spend you can read.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="Three consumers, each holding its own keycard, reach one door; inside that door four boxes stack in request order — identity, a filter, a cache and routing — and out of it go one solid backend and one dashed fallback; a dashed line curves round to a ledger where three bars of different lengths sit against a cap, the longest one crossing it.">
+    <!-- three consumers, each with a key of its own -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="40" y="90" width="86" height="54" rx="7"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="40" y="182" width="86" height="54" rx="7"/>
+    </g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="40" y="274" width="86" height="54" rx="7"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="134" y="102" width="30" height="30" rx="4"/>
+      <rect x="134" y="194" width="30" height="30" rx="4"/>
+      <rect x="134" y="286" width="30" height="30" rx="4"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M172,124 L212,176" marker-end="url(#ahg)"/>
+      <path d="M172,209 L212,209" marker-end="url(#ahg)"/>
+      <path d="M172,294 L212,242" marker-end="url(#ahg)"/>
+    </g>
+    <!-- one door, and the order of its boxes is the design -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3.4">
+      <rect x="220" y="74" width="250" height="274" rx="12"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="242" y="96" width="206" height="50" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="242" y="158" width="206" height="50" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="242" y="220" width="206" height="50" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="242" y="282" width="206" height="50" rx="6"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M345,148 L345,156" marker-end="url(#ahg)"/>
+      <path d="M345,210 L345,218" marker-end="url(#ahg)"/>
+      <path d="M345,272 L345,280" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the route it picks, and the one it keeps in reserve -->
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M480,186 L544,154" marker-end="url(#ahg)"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 7">
+      <path d="M480,246 L544,282" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="552" y="110" width="142" height="84" rx="9"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="552" y="246" width="142" height="84" rx="9"/>
+    </g>
+    <!-- everything it did goes on the tab, per key -->
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="6 7">
+      <path d="M470,336 C552,376 658,376 736,338" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="740" y="94" width="318" height="250" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="762" y="124" width="30" height="30" rx="4"/>
+      <rect x="806" y="128" width="216" height="24" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="762" y="188" width="30" height="30" rx="4"/>
+      <rect x="806" y="192" width="118" height="24" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="762" y="252" width="30" height="30" rx="4"/>
+      <rect x="806" y="256" width="66" height="24" rx="4"/>
+    </g>
+    <g fill="none" stroke="#c62828" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="7 6">
+      <path d="M990,112 L990,322"/>
+    </g>
   </svg>
-  <p class="credit">the model was fine — the door was missing &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M12&middot;01</div>
 </section>
 

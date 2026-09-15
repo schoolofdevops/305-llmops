@@ -143,13 +143,88 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ═══════════════ SLIDE 1 · TITLE ═══════════════ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 7 &nbsp;·&nbsp; MODEL PACKAGING &amp; SIGNING — KITOPS &amp; OCI ARTIFACTS</p>
-  <h2 class="t" style="font-size:1.55em">Model Packaging and Signing</h2>
-  <p class="s" style="font-size:1.15em">OCI artifacts, ModelKits, signatures, and versioning.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A single loose sheet of paper drifts on the left; on the right a solid wooden crate sits sealed with a ribbon and wax stamp, a hanging tag attached, a curved arrow showing the paper becoming the crate.">
-    <image href="../img/decks/m7/title-file-to-artifact.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 7</p>
+  <h2 class="t" style="font-size:1.9em">Model Packaging and Signing</h2>
+  <p class="s" style="font-size:1.05em">OCI artifacts, ModelKits, signatures, and versioning.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="Loose model files — the weights, the tokenizer, the config and the prompts — are packed into one crate whose inner bands show a thick weights layer above two much thinner ones; a wax seal closes the crate, two version tags hang off its side, one solid and one drawn in a dashed outline, and the sealed crate takes its place on a registry shelf.">
+    <!-- the loose bundle: four files that only mean anything together -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="54" y="98" width="122" height="72" rx="6"/>
+    </g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="66" y="186" width="92" height="34" rx="5"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="54" y="234" width="92" height="34" rx="5"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="70" y="282" width="92" height="34" rx="5"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M196,208 L248,208" marker-end="url(#ahg)"/>
+    </g>
+    <!-- one artifact, and its layers are not the same size -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="256" y="108" width="252" height="202" rx="10"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="274" y="126" width="216" height="104" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="274" y="240" width="216" height="22" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="274" y="272" width="216" height="14" rx="4"/>
+    </g>
+    <!-- the seal: tamper-evidence, not secrecy -->
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8">
+      <circle cx="490" cy="300" r="30"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
+      <path d="M476,310 Q484,282 492,302 Q500,322 508,292"/>
+    </g>
+    <!-- two tags: one promoted, one only a candidate -->
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M508,166 L552,166"/>
+      <path d="M508,252 L552,252"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.6">
+      <polygon points="554,140 638,140 664,166 638,192 554,192"/>
+    </g>
+    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="8 6">
+      <polygon points="554,226 638,226 664,252 638,278 554,278"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.2">
+      <circle cx="572" cy="166" r="6"/>
+      <circle cx="572" cy="252" r="6"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M674,210 L696,210" marker-end="url(#ahg)"/>
+    </g>
+    <!-- the registry it now lives in -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="704" y="114" width="292" height="192" rx="10"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
+      <path d="M722,182 L978,182"/>
+      <path d="M722,246 L978,246"/>
+    </g>
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="734" y="134" width="58" height="46" rx="4"/>
+      <rect x="734" y="262" width="58" height="42" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="808" y="134" width="58" height="46" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="882" y="134" width="58" height="46" rx="4"/>
+      <rect x="808" y="198" width="58" height="46" rx="4"/>
+    </g>
+    <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="734" y="198" width="58" height="46" rx="4"/>
+    </g>
   </svg>
-  <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M7&middot;01</div>
 </section>
 

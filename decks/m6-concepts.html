@@ -152,34 +152,55 @@ footer, header, hgroup, main, menu, nav, section {
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
   <p class="kicker">MODULE 6 &nbsp;·&nbsp; FINE-TUNING — SYNTHETIC DATA, LoRA &amp; QLoRA</p>
-  <h2 class="t" style="font-size:1.55em">Retrieval got the facts right — this makes the model sound like your team</h2>
-  <p class="s" style="font-size:1.15em">RAG fixed what the model knows — not how it writes. That's what we fix now.</p>
+  <h2 class="t" style="font-size:1.55em">When Should You Fine-Tune an LLM?</h2>
+  <p class="s" style="font-size:1.15em">LoRA, synthetic data, and an honest ship or no-ship decision.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A robot assistant stands between a faint crossed-out generic speech bubble and a bold checked speech bubble matching a clipboard beside it.">
     <image href="../img/decks/m6/title-robot-voice.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
-  <div class="pageno">M6·01</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">Fixing Behaviour, Not Knowledge</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand adjusts a dial on a robot's chest while a stack of closed books sits untouched beside it.">
-    <image href="../img/decks/m6/divider-0-intro-dial-books.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M6·02</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">When Should You Fine-Tune an LLM?</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A person stands at the bottom of a three-level ladder, looking up, deciding.">
-    <image href="../img/decks/m6/divider-1-ladder.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M6·03</div>
+  <div class="pageno">M6&middot;01</div>
 </section>
 
 <section>
-  <h2 class="t">Climb the decision ladder — three levels, cheapest first</h2>
-  <p class="s">Prompt edit, then RAG, then fine-tune — each fixes a different kind of problem.</p>
+  <h2 class="t">What will you learn?</h2>
+  <p class="s">Four concepts, from the decision to an honest verdict.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A numbered contents list of the module's 4 concepts: fine-tuning, training data, running the tune, measuring the result.">
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="56" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="83" text-anchor="middle" class="lbl-b" style="font-size:20px">1</text>
+    <text x="320" y="83" class="lbl-b" style="font-size:23px">Fine-Tuning</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="124" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="151" text-anchor="middle" class="lbl-b" style="font-size:20px">2</text>
+    <text x="320" y="151" class="lbl-b" style="font-size:23px">Training Data</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="192" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="219" text-anchor="middle" class="lbl-b" style="font-size:20px">3</text>
+    <text x="320" y="219" class="lbl-b" style="font-size:23px">Running the Tune</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="260" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="287" text-anchor="middle" class="lbl-b" style="font-size:20px">4</text>
+    <text x="320" y="287" class="lbl-b" style="font-size:23px">Measuring the Result</text>
+  </svg>
+  <div class="pageno">M6&middot;02</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">Fine-Tuning</h2>
+  <p class="s">when to reach for it, and how LoRA makes it fit on a laptop</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person stands at the bottom of a three-level ladder, looking up, deciding.">
+    <image href="../img/decks/m6/divider-1-ladder.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M6&middot;03</div>
+</section>
+
+<section>
+  <h2 class="t">Three levels, cheapest first</h2>
+  <p class="s">A prompt edit, then RAG, then a fine-tune. Each fixes a different problem.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A three-level staircase, cheapest at the bottom. Bottom level, widest and green: prompt edit, minutes, free, reversible, fixes format, tone, refusals, citations. Middle level, blue: RAG, put the right facts in front, fixes missing knowledge and freshness, M4 and M5. Top level, orange: fine-tune, hours, data plus compute, fixes behaviour that survives with no prompt and no context.">
     <!-- level 1 prompt edit (bottom, widest) — green = the cheap, reach-first level -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
@@ -200,12 +221,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="340" y="126" text-anchor="start" class="lbl-b">3 · FINE-TUNE</text>
     <text x="340" y="150" text-anchor="start" class="lbl-g">hours · data + compute → behaviour that survives NO prompt, NO context</text>
   </svg>
-  <div class="pageno">M6·04</div>
+  <div class="pageno">M6&middot;04</div>
 </section>
 
 <section>
-  <h2 class="t">Most "we need to fine-tune" requests are really prompt problems</h2>
-  <p class="s">Climb only when the level below genuinely can't — you earn the top level.</p>
+  <h2 class="t">Most tuning requests are prompt work</h2>
+  <p class="s">Climb only when the level below genuinely cannot do the job.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="The discipline of the ladder. A big dashed gray back-arrow curves from the top fine-tune level down to the bottom prompt-edit level, tagged: most we-need-to-fine-tune requests are prompt problems, something a single line of instructions would fix. A card notes OpsMate earned the top level: its voice problem survives a prompt edit — the model keeps drifting generic — so fine-tuning is justified. A band reads: climb only when the level below truly can't, and you earn it, you don't start there.">
     <!-- mini staircase reminder -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
@@ -233,29 +254,21 @@ footer, header, hgroup, main, menu, nav, section {
     <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M70,330 L1040,330"/></g>
     <text x="555" y="352" text-anchor="middle" class="lbl-g">climb only when the level below truly can't — <tspan class="lbl-b">you earn the top level, you don't start there</tspan></text>
   </svg>
-  <div class="pageno">M6·05</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">What Is LoRA?</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A hand bolts a small removable shelf bracket onto a plain wall.">
-    <image href="../img/decks/m6/divider-2-shelf-bolt.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M6·06</div>
+  <div class="pageno">M6&middot;05</div>
 </section>
 
 <section>
-  <h2 class="t">LoRA renovates with removable fittings — freeze the walls, bolt on an adapter</h2>
-  <p class="s">A full fine-tune needs a data-center; you're a tenant who can't touch the walls.</p>
+  <h2 class="t">Analogy &mdash; removable fittings</h2>
+  <p class="s">A full fine-tune needs a data centre. You are a tenant who cannot move walls.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A tenant bolts a small removable shelf onto a wall in a rented flat, with a landlord figure watching from a doorway, the structural walls untouched.">
     <image href="../img/decks/m6/analogy-lora-tenant.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M6·07</div>
+  <div class="pageno">M6&middot;06</div>
 </section>
 
 <section>
-  <h2 class="t">You train 0.19% of the model — that's why it fits on a CPU</h2>
-  <p class="s">Two-tenths of one percent trainable — hold that number out of the whole module.</p>
+  <h2 class="t">You train 0.19% of the LLM</h2>
+  <p class="s">Two-tenths of one percent trainable. That is why it fits on a CPU.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="The real number, drawn large. A callout box: trainable one million one hundred forty-six thousand eight hundred eighty, out of five hundred ninety-seven million one hundred ninety-six thousand eight hundred, equals 0.19 percent. Below, why it matters: you only hold gradients for that tiny slice, so it fits on a CPU. Two consequence cards: swappable — many adapters, one base; and tiny to ship — M7 versions it as v1.0. A band reads: train 0.19% of the model, the rest stays frozen.">
     <!-- the number callout frame, present from the start -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -287,12 +300,12 @@ footer, header, hgroup, main, menu, nav, section {
     <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M120,330 L1040,330"/></g>
     <text x="580" y="352" text-anchor="middle" class="lbl-g">train <tspan class="lbl-b">0.19% of the model</tspan> — the rest stays frozen</text>
   </svg>
-  <div class="pageno">M6·08</div>
+  <div class="pageno">M6&middot;07</div>
 </section>
 
 <section>
-  <h2 class="t">The "low-rank" trick — approximate a big update with two thin matrices</h2>
-  <p class="s">Two thin matrices stand in for one big one — the rank sets how thin.</p>
+  <h2 class="t">Two thin matrices, set by the rank</h2>
+  <p class="s">A big update is approximated by two small ones. The rank sets how small.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="On the left, a large gray dense square marked full update, big dense matrix, frozen. An equals sign leads to the product of two thin blue matrices: a tall-skinny one and a short-wide one, their shared narrow edge labelled r equals 8, the rank. A note reads: small r means tiny matrices means few trainable params. On the right, a small card names which layers get an adapter: q_proj plus v_proj, the attention query and value projections, the common minimal choice. A band reads: more rank and more layers buy more capacity to learn — and more room to overfit.">
     <!-- full dense update (gray, frozen) — the starting point of the derivation, present from the start -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.6" stroke-dasharray="9 7"><rect x="60" y="110" width="150" height="150" rx="8"/></g>
@@ -327,20 +340,12 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="820" y="306" text-anchor="middle" class="lbl-g">…and more room to <tspan class="lbl-b">overfit</tspan></text>
     </g>
   </svg>
-  <div class="pageno">M6·09</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">What Is QLoRA?</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A small box wrapped tightly in shrink-wrap with an adapter clip resting on top.">
-    <image href="../img/decks/m6/divider-3-shrinkwrap.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M6·10</div>
+  <div class="pageno">M6&middot;08</div>
 </section>
 
 <section>
-  <h2 class="t">QLoRA is LoRA one tier up — a 4-bit frozen base so a bigger model fits</h2>
-  <p class="s">Store the frozen base at 4-bit so a bigger model fits — adapter untouched.</p>
+  <h2 class="t">QLoRA &mdash; a 4-bit frozen base</h2>
+  <p class="s">Store the frozen base at 4 bits so a bigger LLM fits. The adapter is untouched.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, inked: LoRA — frozen base at 16-bit plus an adapter that trains on top, tagged a 0.6B fits on CPU as-is, the lab's path. Right, inked: QLoRA — frozen base stored 4-bit plus an adapter that trains on top, tagged a quarter of the memory, so a 7B or 13B fits on one small GPU. A gray footline reads: same idea, one tier up — reach for QLoRA only when the base is too big to fit; on a 0.6B it is overkill.">
     <!-- LoRA panel — frozen base unfilled, adapter blue -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -373,29 +378,31 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="843" y="204" text-anchor="middle" class="lbl-g">trains</text>
     <text x="815" y="288" text-anchor="middle" class="lbl-g">¼ the memory → a 7B/13B fits on one small GPU</text>
   </svg>
-  <div class="pageno">M6·11</div>
+  <p class="recap fragment">Next: Training Data &mdash; the part that actually decides whether a tune is worth running.</p>
+  <div class="pageno">M6&middot;09</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">How to Generate Synthetic Training Data</h2>
+  <h2 class="t">Training Data</h2>
+  <p class="s">generating it, filtering it, and keeping it out of the eval</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A stack of closed textbooks with small flashcards fanning out from the top book.">
     <image href="../img/decks/m6/divider-4-textbook-cards.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M6·12</div>
+  <div class="pageno">M6&middot;10</div>
 </section>
 
 <section>
-  <h2 class="t">The hard part isn't training — it's building the practice question bank</h2>
-  <p class="s">You don't re-read the textbook — you turn each chapter into practice questions.</p>
+  <h2 class="t">Analogy &mdash; a practice question bank</h2>
+  <p class="s">You do not re-read the textbook. You turn each chapter into practice questions.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A student sits at a desk surrounded by open textbooks, writing a flashcard by hand.">
     <image href="../img/decks/m6/analogy-exam-revision.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M6·13</div>
+  <div class="pageno">M6&middot;11</div>
 </section>
 
 <section>
-  <h2 class="t">The FILTER is the step that decides if the data is worth training on</h2>
-  <p class="s">A model making its own data makes junk — and the loss still drops on garbage.</p>
+  <h2 class="t">The filter decides if data is usable</h2>
+  <p class="s">An LLM making its own data makes junk, and the loss still drops on garbage.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="The filter and split steps. Generated pairs flow into filter, the emphasized green box — length plus format plus dedupe plus grounded-in-the-section. A dashed red drop-off leads to rejects.jsonl, logged with reasons, so you can read the garbage you kept out. What survives flows to split — train.jsonl plus a small eval slice. A band reads: garbage in, garbage out — if you train on junk the loss still drops, so you would never know.">
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4"><rect x="40" y="120" width="150" height="72" rx="11"/></g>
     <text x="115" y="152" text-anchor="middle" class="lbl-g">generated</text>
@@ -429,20 +436,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="927" y="204" text-anchor="middle" class="lbl-g" fill="#c62828">loss still drops —</text>
     <text x="927" y="228" text-anchor="middle" class="lbl-g">so you'd never know</text>
   </svg>
-  <div class="pageno">M6·14</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">What Is Data Contamination?</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Two baskets side by side, one open and one sealed shut with caution tape between them.">
-    <image href="../img/decks/m6/divider-5-contamination-baskets.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M6·15</div>
+  <div class="pageno">M6&middot;12</div>
 </section>
 
 <section>
-  <h2 class="t">The one rule you cannot break — train and golden set must never overlap</h2>
-  <p class="s">If a trained question lands in the eval, the model saw the answer key.</p>
+  <h2 class="t">Training and eval must never overlap</h2>
+  <p class="s">If a trained question shows up in the eval, the LLM has seen the answer key.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A shared corpus of runbooks at the top feeds two separated lanes across a dashed boundary wall. The left lane: the synthesizer reads the corpus only, producing train.jsonl, inked. The right lane, walled off and gray-dashed: golden.yaml, the M5 test set, held out, never read by the synthesizer. A gray arrow attempting to carry the corpus across into the golden set is struck through, tagged: overlap equals grading on the answer key, silent, inflated, meaningless. A band reads: same sources, different questions, test set held out.">
     <!-- shared corpus -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -491,20 +490,22 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="342" text-anchor="middle" class="lbl-b">same sources · different questions · test set held out</text>
   </svg>
-  <div class="pageno">M6·16</div>
+  <p class="recap fragment">Next: Running the Tune &mdash; reading the loss, and getting the result into the stack.</p>
+  <div class="pageno">M6&middot;13</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">How to Read a Loss Curve</h2>
+  <h2 class="t">Running the Tune</h2>
+  <p class="s">reading the loss, then getting the result into the stack</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A hand points at the flat part of a descending line graph curve.">
     <image href="../img/decks/m6/divider-6-loss-curve.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M6·17</div>
+  <div class="pageno">M6&middot;14</div>
 </section>
 
 <section>
-  <h2 class="t">Read the loss curve — a healthy curve flattens, a diving one is overfitting</h2>
-  <p class="s">Loss is the model's surprise at the next token — two patterns to tell apart.</p>
+  <h2 class="t">A healthy loss curve flattens</h2>
+  <p class="s">Loss is how surprised the LLM is at the next token. Two patterns to tell apart.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A gray definition line reads loss equals how surprised the model is at the next token, from the Module 1 vocabulary. Below it, two panels, each a sketched loss curve on axes. Left, inked and labelled healthy: a curve falling from about 5.0 and then flattening toward about 0.7, tagged falls then flattens, more steps buy little, stop here, the real run's pattern. Right, gray-dashed and labelled suspicious: a curve diving toward zero on a tiny set, tagged keeps dropping to zero equals overfit, memorizing not learning, aces training but fails the real questions. A band reads: train a few epochs and stop — you want it to generalize, not memorize.">
     <!-- definition annotation (M1 vocabulary) -->
     <text x="550" y="28" text-anchor="middle" class="lbl-g">loss = how surprised the model is at the next token (M1)</text>
@@ -532,20 +533,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="840" y="300" text-anchor="middle" class="lbl-g">keeps dropping to zero = OVERFIT</text>
     <text x="840" y="324" text-anchor="middle" class="lbl-g">memorizing, not learning · fails real Qs</text>
   </svg>
-  <div class="pageno">M6·18</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">Merge vs Serve a LoRA Adapter</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Two jigsaw puzzle pieces joined into one on the left, and two pieces deliberately kept apart on the right.">
-    <image href="../img/decks/m6/divider-7-merge-fork.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M6·19</div>
+  <div class="pageno">M6&middot;15</div>
 </section>
 
 <section>
-  <h2 class="t">Merge the adapter in, or serve base + adapter apart — OpsMate merges</h2>
-  <p class="s">Fold the adapter in for one model, or keep it bolted on and swappable.</p>
+  <h2 class="t">Merge the adapter, or serve it apart</h2>
+  <p class="s">Fold it in for one standalone LLM, or keep it bolted on and swappable.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="Two panels. Left, inked with a thicker frame, marked OpsMate's choice: MERGE — fold the adapter into the base to get one standalone model. Plus, it serves like any other model, the stack is unchanged. Minus, the fittings are built in, you cannot swap without re-merging. Right, gray: base plus adapter kept apart — the runtime loads the adapter at serve time. Plus, the adapter stays swappable, one base, many adapters. Minus, the runtime must support adapter loading, not every engine does. A band reads: merge wins here — the goal is one servable model that drops into the existing stack.">
     <!-- MERGE panel (chosen) — green = OpsMate's choice -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
@@ -568,12 +561,12 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- band -->
     <text x="550" y="322" text-anchor="middle" class="lbl-g">merge wins here — the goal is <tspan class="lbl-b">one servable model</tspan> that drops into the existing stack</text>
   </svg>
-  <div class="pageno">M6·20</div>
+  <div class="pageno">M6&middot;16</div>
 </section>
 
 <section>
-  <h2 class="t">Convert the merged model to a GGUF — same quantization, same convert path</h2>
-  <p class="s">It's a normal model now — convert it the way M3 taught, no new machinery.</p>
+  <h2 class="t">Convert the merged LLM to GGUF</h2>
+  <p class="s">It is a normal LLM now, so you convert it the way Module 3 taught.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A pipeline. The merged model, base plus adapter, flows through convert_hf_to_gguf producing q8_0, inked, tagged same quantization from M2, same convert path from M3, about 14 seconds. It lands on a models slash gguf shelf holding two files side by side: base.gguf, v0, in gray, and opsmate-tuned.gguf, v1.0, inked. A band reads: it's a normal model now — convert it the way M3 taught, and drop it beside the base.">
     <!-- merged model -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -615,12 +608,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="308" text-anchor="middle" class="lbl-g">it's a normal model now — convert it the way <tspan class="lbl-b">M3</tspan> taught, and drop it beside the base</text>
   </svg>
-  <div class="pageno">M6·21</div>
+  <div class="pageno">M6&middot;17</div>
 </section>
 
 <section>
-  <h2 class="t">The swap is one env var — same stack, same server, a different file</h2>
-  <p class="s">Deploying the model you trained is a filename change, not a new deployment.</p>
+  <h2 class="t">The swap is one environment variable</h2>
+  <p class="s">Deploying what you trained is a filename change, not a new deployment.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A fixed compose stack box wraps a model service running llama-server, tagged API, retrieval, and eval harness — all unchanged. A single MODEL_GGUF env var points, via a swappable arrow, away from base.gguf, gray and struck, to opsmate-tuned.gguf, inked. It is tagged: change one env var, restart the model service, nothing else moves. A band reads: the OpenAI-compatible endpoint never changed — that is why a model you trained drops in where the base was.">
     <!-- the fixed stack -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -660,20 +653,22 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="324" text-anchor="middle" class="lbl-g">the <tspan class="lbl-b">OpenAI-compatible endpoint never changed</tspan> — that's why a model you trained drops in where the base was</text>
   </svg>
-  <div class="pageno">M6·22</div>
+  <p class="recap fragment">Next: Measuring the Result &mdash; and deciding honestly whether it ships.</p>
+  <div class="pageno">M6&middot;18</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">How to Evaluate a Fine-Tuned Model</h2>
+  <h2 class="t">Measuring the Result</h2>
+  <p class="s">two controls, one scale, and an honest verdict</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A pair of bare feet stepping onto a simple bathroom scale.">
     <image href="../img/decks/m6/divider-8-scale.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M6·23</div>
+  <div class="pageno">M6&middot;19</div>
 </section>
 
 <section>
-  <h2 class="t">Set two controls before you read the number — or you'll misread it</h2>
-  <p class="s">Two controls make the comparison clean before you read beat, tie, or lose.</p>
+  <h2 class="t">Set two controls before you read it</h2>
+  <p class="s">Two controls make the comparison clean before you call it a win or a loss.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two control panels. Left, a retrieval-as-control panel: retrieval 24 of 24 before, 24 of 24 after, filled green with a note tuning changed the model, not the index — if this moved, find the bug before trusting anything else. Right, a no-RAG arm panel: the tuned model with no context versus the base model with no context, filled blue, with a bracket labelled the gap = the value tuning added on its own, isolated from RAG. A band reads: a control that stays put, and an isolated arm — now the beat-tie-lose reading is clean.">
     <!-- retrieval-as-control (green) -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.8"><rect x="50" y="70" width="470" height="200" rx="12" class="f-green"/></g>
@@ -699,21 +694,21 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="160" y="296" width="780" height="40" rx="10"/></g>
     <text x="550" y="323" text-anchor="middle" class="lbl-g">a control that stays put + an isolated arm → now <tspan class="lbl-b">beat / tie / lose</tspan> reads clean</text>
   </svg>
-  <div class="pageno">M6·24</div>
+  <div class="pageno">M6&middot;20</div>
 </section>
 
 <section>
-  <h2 class="t">Weigh it on the same scale — a tuned model always feels better</h2>
-  <p class="s">"I lost weight" means nothing unless you weighed on the same scale.</p>
+  <h2 class="t">Analogy &mdash; weigh on the same scale</h2>
+  <p class="s">&ldquo;I lost weight&rdquo; means nothing unless you weighed on the same scale.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A person stands on a bathroom scale with a faint ghost outline of themselves beside them on the same scale, a before-and-after comparison.">
     <image href="../img/decks/m6/analogy-diet-scale.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M6·25</div>
+  <div class="pageno">M6&middot;21</div>
 </section>
 
 <section>
-  <h2 class="t">On our real run the tune lost — and the baseline refused the ship</h2>
-  <p class="s">Beat, tie, or lose — all three teach; here the number blocked a regression.</p>
+  <h2 class="t">On the real run, the tune lost</h2>
+  <p class="s">Beat, tie or lose &mdash; all three teach. Here the number blocked a regression.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="The honest result table. The tuned model lost on both graded arms: with RAG it scored 2 of 15 against the baseline's 6 of 15, and no-RAG 1 of 15 against 3 of 15 — both down, shown red. The control held at 24 of 24, shown green. A green payoff box reads: the committed baseline refused to let you ship a worse model — a defensible not yet. A gray note: a lose on a knowledge set may still have fixed the voice you tuned for — this set does not measure voice.">
     <!-- result table -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="56" width="600" height="180" rx="12"/></g>
@@ -739,20 +734,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="314" text-anchor="middle" class="lbl-g">honest note: a lose on a <tspan class="lbl-b">knowledge</tspan> set may still have fixed the <tspan class="lbl-b">voice</tspan> you tuned for —</text>
     <text x="550" y="335" text-anchor="middle" class="lbl-g">this set does not measure voice; note what it does and doesn't measure</text>
   </svg>
-  <div class="pageno">M6·26</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">What Artifacts Come Out of Fine-Tuning an LLM?</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Three small distinct objects sitting in a row on a shelf.">
-    <image href="../img/decks/m6/divider-9-artifacts.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M6·27</div>
+  <div class="pageno">M6&middot;22</div>
 </section>
 
 <section>
-  <h2 class="t">The artifacts become OpsMate v1.0 — what M7 packages and versions</h2>
-  <p class="s">Teardown keeps three things — they're the material M7 turns into a release.</p>
+  <h2 class="t">The artifacts become OpsMate v1.0</h2>
+  <p class="s">Teardown keeps three things, and Module 7 turns those into a release.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A hand-off pipeline. A Teardown KEEPS box holds three items: adapter, a few megabytes; tuned GGUF, q8_0; and training logs, step and loss. An arrow leads to M7, package plus sign, which produces OpsMate v1.0, a versioned, signed model artifact, inked, drawn beside v0 base, gray, on a model registry shelf. A band reads: the artifacts are not scratch — they are v1.0, packaged and signed in M7 alongside the v0 base.">
     <!-- teardown keeps -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -797,23 +784,23 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- band -->
     <text x="550" y="312" text-anchor="middle" class="lbl-g">the artifacts are not scratch — they are <tspan class="lbl-b">v1.0</tspan>, packaged and signed in M7 alongside the v0 base</text>
   </svg>
-  <div class="pageno">M6·28</div>
+  <div class="pageno">M6&middot;23</div>
 </section>
 
 <section>
   <p class="kicker">MODULE 6 &nbsp;·&nbsp; FINE-TUNING — SYNTHETIC DATA, LoRA &amp; QLoRA</p>
-  <h2 class="t" style="font-size:2.05em">The whole loop — decide, build the data, tune, and measure honestly</h2>
+  <h2 class="t" style="font-size:2.05em">What you carry into the lab</h2>
   <p class="s">The skill is the whole loop — and the part most people skip is the last one.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A confident presenter points at a clipboard with three checked-off items, next to three small distinct artifacts on a shelf.">
     <image href="../img/decks/m6/closing-presenter-artifacts.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">the part most people skip is <b>#4</b> &nbsp;·&nbsp; now open <b>Module 6 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M6·29</div>
+  <div class="pageno">M6&middot;24</div>
 </section>
 
 <section>
-  <h2 class="t">Next: generate data, run the tune, weigh it honestly</h2>
-  <p class="s">Build it, then weigh it on the same scale as the baseline.</p>
+  <h2 class="t">What you will do as part of the lab</h2>
+  <p class="s">Generate the data, run the tune, then weigh it honestly.</p>
   <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: the stack shuts down to free memory for training; synthetic pairs are generated and then filtered, kept and rejected examples both readable; a real LoRA tune runs while the loss streams into the X-Ray Train lens; the adapter is merged, converted to a GGUF, and swapped in with one environment variable; the tuned model is weighed on the same golden set and graders as the baseline; and three artifacts survive the teardown for Module 7 to version.">
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="40" y="30" width="140" height="140" rx="12"/></g>
@@ -863,7 +850,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="1010" y="218" text-anchor="middle" class="lbl-sm">for M7 to version</text>
     </g>
   </svg>
-  <div class="pageno">M6·30</div>
+  <div class="pageno">M6&middot;25</div>
 </section>
 </div></div>
 

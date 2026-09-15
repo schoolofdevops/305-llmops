@@ -92,7 +92,9 @@ footer, header, hgroup, main, menu, nav, section {
   .reveal svg{ order:2; width:100%; flex:1 1 0; min-height:0; max-height:68%; display:block; margin:auto 0; }
   .reveal .kicker{ order:0; font-size:.8em; color:var(--gray); letter-spacing:2px; }
   .reveal .slides section.divider{ justify-content:center; align-items:center; }
-  .reveal .slides section.divider h2.t{ order:2; font-size:1.1em; max-width:76%; }
+  .reveal .slides section.divider h2.t{ order:2; font-size:2.1em; max-width:80%; }
+  .reveal .slides section.divider p.s{ order:3; font-size:1em; max-width:70%; text-align:center; margin-top:4px; }
+  .reveal p.recap{ order:4; font-size:0.72em; color:var(--ink); margin-top:10px; max-width:92%; align-self:center; }
   .reveal .slides section.divider svg{ order:1; }
   .reveal .credit{ order:4; font-size:.85em; color:var(--gray); margin-top:16px; }
   .reveal .credit b{ color:var(--ink); font-weight:700; }
@@ -133,35 +135,108 @@ footer, header, hgroup, main, menu, nav, section {
 
 <!-- ============ SLIDE 1 — TITLE ============ -->
 <section data-auto-animate>
-  <p class="kicker">MODULE 2 &nbsp;·&nbsp; MODELS, QUANTIZATION &amp; THE API CONTRACT</p>
-  <h2 class="t" style="font-size:2.1em">Two decisions before you serve a model</h2>
-  <p class="s" style="font-size:1.2em">You chose to self-host — now which model, will it fit, how do you talk to it?</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A person stands at a fork in the road facing two signposts, one marked with a small box icon for which model, the other with a plug icon for which contract.">
-    <image href="../img/decks/m2/title-two-decisions.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  <p class="kicker">MODULE 2</p>
+  <h2 class="t" style="font-size:1.9em">Which LLM, and How Do You Talk to It?</h2>
+  <p class="s" style="font-size:1.05em">Memory maths, quantization, model cards, and the API.</p>
+  <svg viewBox="0 0 1100 420" role="img" aria-label="A sketched weighing scale holding a stack of model files on one pan against a memory chip on the other, with a plug and socket drawn beside it.">
+    <!-- the scale: does it fit? -->
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <path d="M300,330 L420,330 L360,150 Z"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+      <path d="M200,150 L520,150"/>
+      <path d="M230,150 L230,196"/>
+      <path d="M490,150 L490,196"/>
+    </g>
+    <!-- left pan: a stack of model files -->
+    <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="188" y="196" width="84" height="22" rx="5"/>
+      <rect x="188" y="222" width="84" height="22" rx="5"/>
+      <rect x="188" y="248" width="84" height="22" rx="5"/>
+    </g>
+    <!-- right pan: the box it has to fit in -->
+    <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="444" y="196" width="92" height="74" rx="8"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M462,270 L462,292"/>
+      <path d="M490,270 L490,292"/>
+      <path d="M518,270 L518,292"/>
+    </g>
+    <!-- the contract: plug and socket -->
+    <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="700" y="188" width="120" height="96" rx="10"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M820,214 L880,214"/>
+      <path d="M820,258 L880,258"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="880" y="188" width="110" height="96" rx="10"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 6">
+      <path d="M760,300 L760,338"/>
+      <path d="M935,300 L935,338"/>
+    </g>
   </svg>
-  <p class="credit"><b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI &nbsp;·&nbsp; Lesson + Lab + Quiz</p>
+  <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M2·01</div>
 </section>
 
-<section class="divider">
-  <h2 class="t">When You Must Choose the Model Yourself</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A person looks up at an overwhelming wall of identical unlabeled boxes stacked floor to ceiling.">
-    <image href="../img/decks/m2/divider-0-intro-wall-of-boxes.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+<section>
+  <h2 class="t">What this module covers</h2>
+  <p class="s">Five concepts, from picking an LLM to calling it.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A numbered contents list of the module's five concepts: memory, quantization, model cards and formats, the OpenAI-compatible API, and choosing a model.">
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="60" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="87" text-anchor="middle" class="lbl-b" style="font-size:20px">1</text>
+    <text x="320" y="87" class="lbl-b" style="font-size:23px">Memory</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="126" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="153" text-anchor="middle" class="lbl-b" style="font-size:20px">2</text>
+    <text x="320" y="153" class="lbl-b" style="font-size:23px">Quantization</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="192" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="219" text-anchor="middle" class="lbl-b" style="font-size:20px">3</text>
+    <text x="320" y="219" class="lbl-b" style="font-size:23px">Model Cards and Formats</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="258" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="285" text-anchor="middle" class="lbl-b" style="font-size:20px">4</text>
+    <text x="320" y="285" class="lbl-b" style="font-size:23px">The OpenAI-Compatible API</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2">
+      <rect x="250" y="324" width="40" height="40" rx="8"/>
+    </g>
+    <text x="270" y="351" text-anchor="middle" class="lbl-b" style="font-size:20px">5</text>
+    <text x="320" y="351" class="lbl-b" style="font-size:23px">Choosing a Model</text>
   </svg>
   <div class="pageno">M2·02</div>
 </section>
 
-<section class="divider">
-  <h2 class="t">How Much Memory Does an LLM Need? &mdash; memory math explained</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A balance scale weighs a stack of numbered blocks against a single large disk.">
-    <image href="../img/decks/m2/divider-1-memory-scale.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+<section>
+  <h2 class="t">Three decisions this module answers</h2>
+  <p class="s">Which LLM to run, whether it fits, and how you call it.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A person looks up at an overwhelming wall of identical unlabeled boxes stacked floor to ceiling.">
+    <image href="../img/decks/m2/divider-0-intro-wall-of-boxes.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M2·03</div>
 </section>
 
+<section class="divider">
+  <h2 class="t">Memory</h2>
+  <p class="s">how much an LLM needs, and where it goes</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A balance scale weighs a stack of numbered blocks against a single large disk.">
+    <image href="../img/decks/m2/divider-1-memory-scale.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M2·04</div>
+</section>
+
 <section>
-  <h2 class="t">A model is mostly weights — the B is billions of numbers</h2>
-  <p class="s">Will it fit? The count is fixed — bytes per number is your choice.</p>
+  <h2 class="t">An LLM is mostly weights</h2>
+  <p class="s">The parameter count is fixed. The bytes per parameter are your choice.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="A blue box holds 751.63 million numbers, labelled parameter count, fixed by the model. An arrow points to three chips showing the precision choice: FP16 spends two bytes per number, Q8 one byte, Q4 half a byte. A dashed band reads: same numbers, fewer bytes each.">
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
       <rect x="60" y="110" width="330" height="150" rx="14"/>
@@ -171,7 +246,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="225" y="300" text-anchor="middle" class="lbl-b">parameter count — fixed</text>
 
     <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
         <path d="M395,185 L470,185" marker-end="url(#ah)"/>
       </g>
       <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8">
@@ -192,21 +267,21 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="760" y="340" text-anchor="middle" class="lbl-b">precision — bytes you spend per number</text>
     </g>
   </svg>
-  <div class="pageno">M2·04</div>
-</section>
-
-<section>
-  <h2 class="t">A model is a photo library — the count is fixed, you choose the bytes</h2>
-  <p class="s">Full-res fills the disk; compressed fits far more.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="Two hands hold up two photographs side by side, one crisp and one pixelated, with a stack of more photographs to the side.">
-    <image href="../img/decks/m2/analogy-quantization-photolib.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
   <div class="pageno">M2·05</div>
 </section>
 
 <section>
-  <h2 class="t">Let&#39;s do the sum — 752M parameters at three precisions</h2>
-  <p class="s">751.63M params &#215; bytes per param — the same model at 1.4, 0.8, 0.5 GB.</p>
+  <h2 class="t">Analogy &mdash; a photo library</h2>
+  <p class="s">Full-resolution fills the disk. Compressed fits far more of the same photos.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="Two hands hold up two photographs side by side, one crisp and one pixelated, with a stack of more photographs to the side.">
+    <image href="../img/decks/m2/analogy-quantization-photolib.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M2·06</div>
+</section>
+
+<section>
+  <h2 class="t">752M parameters at three precisions</h2>
+  <p class="s">Parameters into bytes per parameter &mdash; the same LLM at 1.4, 0.8 and 0.5 GB.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="The real course model's 751.63 million parameters feed a three-row table showing FP16 at two bytes per parameter costing about 1.4 gigabytes, Q8 at one byte costing about 0.8 gigabytes, and Q4 at half a byte costing about 0.5 gigabytes, with a formula reading parameters times bytes-per-parameter equals weights memory.">
     <!-- params source -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3">
@@ -228,7 +303,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
 
     <g class="fragment">
-      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
         <path d="M282,198 L360,198" marker-end="url(#ah)"/>
       </g>
       <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.6">
@@ -258,12 +333,12 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="550" y="372" text-anchor="middle" class="lbl-b">params × bytes-per-param = weights memory</text>
     </g>
   </svg>
-  <div class="pageno">M2·06</div>
+  <div class="pageno">M2·07</div>
 </section>
 
 <section>
-  <h2 class="t">Weights are not the whole bill — the box holds three things</h2>
-  <p class="s">Serving memory goes three places — quantization only shrinks the biggest one.</p>
+  <h2 class="t">Weights are not the whole bill</h2>
+  <p class="s">Serving memory goes three places. Quantization shrinks only the biggest one.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="An outer box labelled memory of a serving box contains three inner blocks: weights, sized by params times bytes; runtime buffers, the engine's scratch space; and the KV cache, the M1 capacity number. A caption notes this is why the loaded size beats the disk size.">
     <!-- outer box -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -295,20 +370,70 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="288" text-anchor="middle" class="lbl-g">this is why loaded size &gt; disk size — you budget all three, not just the weights</text>
   </svg>
-  <div class="pageno">M2·07</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">What Is Quantization? &mdash; the photo at lower resolution</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A landscape photograph degrades through four stages down to blocky pixelation.">
-    <image href="../img/decks/m2/divider-2-quantization-photo.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
+  <p class="recap fragment">Next: Quantization &mdash; how you make the biggest of those three smaller.</p>
   <div class="pageno">M2·08</div>
 </section>
 
+<section class="divider">
+  <h2 class="t">Quantization</h2>
+  <p class="s">fewer bits per weight, and what that costs you</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A landscape photograph degrades through four stages down to blocky pixelation.">
+    <image href="../img/decks/m2/divider-2-quantization-photo.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M2·09</div>
+</section>
+
 <section>
-  <h2 class="t">Quantization is the photo at lower resolution</h2>
-  <p class="s">Store each weight in fewer bits — the same photo, recorded more coarsely.</p>
+  <h2 class="t">Fewer bits for each weight</h2>
+  <p class="s">The parameter count never changes. Only the bytes you spend on each one.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="One weight value shown at three precisions: sixteen bits at FP16, eight bits at Q8 and four bits at Q4, with the stored number getting coarser each time while the count of weights stays the same.">
+    <text x="60" y="66" class="lbl-b" style="font-size:22px">one weight, stored three ways</text>
+
+    <g class="fragment">
+      <text x="60" y="130" class="lbl-b" style="font-size:21px">FP16</text>
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8">
+        <rect x="190" y="106" width="28" height="34" rx="4"/><rect x="222" y="106" width="28" height="34" rx="4"/>
+        <rect x="254" y="106" width="28" height="34" rx="4"/><rect x="286" y="106" width="28" height="34" rx="4"/>
+        <rect x="318" y="106" width="28" height="34" rx="4"/><rect x="350" y="106" width="28" height="34" rx="4"/>
+        <rect x="382" y="106" width="28" height="34" rx="4"/><rect x="414" y="106" width="28" height="34" rx="4"/>
+        <rect x="446" y="106" width="28" height="34" rx="4"/><rect x="478" y="106" width="28" height="34" rx="4"/>
+        <rect x="510" y="106" width="28" height="34" rx="4"/><rect x="542" y="106" width="28" height="34" rx="4"/>
+        <rect x="574" y="106" width="28" height="34" rx="4"/><rect x="606" y="106" width="28" height="34" rx="4"/>
+        <rect x="638" y="106" width="28" height="34" rx="4"/><rect x="670" y="106" width="28" height="34" rx="4"/>
+      </g>
+      <text x="720" y="130" class="lbl">16 bits &middot; 2 bytes &middot; 0.3274618</text>
+    </g>
+
+    <g class="fragment">
+      <text x="60" y="222" class="lbl-b" style="font-size:21px">Q8</text>
+      <g filter="url(#rough)" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="1.8">
+        <rect x="190" y="198" width="28" height="34" rx="4"/><rect x="222" y="198" width="28" height="34" rx="4"/>
+        <rect x="254" y="198" width="28" height="34" rx="4"/><rect x="286" y="198" width="28" height="34" rx="4"/>
+        <rect x="318" y="198" width="28" height="34" rx="4"/><rect x="350" y="198" width="28" height="34" rx="4"/>
+        <rect x="382" y="198" width="28" height="34" rx="4"/><rect x="414" y="198" width="28" height="34" rx="4"/>
+      </g>
+      <text x="720" y="222" class="lbl">8 bits &middot; 1 byte &middot; 0.3275</text>
+    </g>
+
+    <g class="fragment">
+      <text x="60" y="314" class="lbl-b" style="font-size:21px">Q4</text>
+      <g filter="url(#rough)" fill="#f8cecc" stroke="#1e1e1e" stroke-width="1.8">
+        <rect x="190" y="290" width="28" height="34" rx="4"/><rect x="222" y="290" width="28" height="34" rx="4"/>
+        <rect x="254" y="290" width="28" height="34" rx="4"/><rect x="286" y="290" width="28" height="34" rx="4"/>
+      </g>
+      <text x="720" y="314" class="lbl">4 bits &middot; &frac12; byte &middot; 0.33</text>
+    </g>
+
+    <g class="fragment">
+      <text x="550" y="378" text-anchor="middle" class="lbl-b" style="font-size:20px">751.63M weights either way &mdash; only the bytes per weight change</text>
+    </g>
+  </svg>
+  <div class="pageno">M2·10</div>
+</section>
+
+<section>
+  <h2 class="t">Analogy &mdash; the same photo, lower resolution</h2>
+  <p class="s">Store each weight more coarsely. The same picture, recorded with less detail.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="The same portrait printed twice: on the left at 300 DPI, crisp, over a tall stack of ink; on the right at 72 DPI, blocky, over a short stack of ink. A caption reads same picture, less fine detail, far smaller.">
     <!-- 300 DPI: crisp portrait -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
@@ -351,12 +476,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="340" text-anchor="middle" class="lbl-g">same picture · less fine detail · far smaller — that is quantization on a model's weights</text>
   </svg>
-  <div class="pageno">M2·09</div>
+  <div class="pageno">M2·11</div>
 </section>
 
 <section>
-  <h2 class="t">The 4-bit model decodes <em>faster</em> — because decode is bandwidth-bound</h2>
-  <p class="s">You would expect the smaller model to be slower. It is not.</p>
+  <h2 class="t">The 4-bit LLM decodes faster</h2>
+  <p class="s">You would expect the smaller one to be slower. It is not.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels compare the two quants. Q4 is 522 megabytes and decodes at 178 tokens per second with few bytes moved per token, shown as a wide arrow. Q8 is 832 megabytes and decodes at 136 tokens per second with more bytes per token, shown as a narrow arrow. A band explains decode is bandwidth-bound, so fewer bytes per token means more tokens per second.">
     <!-- Q4 panel (the winner) -->
     <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="3">
@@ -364,7 +489,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="280" y="82" text-anchor="middle" class="lbl-b">Q4 · 522 MB</text>
     <text x="280" y="118" text-anchor="middle" class="lbl-g">half the bytes per weight</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="4" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="4" stroke-linecap="round">
       <path d="M110,168 L440,168" marker-end="url(#ah)"/>
     </g>
     <text x="275" y="152" text-anchor="middle" class="lbl-g">fewer bytes moved / token</text>
@@ -377,7 +502,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="820" y="82" text-anchor="middle" class="lbl-b">Q8 · 832 MB</text>
     <text x="820" y="118" text-anchor="middle" class="lbl-g">more bytes per weight</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
+    <g fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
       <path d="M650,168 L820,168" marker-end="url(#ahg)"/>
     </g>
     <text x="815" y="152" text-anchor="middle" class="lbl-g">more bytes / token</text>
@@ -389,12 +514,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="322" text-anchor="middle" class="lbl-g">decode is memory-bandwidth-bound (M1) — fewer bytes / token = more tokens / sec</text>
   </svg>
-  <div class="pageno">M2·10</div>
+  <div class="pageno">M2·12</div>
 </section>
 
 <section>
-  <h2 class="t">The honest cost is quality headroom, not speed</h2>
-  <p class="s">Q4 is not free — quality always costs something, and you verify it on your task.</p>
+  <h2 class="t">The cost is quality, not speed</h2>
+  <p class="s">Q4 is not free. Quality always costs something, and you verify it on your task.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A staircase descends through precisions FP16, Q8, Q4, then Q3 and Q2. A gray wedge of quality headroom shrinks as it descends. An annotation on the shallow steps reads small model: subtle; an annotation on the steep steps reads large or aggressive: visible.">
     <!-- descending staircase: safe (green) → mid (orange) → risky (red) -->
     <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8">
@@ -432,20 +557,22 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="965" y="340">visible</text>
     </g>
   </svg>
-  <div class="pageno">M2·11</div>
+  <p class="recap fragment">Next: Model Cards and Formats &mdash; where you read all of this off the LLM you were handed.</p>
+  <div class="pageno">M2·13</div>
 </section>
 
 <section class="divider">
-  <h2 class="t">How to Read a Model Card &mdash; the label on the medicine strip</h2>
+  <h2 class="t">Model Cards and Formats</h2>
+  <p class="s">reading what you were handed, before you run it</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A hand holds a blister strip of medicine up to the light to read its label.">
     <image href="../img/decks/m2/divider-3-modelcard-medicine.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M2·12</div>
+  <div class="pageno">M2·14</div>
 </section>
 
 <section>
-  <h2 class="t">A model card is the label on the medicine strip</h2>
-  <p class="s">You read the label before you take the pill — the model card is that label.</p>
+  <h2 class="t">What a model card tells you</h2>
+  <p class="s">Four fields decide whether you can run it, and whether you may ship it.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="On the left, a strip of medicine with a label listing dose, maker, use and expiry. On the right, a terminal model card from ollama show listing parameters 751.63M annotated branding rounds, context length 40960 max versus 4096 configured annotated supports is not configured, quantization Q4_K_M, and licence.">
     <!-- medicine strip + label (the analogy) — fragment 1 -->
     <g class="fragment">
@@ -462,7 +589,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="160" y="356" text-anchor="middle" class="lbl-g">dose · maker · use · expiry</text>
       <text x="135" y="46" text-anchor="middle" class="lbl-g">don't take an unlabelled pill</text>
 
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
+      <g fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
         <path d="M290,180 L360,180" marker-end="url(#ahg)"/>
       </g>
     </g>
@@ -473,7 +600,7 @@ footer, header, hgroup, main, menu, nav, section {
         <rect x="370" y="40" width="700" height="336" rx="12"/>
       </g>
       <text x="720" y="78" text-anchor="middle" class="lbl-b">ollama show — the card in your terminal</text>
-      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
         <path d="M390,96 L1050,96"/>
       </g>
       <g class="lbl" text-anchor="start">
@@ -496,12 +623,12 @@ footer, header, hgroup, main, menu, nav, section {
       </g>
     </g>
   </svg>
-  <div class="pageno">M2·13</div>
+  <div class="pageno">M2·15</div>
 </section>
 
 <section>
-  <h2 class="t">"Supports 40k" is not "running at 40k"</h2>
-  <p class="s">The context-length field is a trap — it's the maximum, not what you run.</p>
+  <h2 class="t">“Supports 40k” is not running at 40k</h2>
+  <p class="s">The context-length field is the maximum, not the setting you run.</p>
   <svg viewBox="0 0 1100 400" role="img" aria-label="Two window frames sized to the same model card. The left frame configured at 4096 tokens is small with a modest blue KV-cache block beneath it. The right frame at the full 40960 tokens is ten times wider, its KV-cache block swelling red to roughly 4.5 gigabytes. A caption reads: you pay for the context you configure, not the max the card advertises.">
     <!-- the card's advertised max (the data) -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.6">
@@ -525,7 +652,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="155" y="316" text-anchor="middle" class="lbl-g">you pay for this</text>
 
     <!-- divider -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
       <line x1="300" y1="120" x2="300" y2="330"/>
     </g>
 
@@ -546,14 +673,14 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7">
       <rect x="140" y="352" width="820" height="42" rx="10"/>
     </g>
-    <text x="550" y="379" text-anchor="middle" class="lbl-g">you pay for the context you <em>configure</em>, not the maximum the card advertises</text>
+    <text x="550" y="379" text-anchor="middle" class="lbl-g">you pay for the context you configure, not the maximum the card advertises</text>
   </svg>
-  <div class="pageno">M2·14</div>
+  <div class="pageno">M2·16</div>
 </section>
 
 <section>
-  <h2 class="t">The licence field decides what you may ship</h2>
-  <p class="s">The field engineers skip and lawyers don't — three classes, different rights.</p>
+  <h2 class="t">The licence decides what you may ship</h2>
+  <p class="s">The field engineers skip and lawyers do not. Three classes of rights.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Three numbered licence classes: Apache-2.0 or MIT, permissive — use, fine-tune and redistribute, the Qwen3 case that lets this course fine-tune in M6 and redistribute in M7; community or custom licences like Llama, commercial but with conditions; and research-only or non-commercial, experiment but do not ship. A line notes: read it before you build, later costs a rebuild.">
     <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6">
       <circle cx="90" cy="60" r="28"/>
@@ -584,20 +711,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="320" text-anchor="middle" class="lbl-g">read the licence BEFORE you build — finding out after you ship is a rebuild, not a config change</text>
   </svg>
-  <div class="pageno">M2·15</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">GGUF vs Safetensors &mdash; which runner can run this model</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A single key hovers above three different lock types, only one of which it will fit.">
-    <image href="../img/decks/m2/divider-4-engine-key.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
-  <div class="pageno">M2·16</div>
+  <div class="pageno">M2·17</div>
 </section>
 
 <section>
-  <h2 class="t">Format picks the engine — GGUF for Ollama, safetensors for vLLM</h2>
-  <p class="s">Two questions pick the engine: what format is it, what are you serving on?</p>
+  <h2 class="t">Format picks the engine</h2>
+  <p class="s">GGUF goes to Ollama and llama.cpp. Safetensors goes to vLLM.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Two paired rows. GGUF, a quantized single file, maps to Ollama and llama.cpp for CPU and Apple Silicon serving, used in modules 1 and 2. Safetensors, holding FP16 or AWQ and GPTQ weights, maps to vLLM for GPU serving from module 3 on. A line asks: what format, and what am I serving on.">
     <!-- GGUF row -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8">
@@ -605,7 +724,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="240" y="98" text-anchor="middle" class="lbl-b">GGUF</text>
     <text x="240" y="128" text-anchor="middle" class="lbl-g">quantized · single file</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M422,105 L560,105" marker-end="url(#ah)"/>
     </g>
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.8">
@@ -620,7 +739,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="240" y="228" text-anchor="middle" class="lbl-b">safetensors</text>
     <text x="240" y="258" text-anchor="middle" class="lbl-g">FP16 · AWQ / GPTQ</text>
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
+    <g fill="none" stroke="#757575" stroke-width="2.4" stroke-linecap="round">
       <path d="M422,235 L560,235" marker-end="url(#ahg)"/>
     </g>
     <g filter="url(#rough)" fill="#e1d5e7" stroke="#757575" stroke-width="2.4">
@@ -631,29 +750,22 @@ footer, header, hgroup, main, menu, nav, section {
 
     <text x="550" y="316" text-anchor="middle" class="lbl-g">handed a model, ask two things: what format? · what am I serving on?</text>
   </svg>
-  <div class="pageno">M2·17</div>
-</section>
-
-<section class="divider">
-  <h2 class="t">What Is the OpenAI-Compatible API? &mdash; a call centre with no memory</h2>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A switchboard operator plugs cables into a large panel of jacks.">
-    <image href="../img/decks/m2/divider-5-switchboard.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
-  </svg>
+  <p class="recap fragment">Next: The OpenAI-Compatible API &mdash; how your code actually talks to it.</p>
   <div class="pageno">M2·18</div>
 </section>
 
-<section>
-  <h2 class="t">The API is a call centre with no memory</h2>
-  <p class="s">The API is stateless — the server remembers nothing, so the client re-tells it.</p>
-  <svg viewBox="0 0 1600 900" role="img" aria-label="A customer on the phone talks to a call-centre agent wearing a headset, who has a blank notepad in a thought bubble above her head.">
-    <image href="../img/decks/m2/analogy-callcentre.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+<section class="divider">
+  <h2 class="t">The OpenAI-Compatible API</h2>
+  <p class="s">one stateless contract, and where it drifts</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A switchboard operator plugs cables into a large panel of jacks.">
+    <image href="../img/decks/m2/divider-5-switchboard.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <div class="pageno">M2·19</div>
 </section>
 
 <section>
-  <h2 class="t">A chat request is a list of messages — the client carries the context</h2>
-  <p class="s">system, user, assistant, user — the whole history, resent every turn.</p>
+  <h2 class="t">A request is a list of messages</h2>
+  <p class="s">system, user, assistant, user &mdash; the whole history, resent every turn.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="A messages list with roles system, user, assistant, user. The system row is the standing instruction; the assistant row is boxed and captioned fed back in — the model did not remember saying it, the client reminded it.">
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
       <rect x="270" y="40" width="560" height="290" rx="12"/>
@@ -689,8 +801,17 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">Every turn resends the whole chat — so tokens climb</h2>
-  <p class="s">Each turn resends every turn before it — so tokens climb call after call.</p>
+  <h2 class="t">Analogy &mdash; a call centre with no memory</h2>
+  <p class="s">Every call starts cold, so the caller repeats the whole story each time.</p>
+  <svg viewBox="0 0 1600 900" role="img" aria-label="A customer on the phone talks to a call-centre agent wearing a headset, who has a blank notepad in a thought bubble above her head.">
+    <image href="../img/decks/m2/analogy-callcentre.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
+  </svg>
+  <div class="pageno">M2·21</div>
+</section>
+
+<section>
+  <h2 class="t">Every turn resends the whole chat</h2>
+  <p class="s">Each turn resends every turn before it, so the token count climbs.</p>
   <svg viewBox="0 0 1100 380" role="img" aria-label="A staircase of chat turns climbing left to right. Turn one is a single small blue message block; each later turn is a taller stack because it re-sends every message before it, plus the new one. By turn ten the stack is the tallest and shaded red, labelled carries all nine turns before it. A gray band reads: stateless server means the client re-tells the whole story every turn.">
     <!-- climbing staircase of turns -->
     <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4">
@@ -730,12 +851,12 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="371" text-anchor="middle" class="lbl-g" style="font-size:15px">stateless server → the client re-tells the whole story every turn</text>
   </svg>
-  <div class="pageno">M2·21</div>
+  <div class="pageno">M2·22</div>
 </section>
 
 <section>
-  <h2 class="t">Read the response: usage is the billing meter</h2>
-  <p class="s">Three fields earn your attention: what it cost, why it stopped, how it streams.</p>
+  <h2 class="t">Reading the response</h2>
+  <p class="s">Three fields earn your attention: usage, finish_reason, and the stream.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="A response body with three blocks. Usage reports prompt, completion and total tokens — the bill and the KV fill. finish_reason is stop, meaning done, versus length, meaning cut off at max_tokens, drawn dashed as a warning. Streaming delivers the same answer as delta chunks over the wire.">
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
       <rect x="60" y="40" width="980" height="230" rx="14"/>
@@ -772,12 +893,12 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="865" y="232">first token fast (M1 decode)</text>
     </g>
   </svg>
-  <div class="pageno">M2·22</div>
+  <div class="pageno">M2·23</div>
 </section>
 
 <section>
-  <h2 class="t">"Compatible" is mostly kept, not perfectly</h2>
-  <p class="s">Every engine bends the spec at the edges — and the drift grows over time.</p>
+  <h2 class="t">“Compatible” is mostly kept, not exactly</h2>
+  <p class="s">Every engine bends the spec at the edges, and the drift grows over time.</p>
   <svg viewBox="0 0 1100 360" role="img" aria-label="A two-panel comparison. On the left, the OpenAI spec's defined streaming chunk lists role, content and finish_reason. On the right, Ollama's actual chunk lists the same fields plus an extra field delta.reasoning boxed in red and captioned not in the spec. A line reads: the same call, an extra field — compatibility drift.">
     <!-- LEFT: the spec (neutral, the agreed format) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -796,7 +917,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
 
     <!-- divider -->
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="5 7">
       <line x1="550" y1="70" x2="550" y2="300"/>
     </g>
 
@@ -823,12 +944,12 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1010" y="302" text-anchor="end" class="lbl-g" fill="#c62828" style="font-size:15px">not in the spec</text>
     <text x="550" y="348" text-anchor="middle" class="lbl-g">same call, an extra field — this is compatibility drift, and it grows with every new feature</text>
   </svg>
-  <div class="pageno">M2·23</div>
+  <div class="pageno">M2·24</div>
 </section>
 
 <section>
-  <h2 class="t">The API is a moving target — a gateway absorbs it</h2>
-  <p class="s">The API keeps moving — a gateway in front gives the client one stable face.</p>
+  <h2 class="t">A gateway absorbs the drift</h2>
+  <p class="s">The API keeps moving. A gateway gives your client one stable face.</p>
   <svg viewBox="0 0 1100 340" role="img" aria-label="Three backends — Ollama, vLLM and a provider API — each tagged with its own divergence, converge on a single purple gateway box presenting one API, which a single client speaks to. The gateway is tagged M12.">
     <!-- three backends, each with its own divergence (warning) -->
     <g filter="url(#rough)" fill="#f8cecc" stroke="#757575" stroke-width="2.4">
@@ -859,7 +980,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="690" y="162" text-anchor="middle" class="lbl-b">gateway</text>
     <text x="690" y="192" text-anchor="middle" class="lbl-g">one API in front · M12</text>
     <!-- to client -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round">
       <path d="M827,170 L920,170" marker-end="url(#ah)"/>
     </g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
@@ -868,7 +989,136 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1000" y="178" text-anchor="middle" class="lbl-b">client</text>
     <text x="550" y="322" text-anchor="middle" class="lbl-g">the client speaks one API — the gateway translates each backend's drift and format behind it</text>
   </svg>
-  <div class="pageno">M2·24</div>
+  <p class="recap fragment">Next: Choosing a Model &mdash; putting all of it on one card you can defend.</p>
+  <div class="pageno">M2·25</div>
+</section>
+
+<section class="divider">
+  <h2 class="t">Choosing a Model</h2>
+  <p class="s">seven rows you answer with evidence</p>
+  <svg viewBox="0 0 900 380" role="img" aria-label="A sketched checklist card with seven ruled rows, five of them ticked and two left blank.">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="290" y="70" width="320" height="250" rx="12"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M380,110 L580,110"/><path d="M380,144 L580,144"/><path d="M380,178 L580,178"/>
+      <path d="M380,212 L580,212"/><path d="M380,246 L580,246"/><path d="M380,280 L580,280"/>
+    </g>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
+      <path d="M320,104 L330,114 L348,94"/>
+      <path d="M320,138 L330,148 L348,128"/>
+      <path d="M320,172 L330,182 L348,162"/>
+      <path d="M320,206 L330,216 L348,196"/>
+      <path d="M320,240 L330,250 L348,230"/>
+    </g>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="4 5">
+      <rect x="316" y="266" width="34" height="28" rx="5"/>
+    </g>
+  </svg>
+  <div class="pageno">M2·26</div>
+</section>
+
+<section>
+  <h2 class="t">Seven rows decide a model, not one</h2>
+  <p class="s">Every section of this module answered one row. The card puts them side by side.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="Seven labelled rows of a model-selection scorecard: quality, licence, memory, latency, context, tool use and cost, each naming where its evidence comes from.">
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="70" y="60" width="300" height="52" rx="8"/>
+        <rect x="70" y="124" width="300" height="52" rx="8"/>
+        <rect x="70" y="188" width="300" height="52" rx="8"/>
+      </g>
+      <g class="lbl-b" style="font-size:21px">
+        <text x="92" y="93">quality</text><text x="92" y="157">licence</text><text x="92" y="221">memory</text>
+      </g>
+      <g class="lbl-g">
+        <text x="200" y="93">your own eval set (M5)</text>
+        <text x="200" y="157">the card's licence field</text>
+        <text x="200" y="221">the sum from this module</text>
+      </g>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="70" y="252" width="300" height="52" rx="8"/>
+        <rect x="70" y="316" width="300" height="52" rx="8"/>
+      </g>
+      <g class="lbl-b" style="font-size:21px">
+        <text x="92" y="285">latency</text><text x="92" y="349">context</text>
+      </g>
+      <g class="lbl-g">
+        <text x="200" y="285">a real decode benchmark</text>
+        <text x="200" y="349">the number you configure</text>
+      </g>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 6">
+        <rect x="620" y="124" width="400" height="52" rx="8"/>
+        <rect x="620" y="188" width="400" height="52" rx="8"/>
+      </g>
+      <g class="lbl-b" style="font-size:21px">
+        <text x="642" y="157">tool use</text><text x="642" y="221">cost</text>
+      </g>
+      <g class="lbl-g">
+        <text x="760" y="157">a structured-output test (M13)</text>
+        <text x="760" y="221">a real capacity plan (M8)</text>
+      </g>
+      <text x="820" y="96" text-anchor="middle" class="lbl-b" style="font-size:20px">not measured in this course</text>
+    </g>
+  </svg>
+  <div class="pageno">M2·27</div>
+</section>
+
+<section>
+  <h2 class="t">The card filled in — Q4 against Q8</h2>
+  <p class="s">The one comparison this module actually measured, on the course model.</p>
+  <svg viewBox="0 0 1100 400" role="img" aria-label="A filled scorecard comparing Q4_K_M and Q8_0 of the same 0.6B model across quality, licence, loaded memory, decode latency and context.">
+    <g class="lbl-b" style="font-size:22px">
+      <text x="430" y="62" text-anchor="middle">Q4_K_M</text>
+      <text x="800" y="62" text-anchor="middle">Q8_0</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="300" y="86" width="260" height="50" rx="8"/>
+      </g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="670" y="86" width="260" height="50" rx="8"/>
+      </g>
+      <text x="70" y="118" class="lbl-b" style="font-size:21px">memory</text>
+      <text x="430" y="118" text-anchor="middle" class="lbl">~1.0 GB loaded</text>
+      <text x="800" y="118" text-anchor="middle" class="lbl">~1.3 GB loaded</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="300" y="148" width="260" height="50" rx="8"/>
+      </g>
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="670" y="148" width="260" height="50" rx="8"/>
+      </g>
+      <text x="70" y="180" class="lbl-b" style="font-size:21px">latency</text>
+      <text x="430" y="180" text-anchor="middle" class="lbl">~180 tok/s decode</text>
+      <text x="800" y="180" text-anchor="middle" class="lbl">~140 tok/s decode</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="300" y="210" width="260" height="50" rx="8"/>
+        <rect x="670" y="210" width="260" height="50" rx="8"/>
+      </g>
+      <text x="70" y="242" class="lbl-b" style="font-size:21px">quality</text>
+      <text x="430" y="242" text-anchor="middle" class="lbl">subtle gap</text>
+      <text x="800" y="242" text-anchor="middle" class="lbl">slightly crisper</text>
+    </g>
+    <g class="fragment">
+      <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
+        <rect x="300" y="272" width="630" height="50" rx="8"/>
+      </g>
+      <text x="70" y="304" class="lbl-b" style="font-size:21px">licence</text>
+      <text x="615" y="304" text-anchor="middle" class="lbl">Apache-2.0 on both &mdash; same card</text>
+    </g>
+    <g class="fragment">
+      <text x="550" y="374" text-anchor="middle" class="lbl-b" style="font-size:20px">the smaller one is also the faster one &mdash; and you can say why</text>
+    </g>
+  </svg>
+  <div class="pageno">M2·28</div>
 </section>
 
 <section>
@@ -878,12 +1128,12 @@ footer, header, hgroup, main, menu, nav, section {
     <image href="../img/decks/m2/closing-checklist.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">Now open <b>Module 2 · Lab</b> — you'll size the two quants, read the card, and tour the API on your own machine. &nbsp;·&nbsp; <b>Gourav Shah</b> &nbsp;·&nbsp; School of DevOps &amp; AI</p>
-  <div class="pageno">M2·25</div>
+  <div class="pageno">M2·29</div>
 </section>
 
 <section>
-  <h2 class="t">Next: size two quants, read a card, tour the API</h2>
-  <p class="s">The lab puts numbers on all three decisions, on your own machine.</p>
+  <h2 class="t">What the lab measures on your machine</h2>
+  <p class="s">The lab puts real numbers on all three decisions.</p>
   <svg viewBox="0 0 940 260" role="img" aria-label="A row of five icons revealed one at a time: Q4 and Q8 compared on a balance scale for disk, load, and speed; the same question asked of both to read quality honestly; the model card read via ollama show; a full tour of the API including usage, streaming, and finish reason; and the teardown that reclaims the Q8 disk space.">
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="40" y="30" width="140" height="140" rx="12"/></g>
@@ -922,7 +1172,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="830" y="218" text-anchor="middle" class="lbl-sm">reclaim the space</text>
     </g>
   </svg>
-  <div class="pageno">M2·26</div>
+  <div class="pageno">M2·30</div>
 </section>
 
 </div></div>

@@ -138,7 +138,6 @@ footer, header, hgroup, main, menu, nav, section {
   </defs>
 </svg>
 
-
 <div class="reveal"><div class="slides">
 
 <!-- ═══════════════ SLIDE 1 · TITLE ═══════════════ -->
@@ -974,83 +973,6 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">A registry stores blobs and a manifest</h2>
-  <p class="s">Every layer is stored by its digest. The manifest is the list that names them.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="On the left, a push arrow enters a registry box. Inside the box sit four blobs of very different sizes, each labelled with a digest stub and a size: the weights at 610 MB, the tokenizer and config, the dataset at 16 KB, and the prompts at 5 KB. To the right, a manifest card lists those same four digests. A band reads the digest is the name, so the same content is never stored twice.">
-    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M40,150 L108,150" marker-end="url(#ah)"/>
-    </g>
-    <text x="74" y="136" text-anchor="middle" class="lbl-g">push</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
-      <rect x="116" y="48" width="440" height="252" rx="12"/>
-    </g>
-    <text x="336" y="78" text-anchor="middle" class="lbl-b">the registry</text>
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.4">
-      <rect x="146" y="96" width="380" height="58" rx="8"/>
-    </g>
-    <text x="336" y="122" text-anchor="middle" class="lbl">sha256:9f2c…  <tspan class="lbl-g">the weights · 610 MB</tspan></text>
-    <text x="336" y="144" text-anchor="middle" class="lbl-sm">one blob, stored once</text>
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.2">
-      <rect x="146" y="168" width="380" height="38" rx="7"/>
-    </g>
-    <text x="336" y="192" text-anchor="middle" class="lbl">sha256:41ab…  <tspan class="lbl-g">the dataset · 16 KB</tspan></text>
-    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.2">
-      <rect x="146" y="218" width="380" height="32" rx="7"/>
-    </g>
-    <text x="336" y="240" text-anchor="middle" class="lbl">sha256:7d10…  <tspan class="lbl-g">the prompts · 5 KB</tspan></text>
-    <text x="336" y="278" text-anchor="middle" class="lbl-g">different sizes, same treatment — each addressed by its own digest</text>
-    <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
-      <path d="M568,174 L636,174" marker-end="url(#ahg)"/>
-    </g>
-    <g filter="url(#rough)" fill="#ffffff" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="646" y="76" width="300" height="196" rx="10"/>
-    </g>
-    <text x="796" y="108" text-anchor="middle" class="lbl-b">the manifest</text>
-    <text x="796" y="142" text-anchor="middle" class="lbl-g">sha256:9f2c…  weights</text>
-    <text x="796" y="172" text-anchor="middle" class="lbl-g">sha256:41ab…  dataset</text>
-    <text x="796" y="202" text-anchor="middle" class="lbl-g">sha256:7d10…  prompts</text>
-    <text x="796" y="244" text-anchor="middle" class="lbl-sm">a list of digests — and it has a digest too</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="200" y="308" width="700" height="38" rx="10"/>
-    </g>
-    <text x="550" y="333" text-anchor="middle" class="lbl-g">the digest <tspan class="lbl-b">is</tspan> the name — so identical bytes are never stored twice</text>
-  </svg>
-  <div class="pageno">M7&middot;26</div>
-</section>
-
-<section>
-  <h2 class="t">Four questions decide the registry</h2>
-  <p class="s">None of them is about the artifact. All of them are about who runs the server.</p>
-  <svg viewBox="0 0 1100 350" role="img" aria-label="Four stacked cards, each a question with the trade under it: who may push and pull, does it have to work with no internet, who patches and backs it up, and what does it cost to keep every version of a 610 megabyte model. A band reads the artifact never changes, so this is an operations decision, not a format decision.">
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="70" y="40" width="960" height="52" rx="9"/>
-    </g>
-    <text x="96" y="64" text-anchor="start" class="lbl-b">1 · who may push, and who may pull?</text>
-    <text x="96" y="84" text-anchor="start" class="lbl-g">a shared account for everyone is the same problem as a shared model filename</text>
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="70" y="104" width="960" height="52" rx="9"/>
-    </g>
-    <text x="96" y="128" text-anchor="start" class="lbl-b">2 · does it have to work with no internet?</text>
-    <text x="96" y="148" text-anchor="start" class="lbl-g">an air-gapped or on-prem cluster rules out the managed options entirely</text>
-    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="70" y="168" width="960" height="52" rx="9"/>
-    </g>
-    <text x="96" y="192" text-anchor="start" class="lbl-b">3 · who patches it, and who restores it?</text>
-    <text x="96" y="212" text-anchor="start" class="lbl-g">self-hosted means you own upgrades and backups — managed means you rent that</text>
-    <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="2.6">
-      <rect x="70" y="232" width="960" height="52" rx="9"/>
-    </g>
-    <text x="96" y="256" text-anchor="start" class="lbl-b">4 · what does it cost to keep every version?</text>
-    <text x="96" y="276" text-anchor="start" class="lbl-g">610 MB a release adds up fast — you need a deletion policy before you need more disk</text>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="200" y="300" width="700" height="38" rx="10"/>
-    </g>
-    <text x="550" y="325" text-anchor="middle" class="lbl-g">the artifact never changes — this is an <tspan class="lbl-b">operations</tspan> decision, not a format one</text>
-  </svg>
-  <div class="pageno">M7&middot;27</div>
-</section>
-
-<section>
   <p class="kicker">MODULE 7 &nbsp;·&nbsp; MODEL PACKAGING &amp; SIGNING — KITOPS &amp; OCI ARTIFACTS</p>
   <h2 class="t" style="font-size:2.05em">What you carry into the lab</h2>
   <p class="s">The file is now an artifact with three properties you can prove.</p>
@@ -1058,7 +980,7 @@ footer, header, hgroup, main, menu, nav, section {
     <image href="../img/decks/m7/closing-crate-arrived.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">the loose file is gone &nbsp;·&nbsp; now open <b>Module 7 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M7&middot;28</div>
+  <div class="pageno">M7&middot;26</div>
 </section>
 
 <section>
@@ -1112,7 +1034,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="1010" y="218" text-anchor="middle" class="lbl-sm">Artifacts lens</text>
     </g>
   </svg>
-  <div class="pageno">M7&middot;29</div>
+  <div class="pageno">M7&middot;27</div>
 </section>
 
 </div></div>

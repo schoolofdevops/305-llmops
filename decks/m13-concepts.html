@@ -299,7 +299,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- level 1 -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="60" y="270" width="230" height="60" rx="8"/></g>
     <text x="175" y="298" text-anchor="middle" class="lbl">naive RAG</text>
-    <text x="175" y="320" text-anchor="middle" class="lbl-g" style="font-size:14px">M4 · always retrieve</text>
+    <text x="175" y="320" text-anchor="middle" class="lbl-g" style="font-size:14px">always retrieve</text>
     <!-- level 2 -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="300" y="205" width="230" height="60" rx="8"/></g>
     <text x="415" y="233" text-anchor="middle" class="lbl">agentic RAG</text>
@@ -562,7 +562,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="230" y="176" text-anchor="middle" class="lbl-g" style="font-size:16px">tool_choice:"none"</text>
     <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.6"><rect x="380" y="140" width="90" height="60" rx="8"/><line x1="350" y1="170" x2="378" y2="170" marker-end="url(#ah)"/></g>
     <text x="425" y="176" text-anchor="middle" class="lbl-g" style="font-size:14px">gateway</text>
-    <text x="280" y="256" text-anchor="middle" class="lbl-bad">silently dropped (M2 drift)</text>
+    <text x="280" y="256" text-anchor="middle" class="lbl-bad">silently dropped (drift)</text>
     <!-- fragment: right panel — the fix -->
     <g class="fragment" data-fragment-index="1">
       <g filter="url(#rough)" fill="var(--p-green)" stroke="none"><rect x="600" y="70" width="440" height="220" rx="14"/></g>
@@ -683,13 +683,13 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="810" y="190" text-anchor="middle" class="lbl-g" style="font-size:15px">isolated</text>
     <text x="940" y="190" text-anchor="middle" class="lbl-g" style="font-size:14px">deployable</text>
   </svg>
-  <p class="recap fragment">Next: The Guarded Agent &mdash; keeping all of this inside the door from Module 12.</p>
+  <p class="recap fragment">Next: The Guarded Agent &mdash; keeping all of this inside the gateway.</p>
   <div class="pageno">M13&middot;21</div>
 </section>
 
 <section class="divider">
   <h2 class="t">The Guarded Agent</h2>
-  <p class="s">every turn going through the door you built in Module 12</p>
+  <p class="s">every turn going through the gateway in front of the platform</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A visitor-badge lanyard with a small padlock icon printed on its face.">
     <image href="../img/decks/m13/divider-5-badge-padlock.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
@@ -710,7 +710,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- M12 gateway: purple = control -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="none"><rect x="640" y="90" width="200" height="90" rx="12"/></g>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3"><rect x="640" y="90" width="200" height="90" rx="12"/></g>
-    <text x="740" y="128" text-anchor="middle" class="lbl-b">M12 gateway</text>
+    <text x="740" y="128" text-anchor="middle" class="lbl-b">gateway</text>
     <text x="740" y="156" text-anchor="middle" class="lbl-g" style="font-size:14px">metered · guardrailed</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><path d="M510,143 C580,120 600,125 638,128" marker-end="url(#ah)"/><path d="M510,259 C580,220 600,175 638,168" marker-end="url(#ah)"/></g>
     <text x="590" y="110" text-anchor="middle" class="lbl-g" style="font-size:13px">virtual key</text>
@@ -799,7 +799,7 @@ footer, header, hgroup, main, menu, nav, section {
       <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="150" y1="163" x2="178" y2="163" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="180" y="130" width="120" height="66" rx="9"/></g>
       <text x="240" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">synthesize</text>
-      <text x="240" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M6</text>
+      <text x="240" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">from the corpus</text>
     </g>
     <!-- fragment 2 — narration "Tune under the smoke profile" -->
     <g class="fragment" data-fragment-index="2">
@@ -807,14 +807,14 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="330" y="130" width="120" height="66" rx="9"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="330" y="130" width="120" height="66" rx="9"/></g>
       <text x="390" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">fine-tune</text>
-      <text x="390" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">v1.2 · M6</text>
+      <text x="390" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">v1.2</text>
     </g>
     <!-- fragment 3 — narration "Merge and convert to a GGUF" -->
     <g class="fragment" data-fragment-index="3">
       <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="450" y1="163" x2="478" y2="163" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="480" y="130" width="120" height="66" rx="9"/></g>
       <text x="540" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">→ GGUF</text>
-      <text x="540" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M6</text>
+      <text x="540" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">convert</text>
     </g>
     <!-- fragment 4 — narration "Pack and sign as version one-point-two" -->
     <g class="fragment" data-fragment-index="4">
@@ -822,14 +822,14 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="630" y="130" width="120" height="66" rx="9"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="630" y="130" width="120" height="66" rx="9"/></g>
       <text x="690" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">pack+sign</text>
-      <text x="690" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">1.2.0 · M7</text>
+      <text x="690" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">1.2.0 · signed</text>
     </g>
     <!-- fragment 5 — narration "Run it through gate.sh" -->
     <g class="fragment" data-fragment-index="5">
       <g fill="none" stroke="#1e1e1e" stroke-width="2.4"><line x1="750" y1="163" x2="778" y2="163" marker-end="url(#ah)"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="780" y="130" width="120" height="66" rx="9"/></g>
       <text x="840" y="160" text-anchor="middle" class="lbl-g" style="font-size:14px">gate.sh</text>
-      <text x="840" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">M12</text>
+      <text x="840" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">eval gate</text>
     </g>
     <!-- fragment 6 — lead-out to the gate slide: "PR bumps the tag, Argo syncs, verify serving" -->
     <g class="fragment" data-fragment-index="6">
@@ -837,7 +837,7 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="none"><rect x="930" y="130" width="140" height="66" rx="9"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><rect x="930" y="130" width="140" height="66" rx="9"/></g>
       <text x="1000" y="158" text-anchor="middle" class="lbl-g" style="font-size:13px">PR → Argo</text>
-      <text x="1000" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">verify · M11</text>
+      <text x="1000" y="180" text-anchor="middle" class="lbl-g" style="font-size:12px">verify serving</text>
     </g>
   </svg>
   <div class="pageno">M13&middot;27</div>
@@ -845,13 +845,13 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <h2 class="t">The gate must hold the floor</h2>
-  <p class="s">The Module 6 model did not beat the baseline, and the gate has to say so.</p>
+  <p class="s">The earlier tuned model did not beat the baseline, and the gate has to say so.</p>
   <svg viewBox="0 0 1100 330" role="img" aria-label="gate.sh runs the candidate v1.2 against the committed baseline floor. A fork: holds the floor leads to a PR and promotion in green; below the floor leads to BLOCK with no promotion in red.">
     <!-- gate.sh + baseline floor -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8"><rect x="60" y="120" width="220" height="90" rx="12"/></g>
     <text x="170" y="152" text-anchor="middle" class="lbl-b">gate.sh</text>
     <text x="170" y="178" text-anchor="middle" class="lbl-g" style="font-size:15px">v1.2 vs baseline floor</text>
-    <text x="170" y="248" text-anchor="middle" class="lbl-g" style="font-size:14px">M6's tuned model</text>
+    <text x="170" y="248" text-anchor="middle" class="lbl-g" style="font-size:14px">the earlier tuned model</text>
     <text x="170" y="268" text-anchor="middle" class="lbl-g" style="font-size:14px">didn't beat it either</text>
     <!-- fragment: the fork -->
     <g class="fragment" data-fragment-index="1">

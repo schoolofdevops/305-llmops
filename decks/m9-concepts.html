@@ -430,7 +430,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="590" y="260" text-anchor="middle" class="lbl-g">~10%</text>
       <g filter="url(#rough)" fill="var(--p-orange)" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7"><rect x="664" y="220" width="380" height="72" rx="10"/></g>
       <text x="854" y="252" text-anchor="middle" class="lbl">opsmate-canary</text>
-      <text x="854" y="276" text-anchor="middle" class="lbl-g">1.0.0-candidate (M6's loser)</text>
+      <text x="854" y="276" text-anchor="middle" class="lbl-g">1.0.0-candidate — the tuned model</text>
     </g>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
@@ -448,7 +448,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- client -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="40" y="120" width="220" height="96" rx="11"/></g>
     <text x="150" y="158" text-anchor="middle" class="lbl-b">client</text>
-    <text x="150" y="186" text-anchor="middle" class="lbl-g">unchanged since M3</text>
+    <text x="150" y="186" text-anchor="middle" class="lbl-g">unchanged since the engine swap</text>
     <!-- request arrow -->
     <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M260,168 L330,168" marker-end="url(#ah)"/></g>
     <text x="295" y="152" text-anchor="middle" class="lbl-g">same /v1</text>
@@ -501,6 +501,65 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
+  <h2 class="t">What you hash on decides who sticks</h2>
+  <p class="s">Split per request and a conversation reaches both. Per session, it does not.</p>
+  <svg viewBox="0 0 1100 330" role="img" aria-label="Two panels. On the left, hashing the request ID: one user sends four requests and the arrows fan out to both the base and the canary, so a single conversation is answered by two different models. On the right, hashing the session ID: the same four requests all reach the base, so the whole conversation stays on one version. A band reads that for a chat assistant, consistency beats even sampling.">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="50" y="34" width="480" height="212" rx="10"/>
+    </g>
+    <text x="290" y="62" text-anchor="middle" class="lbl-b">hash the request ID</text>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
+      <circle cx="108" cy="146" r="16"/><path d="M108,162 L108,196"/><path d="M92,212 L108,196 L124,212"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M134,126 L214,104" marker-end="url(#ahg)"/>
+      <path d="M134,140 L214,178" marker-end="url(#ahg)"/>
+      <path d="M134,156 L214,118" marker-end="url(#ahg)"/>
+      <path d="M134,170 L214,192" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="222" y="82" width="140" height="54" rx="8"/>
+    </g>
+    <text x="292" y="114" text-anchor="middle" class="lbl">base</text>
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="222" y="160" width="140" height="54" rx="8"/>
+    </g>
+    <text x="292" y="192" text-anchor="middle" class="lbl">canary</text>
+    <text x="446" y="140" text-anchor="middle" class="lbl-g">one chat,</text>
+    <text x="446" y="162" text-anchor="middle" class="lbl-g">two voices</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="570" y="34" width="480" height="212" rx="10"/>
+    </g>
+    <text x="810" y="62" text-anchor="middle" class="lbl-b">hash the session ID</text>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
+      <circle cx="628" cy="146" r="16"/><path d="M628,162 L628,196"/><path d="M612,212 L628,196 L644,212"/>
+    </g>
+    <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round">
+      <path d="M654,128 L734,104" marker-end="url(#ahg)"/>
+      <path d="M654,140 L734,110" marker-end="url(#ahg)"/>
+      <path d="M654,152 L734,116" marker-end="url(#ahg)"/>
+      <path d="M654,164 L734,122" marker-end="url(#ahg)"/>
+    </g>
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="742" y="82" width="140" height="54" rx="8"/>
+    </g>
+    <text x="812" y="114" text-anchor="middle" class="lbl">base</text>
+    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="8 6">
+      <rect x="742" y="160" width="140" height="54" rx="8"/>
+    </g>
+    <text x="812" y="192" text-anchor="middle" class="lbl-g">canary</text>
+    <text x="966" y="140" text-anchor="middle" class="lbl-g">one chat,</text>
+    <text x="966" y="162" text-anchor="middle" class="lbl-g">one voice</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="150" y="266" width="800" height="52" rx="10"/>
+    </g>
+    <text x="550" y="288" text-anchor="middle" class="lbl-g">sticky costs you speed of sampling — a bad canary hits <tspan class="lbl-b">10% of users, all the time</tspan></text>
+    <text x="550" y="310" text-anchor="middle" class="lbl-g">instead of all users, 10% of the time. For a chat assistant, take that trade.</text>
+  </svg>
+  <div class="pageno">M9&middot;12</div>
+</section>
+
+<section>
   <h2 class="t">X-Served-By names who answered</h2>
   <p class="s">Every response names its backend, so you can tally the real split.</p>
   <svg viewBox="0 0 1100 320" role="img" aria-label="The router emits responses, each stamped with a purple X-Served-By header reading either base or canary. A tally below counts them: mostly base, a few canary, summing toward the configured ratio. A band reads X-Served-By is the hook — watch the split, do not trust it.">
@@ -525,7 +584,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="283" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">X-Served-By</tspan> is the hook — <tspan class="lbl-b">watch</tspan> the split, don't just trust it</text>
   </svg>
-  <div class="pageno">M9&middot;12</div>
+  <div class="pageno">M9&middot;13</div>
 </section>
 
 <section>
@@ -558,7 +617,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="280" text-anchor="middle" class="lbl-g">manual <tspan class="lbl-b">on purpose</tspan> — you feel promote and rollback in your hands before an abstraction hides them</text>
   </svg>
   <p class="recap fragment">Next: The Quality Gate &mdash; what decides whether the canary is promoted.</p>
-  <div class="pageno">M9&middot;13</div>
+  <div class="pageno">M9&middot;14</div>
 </section>
 
 <section class="divider">
@@ -567,7 +626,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="A tollgate arm blocks a path, with a measuring ruler leaning against the gate post beside it.">
     <image href="../img/decks/m9/divider-4-tollgate-ruler.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M9&middot;14</div>
+  <div class="pageno">M9&middot;15</div>
 </section>
 
 <section>
@@ -577,8 +636,8 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- golden set box -->
     <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="3"><rect x="40" y="128" width="300" height="104" rx="12"/></g>
     <text x="190" y="162" text-anchor="middle" class="lbl-b">golden set</text>
-    <text x="190" y="190" text-anchor="middle" class="lbl-g">the M5 yardstick —</text>
-    <text x="190" y="214" text-anchor="middle" class="lbl-g">rejected this tune in M6</text>
+    <text x="190" y="190" text-anchor="middle" class="lbl-g">the golden set —</text>
+    <text x="190" y="214" text-anchor="middle" class="lbl-g">it rejected this tune before</text>
     <!-- run vs canary -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round"><path d="M340,158 C420,126 470,100 540,92" marker-end="url(#ah)"/></g>
     <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.6"><rect x="544" y="56" width="320" height="72" rx="10"/></g>
@@ -604,7 +663,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="337" text-anchor="middle" class="lbl-g">the same <tspan class="lbl-b">M5/M6 yardstick</tspan>, now pointed at production — run it against the canary <tspan class="lbl-b">and</tspan> the version it would replace</text>
   </svg>
-  <div class="pageno">M9&middot;15</div>
+  <div class="pageno">M9&middot;16</div>
 </section>
 
 <section>
@@ -624,7 +683,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="754" y="114" text-anchor="middle" class="lbl-g">the path not taken here</text>
     <!-- NO → ROLLBACK (the real result) -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><path d="M340,200 C450,240 520,254 600,262" marker-end="url(#ah)"/></g>
-    <text x="470" y="270" text-anchor="middle" class="lbl-g">no — it's the M6 loser</text>
+    <text x="470" y="270" text-anchor="middle" class="lbl-g">no — the tuned model lost</text>
     <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="3"><rect x="604" y="226" width="300" height="86" rx="10"/></g>
     <text x="754" y="260" text-anchor="middle" class="lbl-b">ROLLBACK</text>
     <text x="754" y="288" text-anchor="middle" class="lbl-g">weight → 0 · rollout restart</text>
@@ -639,7 +698,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="341" text-anchor="middle" class="lbl-g">the probe said <tspan class="lbl-b">healthy</tspan>, the golden set said <tspan class="lbl-b">wrong</tspan> — promote and rollback are now <tspan class="lbl-b">data verbs</tspan></text>
   </svg>
-  <div class="pageno">M9&middot;16</div>
+  <div class="pageno">M9&middot;17</div>
 </section>
 
 <section>
@@ -659,20 +718,20 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="720" y="98" text-anchor="middle" class="lbl-b">100% · the school run</text>
     <text x="720" y="122" text-anchor="middle" class="lbl-g">only after it has earned it</text>
     <!-- climbing arrows + gate labels -->
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M390,262 L444,204" marker-end="url(#ah)"/><path d="M630,172 L684,114" marker-end="url(#ah)"/></g>
-    <text x="404" y="238" text-anchor="middle" class="lbl-g">gate</text>
-    <text x="644" y="148" text-anchor="middle" class="lbl-g">gate</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M396,256 L440,230" marker-end="url(#ah)"/><path d="M636,166 L680,140" marker-end="url(#ah)"/></g>
+    <text x="478" y="244" text-anchor="middle" class="lbl-g">gate</text>
+    <text x="718" y="154" text-anchor="middle" class="lbl-g">gate</text>
     <!-- new driver figure at the bottom -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4"><circle cx="120" cy="222" r="16"/></g>
     <text x="120" y="200" text-anchor="middle" class="lbl-g">new driver</text>
     <!-- pull-back down-arrow -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="9 7" stroke-linecap="round"><path d="M930,100 C980,160 980,240 930,300" marker-end="url(#ahg)"/></g>
-    <text x="1006" y="204" text-anchor="middle" class="lbl-g">gate red →</text>
-    <text x="1006" y="228" text-anchor="middle" class="lbl-g">pull back a level</text>
-    <text x="1006" y="252" text-anchor="middle" class="lbl-g">(or → 0)</text>
+    <text x="1036" y="204" text-anchor="middle" class="lbl-g">gate red →</text>
+    <text x="1036" y="228" text-anchor="middle" class="lbl-g">pull back a level</text>
+    <text x="1036" y="252" text-anchor="middle" class="lbl-g">(or → 0)</text>
   </svg>
   <p class="recap fragment">Next: Beyond nginx &mdash; what this looks like at a scale past one router.</p>
-  <div class="pageno">M9&middot;17</div>
+  <div class="pageno">M9&middot;18</div>
 </section>
 
 <section class="divider">
@@ -681,7 +740,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="A small simple box sits beside a much taller, more elaborate multi-tiered tower with antennas, showing a jump in complexity.">
     <image href="../img/decks/m9/divider-6-tower-vs-box.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M9&middot;18</div>
+  <div class="pageno">M9&middot;19</div>
 </section>
 
 <section>
@@ -716,7 +775,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">the two weight lines become <tspan class="lbl-b">one field</tspan> — a real upgrade, paid for in a dependency stack you keep patched</text>
   </svg>
-  <div class="pageno">M9&middot;19</div>
+  <div class="pageno">M9&middot;20</div>
 </section>
 
 <section>
@@ -746,7 +805,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="305" text-anchor="middle" class="lbl-g">beyond anything nginx can do — the router sends you to the pod that <tspan class="lbl-b">already holds your cache</tspan></text>
   </svg>
-  <div class="pageno">M9&middot;20</div>
+  <div class="pageno">M9&middot;21</div>
 </section>
 
 <section>
@@ -755,7 +814,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1100 330" role="img" aria-label="On the left, the M1 memory diagram drawn small and gray, showing prefill and decode side by side. An arrow labelled at scale leads to two blue pools: a prefill pool, compute-bound, and a decode pool, bandwidth-bound, with a cache-aware router between them. A note reads each sized for its own bottleneck. A band reads the phases you met as a memory diagram become, at scale, two fleets with a cache-aware router between them.">
     <!-- M1 memory diagram (gray callback) -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4" stroke-dasharray="5 5"><rect x="40" y="120" width="240" height="100" rx="11"/></g>
-    <text x="160" y="150" text-anchor="middle" class="lbl">M1 memory diagram</text>
+    <text x="160" y="150" text-anchor="middle" class="lbl">the memory diagram</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2"><rect x="64" y="166" width="96" height="42" rx="7"/><rect x="176" y="166" width="96" height="42" rx="7"/></g>
     <text x="112" y="193" text-anchor="middle" class="lbl-g">prefill</text>
     <text x="224" y="193" text-anchor="middle" class="lbl-g">decode</text>
@@ -784,7 +843,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="310" text-anchor="middle" class="lbl-g">the phases you met as a <tspan class="lbl-b">memory diagram</tspan> become, at scale, two <tspan class="lbl-b">separately-scaled fleets</tspan></text>
   </svg>
-  <div class="pageno">M9&middot;21</div>
+  <div class="pageno">M9&middot;22</div>
 </section>
 
 <section>
@@ -794,11 +853,11 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- level 1 — owned, simplest (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#757575" stroke-width="2.4"><rect x="40" y="220" width="230" height="70" rx="10"/></g>
     <text x="155" y="252" text-anchor="middle" class="lbl-b">(1) Deployment + Service</text>
-    <text x="155" y="276" text-anchor="middle" class="lbl-g">M8 · one version · no deps</text>
+    <text x="155" y="276" text-anchor="middle" class="lbl-g">one version · no deps · M8</text>
     <!-- level 2 — owned, this module (green) -->
     <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6"><rect x="290" y="162" width="230" height="70" rx="10"/></g>
     <text x="405" y="194" text-anchor="middle" class="lbl-b">(2) router + canary</text>
-    <text x="405" y="218" text-anchor="middle" class="lbl-g">M9 · two versions · one nginx</text>
+    <text x="405" y="218" text-anchor="middle" class="lbl-g">two versions · one nginx · M9</text>
     <!-- level 3 — a step up (blue) -->
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.8"><rect x="540" y="104" width="230" height="70" rx="10"/></g>
     <text x="655" y="136" text-anchor="middle" class="lbl-b">(3) KServe</text>
@@ -815,7 +874,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="1030" y="332" text-anchor="end" class="lbl-g">more / more →</text>
   </svg>
   <p class="recap fragment">Next: what all of this leaves OpsMate able to do.</p>
-  <div class="pageno">M9&middot;22</div>
+  <div class="pageno">M9&middot;23</div>
 </section>
 
 <section class="divider">
@@ -824,7 +883,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="A fully open gate with light streaming through, and a small magnifying glass watching over it.">
     <image href="../img/decks/m9/divider-8-gate-light-eye.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M9&middot;23</div>
+  <div class="pageno">M9&middot;24</div>
 </section>
 
 <section>
@@ -845,7 +904,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- arrow to M10 -->
     <g fill="none" stroke="#1e1e1e" stroke-width="2.8" stroke-linecap="round"><path d="M728,159 L788,159" marker-end="url(#ah)"/></g>
     <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="3"><rect x="792" y="122" width="270" height="74" rx="11"/></g>
-    <text x="927" y="154" text-anchor="middle" class="lbl-b">M10: traces + metrics</text>
+    <text x="927" y="154" text-anchor="middle" class="lbl-b">traces + metrics — next</text>
     <text x="927" y="180" text-anchor="middle" class="lbl-g">see the regression the moment it starts</text>
     <!-- band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
@@ -853,7 +912,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="315" text-anchor="middle" class="lbl-g">you cannot canary what you cannot <tspan class="lbl-b">observe</tspan> — M9 fetched its signals by hand, M10 makes them <tspan class="lbl-b">always-on</tspan></text>
   </svg>
-  <div class="pageno">M9&middot;24</div>
+  <div class="pageno">M9&middot;25</div>
 </section>
 
 <section>
@@ -864,56 +923,56 @@ footer, header, hgroup, main, menu, nav, section {
     <image href="../img/decks/m9/closing-two-boxes-check-x.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">OpsMate is <b>v2.0</b> — a safe way to change what it serves &nbsp;·&nbsp; now open <b>Module 9 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M9&middot;25</div>
+  <div class="pageno">M9&middot;26</div>
 </section>
 
 <section>
   <h2 class="t">What you will do as part of the lab</h2>
   <p class="s">Watch the split, trust the gate, and climb the ladder.</p>
-  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: the canary backend and nginx router come up; the response header names which backend answered; the sample-size trap is proven with 20 then 100 requests; the quality gate runs and prints ROLLBACK; the promote ladder is climbed at 10, 50, and 100 percent; and the result is read through the decision tree and the live split in X-Ray.">
-    <g class="fragment" transform="translate(40,0)">
+  <svg viewBox="0 0 1375 260" role="img" aria-label="A row of six icons, revealed one at a time: the canary backend and nginx router come up; the response header names which backend answered; the sample-size trap is proven with 20 then 100 requests; the quality gate runs and prints ROLLBACK; the promote ladder is climbed at 10, 50, and 100 percent; and the result is read through the decision tree and the live split in X-Ray.">
+    <g class="fragment" transform="translate(30,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="20" y="75" width="35" height="40" rx="4"/><rect x="85" y="75" width="35" height="40" rx="4"/></g>
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2"><path d="M55,90 L85,90"/><path d="M70,60 L70,90"/></g>
-      <text x="70" y="196" text-anchor="middle" class="lbl-b">stand up canary + router</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">nginx in front of two backends</text>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">stand up the canary</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">nginx in front of two</text>
     </g>
-    <g class="fragment" transform="translate(220,0)">
+    <g class="fragment" transform="translate(265,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="45" y="65" width="50" height="35" rx="4"/></g>
       <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2"><rect x="55" y="105" width="30" height="14" rx="3"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">watch the header</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">X-Served-By names the backend</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">X-Served-By names it</text>
     </g>
-    <g class="fragment" transform="translate(400,0)">
+    <g class="fragment" transform="translate(500,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="45" cy="90" r="14"/></g>
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><circle cx="80" cy="75" r="9"/><circle cx="100" cy="75" r="9"/><circle cx="90" cy="95" r="9"/><circle cx="70" cy="100" r="9"/><circle cx="105" cy="100" r="9"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">prove the sample trap</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">20 requests, then 100</text>
     </g>
-    <g class="fragment" transform="translate(580,0)">
+    <g class="fragment" transform="translate(735,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="70" cy="90" r="24"/></g>
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M50,70 L90,110"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">run the gate</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">ROLLBACK — this candidate lost</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">ROLLBACK — it lost</text>
     </g>
-    <g class="fragment" transform="translate(760,0)">
+    <g class="fragment" transform="translate(970,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="25" y="100" width="25" height="15" rx="2"/><rect x="58" y="80" width="25" height="35" rx="2"/><rect x="91" y="58" width="25" height="57" rx="2"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">climb the ladder</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">10% then 50% then 100%, measure each level</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">10, 50, 100 — measure each</text>
     </g>
-    <g class="fragment" transform="translate(940,0)">
+    <g class="fragment" transform="translate(1205,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="65" cy="80" r="22"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><path d="M81,96 L98,113"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">read it in X-Ray</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">decision tree + live split</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">decision tree + split</text>
     </g>
   </svg>
-  <div class="pageno">M9&middot;26</div>
+  <div class="pageno">M9&middot;27</div>
 </section>
 
 </div></div>

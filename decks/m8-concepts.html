@@ -263,46 +263,78 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <h2 class="t">Why Kubernetes, and when not to</h2>
-  <p class="s">Fine while it was your box. Not fine the moment it is not.</p>
-  <svg viewBox="0 0 1100 330" role="img" aria-label="Two columns compared. On the left, while it was your box: one machine is enough, the memory number lives in your head, you restart it yourself, and one user at a time is fine. On the right, now that other people depend on it: it has to come back without you, the numbers have to be written in a file, a scheduler has to place it, and concurrency outgrows what one box holds. A band underneath says that if you serve one model to a handful of people on a machine you own, you may not need any of this.">
-    <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.4">
-      <rect x="56" y="30" width="480" height="236" rx="10"/>
+  <h2 class="t">Eight conversations, then you are out</h2>
+  <p class="s">Not slower. Out. The weights and the cache are simply the memory the work needs.</p>
+  <svg viewBox="0 0 1100 330" role="img" aria-label="A memory budget drawn as a tall box of 8 gibibytes. A fixed block of about 0.95 gibibytes at the bottom holds the weights and the runtime buffers. Above it, eight stacked slices of 0.22 gibibytes each, one per live conversation, fill the rest. A ninth conversation arrives at the top and is turned away against a ceiling line. A band reads that you cannot optimise past this, because it is the memory the work needs.">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3">
+      <rect x="160" y="34" width="280" height="252" rx="10"/>
     </g>
-    <text x="296" y="58" text-anchor="middle" class="lbl-b">while it was YOUR box</text>
-    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.2">
-      <rect x="80" y="76" width="432" height="40" rx="7"/>
-      <rect x="80" y="124" width="432" height="40" rx="7"/>
-      <rect x="80" y="172" width="432" height="40" rx="7"/>
-      <rect x="80" y="220" width="432" height="40" rx="7"/>
+    <text x="300" y="24" text-anchor="middle" class="lbl-b">one 8 GiB box</text>
+    <g filter="url(#rough)" fill="var(--p-purple)" stroke="#1e1e1e" stroke-width="2.2">
+      <rect x="176" y="222" width="248" height="50" rx="6"/>
     </g>
-    <text x="296" y="101" text-anchor="middle" class="lbl-g">one machine is enough</text>
-    <text x="296" y="149" text-anchor="middle" class="lbl-g">the memory number is in your head</text>
-    <text x="296" y="197" text-anchor="middle" class="lbl-g">you notice it died, and you restart it</text>
-    <text x="296" y="245" text-anchor="middle" class="lbl-g">one person asking at a time</text>
-    <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
-      <path d="M548,148 L588,148" marker-end="url(#ah)"/>
+    <text x="300" y="242" text-anchor="middle" class="lbl">weights + buffers</text>
+    <text x="300" y="262" text-anchor="middle" class="lbl-g">~0.95 GiB · fixed</text>
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="1.8">
+      <rect x="176" y="198" width="248" height="18" rx="4"/>
+      <rect x="176" y="176" width="248" height="18" rx="4"/>
+      <rect x="176" y="154" width="248" height="18" rx="4"/>
+      <rect x="176" y="132" width="248" height="18" rx="4"/>
+      <rect x="176" y="110" width="248" height="18" rx="4"/>
+      <rect x="176" y="88" width="248" height="18" rx="4"/>
+      <rect x="176" y="66" width="248" height="18" rx="4"/>
+      <rect x="176" y="44" width="248" height="18" rx="4"/>
     </g>
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.8">
-      <rect x="600" y="30" width="444" height="236" rx="10"/>
+    <text x="466" y="128" text-anchor="start" class="lbl-g">8 live conversations</text>
+    <text x="466" y="150" text-anchor="start" class="lbl-g">~0.22 GiB of KV cache each</text>
+    <g fill="none" stroke="#c62828" stroke-width="2.8" stroke-linecap="round">
+      <path d="M150,34 L450,34"/>
+      <path d="M700,64 L604,64" marker-end="url(#ah)"/>
+      <path d="M640,46 L664,82"/><path d="M664,46 L640,82"/>
     </g>
-    <text x="822" y="58" text-anchor="middle" class="lbl-b">now that it is NOT</text>
-    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.2">
-      <rect x="622" y="76" width="400" height="40" rx="7"/>
-      <rect x="622" y="124" width="400" height="40" rx="7"/>
-      <rect x="622" y="172" width="400" height="40" rx="7"/>
-      <rect x="622" y="220" width="400" height="40" rx="7"/>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
+      <circle cx="736" cy="52" r="15"/><path d="M736,67 L736,98"/><path d="M722,112 L736,98 L750,112"/>
     </g>
-    <text x="822" y="101" text-anchor="middle" class="lbl-g">it has to come back without you</text>
-    <text x="822" y="149" text-anchor="middle" class="lbl-g">the numbers have to be in a file</text>
-    <text x="822" y="197" text-anchor="middle" class="lbl-g">something has to place it, and route to it</text>
-    <text x="822" y="245" text-anchor="middle" class="lbl-g">more at once than one box holds</text>
+    <text x="800" y="48" text-anchor="start" class="lbl-b">the 9th arrives</text>
+    <text x="800" y="70" text-anchor="start" class="lbl-g">and there is nowhere to put it</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
-      <rect x="150" y="282" width="800" height="36" rx="10"/>
+      <rect x="150" y="296" width="800" height="32" rx="10"/>
     </g>
-    <text x="550" y="306" text-anchor="middle" class="lbl-g">one model, a handful of people, a machine you own → <tspan class="lbl-b">you may not need any of this</tspan></text>
+    <text x="550" y="318" text-anchor="middle" class="lbl-g">no setting gets you past this — <tspan class="lbl-b">more people means more copies</tspan></text>
   </svg>
   <div class="pageno">M8&middot;03</div>
+</section>
+
+<section>
+  <h2 class="t">What serving at scale actually needs</h2>
+  <p class="s">More copies is a placement problem, and that is what Kubernetes is for.</p>
+  <svg viewBox="0 0 1100 330" role="img" aria-label="Four stacked cards describing what serving inference at scale requires: many replicas each needing a machine with enough free memory, capacity that follows demand because inference hardware is the expensive part, several models and versions answering at once so something has to route between them, and scarce GPU nodes pooled between teams. A band underneath says one model at low concurrency on a box you own still needs none of this.">
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="64" y="26" width="972" height="56" rx="9"/>
+    </g>
+    <text x="92" y="50" text-anchor="start" class="lbl-b">1 · many replicas, each needing free memory</text>
+    <text x="92" y="72" text-anchor="start" class="lbl-g">something has to know which node has 4 spare gigs, and put the pod there — a scheduler</text>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="64" y="94" width="972" height="56" rx="9"/>
+    </g>
+    <text x="92" y="118" text-anchor="start" class="lbl-b">2 · capacity that follows demand</text>
+    <text x="92" y="140" text-anchor="start" class="lbl-g">inference hardware is the expensive part — you cannot size for Monday and run it all weekend</text>
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="64" y="162" width="972" height="56" rx="9"/>
+    </g>
+    <text x="92" y="186" text-anchor="start" class="lbl-b">3 · several models and versions at once</text>
+    <text x="92" y="208" text-anchor="start" class="lbl-g">a small one for cheap questions, a big one for hard ones, a new one on trial — so, routing</text>
+    <g filter="url(#rough)" fill="var(--p-red)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="64" y="230" width="972" height="56" rx="9"/>
+    </g>
+    <text x="92" y="254" text-anchor="start" class="lbl-b">4 · scarce accelerators, shared between teams</text>
+    <text x="92" y="276" text-anchor="start" class="lbl-g">GPU nodes are pooled because nobody affords one per team — allocating them is scheduling</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="150" y="296" width="800" height="32" rx="10"/>
+    </g>
+    <text x="550" y="318" text-anchor="middle" class="lbl-g">one model, low concurrency, a box you own → <tspan class="lbl-b">Compose is still the right answer</tspan></text>
+  </svg>
+  <div class="pageno">M8&middot;04</div>
 </section>
 
 <section>
@@ -345,7 +377,7 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="150" y="322" width="800" height="16" rx="8"/>
     </g>
   </svg>
-  <div class="pageno">M8&middot;04</div>
+  <div class="pageno">M8&middot;05</div>
 </section>
 
 <section>
@@ -398,7 +430,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="319" text-anchor="middle" class="lbl-g">an isolated kubeconfig names <tspan class="lbl-b">only the throwaway cluster</tspan> — your real context is never touched</text>
   </svg>
-  <div class="pageno">M8&middot;05</div>
+  <div class="pageno">M8&middot;06</div>
 </section>
 
 <section class="divider">
@@ -407,7 +439,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="A rolled guest list with tally marks sits beside the open doorway of an empty banquet hall with round tables inside, echoing counting the guests before booking the hall.">
     <image href="../img/decks/m8/divider-1-wedding-hall.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M8&middot;06</div>
+  <div class="pageno">M8&middot;07</div>
 </section>
 
 <section>
@@ -457,7 +489,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="756" y="230" text-anchor="middle" class="lbl-g">= the pod's working set</text>
     </g>
   </svg>
-  <div class="pageno">M8&middot;07</div>
+  <div class="pageno">M8&middot;08</div>
 </section>
 
 <section>
@@ -506,7 +538,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="329" text-anchor="middle" class="lbl-g">the memory limit is the <tspan class="lbl-b">hall you book</tspan> — the capacity sum is the <tspan class="lbl-b">guest count you do first</tspan></text>
   </svg>
-  <div class="pageno">M8&middot;08</div>
+  <div class="pageno">M8&middot;09</div>
 </section>
 
 <section>
@@ -530,7 +562,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="4 6" stroke-linecap="round"><path d="M640,64 L640,262"/></g>
     <text x="648" y="60" text-anchor="start" class="lbl-g">the box fills</text>
   </svg>
-  <div class="pageno">M8&middot;09</div>
+  <div class="pageno">M8&middot;10</div>
 </section>
 
 <section>
@@ -567,7 +599,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="550" y="329" text-anchor="middle" class="lbl-g">all three answers come from the <tspan class="lbl-b">one worksheet</tspan> you filled in</text>
     </g>
   </svg>
-  <div class="pageno">M8&middot;10</div>
+  <div class="pageno">M8&middot;11</div>
 </section>
 
 <section>
@@ -602,7 +634,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="315" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">requests</tspan> is the working set, <tspan class="lbl-b">limits</tspan> is the OOM ceiling — both derived from the three-term sum</text>
   </svg>
   <p class="recap fragment">Next: Getting the Model In &mdash; how the signed artifact reaches the pod.</p>
-  <div class="pageno">M8&middot;11</div>
+  <div class="pageno">M8&middot;12</div>
 </section>
 
 <section class="divider">
@@ -611,7 +643,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="Four conveyor paths each carrying a crate converge on a single box representing a pod, with one path marked by a checkmark as the chosen route.">
     <image href="../img/decks/m8/divider-3-four-roads-pod.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M8&middot;12</div>
+  <div class="pageno">M8&middot;13</div>
 </section>
 
 <section>
@@ -654,7 +686,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="353" text-anchor="middle" class="lbl-g">a <tspan class="lbl-b">signed, versioned artifact</tspan> → the initContainer is the natural fit</text>
   </svg>
-  <div class="pageno">M8&middot;13</div>
+  <div class="pageno">M8&middot;14</div>
 </section>
 
 <section>
@@ -707,7 +739,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- selective pull note -->
     <text x="550" y="270" text-anchor="middle" class="lbl-g">the same M7 selective pull — <tspan class="lbl-b">--filter=model</tspan> takes only the weights, not the eval set or prompts</text>
   </svg>
-  <div class="pageno">M8&middot;14</div>
+  <div class="pageno">M8&middot;15</div>
 </section>
 
 <section>
@@ -716,7 +748,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="A storage disk sits steadily on a shelf while a restart arrow spins beside it, showing the model staying in place on the volume through a restart.">
     <image href="../img/decks/m8/analogy-pvc-restart.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M8&middot;15</div>
+  <div class="pageno">M8&middot;16</div>
 </section>
 
 <section>
@@ -745,7 +777,7 @@ footer, header, hgroup, main, menu, nav, section {
     <!-- M7 -> M8 bridge note -->
     <text x="550" y="300" text-anchor="middle" class="lbl-g">you ran this by hand in <tspan class="lbl-b">M7's preflight</tspan> — here it is the same check at the cluster's front door</text>
   </svg>
-  <div class="pageno">M8&middot;16</div>
+  <div class="pageno">M8&middot;17</div>
 </section>
 
 <section>
@@ -777,7 +809,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="325" text-anchor="middle" class="lbl-g">the mirror covers <tspan class="lbl-b">image pulls</tspan>, not in-pod HTTP — so <tspan class="lbl-b">localhost</tspan> inside a pod finds nothing</text>
   </svg>
-  <div class="pageno">M8&middot;17</div>
+  <div class="pageno">M8&middot;18</div>
 </section>
 
 <section>
@@ -807,7 +839,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="325" text-anchor="middle" class="lbl-g"><tspan class="lbl-b">hostAliases</tspan> fixes the second path — a name you pin, an IP the node resolves</text>
   </svg>
   <p class="recap fragment">Next: Probes &mdash; and why the usual settings break a slow-loading model server.</p>
-  <div class="pageno">M8&middot;18</div>
+  <div class="pageno">M8&middot;19</div>
 </section>
 
 <section class="divider">
@@ -816,7 +848,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="An empty stage with a microphone stand under a spotlight and a checklist leaning against it, standing in for the sound-check before the show goes on.">
     <image href="../img/decks/m8/divider-6-soundcheck-stage.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M8&middot;19</div>
+  <div class="pageno">M8&middot;20</div>
 </section>
 
 <section>
@@ -845,7 +877,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="150" y="276" width="800" height="30" rx="8"/></g>
     <text x="550" y="297" text-anchor="middle" class="lbl-g">name the <tspan class="lbl-b">question each answers</tspan> and the job follows</text>
   </svg>
-  <div class="pageno">M8&middot;20</div>
+  <div class="pageno">M8&middot;21</div>
 </section>
 
 <section>
@@ -876,7 +908,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="560" y="280" text-anchor="middle" class="lbl-g">load budget = <tspan class="lbl-b">failureThreshold × periodSeconds</tspan> &nbsp;(e.g. 30 × 5 s = 150 s &gt; ~40 s)</text>
     <text x="560" y="304" text-anchor="middle" class="lbl-g">the total grace the model gets before Kubernetes gives up</text>
   </svg>
-  <div class="pageno">M8&middot;21</div>
+  <div class="pageno">M8&middot;22</div>
 </section>
 
 <section>
@@ -930,7 +962,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="354" text-anchor="middle" class="lbl-g">apply the bad probe, watch the loop, revert — a self-inflicted outage seen in a safe place</text>
   </svg>
-  <div class="pageno">M8&middot;22</div>
+  <div class="pageno">M8&middot;23</div>
 </section>
 
 <section>
@@ -961,7 +993,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="550" y="316" text-anchor="middle" class="lbl-g">readiness removes <tspan class="lbl-b">traffic</tspan> · liveness destroys <tspan class="lbl-b">work</tspan></text>
   </svg>
   <p class="recap fragment">Next: The Engine Fork &mdash; the same manifests, with a different engine image.</p>
-  <div class="pageno">M8&middot;23</div>
+  <div class="pageno">M8&middot;24</div>
 </section>
 
 <section class="divider">
@@ -970,7 +1002,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="A single road splits into two diverging paths, one plain and one more elaborate, standing in for the honest fork between the llama-server and vLLM engines.">
     <image href="../img/decks/m8/divider-7-road-fork.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M8&middot;24</div>
+  <div class="pageno">M8&middot;25</div>
 </section>
 
 <section>
@@ -1006,7 +1038,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="323" text-anchor="middle" class="lbl-g">swapping the engine is an <tspan class="lbl-b">image-and-args change</tspan>, not a manifest rewrite — the <tspan class="lbl-b">/v1 contract</tspan> holds the client stable</text>
   </svg>
-  <div class="pageno">M8&middot;25</div>
+  <div class="pageno">M8&middot;26</div>
 </section>
 
 <section>
@@ -1040,7 +1072,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="313" text-anchor="middle" class="lbl-g">the pattern is portable, the numbers are not — <tspan class="lbl-b">derive the box, don't paste the values</tspan></text>
   </svg>
-  <div class="pageno">M8&middot;26</div>
+  <div class="pageno">M8&middot;27</div>
 </section>
 
 <section>
@@ -1051,7 +1083,7 @@ footer, header, hgroup, main, menu, nav, section {
     <image href="../img/decks/m8/closing-namespace-served.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">OpsMate is <b>v2.0</b> — served by the cluster &nbsp;·&nbsp; now open <b>Module 8 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M8&middot;27</div>
+  <div class="pageno">M8&middot;28</div>
 </section>
 
 <section>
@@ -1101,7 +1133,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">initContainer vs hostPath timing</text>
     </g>
   </svg>
-  <div class="pageno">M8&middot;28</div>
+  <div class="pageno">M8&middot;29</div>
 </section>
 
 </div></div>

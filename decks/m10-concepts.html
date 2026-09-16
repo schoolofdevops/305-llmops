@@ -821,40 +821,40 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">What you will do as part of the lab</h2>
   <p class="s">Watch the wall move, fix a real crash, and read a trace end to end.</p>
-  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: Prometheus and the Grafana dashboard deploy as a real artifact; the wall shows the deferred gauge climbing while throughput holds; the service-link crash is hit on purpose, read, and fixed; a request's trace opens showing retrieve, generate, and token counts; mixed load is driven so the median stays green while per-phase numbers show the truth; and the result is read through X-Ray, deciding whether to keep or redact the prompt.">
-    <g class="fragment" transform="translate(40,0)">
+  <svg viewBox="0 0 1430 260" role="img" aria-label="A row of six icons, revealed one at a time: Prometheus and the Grafana dashboard deploy as a real artifact; the wall shows the deferred gauge climbing while throughput holds; the service-link crash is hit on purpose, read, and fixed; a request's trace opens showing retrieve, generate, and token counts; mixed load is driven so the median stays green while per-phase numbers show the truth; and the result is read through X-Ray, deciding whether to keep or redact the prompt.">
+    <g class="fragment" transform="translate(30,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.2"><rect x="45" y="65" width="50" height="55" rx="4"/></g>
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><circle cx="70" cy="90" r="14"/></g>
-      <text x="70" y="196" text-anchor="middle" class="lbl-b">deploy Prometheus + Grafana</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">dashboard as a real artifact</text>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">deploy the stack</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">Prometheus + Grafana</text>
     </g>
-    <g class="fragment" transform="translate(220,0)">
+    <g class="fragment" transform="translate(275,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><path d="M30,110 L55,90 L75,100 L100,60 L115,80"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">watch the wall move</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">deferred climbs, throughput holds</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">deferred climbs</text>
     </g>
-    <g class="fragment" transform="translate(400,0)">
+    <g class="fragment" transform="translate(520,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="45" y="65" width="50" height="45" rx="4"/></g>
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M100,70 L115,85"/><path d="M115,70 L100,85"/></g>
-      <text x="70" y="196" text-anchor="middle" class="lbl-b">hit the service-link crash</text>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">hit the crash</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">read the log, fix it</text>
     </g>
-    <g class="fragment" transform="translate(580,0)">
+    <g class="fragment" transform="translate(765,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="30" y="60" width="80" height="18" rx="3"/><rect x="45" y="83" width="55" height="14" rx="3"/><rect x="55" y="102" width="35" height="12" rx="3"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">open the trace</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">retrieve, generate, tokens on the span</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">tokens on the span</text>
     </g>
-    <g class="fragment" transform="translate(760,0)">
+    <g class="fragment" transform="translate(1010,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><path d="M30,100 L50,100 L60,60 L75,110 L90,90 L110,90"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">drive mixed load</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">median green, per-phase shows the truth</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">per-phase shows the truth</text>
     </g>
-    <g class="fragment" transform="translate(940,0)">
+    <g class="fragment" transform="translate(1255,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="65" cy="80" r="22"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="3" stroke-linecap="round"><path d="M81,96 L98,113"/></g>

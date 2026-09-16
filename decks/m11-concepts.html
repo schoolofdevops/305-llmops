@@ -890,29 +890,29 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">What you will do as part of the lab</h2>
   <p class="s">Scale on the queue, catch the promotion lie, and cap the trainer.</p>
-  <svg viewBox="0 0 1120 260" role="img" aria-label="A row of six icons, revealed one at a time: a ScaledObject wires up and KEDA builds the HPA behind it; the deployment scales from one replica to two and back to one; a promotion merges green but is caught still serving the old model; the presence-cache is versioned per tag and the promotion is redone for real; rollback proves nearly instant because the old version never left the volume; and the training pipeline runs as a capped Argo Workflow with serving drained first.">
-    <g class="fragment" transform="translate(40,0)">
+  <svg viewBox="0 0 1430 260" role="img" aria-label="A row of six icons, revealed one at a time: a ScaledObject wires up and KEDA builds the HPA behind it; the deployment scales from one replica to two and back to one; a promotion merges green but is caught still serving the old model; the presence-cache is versioned per tag and the promotion is redone for real; rollback proves nearly instant because the old version never left the volume; and the training pipeline runs as a capped Argo Workflow with serving drained first.">
+    <g class="fragment" transform="translate(30,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.2"><rect x="45" y="65" width="50" height="35" rx="4"/></g>
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><rect x="30" y="105" width="30" height="14" rx="3"/><rect x="80" y="105" width="30" height="14" rx="3"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">wire up the ScaledObject</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">watch KEDA build the HPA</text>
     </g>
-    <g class="fragment" transform="translate(220,0)">
+    <g class="fragment" transform="translate(275,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="25" y="75" width="30" height="35" rx="4"/><rect x="85" y="65" width="30" height="45" rx="4"/></g>
       <g fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M60,90 L82,90" marker-end="url(#ahg)"/></g>
-      <text x="70" y="196" text-anchor="middle" class="lbl-b">watch it scale 1 to 2 to 1</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">load up, drain, watch it settle</text>
+      <text x="70" y="196" text-anchor="middle" class="lbl-b">scale 1 to 2 to 1</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">load up, drain, settle</text>
     </g>
-    <g class="fragment" transform="translate(400,0)">
+    <g class="fragment" transform="translate(520,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.2"><rect x="45" y="65" width="50" height="35" rx="4"/></g>
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-linecap="round"><path d="M100,72 L115,87"/><path d="M115,72 L100,87"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">catch the promotion lie</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">green deploy, old model</text>
     </g>
-    <g class="fragment" transform="translate(580,0)">
+    <g class="fragment" transform="translate(765,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><rect x="30" y="60" width="35" height="45" rx="4"/><rect x="80" y="60" width="35" height="45" rx="4"/></g>
       <text x="47" y="87" text-anchor="middle" class="lbl-good">&#10003;</text>
@@ -920,18 +920,18 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="70" y="196" text-anchor="middle" class="lbl-b">version the cache per tag</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">re-promote for real</text>
     </g>
-    <g class="fragment" transform="translate(760,0)">
+    <g class="fragment" transform="translate(1010,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round"><path d="M100,60 A25,25 0 1 1 75,60" marker-end="url(#ah)"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">prove rollback is instant</text>
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">the old version never left</text>
     </g>
-    <g class="fragment" transform="translate(940,0)">
+    <g class="fragment" transform="translate(1255,0)">
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2" stroke-dasharray="4 4"><rect x="0" y="30" width="140" height="140" rx="12"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2"><circle cx="60" cy="80" r="20"/></g>
       <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2"><path d="M60,60 L60,80 L75,90"/></g>
       <text x="70" y="196" text-anchor="middle" class="lbl-b">run the training pipeline</text>
-      <text x="70" y="218" text-anchor="middle" class="lbl-sm">Argo Workflow, capped, serving drained</text>
+      <text x="70" y="218" text-anchor="middle" class="lbl-sm">Argo Workflow, capped</text>
     </g>
   </svg>
   <div class="pageno">M11&middot;31</div>

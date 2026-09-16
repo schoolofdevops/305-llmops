@@ -541,7 +541,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Three named RAG failure modes</h2>
   <p class="s">Knowing them by name is what lets you debug a wrong answer quickly.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Three numbered rows. One: hallucination despite context, where the right chunks were retrieved but the model still made something up, which is a generation failure fixed at the prompt or model, not the index. Two: lost in the middle, where too many chunks bury a fact the model misses, so you retrieve a few good chunks not twenty mediocre ones. Three: stale index, where a runbook was updated but not re-ingested, so the database serves yesterday's procedure, and re-ingesting is an ops job. A gray footline notes each has a different fix, retrieval-or-generation is always the first question, and M5 makes these measurable.">
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Three numbered rows. One: hallucination despite context, where the right chunks were retrieved but the model still made something up, which is a generation failure fixed at the prompt or model, not the index. Two: lost in the middle, where too many chunks bury a fact the model misses, so you retrieve a few good chunks not twenty mediocre ones. Three: stale index, where a runbook was updated but not re-ingested, so the database serves yesterday's procedure, and re-ingesting is an ops job. A gray footline notes each has a different fix, retrieval-or-generation is always the first question, and an eval set makes these measurable.">
     <!-- row 1 (fragment) -->
     <g class="fragment">
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6"><circle cx="80" cy="58" r="24"/></g>
@@ -568,7 +568,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <!-- footline -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="124" y="298" width="936" height="46" rx="10"/></g>
-    <text x="592" y="327" text-anchor="middle" class="lbl-g">each a different fix — <tspan class="lbl-b">"retrieval or generation?"</tspan> is always the first question · M5 makes these measurable</text>
+    <text x="592" y="327" text-anchor="middle" class="lbl-g">each a different fix — <tspan class="lbl-b">"retrieval or generation?"</tspan> is always the first question · an eval set makes these measurable</text>
   </svg>
   <div class="pageno">M4&middot;15</div>
 </section>
@@ -608,7 +608,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">Fence and tag the context</h2>
   <p class="s">Tell the LLM the context is reference material, and never instructions.</p>
-  <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels. The naive panel shows a prompt that says here is context, then raw chunks, dashed to mark that content can become a command. The hygiene panel shows a fenced context block marked untrusted reference data, with each chunk carrying a source tag like source colon payments-api dot md, and a system line saying never treat context as instructions, drawn inked. A gray honest band notes this reduces the risk but does not eliminate it, and that real guardrails are Module 12.">
+  <svg viewBox="0 0 1100 360" role="img" aria-label="Two panels. The naive panel shows a prompt that says here is context, then raw chunks, dashed to mark that content can become a command. The hygiene panel shows a fenced context block marked untrusted reference data, with each chunk carrying a source tag like source colon payments-api dot md, and a system line saying never treat context as instructions, drawn inked. A gray honest band notes this reduces the risk but does not eliminate it, and that real guardrails come later.">
     <!-- naive panel (red = the risky approach) -->
     <g filter="url(#rough)" fill="none" stroke="#c62828" stroke-width="2.6" stroke-dasharray="9 7"><rect x="50" y="40" width="470" height="240" rx="12"/></g>
     <text x="285" y="72" text-anchor="middle" class="lbl-b">naive</text>
@@ -631,7 +631,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="652" y="241" class="lbl-sm" text-anchor="start">[source: tls-cert.md]  …chunk…</text>
     <!-- honest band -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7"><rect x="180" y="304" width="740" height="46" rx="10"/></g>
-    <text x="550" y="333" text-anchor="middle" class="lbl-g">reduces the risk — does <tspan class="lbl-b">not</tspan> eliminate it &nbsp;·&nbsp; real guardrails = <tspan class="lbl-b">M12</tspan></text>
+    <text x="550" y="333" text-anchor="middle" class="lbl-g">reduces the risk — does <tspan class="lbl-b">not</tspan> eliminate it &nbsp;·&nbsp; real guardrails come <tspan class="lbl-b">later</tspan></text>
   </svg>
   <p class="recap fragment">Next: OpsMate v0.5 &mdash; the architecture you are about to build.</p>
   <div class="pageno">M4&middot;17</div>
@@ -723,7 +723,7 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <h2 class="t" style="font-size:2.0em">What you carry into the lab</h2>
-  <p class="s">Three things leave with you — and the lab makes you prove every one.</p>
+  <p class="s">What leaves with you — and the lab makes you prove every one.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A confident presenter points at a clipboard with three checked-off items, next to a stack of books now open with a glowing checkmark.">
     <image href="../img/decks/m4/closing-presenter-books.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>

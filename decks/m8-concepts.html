@@ -887,8 +887,38 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="354" text-anchor="middle" class="lbl-g">apply the bad probe, watch the loop, revert — a self-inflicted outage seen in a safe place</text>
   </svg>
-  <p class="recap fragment">Next: The Engine Fork &mdash; the same manifests, with a different engine image.</p>
   <div class="pageno">M8&middot;21</div>
+</section>
+
+<section>
+  <h2 class="t">Probe numbers come from the load time</h2>
+  <p class="s">Restart is the violent one, so liveness gets the most slack, not the least.</p>
+  <svg viewBox="0 0 1100 330" role="img" aria-label="Three stacked cards. The startup probe: period ten seconds times a failure threshold of twelve gives a budget of one hundred and twenty seconds, against a load of about forty, so roughly three times headroom. The liveness probe: period twenty seconds, threshold three, timeout five, so it only restarts after about a minute of real unresponsiveness. The readiness probe: period five seconds, threshold two, so traffic is pulled in about ten seconds without killing anything. A band reads readiness removes traffic, liveness destroys work.">
+    <g filter="url(#rough)" fill="var(--p-orange)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="60" y="14" width="980" height="82" rx="10"/>
+    </g>
+    <text x="88" y="42" text-anchor="start" class="lbl-b">startupProbe &nbsp;·&nbsp; covers the load</text>
+    <text x="88" y="66" text-anchor="start" class="lbl">periodSeconds 10 &nbsp;×&nbsp; failureThreshold 12 &nbsp;=&nbsp; a 120 s budget</text>
+    <text x="88" y="88" text-anchor="start" class="lbl-g">load is ~40 s → about 3× headroom for a cold page cache or a slow disk</text>
+    <g filter="url(#rough)" fill="var(--p-blue)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="60" y="108" width="980" height="82" rx="10"/>
+    </g>
+    <text x="88" y="136" text-anchor="start" class="lbl-b">livenessProbe &nbsp;·&nbsp; only for a process that is truly stuck</text>
+    <text x="88" y="160" text-anchor="start" class="lbl">periodSeconds 20 &nbsp;·&nbsp; failureThreshold 3 &nbsp;·&nbsp; timeoutSeconds 5</text>
+    <text x="88" y="182" text-anchor="start" class="lbl-g">~60 s of real unresponsiveness before it restarts — deliberately lenient</text>
+    <g filter="url(#rough)" fill="var(--p-green)" stroke="#1e1e1e" stroke-width="2.6">
+      <rect x="60" y="202" width="980" height="82" rx="10"/>
+    </g>
+    <text x="88" y="230" text-anchor="start" class="lbl-b">readinessProbe &nbsp;·&nbsp; the one allowed to be twitchy</text>
+    <text x="88" y="254" text-anchor="start" class="lbl">periodSeconds 5 &nbsp;·&nbsp; failureThreshold 2</text>
+    <text x="88" y="276" text-anchor="start" class="lbl-g">pulls out of the Service in ~10 s when busy — and kills nothing</text>
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4" stroke-dasharray="9 7">
+      <rect x="230" y="294" width="640" height="32" rx="10"/>
+    </g>
+    <text x="550" y="316" text-anchor="middle" class="lbl-g">readiness removes <tspan class="lbl-b">traffic</tspan> · liveness destroys <tspan class="lbl-b">work</tspan></text>
+  </svg>
+  <p class="recap fragment">Next: The Engine Fork &mdash; the same manifests, with a different engine image.</p>
+  <div class="pageno">M8&middot;22</div>
 </section>
 
 <section class="divider">
@@ -897,7 +927,7 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 1600 900" role="img" aria-label="A single road splits into two diverging paths, one plain and one more elaborate, standing in for the honest fork between the llama-server and vLLM engines.">
     <image href="../img/decks/m8/divider-7-road-fork.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
-  <div class="pageno">M8&middot;22</div>
+  <div class="pageno">M8&middot;23</div>
 </section>
 
 <section>
@@ -933,7 +963,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="323" text-anchor="middle" class="lbl-g">swapping the engine is an <tspan class="lbl-b">image-and-args change</tspan>, not a manifest rewrite — the <tspan class="lbl-b">/v1 contract</tspan> holds the client stable</text>
   </svg>
-  <div class="pageno">M8&middot;23</div>
+  <div class="pageno">M8&middot;24</div>
 </section>
 
 <section>
@@ -967,7 +997,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="550" y="313" text-anchor="middle" class="lbl-g">the pattern is portable, the numbers are not — <tspan class="lbl-b">derive the box, don't paste the values</tspan></text>
   </svg>
-  <div class="pageno">M8&middot;24</div>
+  <div class="pageno">M8&middot;25</div>
 </section>
 
 <section>
@@ -978,7 +1008,7 @@ footer, header, hgroup, main, menu, nav, section {
     <image href="../img/decks/m8/closing-namespace-served.jpg" x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid meet"/>
   </svg>
   <p class="credit">OpsMate is <b>v2.0</b> — served by the cluster &nbsp;·&nbsp; now open <b>Module 8 · Lab</b>. &nbsp;·&nbsp; <b>Gourav Shah</b> · School of DevOps &amp; AI</p>
-  <div class="pageno">M8&middot;25</div>
+  <div class="pageno">M8&middot;26</div>
 </section>
 
 <section>
@@ -1028,7 +1058,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="70" y="218" text-anchor="middle" class="lbl-sm">initContainer vs hostPath timing</text>
     </g>
   </svg>
-  <div class="pageno">M8&middot;26</div>
+  <div class="pageno">M8&middot;27</div>
 </section>
 
 </div></div>

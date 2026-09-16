@@ -277,7 +277,7 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="180" y="180" width="620" height="66" rx="11" class="f-blue"/>
     </g>
     <text x="230" y="212" text-anchor="start" class="lbl-b">2 · RAG</text>
-    <text x="230" y="236" text-anchor="start" class="lbl-g">put the right facts in front → missing knowledge, freshness (M4/M5)</text>
+    <text x="230" y="236" text-anchor="start" class="lbl-g">put the right facts in front → missing knowledge, freshness — retrieval, M4/M5</text>
     <!-- level 3 fine-tune (top, protagonist) — orange = the expensive, easy-to-fool-yourself level -->
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="3">
       <rect x="290" y="94" width="620" height="66" rx="11" class="f-orange"/>
@@ -358,7 +358,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g class="fragment">
       <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4"><rect x="600" y="232" width="440" height="76" rx="11" class="f-blue"/></g>
       <text x="820" y="266" text-anchor="middle" class="lbl-b">tiny to ship</text>
-      <text x="820" y="292" text-anchor="middle" class="lbl-g">M7 versions it as v1.0</text>
+      <text x="820" y="292" text-anchor="middle" class="lbl-g">packaged and signed as v1.0 — M7</text>
     </g>
     <!-- band -->
     <g fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M120,330 L1040,330"/></g>
@@ -410,7 +410,7 @@ footer, header, hgroup, main, menu, nav, section {
 <section>
   <h2 class="t">QLoRA &mdash; a 4-bit frozen base</h2>
   <p class="s">Store the frozen base at 4 bits so a bigger LLM fits. The adapter is untouched.</p>
-  <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, inked: LoRA — frozen base at 16-bit plus an adapter that trains on top, tagged a 0.6B fits on CPU as-is, the lab's path. Right, inked: QLoRA — frozen base stored 4-bit plus an adapter that trains on top, tagged a quarter of the memory, so a 7B or 13B fits on one small GPU. A gray footline reads: same idea, one tier up — reach for QLoRA only when the base is too big to fit; on a 0.6B it is overkill.">
+  <svg viewBox="0 0 1100 340" role="img" aria-label="Two panels. Left, inked: LoRA — frozen base at 16-bit plus an adapter that trains on top, tagged a 0.6B fits on CPU as-is, the lab's path. Right, inked: QLoRA — frozen base stored 4-bit plus an adapter that trains on top, tagged a quarter of the memory, so a 7B or 13B fits on one small GPU. The two panels sit side by side with no footline.">
     <!-- LoRA panel — frozen base unfilled, adapter blue -->
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="70" y="80" width="430" height="170" rx="12"/>
@@ -537,7 +537,7 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="740" y="150" width="290" height="100" rx="11" class="f-purple"/>
     </g>
     <text x="885" y="184" text-anchor="middle" class="lbl-b">golden.yaml</text>
-    <text x="885" y="212" text-anchor="middle" class="lbl-g">M5 test set — HELD OUT</text>
+    <text x="885" y="212" text-anchor="middle" class="lbl-g">golden set — HELD OUT</text>
     <text x="885" y="236" text-anchor="middle" class="lbl-g">synthesizer never reads it</text>
     <!-- struck-through overlap attempt -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5" stroke-linecap="round">
@@ -572,7 +572,7 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">Loss is how surprised the LLM is at the next token. Two patterns to tell apart.</p>
   <svg viewBox="0 0 1100 350" role="img" aria-label="A gray definition line reads loss equals how surprised the model is at the next token, from the Module 1 vocabulary. Below it, two panels, each a sketched loss curve on axes. Left, inked and labelled healthy: a curve falling from about 5.0 and then flattening toward about 0.7, tagged falls then flattens, more steps buy little, stop here, the real run's pattern. Right, gray-dashed and labelled suspicious: a curve diving toward zero on a tiny set, tagged keeps dropping to zero equals overfit, memorizing not learning, aces training but fails the real questions. A band reads: train a few epochs and stop — you want it to generalize, not memorize.">
     <!-- definition annotation (M1 vocabulary) -->
-    <text x="550" y="28" text-anchor="middle" class="lbl-g">loss = how surprised the model is at the next token (M1)</text>
+    <text x="550" y="28" text-anchor="middle" class="lbl-g">loss = how surprised the model is at the next token — next-token prediction, M1</text>
     <!-- left panel HEALTHY -->
     <text x="280" y="60" text-anchor="middle" class="lbl-good">HEALTHY</text>
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round">
@@ -749,7 +749,7 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="700" y="172" text-anchor="middle" class="lbl-g">on its own</text>
     <g filter="url(#rough)" stroke="#757575" stroke-width="2.2" stroke-dasharray="5 5"><rect x="840" y="128" width="180" height="52" rx="9"/></g>
     <text x="930" y="152" text-anchor="middle" class="lbl-sm">base · no context</text>
-    <text x="930" y="172" text-anchor="middle" class="lbl-g">(M5's arm)</text>
+    <text x="930" y="172" text-anchor="middle" class="lbl-g">the baseline</text>
     <!-- gap bracket -->
     <g filter="url(#rough)" fill="none" stroke="#757575" stroke-width="2.2" stroke-linecap="round"><path d="M700,196 L930,196 M700,190 L700,202 M930,190 L930,202"/></g>
     <text x="815" y="226" text-anchor="middle" class="lbl-g">the gap = the value tuning added,</text>
@@ -825,7 +825,7 @@ footer, header, hgroup, main, menu, nav, section {
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
       <rect x="380" y="146" width="180" height="70" rx="11"/>
     </g>
-    <text x="470" y="178" text-anchor="middle" class="lbl-b">M7 · package</text>
+    <text x="470" y="178" text-anchor="middle" class="lbl-b">package + sign · M7</text>
     <text x="470" y="204" text-anchor="middle" class="lbl-g">+ sign</text>
     <g fill="none" stroke="#1e1e1e" stroke-width="2.6" stroke-linecap="round">
       <path d="M560,180 L626,180" marker-end="url(#ah)"/>
@@ -852,7 +852,7 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 <section>
-  <p class="kicker">MODULE 6 &nbsp;·&nbsp; FINE-TUNING — SYNTHETIC DATA, LoRA &amp; QLoRA</p>
+  <p class="kicker">MODULE 6</p>
   <h2 class="t" style="font-size:2.05em">What you carry into the lab</h2>
   <p class="s">The skill is the whole loop — and the part most people skip is the last one.</p>
   <svg viewBox="0 0 1600 900" role="img" aria-label="A confident presenter points at a clipboard with three checked-off items, next to three small distinct artifacts on a shelf.">
@@ -911,7 +911,7 @@ footer, header, hgroup, main, menu, nav, section {
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2"><rect x="1000" y="70" width="30" height="50" rx="4"/></g>
       <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2"><rect x="1040" y="75" width="30" height="45" rx="4"/></g>
       <text x="1010" y="196" text-anchor="middle" class="lbl-b">keep three artifacts</text>
-      <text x="1010" y="218" text-anchor="middle" class="lbl-sm">for M7 to version</text>
+      <text x="1010" y="218" text-anchor="middle" class="lbl-sm">to package and version</text>
     </g>
   </svg>
   <div class="pageno">M6&middot;25</div>
